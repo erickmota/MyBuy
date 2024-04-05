@@ -1,5 +1,5 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, FlatList,TouchableWithoutFeedback } from 'react-native';
+import { StyleSheet, Text, View, FlatList, TouchableWithoutFeedback } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const DATA = [
@@ -85,8 +85,8 @@ export default function App() {
 
         <Text style={styles.textInicio}>
 
-          Olá Erick Mota. Atualmente na sua região, o mercado mais vantajoso
-          para comprar é o{'\n'}
+          Olá Erick Mota. Atualmente na sua região, os preços mais
+          baixos, são do mercado:{'\n\n'}
 
           <Icon
           name="map-marker"
@@ -94,7 +94,7 @@ export default function App() {
           color={"#FFF"}
           />
           
-          <Text style={styles.nomeMercado}> Comercial Esperança, Votorantim-SP</Text>
+          <Text style={styles.nomeMercado}>Comercial Esperança, Votorantim-SP</Text>
 
         </Text>
 
@@ -174,7 +174,14 @@ const styles = StyleSheet.create({
 
   nomeMercado:{
 
-    color: "#000",
+    fontSize: 17,
+    fontWeight: "500",
+    color: "#65bbbb",
+    backgroundColor: "#FFF",
+    paddingHorizontal: 7,
+    marginLeft: 5,
+    borderRadius: 10,
+    paddingVertical: 5
 
   },
 
@@ -196,7 +203,7 @@ const styles = StyleSheet.create({
 
     color: "#747474",
     fontSize: 17,
-    paddingHorizontal: 10
+    paddingHorizontal: 15,
 
   },
 
@@ -232,10 +239,12 @@ const styles = StyleSheet.create({
 
   areaIconeMais: {
 
+    ...StyleSheet.absoluteFillObject,
     flex: 2,
     flexDirection: "row",
     justifyContent: "flex-end",
-    alignItems: "flex-end"
+    alignItems: "flex-end",
+    pointerEvents: 'box-none',
 
   },
 
@@ -246,8 +255,8 @@ const styles = StyleSheet.create({
     width: 60,
     height: 60,
     justifyContent: "center",
-    marginBottom: 15,
-    marginRight: 15,
+    marginBottom: 20,
+    marginRight: 20,
     flexDirection: "row",
     alignItems: "center"
 
