@@ -1,7 +1,40 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, FlatList } from 'react-native';
+import { StyleSheet, Text, View, FlatList,TouchableWithoutFeedback } from 'react-native';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const DATA = [
+  {
+    id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
+    title: 'Mercado',
+  },
+  {
+    id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
+    title: 'Mecânico',
+  },
+  {
+    id: '58694a0f-3da1-471f-bd96-145571e29d72',
+    title: 'Escola',
+  },
+  {
+    id: '58694a0f-3da1-471f-bd96-145571e29d722',
+    title: 'Condomínio',
+  },
+  {
+    id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
+    title: 'Mercado',
+  },
+  {
+    id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
+    title: 'Mecânico',
+  },
+  {
+    id: '58694a0f-3da1-471f-bd96-145571e29d72',
+    title: 'Escola',
+  },
+  {
+    id: '58694a0f-3da1-471f-bd96-145571e29d722',
+    title: 'Condomínio',
+  },
   {
     id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
     title: 'Mercado',
@@ -22,7 +55,21 @@ const DATA = [
 
 const Item = ({title}) => (
   <View style={styles.itemLista}>
-    <Text style={styles.titleLista}>{title}</Text>
+      <View style={{flex: 1}}>
+
+        <Text style={styles.titleLista}>{title}</Text>
+
+      </View>
+
+      <View style={styles.iconeLista}>
+
+        <Icon
+          name="note-edit-outline"
+          size={25}
+          color={"#65bbbb"}
+          />
+
+      </View>
   </View>
 );
 
@@ -39,7 +86,15 @@ export default function App() {
         <Text style={styles.textInicio}>
 
           Olá Erick Mota. Atualmente na sua região, o mercado mais vantajoso
-          para comprar é o <Text style={styles.nomeMercado}>Comercial Esperança, Votorantim-SP</Text>.
+          para comprar é o{'\n'}
+
+          <Icon
+          name="map-marker"
+          size={20}
+          color={"#FFF"}
+          />
+          
+          <Text style={styles.nomeMercado}> Comercial Esperança, Votorantim-SP</Text>
 
         </Text>
 
@@ -69,6 +124,24 @@ export default function App() {
 
       </View>
 
+      <View style={styles.areaIconeMais}>
+
+          <TouchableWithoutFeedback>
+
+            <View style={styles.iconeMais}>
+
+              <Text style={styles.mais}>
+
+                +
+
+              </Text>
+
+            </View>
+
+          </TouchableWithoutFeedback>
+
+        </View>
+
     </View>
 
   );
@@ -86,7 +159,7 @@ const styles = StyleSheet.create({
   espacoVerde: {
 
     backgroundColor: "#65bbbb",
-    flex:1,
+    flex:3,
     justifyContent: "center",
 
   },
@@ -94,7 +167,7 @@ const styles = StyleSheet.create({
   textInicio: {
 
     textAlign: "center",
-    color: "#747474",
+    color: "#FFF",
     paddingHorizontal: 30,
 
   },
@@ -108,7 +181,7 @@ const styles = StyleSheet.create({
   espacoListas: {
 
     backgroundColor: "#FFF",
-    flex:5,
+    flex: 9,
 
   },
 
@@ -129,7 +202,7 @@ const styles = StyleSheet.create({
 
   areaListas:{
 
-    flex: 7,
+    flex: 8,
 
   },
 
@@ -138,7 +211,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     paddingVertical: 15,
     borderBottomWidth: 1,
-    borderColor: "#CCC"
+    borderColor: "#CCC",
+    flexDirection: "row"
 
   },
 
@@ -147,5 +221,45 @@ const styles = StyleSheet.create({
     fontSize: 25,
     
   },
+
+  iconeLista: {
+
+    alignItems: "flex-end",
+    flex: 1,
+    justifyContent: "center"
+
+  },
+
+  areaIconeMais: {
+
+    flex: 2,
+    flexDirection: "row",
+    justifyContent: "flex-end",
+    alignItems: "flex-end"
+
+  },
+
+  iconeMais: {
+
+    borderRadius: 50,
+    backgroundColor: "#65bbbb",
+    width: 60,
+    height: 60,
+    justifyContent: "center",
+    marginBottom: 15,
+    marginRight: 15,
+    flexDirection: "row",
+    alignItems: "center"
+
+  },
+
+  mais: {
+
+    textAlign: "center",
+    color: "#FFF",
+    fontSize: 50,
+    marginBottom: 10
+
+  }
 
 });
