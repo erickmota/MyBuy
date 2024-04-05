@@ -1,6 +1,31 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, FlatList } from 'react-native';
 
+const DATA = [
+  {
+    id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
+    title: 'Mercado',
+  },
+  {
+    id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
+    title: 'Mecânico',
+  },
+  {
+    id: '58694a0f-3da1-471f-bd96-145571e29d72',
+    title: 'Escola',
+  },
+  {
+    id: '58694a0f-3da1-471f-bd96-145571e29d722',
+    title: 'Condomínio',
+  },
+];
+
+const Item = ({title}) => (
+  <View style={styles.itemLista}>
+    <Text style={styles.titleLista}>{title}</Text>
+  </View>
+);
+
 export default function App() {
   
   return (
@@ -34,7 +59,11 @@ export default function App() {
 
         <View style={styles.areaListas}>
 
-
+          <FlatList
+          data={DATA}
+          renderItem={({item}) => <Item title={item.title} />}
+          keyExtractor={item => item.id}
+          />
 
         </View>
 
@@ -100,9 +129,23 @@ const styles = StyleSheet.create({
 
   areaListas:{
 
-    backgroundColor: "#DDD",
     flex: 7,
 
+  },
+
+  itemLista: {
+
+    paddingHorizontal: 10,
+    paddingVertical: 15,
+    borderBottomWidth: 1,
+    borderColor: "#CCC"
+
+  },
+
+  titleLista: {
+
+    fontSize: 25,
+    
   },
 
 });
