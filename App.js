@@ -4,51 +4,19 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const DATA = [
   {
-    id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
+    id: '1',
     title: 'Mercado',
   },
   {
-    id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
+    id: '2',
     title: 'Mecânico',
   },
   {
-    id: '58694a0f-3da1-471f-bd96-145571e29d72',
+    id: '3',
     title: 'Escola',
   },
   {
-    id: '58694a0f-3da1-471f-bd96-145571e29d722',
-    title: 'Condomínio',
-  },
-  {
-    id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-    title: 'Mercado',
-  },
-  {
-    id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
-    title: 'Mecânico',
-  },
-  {
-    id: '58694a0f-3da1-471f-bd96-145571e29d72',
-    title: 'Escola',
-  },
-  {
-    id: '58694a0f-3da1-471f-bd96-145571e29d722',
-    title: 'Condomínio',
-  },
-  {
-    id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-    title: 'Mercado',
-  },
-  {
-    id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
-    title: 'Mecânico',
-  },
-  {
-    id: '58694a0f-3da1-471f-bd96-145571e29d72',
-    title: 'Escola',
-  },
-  {
-    id: '58694a0f-3da1-471f-bd96-145571e29d722',
+    id: '4',
     title: 'Condomínio',
   },
 ];
@@ -79,7 +47,7 @@ export default function App() {
 
     <View style={styles.container}>
 
-      <StatusBar style="auto" />
+      <StatusBar backgroundColor="#498989" style="light" />
 
       <View style={styles.espacoVerde}>
 
@@ -161,6 +129,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#65bbbb",
     flex:3,
     justifyContent: "center",
+    alignContent: "center",
 
   },
 
@@ -169,6 +138,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
     color: "#FFF",
     paddingHorizontal: 30,
+    marginTop: 30
 
   },
 
@@ -181,7 +151,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 7,
     marginLeft: 5,
     borderRadius: 10,
-    paddingVertical: 5
+    paddingVertical: 5,
 
   },
 
@@ -225,7 +195,7 @@ const styles = StyleSheet.create({
 
   titleLista: {
 
-    fontSize: 25,
+    fontSize: 20,
     
   },
 
@@ -252,13 +222,13 @@ const styles = StyleSheet.create({
 
     borderRadius: 50,
     backgroundColor: "#65bbbb",
-    width: 60,
-    height: 60,
+    width: 65,
+    height: 65,
+    marginBottom: 15,
+    marginRight: 15,
     justifyContent: "center",
-    marginBottom: 20,
-    marginRight: 20,
+    alignItems: "center",
     flexDirection: "row",
-    alignItems: "center"
 
   },
 
@@ -266,8 +236,8 @@ const styles = StyleSheet.create({
 
     textAlign: "center",
     color: "#FFF",
-    fontSize: 50,
-    marginBottom: 10
+    fontSize: 40,
+    marginTop: -5
 
   }
 
