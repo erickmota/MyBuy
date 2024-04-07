@@ -1,6 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, FlatList, TouchableWithoutFeedback } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { NavigationContainer, useNavigation } from '@react-navigation/native';
 
 import IconeMais from "../componentes/botaoAdd"
 
@@ -24,7 +25,9 @@ const DATA = [
 ];
 
 const Item = ({title}) => (
+
   <View style={styles.itemLista}>
+    
       <View style={{flex: 1}}>
 
         <Text style={styles.titleLista}>{title}</Text>
@@ -44,6 +47,8 @@ const Item = ({title}) => (
 );
 
 export default function App() {
+
+  const navigation = useNavigation();
   
   return (
 
@@ -84,11 +89,41 @@ export default function App() {
 
         <View style={styles.areaListas}>
 
+          
+
           <FlatList
           data={DATA}
-          renderItem={({item}) => <Item title={item.title} />}
+          renderItem={({item}) =>
+
+          <View style={styles.itemLista}>
+
+            <TouchableWithoutFeedback onPress={() => navigation.navigate('Adicionar', {ItemTitle: item.title})}>
+
+            <View style={{flex: 1}}>
+
+              <Text style={styles.titleLista}>{item.title}</Text>
+
+            </View>
+
+            </TouchableWithoutFeedback>
+
+            <View style={styles.iconeLista}>
+
+              <Icon
+                name="note-edit-outline"
+                size={25}
+                color={"#65bbbb"}
+                />
+
+            </View>
+
+          </View>
+
+          }
           keyExtractor={item => item.id}
           />
+
+          
 
         </View>
 

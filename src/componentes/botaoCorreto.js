@@ -1,6 +1,7 @@
 import React from "react";
 import { StyleSheet, TouchableWithoutFeedback, View, Text } from "react-native";
 import { NavigationContainer, useNavigation } from '@react-navigation/native';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 export default function BotaoAdd() {
 
@@ -16,7 +17,11 @@ export default function BotaoAdd() {
 
               <Text style={styles.mais}>
 
-                +
+              <Icon
+              name="check-bold"
+              size={35}
+              color={"#FFF"}
+              />
 
               </Text>
 
@@ -61,9 +66,8 @@ const styles = StyleSheet.create({
 
         textAlign: "center",
         color: "#FFF",
-        fontSize: 50,
-        marginTop: -5,
-        fontWeight: "600"
+        fontSize: 40,
+        marginTop: -5
     
     }
 
