@@ -20,7 +20,7 @@ export default function Adicionar(){
             <TextInput style={styles.input}
             onChangeText={onChangeNumber}
             value={number}
-            keyboardType="numeric"
+            keyboardType="default"
             />
 
             <IconeCorreto/>
@@ -53,8 +53,8 @@ const styles = StyleSheet.create({
         borderBottomColor: "#CCC",
         marginTop: 20,
         fontSize: 20,
-        underlineColorAndroid: 'transparent',
-        marginHorizontal: 20
+        marginHorizontal: 20,
+        color: "#777"
 
     }
 

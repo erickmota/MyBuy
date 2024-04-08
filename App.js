@@ -2,8 +2,10 @@ import { StatusBar } from 'expo-status-bar';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
+/* Views */
 import Listas from "./src/views/listas"
 import Adicionar from "./src/views/adicionar"
+import ListaItem from "./src/views/listaItem"
 
 const stack = createStackNavigator();
 
@@ -35,6 +37,18 @@ export default function App() {
             borderWidth: 0,
 
           }
+
+          }} />
+          <stack.Screen name="ListaItem" component={Adicionar} options={{
+
+            title: "Adicionar Lista",
+            headerTintColor: "#FFF",
+            headerStyle: {
+
+              backgroundColor: "#498989",
+              borderWidth: 0,
+
+            }
 
           }} />
       </stack.Navigator>
