@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
 
         marginTop: 30,
         fontSize: 20,
-        paddingHorizontal: 20
+        paddingHorizontal: 15
 
     },
 
@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
         borderBottomColor: "#CCC",
         marginTop: 20,
         fontSize: 20,
-        marginHorizontal: 20,
+        marginHorizontal: 15,
         color: "#777"
 
     }

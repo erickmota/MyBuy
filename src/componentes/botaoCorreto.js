@@ -19,7 +19,7 @@ export default function BotaoAdd() {
 
               <Icon
               name="check-bold"
-              size={35}
+              size={25}
               color={"#FFF"}
               />
 
@@ -52,13 +52,11 @@ const styles = StyleSheet.create({
 
         borderRadius: 50,
         backgroundColor: "#65bbbb",
-        width: 65,
-        height: 65,
+        width: 60,
+        height: 60,
         marginBottom: 15,
         marginRight: 15,
         justifyContent: "center",
-        alignItems: "center",
-        flexDirection: "row",
     
     },
 
@@ -66,8 +64,6 @@ const styles = StyleSheet.create({
 
         textAlign: "center",
         color: "#FFF",
-        fontSize: 40,
-        marginTop: -6
     
     }
 

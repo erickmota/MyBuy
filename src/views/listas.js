@@ -9,18 +9,22 @@ const DATA = [
   {
     id: '1',
     title: 'Mercado',
+    qtdItens: '5'
   },
   {
     id: '2',
     title: 'Mecânico',
+    qtdItens: '20'
   },
   {
     id: '3',
     title: 'Escola',
+    qtdItens: '4'
   },
   {
     id: '4',
     title: 'Condomínio',
+    qtdItens: '16'
   },
 ];
 
@@ -97,11 +101,12 @@ export default function App() {
 
           <View style={styles.itemLista}>
 
-            <TouchableWithoutFeedback onPress={() => navigation.navigate('Adicionar', {ItemTitle: item.title})}>
+            <TouchableWithoutFeedback onPress={() => navigation.navigate('ListaItem', {TituloLista: item.title})}>
 
-            <View style={{flex: 1}}>
+            <View style={{flex: 1, flexDirection: "row"}}>
 
               <Text style={styles.titleLista}>{item.title}</Text>
+              <Text style={styles.qtdItens}> / {item.qtdItens} Itens</Text>
 
             </View>
 
@@ -121,9 +126,7 @@ export default function App() {
 
           }
           keyExtractor={item => item.id}
-          />
-
-          
+          />          
 
         </View>
 
@@ -159,7 +162,6 @@ const styles = StyleSheet.create({
     textAlign: "center",
     color: "#FFF",
     paddingHorizontal: 30,
-    marginTop: 30
 
   },
 
@@ -206,7 +208,7 @@ const styles = StyleSheet.create({
 
   itemLista: {
 
-    paddingHorizontal: 10,
+    marginHorizontal: 15,
     paddingVertical: 15,
     borderBottomWidth: 1,
     borderColor: "#CCC",
@@ -218,6 +220,13 @@ const styles = StyleSheet.create({
 
     fontSize: 20,
     
+  },
+
+  qtdItens:{
+
+    fontSize: 20,
+    color: "#DDD"
+
   },
 
   iconeLista: {

@@ -45,15 +45,13 @@ const styles = StyleSheet.create({
 
     iconeMais: {
 
-        borderRadius: 50,
         backgroundColor: "#65bbbb",
-        width: 65,
-        height: 65,
+        width: 60,
+        height: 60,
         marginBottom: 15,
         marginRight: 15,
         justifyContent: "center",
-        alignItems: "center",
-        flexDirection: "row",
+        borderRadius: 50
     
     },
 
@@ -61,9 +59,9 @@ const styles = StyleSheet.create({
 
         textAlign: "center",
         color: "#FFF",
-        fontSize: 50,
-        marginTop: -7,
-        fontWeight: "400"
+        fontSize: 30,
+        fontWeight: "400",
+        marginTop: -2
     
     }
 

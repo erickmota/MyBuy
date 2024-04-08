@@ -38,19 +38,19 @@ export default function App() {
 
           }
 
-          }} />
-          <stack.Screen name="ListaItem" component={Adicionar} options={{
+        }} />
+        <stack.Screen name="ListaItem" component={ListaItem} options={{
 
-            title: "Adicionar Lista",
-            headerTintColor: "#FFF",
-            headerStyle: {
+          title: "Lista Item",
+          headerTintColor: "#FFF",
+          headerStyle: {
 
-              backgroundColor: "#498989",
-              borderWidth: 0,
+            backgroundColor: "#498989",
+            borderWidth: 0,
 
-            }
+          }
 
-          }} />
+        }} />
       </stack.Navigator>
     </NavigationContainer>
 
