@@ -149,7 +149,7 @@ export default function ListaItem({route, navigation}){
 
                     <View style={{flex: 3, flexDirection: "column"}}>
 
-                        <Text style={styles.titleLista}>{item.title}</Text>
+                        <Text style={[styles.titleLista, styles.itemMarcado]}>{item.title}</Text>
                         
                         <View style={{flexDirection: "row"}}>
 
@@ -224,6 +224,12 @@ const styles = StyleSheet.create({
 
         fontSize: 20,
         
+    },
+
+    itemMarcado:{
+
+        textDecorationLine: "line-through",
+
     },
 
     qtdItens:{

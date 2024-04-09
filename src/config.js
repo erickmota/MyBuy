@@ -1,7 +1,7 @@
 const config = {
     
-    cor1: "#498989",
-    cor2: "#65bbbb",
+    cor2: "#902dc4",
+    cor1: "#7523a0",
     corTextoSecundario: "#BBB",
 
 };

@@ -153,7 +153,7 @@ const styles = StyleSheet.create({
 
     fontSize: 17,
     fontWeight: "500",
-    color: "#65bbbb",
+    color: config.cor2,
     backgroundColor: "#FFF",
     paddingHorizontal: 7,
     marginLeft: 5,
