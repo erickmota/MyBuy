@@ -26,29 +26,8 @@ const DATA = [
     title: 'Condomínio',
     qtdItens: '16'
   },
+  
 ];
-
-const Item = ({title}) => (
-
-  <View style={styles.itemLista}>
-    
-      <View style={{flex: 1}}>
-
-        <Text style={styles.titleLista}>{title}</Text>
-
-      </View>
-
-      <View style={styles.iconeLista}>
-
-        <Icon
-          name="note-edit-outline"
-          size={25}
-          color={"#65bbbb"}
-          />
-
-      </View>
-  </View>
-);
 
 export default function App() {
 
@@ -92,8 +71,6 @@ export default function App() {
         </View>
 
         <View style={styles.areaListas}>
-
-          
 
           <FlatList
           data={DATA}
@@ -224,8 +201,9 @@ const styles = StyleSheet.create({
 
   qtdItens:{
 
-    fontSize: 20,
-    color: "#DDD"
+    fontSize: 15,
+    color: "#DDD",
+    alignContent: "center"
 
   },
 
