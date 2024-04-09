@@ -3,6 +3,8 @@ import { StyleSheet, Text, View, FlatList, TouchableWithoutFeedback } from 'reac
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { NavigationContainer, useNavigation } from '@react-navigation/native';
 
+import config from "../config"
+
 import IconeMais from "../componentes/botaoAdd"
 
 const DATA = [
@@ -37,7 +39,7 @@ export default function App() {
 
     <View style={styles.container}>
 
-      <StatusBar backgroundColor="#498989" style="light" />
+      <StatusBar backgroundColor={config.cor1} style="light" />
 
       <View style={styles.espacoVerde}>
 
@@ -80,21 +82,26 @@ export default function App() {
 
             <TouchableWithoutFeedback onPress={() => navigation.navigate('ListaItem', {TituloLista: item.title})}>
 
-            <View style={{flex: 1, flexDirection: "row"}}>
+            <View style={{flex: 3, flexDirection: "column"}}>
 
               <Text style={styles.titleLista}>{item.title}</Text>
-              <Text style={styles.qtdItens}> / {item.qtdItens} Itens</Text>
+
+              <View style={{flexDirection: "row"}}>
+
+                <Text style={styles.qtdItens}>{item.qtdItens} Itens</Text>
+
+              </View>
 
             </View>
 
             </TouchableWithoutFeedback>
 
-            <View style={styles.iconeLista}>
+            <View style={[styles.iconeLista, {flex:1}]}>
 
               <Icon
                 name="note-edit-outline"
                 size={25}
-                color={"#65bbbb"}
+                color={config.cor2}
                 />
 
             </View>
@@ -127,7 +134,7 @@ const styles = StyleSheet.create({
 
   espacoVerde: {
 
-    backgroundColor: "#65bbbb",
+    backgroundColor: config.cor2,
     flex:3,
     justifyContent: "center",
     alignContent: "center",
@@ -202,8 +209,8 @@ const styles = StyleSheet.create({
   qtdItens:{
 
     fontSize: 15,
-    color: "#DDD",
-    alignContent: "center"
+    color: config.corTextoSecundario,
+    alignContent: "center",
 
   },
 

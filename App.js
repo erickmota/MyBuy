@@ -7,6 +7,8 @@ import Listas from "./src/views/listas"
 import Adicionar from "./src/views/adicionar"
 import ListaItem from "./src/views/listaItem"
 
+import config from "./src/config"
+
 const stack = createStackNavigator();
 
 export default function App() {
@@ -21,7 +23,7 @@ export default function App() {
           headerTintColor: "#FFF",
           headerStyle: {
 
-            backgroundColor: "#498989",
+            backgroundColor: config.cor1,
             borderWidth: 0,
 
           }
@@ -33,7 +35,7 @@ export default function App() {
           headerTintColor: "#FFF",
           headerStyle: {
 
-            backgroundColor: "#498989",
+            backgroundColor: config.cor1,
             borderWidth: 0,
 
           }
@@ -45,7 +47,7 @@ export default function App() {
           headerTintColor: "#FFF",
           headerStyle: {
 
-            backgroundColor: "#498989",
+            backgroundColor: config.cor1,
             borderWidth: 0,
 
           }

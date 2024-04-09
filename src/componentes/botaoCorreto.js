@@ -3,6 +3,8 @@ import { StyleSheet, TouchableWithoutFeedback, View, Text } from "react-native";
 import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
+import config from "../config"
+
 export default function BotaoAdd() {
 
   const navigation = useNavigation();
@@ -51,12 +53,13 @@ const styles = StyleSheet.create({
     iconeMais: {
 
         borderRadius: 50,
-        backgroundColor: "#65bbbb",
+        backgroundColor: config.cor2,
         width: 60,
         height: 60,
         marginBottom: 15,
         marginRight: 15,
         justifyContent: "center",
+        elevation: 5,
     
     },
 

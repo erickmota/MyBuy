@@ -5,6 +5,8 @@ import { useNavigation } from '@react-navigation/native';
 
 import IconeAdd from "../componentes/botaoAdd"
 
+import config from "../config";
+
 const DATA = [
     {
       id: '1',
@@ -18,7 +20,7 @@ const DATA = [
     },
     {
       id: '3',
-      title: 'Bife',
+      title: 'Bife de berinjela',
       qtdItens: '4'
     },
     {
@@ -47,7 +49,7 @@ const DATA = [
     },
     {
       id: '2',
-      title: 'Miojo',
+      title: 'Miojo de feijão',
       qtdItens: '20'
     },
     {
@@ -101,38 +103,35 @@ export default function ListaItem({route, navigation}){
 
                 </View>
 
-                <FlatList
-                data={DATA}
-                renderItem={({item}) =>
+                {DATA.map(item => (
 
-                <View style={styles.itemLista}>
+                <View key={item.id} style={styles.itemLista}>
 
-                    <TouchableWithoutFeedback onPress={() => navigation.navigate('ListaItem', {TituloLista: item.title})}>
+                    <View style={{flex: 3, flexDirection: "column"}}>
 
-                        <View style={{flex: 1, flexDirection: "row"}}>
+                        <Text style={styles.titleLista}>{item.title}</Text>
 
-                            <Text style={styles.titleLista}>{item.title}</Text>
-                            <Text style={styles.qtdItens}> / 2 Pacotes</Text>
+                        <View style={{flexDirection: "row"}}>
+
+                            <Text style={styles.qtdItens}>2 Pacotes</Text>
 
                         </View>
 
-                    </TouchableWithoutFeedback>
+                    </View>
 
-                    <View style={styles.iconeLista}>
+                    <View style={[styles.iconeLista, {flex:1}]}>
 
                         <Icon
                             name="cart-plus"
                             size={25}
-                            color={"#65bbbb"}
+                            color={"#0ee031"}
                             />
 
                     </View>
 
                 </View>
 
-                }
-                keyExtractor={item => item.id}
-                />
+                ))}
 
                 <View>
 
@@ -144,25 +143,24 @@ export default function ListaItem({route, navigation}){
 
                 </View>
 
-                <FlatList
-                data={DATA2}
-                renderItem={({item}) =>
+                {DATA2.map(item => (
 
-                <View style={styles.itemLista}>
+                <View key={item.id} style={styles.itemLista}>
 
-                    <TouchableWithoutFeedback onPress={() => navigation.navigate('ListaItem', {TituloLista: item.title})}>
+                    <View style={{flex: 3, flexDirection: "column"}}>
 
-                        <View style={{flex: 1, flexDirection: "row"}}>
+                        <Text style={styles.titleLista}>{item.title}</Text>
+                        
+                        <View style={{flexDirection: "row"}}>
 
-                            <Text style={styles.titleLista}>{item.title}</Text>
-                            <Text style={styles.qtdItens}> / {item.qtdItens} Pacotes /</Text>
+                            <Text style={styles.qtdItens}>{item.qtdItens} Pacotes /</Text>
                             <Text style={[styles.qtdItens, {color: "#8FBC8F"}]}> R$18,58</Text>
 
                         </View>
 
-                    </TouchableWithoutFeedback>
+                    </View>
 
-                    <View style={styles.iconeLista}>
+                    <View style={[styles.iconeLista, {flex: 1}]}>
 
                         <Icon
                             name="cart-minus"
@@ -174,11 +172,11 @@ export default function ListaItem({route, navigation}){
 
                 </View>
 
-                }
-                keyExtractor={item => item.id}
-                />
+                ))}
 
             </ScrollView>
+
+            <IconeAdd/>
 
             </View>
 
@@ -231,8 +229,8 @@ const styles = StyleSheet.create({
     qtdItens:{
 
         fontSize: 15,
-        color: "#DDD",
-        alignContent: "center"
+        color: config.corTextoSecundario,
+        alignContent: "center",
     
     },
 
