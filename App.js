@@ -4,8 +4,9 @@ import { createStackNavigator } from '@react-navigation/stack';
 
 /* Views */
 import Listas from "./src/views/listas"
-import Adicionar from "./src/views/adicionar"
+import AddLista from "./src/views/adicionar_lista"
 import ListaItem from "./src/views/listaItem"
+import AddItem from "./src/views/adicionar_item"
 
 import config from "./src/config"
 
@@ -19,7 +20,7 @@ export default function App() {
       <stack.Navigator initialRouteName='Listas'>
         <stack.Screen name="Listas"  component={Listas} options={{
 
-          title: "Minhas Listas",
+          title: "My Buy",
           headerTintColor: "#FFF",
           headerStyle: {
 
@@ -29,7 +30,7 @@ export default function App() {
           }
 
         }} />
-        <stack.Screen name="Adicionar" component={Adicionar} options={{
+        <stack.Screen name="Adicionar_lista" component={AddLista} options={{
 
           title: "Adicionar Lista",
           headerTintColor: "#FFF",
@@ -44,6 +45,18 @@ export default function App() {
         <stack.Screen name="ListaItem" component={ListaItem} options={{
 
           title: "Lista Item",
+          headerTintColor: "#FFF",
+          headerStyle: {
+
+            backgroundColor: config.cor1,
+            borderWidth: 0,
+
+          }
+
+        }} />
+        <stack.Screen name="AddItem" component={AddItem} options={{
+
+          title: "Adicionar item",
           headerTintColor: "#FFF",
           headerStyle: {
 

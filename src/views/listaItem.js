@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
-import { View, Text, FlatList, TouchableWithoutFeedback, StyleSheet, ScrollView } from "react-native";
+import { View, Text, StyleSheet, ScrollView } from "react-native";
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import { useNavigation } from '@react-navigation/native';
 
 import IconeAdd from "../componentes/botaoAdd"
 
@@ -97,7 +96,7 @@ export default function ListaItem({route, navigation}){
 
                     <Text style={styles.tituloListas}>
 
-                        PARA PEGAR
+                        Frios
 
                     </Text>
 
@@ -135,37 +134,36 @@ export default function ListaItem({route, navigation}){
 
                 <View>
 
-                    <Text style={styles.tituloListas}>
+                    <Text style={[styles.tituloListas, styles.tituloListasSeguir]}>
 
-                        NO CARRINHO
+                        Limpeza
 
                     </Text>
 
                 </View>
 
-                {DATA2.map(item => (
+                {DATA.map(item => (
 
                 <View key={item.id} style={styles.itemLista}>
 
                     <View style={{flex: 3, flexDirection: "column"}}>
 
-                        <Text style={[styles.titleLista, styles.itemMarcado]}>{item.title}</Text>
-                        
+                        <Text style={styles.titleLista}>{item.title}</Text>
+
                         <View style={{flexDirection: "row"}}>
 
-                            <Text style={styles.qtdItens}>{item.qtdItens} Pacotes /</Text>
-                            <Text style={[styles.qtdItens, {color: "#8FBC8F"}]}> R$18,58</Text>
+                            <Text style={styles.qtdItens}>2 Pacotes</Text>
 
                         </View>
 
                     </View>
 
-                    <View style={[styles.iconeLista, {flex: 1}]}>
+                    <View style={[styles.iconeLista, {flex:1}]}>
 
                         <Icon
-                            name="cart-minus"
+                            name="cart-plus"
                             size={25}
-                            color={"#FF0000"}
+                            color={"#0ee031"}
                             />
 
                     </View>
@@ -174,9 +172,54 @@ export default function ListaItem({route, navigation}){
 
                 ))}
 
+                <View style={styles.areaCarrinho}>
+
+                    <View>
+
+                        <Text style={[styles.tituloListas, styles.tituloListasCarrinho]}>
+
+                            NO CARRINHO
+
+                        </Text>
+
+                    </View>
+
+                    {DATA2.map(item => (
+
+                    <View key={item.id} style={styles.itemLista}>
+
+                        <View style={{flex: 3, flexDirection: "column"}}>
+
+                            <Text style={[styles.titleLista, styles.itemMarcado]}>{item.title}</Text>
+                            
+                            <View style={{flexDirection: "row"}}>
+
+                                <Text style={styles.qtdItens}>{item.qtdItens} Pacotes /</Text>
+                                <Text style={[styles.qtdItens, {color: "#8FBC8F"}]}> R$18,58</Text>
+
+                            </View>
+
+                        </View>
+
+                        <View style={[styles.iconeLista, {flex: 1}]}>
+
+                            <Icon
+                                name="cart-minus"
+                                size={25}
+                                color={"#FF0000"}
+                                />
+
+                        </View>
+
+                    </View>
+
+                    ))}
+
+                </View>
+
             </ScrollView>
 
-            <IconeAdd/>
+            <IconeAdd caminho={"AddItem"}/>
 
             </View>
 
@@ -196,13 +239,26 @@ const styles = StyleSheet.create({
 
     tituloListas: {
 
-        color: "#747474",
+        color: config.cor2,
         fontSize: 17,
         paddingHorizontal: 15,
-        marginTop: 35,
-        marginBottom: 5
+        marginTop: 20,
+        marginBottom: 5,
+        fontWeight: "bold"
     
     },
+
+    tituloListasSeguir:{
+
+        marginTop: 35
+
+    },
+    
+    tituloListasCarrinho:{
+
+        color: config.cor1
+
+    }, 
 
     areaListas:{
 
@@ -246,6 +302,12 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: "center"
     
+    },
+
+    areaCarrinho:{
+
+        backgroundColor: "#f8eaff"
+
     }
 
 })

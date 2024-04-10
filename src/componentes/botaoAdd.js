@@ -1,18 +1,20 @@
 import React from "react";
 import { StyleSheet, TouchableWithoutFeedback, View, Text } from "react-native";
-import { NavigationContainer, useNavigation } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 
 import config from "../config"
 
-export default function BotaoAdd() {
+export default function BotaoAdd(props) {
 
   const navigation = useNavigation();
+
+  const caminho = props.caminho
 
     return (
 
         <View style={styles.areaIconeMais}>
 
-          <TouchableWithoutFeedback onPress={() => navigation.navigate('Adicionar')}>
+          <TouchableWithoutFeedback onPress={() => navigation.navigate(caminho)}>
 
             <View style={styles.iconeMais}>
 

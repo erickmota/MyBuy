@@ -1,7 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, FlatList, TouchableWithoutFeedback } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import { NavigationContainer, useNavigation } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 
 import config from "../config"
 
@@ -114,7 +114,7 @@ export default function App() {
 
         </View>
 
-        <IconeMais/>
+        <IconeMais caminho={"Adicionar_lista"}/>
 
       </View>
 
@@ -178,9 +178,10 @@ const styles = StyleSheet.create({
 
   tituloListas: {
 
-    color: "#747474",
+    color: config.cor2,
     fontSize: 17,
     paddingHorizontal: 15,
+    fontWeight: "bold"
 
   },
 
