@@ -88,138 +88,163 @@ export default function ListaItem({route, navigation}){
 
         <View style={styles.container}>
 
-            <View style={styles.areaListas}>
+            <ScrollView>
 
-                <ScrollView>
-                
-                <View>
+                <View style={styles.areaListas}>
 
-                    <Text style={styles.tituloListas}>
+                    <View style={{backgroundColor: "#FFF"}}>
+                    
+                        <View>
 
-                        Frios
+                            <Text style={styles.tituloListas}>
 
-                    </Text>
+                                Frios
 
-                </View>
-
-                {DATA.map(item => (
-
-                <View key={item.id} style={styles.itemLista}>
-
-                    <View style={{flex: 3, flexDirection: "column"}}>
-
-                        <Text style={styles.titleLista}>{item.title}</Text>
-
-                        <View style={{flexDirection: "row"}}>
-
-                            <Text style={styles.qtdItens}>2 Pacotes</Text>
+                            </Text>
 
                         </View>
 
-                    </View>
+                        {DATA.map(item => (
 
-                    <View style={[styles.iconeLista, {flex:1}]}>
+                        <View key={item.id} style={styles.itemLista}>
 
-                        <Icon
-                            name="cart-plus"
-                            size={25}
-                            color={"#0ee031"}
-                            />
+                            <View style={{flex: 3, flexDirection: "column"}}>
 
-                    </View>
+                                <Text style={styles.titleLista}>{item.title}</Text>
 
-                </View>
+                                <View style={{flexDirection: "row"}}>
 
-                ))}
+                                    <Text style={styles.qtdItens}>2 Pacotes</Text>
 
-                <View>
+                                </View>
 
-                    <Text style={[styles.tituloListas, styles.tituloListasSeguir]}>
+                            </View>
 
-                        Limpeza
+                            <View style={[styles.iconeLista, {flex:1}]}>
 
-                    </Text>
-
-                </View>
-
-                {DATA.map(item => (
-
-                <View key={item.id} style={styles.itemLista}>
-
-                    <View style={{flex: 3, flexDirection: "column"}}>
-
-                        <Text style={styles.titleLista}>{item.title}</Text>
-
-                        <View style={{flexDirection: "row"}}>
-
-                            <Text style={styles.qtdItens}>2 Pacotes</Text>
-
-                        </View>
-
-                    </View>
-
-                    <View style={[styles.iconeLista, {flex:1}]}>
-
-                        <Icon
-                            name="cart-plus"
-                            size={25}
-                            color={"#0ee031"}
-                            />
-
-                    </View>
-
-                </View>
-
-                ))}
-
-                <View style={styles.areaCarrinho}>
-
-                    <View>
-
-                        <Text style={[styles.tituloListas, styles.tituloListasCarrinho]}>
-
-                            NO CARRINHO
-
-                        </Text>
-
-                    </View>
-
-                    {DATA2.map(item => (
-
-                    <View key={item.id} style={styles.itemLista}>
-
-                        <View style={{flex: 3, flexDirection: "column"}}>
-
-                            <Text style={[styles.titleLista, styles.itemMarcado]}>{item.title}</Text>
-                            
-                            <View style={{flexDirection: "row"}}>
-
-                                <Text style={styles.qtdItens}>{item.qtdItens} Pacotes /</Text>
-                                <Text style={[styles.qtdItens, {color: "#8FBC8F"}]}> R$18,58</Text>
+                                <Icon
+                                    name="cart-plus"
+                                    size={25}
+                                    color={"#0ee031"}
+                                    />
 
                             </View>
 
                         </View>
 
-                        <View style={[styles.iconeLista, {flex: 1}]}>
+                        ))}
 
-                            <Icon
-                                name="cart-minus"
-                                size={25}
-                                color={"#FF0000"}
-                                />
+                        <View>
+
+                            <Text style={[styles.tituloListas, styles.tituloListasSeguir]}>
+
+                                Limpeza
+
+                            </Text>
 
                         </View>
 
+                        {DATA.map(item => (
+
+                        <View key={item.id} style={styles.itemLista}>
+
+                            <View style={{flex: 3, flexDirection: "column"}}>
+
+                                <Text style={styles.titleLista}>{item.title}</Text>
+
+                                <View style={{flexDirection: "row"}}>
+
+                                    <Text style={styles.qtdItens}>2 Pacotes</Text>
+
+                                </View>
+
+                            </View>
+
+                            <View style={[styles.iconeLista, {flex:1}]}>
+
+                                <Icon
+                                    name="cart-plus"
+                                    size={25}
+                                    color={"#0ee031"}
+                                    />
+
+                            </View>
+
+                        </View>
+
+                        ))}
+
                     </View>
 
-                    ))}
+                    <View style={styles.areaCarrinho}>
+
+                        <View>
+
+                            <Text style={[styles.tituloListas, styles.tituloListasCarrinho]}>
+
+                                SEU CARRINHO
+
+                            </Text>
+
+                        </View>
+
+                        {DATA2.map(item => (
+
+                        <View key={item.id} style={styles.itemLista}>
+
+                            <View style={{flex: 3, flexDirection: "column"}}>
+
+                                <Text style={[styles.titleLista, styles.itemMarcado]}>{item.title}</Text>
+                                
+                                <View style={{flexDirection: "row"}}>
+
+                                    <Text style={styles.qtdItens}>{item.qtdItens} Pacotes /</Text>
+                                    <Text style={[styles.qtdItens, {color: "#8FBC8F"}]}> R$18,58</Text>
+
+                                </View>
+
+                            </View>
+
+                            <View style={[styles.iconeLista, {flex: 1}]}>
+
+                                <Icon
+                                    name="cart-minus"
+                                    size={25}
+                                    color={"#FF0000"}
+                                    />
+
+                            </View>
+
+                        </View>
+
+                        ))}
+
+                    </View>
 
                 </View>
 
             </ScrollView>
 
-            <IconeAdd caminho={"AddItem"}/>
+            <View>
+
+                <IconeAdd caminho={"AddItem"}/>
+
+            </View>
+
+            <View style={styles.containerBtnComprar}>
+
+                <Icon
+                    name="cart-arrow-right"
+                    size={50}
+                    color={"#FFF"}
+                    />
+
+                <Text style={styles.textBtnComprar}>
+
+                    Finalizar{"\n"}
+                    <Text style={{fontSize: 20, fontWeight: "bold"}}>R$189,90</Text>
+
+                </Text>
 
             </View>
 
@@ -233,7 +258,8 @@ const styles = StyleSheet.create({
 
     container:{
 
-        flex: 1
+        flex: 1,
+        backgroundColor: "#f8eaff"
 
     },
 
@@ -263,6 +289,7 @@ const styles = StyleSheet.create({
     areaListas:{
 
         flex: 9,
+        paddingBottom: 80
     
     },
 
@@ -306,8 +333,39 @@ const styles = StyleSheet.create({
 
     areaCarrinho:{
 
-        backgroundColor: "#f8eaff"
+        backgroundColor: "#f8eaff",
+        borderTopWidth: 1,
+        marginTop: -1,
+        borderColor: config.cor1
 
-    }
+    },
+
+    containerInfo:{
+
+        backgroundColor: config.cor2,
+        height: 30,
+        flexDirection: "row",
+
+    },
+
+    containerBtnComprar:{
+
+        backgroundColor: config.cor1,
+        height: 60,
+        justifyContent: "center",
+        flexDirection: "row",
+        alignItems: "center"
+
+    },
+
+    textBtnComprar:{
+
+        color: "#FFF",
+        fontWeight: "300",
+        fontSize: 15,
+        paddingRight: 5,
+        textAlign: "center"
+
+    },
 
 })
