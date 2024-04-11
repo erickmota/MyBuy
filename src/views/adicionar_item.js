@@ -1,12 +1,15 @@
 import React, {useState} from "react";
-import { View, Text, StyleSheet, TextInput } from "react-native";
+import { View, Text, StyleSheet, TextInput, TouchableWithoutFeedback } from "react-native";
 import { Picker } from '@react-native-picker/picker';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { useNavigation } from '@react-navigation/native';
 
 import IconeCorreto from "../componentes/botaoCorreto"
 import config from "../config";
 
 export default function AddItem(){
+
+    const navigation = useNavigation();
 
     const [number, onChangeNumber] = React.useState('');
     const [selectedValue, setSelectedValue] = useState("option1");
@@ -99,16 +102,20 @@ export default function AddItem(){
 
                 </View>
 
-                <View style={{flex: 1, justifyContent: "flex-end", alignItems: "flex-end"}}>
+                <TouchableWithoutFeedback onPress={() => navigation.navigate('Categorias')}>
 
-                    <Icon
-                        name="playlist-edit"
-                        size={40}
-                        color={"white"}
-                        style={styles.iconEdit}
-                        />
+                    <View style={{flex: 1, justifyContent: "flex-end", alignItems: "flex-end"}}>
 
-                </View>
+                        <Icon
+                            name="playlist-edit"
+                            size={40}
+                            color={"white"}
+                            style={styles.iconEdit}
+                            />
+
+                    </View>
+
+                </TouchableWithoutFeedback>
 
             </View>
 

@@ -7,6 +7,8 @@ import Listas from "./src/views/listas"
 import AddLista from "./src/views/adicionar_lista"
 import ListaItem from "./src/views/listaItem"
 import AddItem from "./src/views/adicionar_item"
+import Categorias from "./src/views/categorias"
+import AddCategoria from "./src/views/adicionar_categoria"
 
 import config from "./src/config"
 
@@ -57,6 +59,30 @@ export default function App() {
         <stack.Screen name="AddItem" component={AddItem} options={{
 
           title: "Adicionar item",
+          headerTintColor: "#FFF",
+          headerStyle: {
+
+            backgroundColor: config.cor1,
+            borderWidth: 0,
+
+          }
+
+        }} />
+        <stack.Screen name="Categorias" component={Categorias} options={{
+
+          title: "Gerenciar categorias",
+          headerTintColor: "#FFF",
+          headerStyle: {
+
+            backgroundColor: config.cor1,
+            borderWidth: 0,
+
+          }
+
+        }} />
+        <stack.Screen name="Adicionar_categoria" component={AddCategoria} options={{
+
+          title: "Nova categoria",
           headerTintColor: "#FFF",
           headerStyle: {
 
