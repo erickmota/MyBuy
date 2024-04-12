@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { View, Text, StyleSheet, ScrollView } from "react-native";
+import { View, Text, StyleSheet, ScrollView, StatusBar } from "react-native";
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import IconeAdd from "../componentes/botaoAdd"
@@ -76,17 +76,27 @@ const DATA = [
 
 export default function ListaItem({route, navigation}){
 
-    const {TituloLista} = route.params
-
     useEffect(() => {
 
-        navigation.setOptions({ title: TituloLista });
+        if(route.params){
+
+            const {TituloLista} = route.params
+
+            navigation.setOptions({ title: TituloLista });
+
+        }else{
+
+            navigation.setOptions({ title: "Mercado" });
+
+        }
         
     }, []);
 
     return(
 
         <View style={styles.container}>
+
+            <StatusBar backgroundColor={config.cor1} style="light" />
 
             <ScrollView>
 

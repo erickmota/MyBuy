@@ -39,8 +39,6 @@ export default function App() {
 
     <View style={styles.container}>
 
-      <StatusBar backgroundColor={config.cor1} style="light" />
-
       <View style={styles.espacoVerde}>
 
         <Text style={styles.textInicio}>

@@ -19,7 +19,7 @@ export default function App() {
   return (
 
     <NavigationContainer>
-      <stack.Navigator initialRouteName='Listas'>
+      <stack.Navigator initialRouteName='ListaItem'>
         <stack.Screen name="Listas"  component={Listas} options={{
 
           title: "My Buy",
