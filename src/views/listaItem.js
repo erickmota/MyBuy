@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { View, Text, StyleSheet, ScrollView, StatusBar } from "react-native";
+import { View, Text, StyleSheet, ScrollView, StatusBar, TouchableWithoutFeedback, props } from "react-native";
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import IconeAdd from "../componentes/botaoAdd"
@@ -86,11 +86,22 @@ export default function ListaItem({route, navigation}){
 
         }else{
 
-            navigation.setOptions({ title: "Mercado" });
+            navigation.setOptions({ title: "Mercado", headerRight: () => (
+            <TouchableWithoutFeedback onPress={() => navigation.navigate('Listas')}>
+
+                <Icon
+                    name="view-list"
+                    style={{marginRight: 15}}
+                    size={30}
+                    color={"white"}
+                    />
+
+            </TouchableWithoutFeedback>
+          ), });
 
         }
         
-    }, []);
+    }, [route.params, navigation]);
 
     return(
 

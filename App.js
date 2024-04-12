@@ -1,4 +1,4 @@
-import { StatusBar } from 'expo-status-bar';
+import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
@@ -22,7 +22,7 @@ export default function App() {
       <stack.Navigator initialRouteName='ListaItem'>
         <stack.Screen name="Listas"  component={Listas} options={{
 
-          title: "My Buy",
+          title: "Minhas listas",
           headerTintColor: "#FFF",
           headerStyle: {
 
