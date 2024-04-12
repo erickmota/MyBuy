@@ -39,36 +39,7 @@ export default function App() {
 
     <View style={styles.container}>
 
-      <View style={styles.espacoVerde}>
-
-        <Text style={styles.textInicio}>
-
-          Olá Erick Mota. Atualmente na sua região, os preços mais
-          baixos, são do mercado:{'\n\n'}
-
-          <Icon
-          name="map-marker"
-          size={20}
-          color={"#FFF"}
-          />
-          
-          <Text style={styles.nomeMercado}>Comercial Esperança, Votorantim-SP</Text>
-
-        </Text>
-
-      </View>
-
       <View style={styles.espacoListas}>
-
-        <View style={styles.areaTituloListas}>
-
-          <Text style={styles.tituloListas}>
-
-            MINHAS LISTAS
-
-          </Text>
-
-        </View>
 
         <View style={styles.areaListas}>
 
@@ -130,56 +101,10 @@ const styles = StyleSheet.create({
 
   },
 
-  espacoVerde: {
-
-    backgroundColor: config.cor2,
-    flex:3,
-    justifyContent: "center",
-    alignContent: "center",
-
-  },
-
-  textInicio: {
-
-    textAlign: "center",
-    color: "#FFF",
-    paddingHorizontal: 30,
-
-  },
-
-  nomeMercado:{
-
-    fontSize: 17,
-    fontWeight: "500",
-    color: config.cor2,
-    backgroundColor: "#FFF",
-    paddingHorizontal: 7,
-    marginLeft: 5,
-    borderRadius: 10,
-    paddingVertical: 5,
-
-  },
-
   espacoListas: {
 
     backgroundColor: "#FFF",
     flex: 9,
-
-  },
-
-  areaTituloListas:{
-
-    flex: 1,
-    justifyContent: "center",
-
-  },
-
-  tituloListas: {
-
-    color: config.cor2,
-    fontSize: 17,
-    paddingHorizontal: 15,
-    fontWeight: "bold"
 
   },
 
