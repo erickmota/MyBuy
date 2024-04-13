@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { View, Text, StyleSheet, ScrollView, StatusBar, TouchableWithoutFeedback, props } from "react-native";
+import { View, Text, StyleSheet, ScrollView, StatusBar, TouchableNativeFeedback } from "react-native";
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import IconeAdd from "../componentes/botaoAdd"
@@ -86,18 +86,7 @@ export default function ListaItem({route, navigation}){
 
         }else{
 
-            navigation.setOptions({ title: "Mercado", headerRight: () => (
-            <TouchableWithoutFeedback onPress={() => navigation.navigate('Listas')}>
-
-                <Icon
-                    name="view-list"
-                    style={{marginRight: 15}}
-                    size={30}
-                    color={"white"}
-                    />
-
-            </TouchableWithoutFeedback>
-          ), });
+            navigation.setOptions({ title: "Mercado" });
 
         }
         
@@ -252,6 +241,8 @@ export default function ListaItem({route, navigation}){
 
             </View>
 
+            <TouchableNativeFeedback>
+
             <View style={styles.containerBtnComprar}>
 
                 <Icon
@@ -262,12 +253,14 @@ export default function ListaItem({route, navigation}){
 
                 <Text style={styles.textBtnComprar}>
 
-                    Finalizar{"\n"}
+                    Registrar{"\n"}
                     <Text style={{fontSize: 20, fontWeight: "bold"}}>R$189,90</Text>
 
                 </Text>
 
             </View>
+
+            </TouchableNativeFeedback>
 
         </View>
 

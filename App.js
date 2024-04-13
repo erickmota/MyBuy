@@ -59,18 +59,6 @@ export default function App() {
 
         <stack.Screen name="Drawer" component={DrawerNavigation} options={{ headerShown: false }} />
 
-        {/* <stack.Screen name="Listas"  component={Listas} options={{
-
-          title: "Minhas listas",
-          headerTintColor: "#FFF",
-          headerStyle: {
-
-            backgroundColor: config.cor1,
-            borderWidth: 0,
-
-          }
-
-        }} /> */}
         <stack.Screen name="Adicionar_lista" component={AddLista} options={{
 
           title: "Adicionar Lista",
@@ -83,18 +71,6 @@ export default function App() {
           }
 
         }} />
-        {/* <stack.Screen name="ListaItem" component={ListaItem} options={{
-
-          title: "Lista Item",
-          headerTintColor: "#FFF",
-          headerStyle: {
-
-            backgroundColor: config.cor1,
-            borderWidth: 0,
-
-          }
-
-        }} /> */}
         <stack.Screen name="AddItem" component={AddItem} options={{
 
           title: "Adicionar item",
