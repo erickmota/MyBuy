@@ -12,6 +12,7 @@ import AddItem from "./src/views/adicionar_item"
 import Categorias from "./src/views/categorias"
 import AddCategoria from "./src/views/adicionar_categoria"
 
+/* Componentes */
 import Menu from "./src/componentes/menu"
 
 import config from "./src/config"
@@ -19,6 +20,7 @@ import config from "./src/config"
 const stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
 
+/* Menu lateral */
 function DrawerNavigation() {
   return (
     <Drawer.Navigator drawerContent={Menu}>
@@ -50,6 +52,7 @@ function DrawerNavigation() {
   );
 }
 
+/* Menu Stack */
 export default function App() {
   
   return (

@@ -38,6 +38,27 @@ export default function Menu(){
                     <View style={styles.areaItemMenu}>
 
                         <Icon
+                            name="account"
+                            style={styles.iconMenu}
+                            size={25}
+                            color={config.cor2}
+                            />
+
+                        <Text style={styles.itemMenu}>
+
+                            ErickMota
+
+                        </Text>
+
+                    </View>
+
+                </TouchableWithoutFeedback>
+
+                <TouchableWithoutFeedback onPress={() => {navigation.navigate("Listas")}}>
+
+                    <View style={styles.areaItemMenu}>
+
+                        <Icon
                             name="view-list"
                             style={styles.iconMenu}
                             size={25}
@@ -54,12 +75,54 @@ export default function Menu(){
 
                 </TouchableWithoutFeedback>
 
+                <TouchableWithoutFeedback onPress={() => {navigation.navigate("Listas")}}>
+
+                    <View style={styles.areaItemMenu}>
+
+                        <Icon
+                            name="shopping"
+                            style={styles.iconMenu}
+                            size={25}
+                            color={"#CCC"}
+                            />
+
+                        <Text style={styles.itemMenu}>
+
+                            Minhas compras
+
+                        </Text>
+
+                    </View>
+
+                </TouchableWithoutFeedback>
+
+                <TouchableWithoutFeedback onPress={() => {navigation.navigate("Listas")}}>
+
+                    <View style={styles.areaItemMenu}>
+
+                        <Icon
+                            name="chart-bar"
+                            style={styles.iconMenu}
+                            size={25}
+                            color={"#d6b94f"}
+                            />
+
+                        <Text style={styles.itemMenu}>
+
+                            Minhas despesas
+
+                        </Text>
+
+                    </View>
+
+                </TouchableWithoutFeedback>
+
                 <TouchableWithoutFeedback onPress={() => {navigation.navigate("Categorias")}}>
 
                     <View style={styles.areaItemMenu}>
 
                         <Icon
-                            name="hammer-wrench"
+                            name="list-status"
                             style={styles.iconMenu}
                             size={25}
                             color={"#CCC"}
@@ -68,6 +131,27 @@ export default function Menu(){
                         <Text style={styles.itemMenu}>
 
                             Gerenciar categorias
+
+                        </Text>
+
+                    </View>
+
+                </TouchableWithoutFeedback>
+
+                <TouchableWithoutFeedback onPress={() => {navigation.navigate("Categorias")}}>
+
+                    <View style={styles.areaItemMenu}>
+
+                        <Icon
+                            name="cog"
+                            style={styles.iconMenu}
+                            size={25}
+                            color={"#CCC"}
+                            />
+
+                        <Text style={styles.itemMenu}>
+
+                            Configurações
 
                         </Text>
 
@@ -135,7 +219,7 @@ const styles = StyleSheet.create({
     parte2:{
 
         flex: 8,
-        marginTop: 40,
+        marginTop: 20,
         marginHorizontal: 15
         
     },
@@ -150,7 +234,7 @@ const styles = StyleSheet.create({
 
     itemMenu:{
 
-        fontSize: 17
+        fontSize: 15
 
     },
 
