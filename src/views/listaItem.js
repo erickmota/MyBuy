@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { View, Text, StyleSheet, ScrollView, StatusBar, TouchableNativeFeedback } from "react-native";
+import { View, Text, StyleSheet, ScrollView, StatusBar, TouchableNativeFeedback, Image } from "react-native";
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import IconeAdd from "../componentes/botaoAdd"
@@ -117,6 +117,12 @@ export default function ListaItem({route, navigation}){
                         {DATA.map(item => (
 
                         <View key={item.id} style={styles.itemLista}>
+
+                            <View style={styles.areaFoto}>
+
+                                <Image style={styles.imgProduto} source={{ uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRhRA2DHY1ynTaMMIk4TdlJ1XvTa5UjtiiQ3n0r0WakYg&s' }} />
+
+                            </View>
 
                             <View style={{flex: 3, flexDirection: "column"}}>
 
@@ -381,5 +387,19 @@ const styles = StyleSheet.create({
         textAlign: "center"
 
     },
+
+    imgProduto:{
+
+        width: 55,
+        height: 55,
+        borderRadius: 50,
+
+    },
+
+    areaFoto:{
+
+        marginRight: 15
+
+    }
 
 })
