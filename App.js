@@ -11,6 +11,7 @@ import ListaItem from "./src/views/listaItem"
 import AddItem from "./src/views/adicionar_item"
 import Categorias from "./src/views/categorias"
 import AddCategoria from "./src/views/adicionar_categoria"
+import login from "./src/views/login"
 
 /* Componentes */
 import Menu from "./src/componentes/menu"
@@ -58,9 +59,15 @@ export default function App() {
   return (
 
     <NavigationContainer>
-      <stack.Navigator initialRouteName='ListaItem'>
+      <stack.Navigator initialRouteName='Login'>
 
         <stack.Screen name="Drawer" component={DrawerNavigation} options={{ headerShown: false }} />
+
+        <stack.Screen name="Login" component={login} options={{
+
+          headerShown: false
+
+        }} />
 
         <stack.Screen name="Adicionar_lista" component={AddLista} options={{
 
