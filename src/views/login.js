@@ -144,7 +144,8 @@ const styles = StyleSheet.create({
     titulo:{
 
         fontSize: 20,
-        paddingHorizontal: 15
+        paddingHorizontal: 15,
+        color: "#555"
 
     },
 
