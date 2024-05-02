@@ -12,6 +12,7 @@ import AddItem from "./src/views/adicionar_item"
 import Categorias from "./src/views/categorias"
 import AddCategoria from "./src/views/adicionar_categoria"
 import login from "./src/views/login"
+import Cadastro from "./src/views/cadastro"
 
 /* Componentes */
 import Menu from "./src/componentes/menu"
@@ -24,7 +25,7 @@ const Drawer = createDrawerNavigator();
 /* Menu lateral */
 function DrawerNavigation() {
   return (
-    <Drawer.Navigator drawerContent={Menu}>
+    <Drawer.Navigator drawerContent={Menu} initialRouteName='ListaItem'>
       <Drawer.Screen name="ListaItem" component={ListaItem}  options={{
 
         title: "Lista Item",
@@ -64,6 +65,12 @@ export default function App() {
         <stack.Screen name="Drawer" component={DrawerNavigation} options={{ headerShown: false }} />
 
         <stack.Screen name="Login" component={login} options={{
+
+          headerShown: false
+
+        }} />
+
+        <stack.Screen name="Cadastro" component={Cadastro} options={{
 
           headerShown: false
 
