@@ -1,6 +1,8 @@
 import React, {useState} from "react"
 import { View, Text, StyleSheet, TextInput, useWindowDimensions } from "react-native"
 
+import Icon from 'react-native-vector-icons/Ionicons';
+
 import config from "../config";
 
 export default function Login(){
@@ -88,21 +90,21 @@ export default function Login(){
 
                             <View style={[styles.btn, styles.btnFacebook]}>
 
-                                <Text style={styles.textBtn}>
-
-                                    FACEBOOK
-
-                                </Text>
+                                <Icon
+                                    name="logo-facebook"
+                                    size={30}
+                                    color={"white"}
+                                    />
 
                             </View>
 
                             <View style={[styles.btn, styles.btnGoole]}>
 
-                                <Text style={styles.textBtn}>
-
-                                    GOOGLE
-
-                                </Text>
+                                <Icon
+                                    name="logo-google"
+                                    size={30}
+                                    color={"white"}
+                                    />
 
                             </View>
 
@@ -137,7 +139,7 @@ const styles = StyleSheet.create({
         height: "auto",
         borderRadius: 20,
         elevation: 10,
-        paddingVertical: 20
+        paddingVertical: 35
 
     },
 
