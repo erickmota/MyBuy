@@ -2,11 +2,6 @@
 
 O My Buy é um aplicativo criado em React Native, para controle de listas de compras. Atualmente ele está em versão alfa
 
-## Últimas atualizações
-
-- 13/04/2024 - Adicionado menu drawer
-- 11/04/2024 - Adicionadas as telas de gerenciamento de categorias e adicionar uma nova categoria.
-
 ## Funcionalidades e recursos desejados
 
 - Cadastro de usuários
