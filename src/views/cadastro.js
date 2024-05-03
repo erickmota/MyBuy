@@ -61,6 +61,18 @@ export default function Cadastro(){
                         keyboardType="default"
                         />
 
+                        <Text style={[styles.titulo, styles.tituloSeguinte]}>
+
+                            Confirmar senha:
+
+                        </Text>
+
+                        <TextInput style={styles.input}
+                        onChangeText={onChangeNumber}
+                        value={number}
+                        keyboardType="default"
+                        />
+
                     </View>
 
                     <View style={styles.botoes}>
