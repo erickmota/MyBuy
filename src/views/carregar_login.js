@@ -19,7 +19,6 @@ export default function Carregar_login({route}){
     method: "POST",
     headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
-        // Outros cabeçalhos, se necessário
     },
     body: formData.toString()
     })

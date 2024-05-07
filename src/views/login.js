@@ -1,5 +1,5 @@
 import React, {useState} from "react"
-import { View, Text, StyleSheet, TextInput, useWindowDimensions, TouchableNativeFeedback } from "react-native"
+import { View, Text, StyleSheet, TextInput, useWindowDimensions, TouchableNativeFeedback, Alert } from "react-native"
 import { useNavigation } from '@react-navigation/native';
 
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -17,6 +17,20 @@ export default function Login(){
     /* Tamanho da tela */
     const larguraTela = useWindowDimensions().width;
     const larguraEspacoLogin = larguraTela * 0.85;
+
+    function enviarForm(){
+
+        if(email.trim() === "" || senha.trim() === ""){
+
+            Alert.alert("Por favor, insira seus dados para efetuar o login.");
+
+        }else{
+
+            navigation.navigate("Carregar_login", {email: email, senha: senha})
+
+        }
+
+    }
 
     return(
 
@@ -37,6 +51,7 @@ export default function Login(){
                         <TextInput style={styles.input}
                         onChangeText={onChangeEmail}
                         value={email}
+                        required
                         keyboardType="email-address"
                         />
 
@@ -49,6 +64,7 @@ export default function Login(){
                         <TextInput style={styles.input}
                         onChangeText={onChangeSenha}
                         value={senha}
+                        required
                         secureTextEntry={true}
                         keyboardType="default"
                         />
@@ -83,7 +99,7 @@ export default function Login(){
 
                             </TouchableNativeFeedback>
 
-                            <TouchableNativeFeedback onPress={() => navigation.navigate("Carregar_login", {email: email, senha: senha})}>
+                            <TouchableNativeFeedback onPress={() => enviarForm()}>
 
                                 <View style={[styles.btnNativo, styles.btnEntrar]}>
 
