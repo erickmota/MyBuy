@@ -13,6 +13,7 @@ import Categorias from "./src/views/categorias"
 import AddCategoria from "./src/views/adicionar_categoria"
 import login from "./src/views/login"
 import Cadastro from "./src/views/cadastro"
+import Carregar_login from "./src/views/carregar_login"
 
 /* Componentes */
 import Menu from "./src/componentes/menu"
@@ -71,6 +72,12 @@ export default function App() {
         }} />
 
         <stack.Screen name="Cadastro" component={Cadastro} options={{
+
+          headerShown: false
+
+        }} />
+
+        <stack.Screen name="Carregar_login" component={Carregar_login} options={{
 
           headerShown: false
 

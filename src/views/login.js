@@ -11,7 +11,8 @@ export default function Login(){
     const navigation = useNavigation();
 
     /* Use state dos inputs */
-    const [number, onChangeNumber] = React.useState('');
+    const [email, onChangeEmail] = React.useState('');
+    const [senha, onChangeSenha] = React.useState('');
 
     /* Tamanho da tela */
     const larguraTela = useWindowDimensions().width;
@@ -34,9 +35,9 @@ export default function Login(){
                         </Text>
 
                         <TextInput style={styles.input}
-                        onChangeText={onChangeNumber}
-                        value={number}
-                        keyboardType="default"
+                        onChangeText={onChangeEmail}
+                        value={email}
+                        keyboardType="email-address"
                         />
 
                         <Text style={[styles.titulo, styles.tituloSeguinte]}>
@@ -46,8 +47,9 @@ export default function Login(){
                         </Text>
 
                         <TextInput style={styles.input}
-                        onChangeText={onChangeNumber}
-                        value={number}
+                        onChangeText={onChangeSenha}
+                        value={senha}
+                        secureTextEntry={true}
                         keyboardType="default"
                         />
 
@@ -81,7 +83,7 @@ export default function Login(){
 
                             </TouchableNativeFeedback>
 
-                            <TouchableNativeFeedback onPress={() => navigation.navigate("Drawer")}>
+                            <TouchableNativeFeedback onPress={() => navigation.navigate("Carregar_login", {email: email, senha: senha})}>
 
                                 <View style={[styles.btnNativo, styles.btnEntrar]}>
 
@@ -138,7 +140,7 @@ const styles = StyleSheet.create({
     container:{
 
         flex: 1,
-        backgroundColor: "#e1c6f5",
+        backgroundColor: config.corTelaLogin,
         justifyContent: "center",
         alignItems: "center"
 
