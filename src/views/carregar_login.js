@@ -15,7 +15,7 @@ export default function Carregar_login({route}){
     formData.append('email', email);
     formData.append('senha', senha);
 
-    fetch("http://192.168.0.15:80/API_MyBuy/login", {
+    fetch(`${config.URL_inicial_API}login`, {
     method: "POST",
     headers: {
         'Content-Type': 'application/x-www-form-urlencoded',

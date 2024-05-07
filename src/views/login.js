@@ -14,6 +14,9 @@ export default function Login(){
     const [email, onChangeEmail] = React.useState('');
     const [senha, onChangeSenha] = React.useState('');
 
+    /* Estado para alterar a cor dos inputs */
+    const [borda, changeBorda] = React.useState({});
+
     /* Tamanho da tela */
     const larguraTela = useWindowDimensions().width;
     const larguraEspacoLogin = larguraTela * 0.85;
@@ -22,7 +25,13 @@ export default function Login(){
 
         if(email.trim() === "" || senha.trim() === ""){
 
-            Alert.alert("Por favor, insira seus dados para efetuar o login.");
+            changeBorda({backgroundColor: "#f0d5da", borderBottomColor: "red"});
+
+            setTimeout(() => {
+
+                changeBorda({borderBottomColor: "#CCC", borderBottomWidth: 1});
+
+            }, 3000)
 
         }else{
 
@@ -48,7 +57,7 @@ export default function Login(){
 
                         </Text>
 
-                        <TextInput style={styles.input}
+                        <TextInput style={[styles.input, {...borda}]}
                         onChangeText={onChangeEmail}
                         value={email}
                         required
@@ -61,7 +70,7 @@ export default function Login(){
 
                         </Text>
 
-                        <TextInput style={styles.input}
+                        <TextInput style={[styles.input, {...borda}]}
                         onChangeText={onChangeSenha}
                         value={senha}
                         required
