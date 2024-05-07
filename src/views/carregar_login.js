@@ -9,6 +9,30 @@ export default function Carregar_login({route}){
     const {email} = route.params
     const {senha} = route.params
 
+    const [DATA, setData] = useState([]);
+
+    const formData = new URLSearchParams();
+    formData.append('email', email);
+    formData.append('senha', senha);
+
+    fetch("http://192.168.0.15:80/API_MyBuy/login", {
+    method: "POST",
+    headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        // Outros cabeçalhos, se necessário
+    },
+    body: formData.toString()
+    })
+    .then(response => response.json())
+    .then(data => {
+
+        setData(data.data);
+
+    })
+    .catch(error => {
+    console.error('Erro ao enviar solicitação:', error);
+    });
+
     return(
 
         <View style={styles.container}>
@@ -18,6 +42,36 @@ export default function Carregar_login({route}){
                 Carregando...
 
             </Text>
+
+            <View>
+
+                {DATA.map(item => (
+
+                    <View key={item.token}>
+
+                        <Text>
+
+                            {item.token}
+
+                        </Text>
+
+                        <Text>
+
+                            {item.nome}
+
+                        </Text>
+
+                        <Text>
+
+                            {item.id}
+
+                        </Text>
+
+                    </View>
+
+                ))}
+
+            </View>
 
         </View>
 
@@ -37,27 +91,3 @@ const styles = StyleSheet.create({
     }
 
 })
-
-function Login(){
-
-    fetch('https://exemplo.com/api/recurso', {
-    method: 'POST',
-    headers: {
-        'Content-Type': 'application/json',
-        // Outros cabeçalhos, se necessário
-    },
-    body: JSON.stringify({
-        chave1: valor1,
-        chave2: valor2,
-        // Adicione outras chaves e valores conforme necessário
-    }),
-    })
-    .then(response => response.json())
-    .then(data => {
-    console.log('Resposta da API:', data);
-    })
-    .catch(error => {
-    console.error('Erro ao enviar solicitação:', error);
-    });
-
-}
