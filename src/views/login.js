@@ -1,5 +1,5 @@
 import React, {useState} from "react"
-import { View, Text, StyleSheet, TextInput, useWindowDimensions, TouchableNativeFeedback, Alert } from "react-native"
+import { View, Text, StyleSheet, TextInput, useWindowDimensions, TouchableNativeFeedback, Animated} from "react-native"
 import { useNavigation } from '@react-navigation/native';
 
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -11,11 +11,11 @@ export default function Login(){
     const navigation = useNavigation();
 
     /* Use state dos inputs */
-    const [email, onChangeEmail] = React.useState('');
-    const [senha, onChangeSenha] = React.useState('');
+    const [email, onChangeEmail] = useState('');
+    const [senha, onChangeSenha] = useState('');
 
     /* Estado para alterar a cor dos inputs */
-    const [borda, changeBorda] = React.useState({});
+    const [borda, changeBorda] = useState({});
 
     /* Tamanho da tela */
     const larguraTela = useWindowDimensions().width;

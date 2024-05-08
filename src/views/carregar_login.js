@@ -1,15 +1,18 @@
 import React, {useState} from "react"
-import { View, Text, StyleSheet, TextInput, useWindowDimensions, TouchableNativeFeedback } from "react-native"
+import { Image, View, Text, StyleSheet, TextInput, useWindowDimensions, TouchableNativeFeedback, Alert } from "react-native"
 import { useNavigation } from '@react-navigation/native';
 
 import config from "../config";
 
 export default function Carregar_login({route}){
 
+    const navigation = useNavigation();
+
     const {email} = route.params
     const {senha} = route.params
 
     const [DATA, setData] = useState([]);
+    const [view, mostrarView] = useState(false);
 
     const formData = new URLSearchParams();
     formData.append('email', email);
@@ -32,45 +35,78 @@ export default function Carregar_login({route}){
     console.error('Erro ao enviar solicitação:', error);
     });
 
+    setTimeout(()=>{
+
+        mostrarView(true)
+
+    }, 2500)
+
     return(
 
         <View style={styles.container}>
 
             <Text style={{color: "white"}}>
 
-                Carregando...
+                <Text>
+
+                    <Image source={require("../img/carregando.gif")} style={{width: 20}}/>
+
+                </Text>
 
             </Text>
 
-            <View>
+            {view && (<View>
 
-                {DATA.map(item => (
+                {DATA !== false ? (
 
-                    <View key={item.token}>
+                    DATA.map(item => (
 
-                        <Text>
+                        <View key={item.token}>
 
-                            {item.token}
+                            <Text>
 
-                        </Text>
+                                {item.token}
 
-                        <Text>
+                            </Text>
 
-                            {item.nome}
+                            <Text>
 
-                        </Text>
+                                {item.nome}
 
-                        <Text>
+                            </Text>
 
-                            {item.id}
+                            <Text>
 
-                        </Text>
+                                {item.id}
 
-                    </View>
+                            </Text>
 
-                ))}
+                        </View>
 
-            </View>
+                    ))
+
+                ) : (
+
+                    Alert.alert(
+
+                        "",
+                        "Usuário inválido",
+                        [{
+
+                            text: "Ok",
+                            onPress: () =>{
+
+                                navigation.navigate("Login")
+
+                            }
+
+                        }]
+
+                    )
+
+                )}
+
+            </View>)}
 
         </View>
 
