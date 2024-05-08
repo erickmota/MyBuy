@@ -1,5 +1,5 @@
 import React, {useState} from "react"
-import { View, Text, StyleSheet, TextInput, useWindowDimensions, TouchableNativeFeedback } from "react-native"
+import { View, Text, StyleSheet, TextInput, useWindowDimensions, TouchableNativeFeedback, Animated} from "react-native"
 import { useNavigation } from '@react-navigation/native';
 
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -11,11 +11,35 @@ export default function Login(){
     const navigation = useNavigation();
 
     /* Use state dos inputs */
-    const [number, onChangeNumber] = React.useState('');
+    const [email, onChangeEmail] = useState('');
+    const [senha, onChangeSenha] = useState('');
+
+    /* Estado para alterar a cor dos inputs */
+    const [borda, changeBorda] = useState({});
 
     /* Tamanho da tela */
     const larguraTela = useWindowDimensions().width;
     const larguraEspacoLogin = larguraTela * 0.85;
+
+    function enviarForm(){
+
+        if(email.trim() === "" || senha.trim() === ""){
+
+            changeBorda({backgroundColor: "#f0d5da", borderBottomColor: "red"});
+
+            setTimeout(() => {
+
+                changeBorda({borderBottomColor: "#CCC", borderBottomWidth: 1});
+
+            }, 3000)
+
+        }else{
+
+            navigation.navigate("Carregar_login", {email: email, senha: senha})
+
+        }
+
+    }
 
     return(
 
@@ -33,10 +57,11 @@ export default function Login(){
 
                         </Text>
 
-                        <TextInput style={styles.input}
-                        onChangeText={onChangeNumber}
-                        value={number}
-                        keyboardType="default"
+                        <TextInput style={[styles.input, {...borda}]}
+                        onChangeText={onChangeEmail}
+                        value={email}
+                        required
+                        keyboardType="email-address"
                         />
 
                         <Text style={[styles.titulo, styles.tituloSeguinte]}>
@@ -45,9 +70,11 @@ export default function Login(){
 
                         </Text>
 
-                        <TextInput style={styles.input}
-                        onChangeText={onChangeNumber}
-                        value={number}
+                        <TextInput style={[styles.input, {...borda}]}
+                        onChangeText={onChangeSenha}
+                        value={senha}
+                        required
+                        secureTextEntry={true}
                         keyboardType="default"
                         />
 
@@ -81,7 +108,7 @@ export default function Login(){
 
                             </TouchableNativeFeedback>
 
-                            <TouchableNativeFeedback onPress={() => navigation.navigate("Drawer")}>
+                            <TouchableNativeFeedback onPress={() => enviarForm()}>
 
                                 <View style={[styles.btnNativo, styles.btnEntrar]}>
 
@@ -138,7 +165,7 @@ const styles = StyleSheet.create({
     container:{
 
         flex: 1,
-        backgroundColor: "#e1c6f5",
+        backgroundColor: config.corTelaLogin,
         justifyContent: "center",
         alignItems: "center"
 
