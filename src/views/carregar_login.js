@@ -49,7 +49,11 @@ export default function Carregar_login({route}){
 
                 <Text>
 
-                    <Image source={require("../img/carregando.gif")} style={{width: 20}}/>
+                    <Text>
+
+                        Conectando...
+
+                    </Text>
 
                 </Text>
 
