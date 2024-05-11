@@ -27,7 +27,7 @@ export default function Carregar_login({route}){
 
   },[])
 
-  /* useEffect(()=>{
+  useEffect(()=>{
 
     if (db) {
       db.transaction((tx) => {
@@ -48,7 +48,7 @@ export default function Carregar_login({route}){
       });
     }
 
-  },[db]) */
+  },[db])
 
   function inserirNoBancoLocal(id, nome, token){
 
@@ -103,8 +103,11 @@ export default function Carregar_login({route}){
     const [view, mostrarView] = useState(false);
 
     const formData = new URLSearchParams();
-    formData.append('email', 'eli@gmail.com');
-    formData.append('senha', '1234');
+    /* formData.append('email', email);
+    formData.append('senha', senha); */
+
+    formData.append('email', 'carlos@gmail.com');
+    formData.append('senha', "1234");
 
     fetch(`${config.URL_inicial_API}login`, {
     method: "POST",
@@ -120,13 +123,28 @@ export default function Carregar_login({route}){
         setData(data.data);
         mostrarView(true);
 
-        /* inserirNoBancoLocal(data.data.id, data.data.nome, data.data.token); */
+          /* setTimeout(()=>{
+
+            inserirNoBancoLocal(data.data.id, data.data.nome, data.data.token)
+
+          }, 2000) */
+
       }
 
     })
     .catch(errors => {
     console.error('Erro ao enviar solicitação:', errors);
     });
+
+    useEffect(()=>{
+
+      if(DATA){
+
+        inserirNoBancoLocal(DATA.id, DATA.nome, DATA.token)
+
+      }
+
+    }, [db, view])
 
     return(
 
@@ -171,8 +189,6 @@ export default function Carregar_login({route}){
                                 {item.id}
 
                             </Text>
-
-                            {/* {inserirNoBancoLocal(item.id, item.nome, item.token)} */}
 
                         </View>
 
