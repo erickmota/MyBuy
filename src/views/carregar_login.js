@@ -10,30 +10,47 @@ export default function Carregar_login({route}){
   /* Banco de dados local - Inicio da view (SQLite) */
   const [db, setDbLocal] = useState(null);
 
-  try {
-
-    const db = SQLite.openDatabase("MyBuy.db");
-    setDbLocal(db);
-    
-  } catch (error) {
-    
-    console.error("conexão com o banco de dados local, falhou", error);
-
-  }
-
   useEffect(()=>{
+
+    try {
+
+      const db = SQLite.openDatabase("MyBuy.db");
+      setDbLocal(db);
+
+      console.warn("Sucesso ao abrir o banco");
+      
+    } catch (error) {
+      
+      console.error("conexão com o banco de dados local, falhou", error);
+  
+    }
+
+  },[])
+
+  /* useEffect(()=>{
 
     if (db) {
       db.transaction((tx) => {
         tx.executeSql(
-          "CREATE TABLE IF NOT EXISTS usuarios (id INTEGER PRIMARY KEY AUTOINCREMENT, nome VARCHAR(200), token VARCHAR(200))"
+          "CREATE TABLE IF NOT EXISTS usuarios (id INTEGER PRIMARY KEY AUTOINCREMENT, nome VARCHAR(200), token VARCHAR(200))",
+          [],
+          ()=>{
+
+            console.warn("Tabela criada com sucesso");
+
+          },
+          (_, error)=>{
+
+            console.warn("Erro ao criar uma tabela", error);
+
+          }
         );
       });
     }
 
-  },[db])
+  },[db]) */
 
-  function inserirNoBancoLocal(id, nome, token){
+  /* function inserirNoBancoLocal(id, nome, token){
 
     db.transaction((tx) => {
       tx.executeSql(
@@ -41,7 +58,23 @@ export default function Carregar_login({route}){
       );
     });
 
-  }
+    try {
+
+      db.transaction((tx) => {
+        tx.executeSql(
+          `INSERT INTO usuarios (id, nome, token) VALUES ('${id}', '${nome}', '${token}')`
+        );
+      });
+
+      console.warn("Sucesso ao inserir o dado no banco.");
+      
+    } catch (error) {
+
+      console.warn("Erro ao inserir o dado no banco.", error);
+      
+    }
+
+  } */
 
   /* API */
     const navigation = useNavigation();
@@ -53,8 +86,8 @@ export default function Carregar_login({route}){
     const [view, mostrarView] = useState(false);
 
     const formData = new URLSearchParams();
-    formData.append('email', 'svv');
-    formData.append('senha', '11');
+    formData.append('email', 'erick@gmail.com');
+    formData.append('senha', '1234');
 
     fetch(`${config.URL_inicial_API}login`, {
     method: "POST",
@@ -74,11 +107,11 @@ export default function Carregar_login({route}){
     console.error('Erro ao enviar solicitação:', errors);
     });
 
-    /* setTimeout(()=>{
+    setTimeout(()=>{
 
         mostrarView(true)
 
-    }, 2500) */
+    }, 2500)
 
     return(
 
@@ -123,6 +156,8 @@ export default function Carregar_login({route}){
                                 {item.id}
 
                             </Text>
+
+                            {/* {inserirNoBancoLocal(item.id, item.nome, item.token)} */}
 
                         </View>
 
