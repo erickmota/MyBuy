@@ -17,7 +17,7 @@ export default function Carregar_login({route}){
       const db = SQLite.openDatabase("MyBuy.db");
       setDbLocal(db);
 
-      console.warn("Sucesso ao abrir o banco");
+      console.log("Sucesso ao abrir o banco");
       
     } catch (error) {
       
@@ -36,12 +36,12 @@ export default function Carregar_login({route}){
           [],
           ()=>{
 
-            console.warn("Tabela criada com sucesso");
+            console.log("Tabela criada com sucesso");
 
           },
           (_, error)=>{
 
-            console.warn("Erro ao criar uma tabela", error);
+            console.error("Erro ao criar uma tabela", error);
 
           }
         );
@@ -50,31 +50,48 @@ export default function Carregar_login({route}){
 
   },[db]) */
 
-  /* function inserirNoBancoLocal(id, nome, token){
+  function inserirNoBancoLocal(id, nome, token){
 
     db.transaction((tx) => {
       tx.executeSql(
-        `INSERT INTO usuarios (id, nome, token) VALUES ('${id}', '${nome}', '${token}')`
+        `INSERT INTO usuarios (id, nome, token) VALUES ('${id}', '${nome}', '${token}')`,
+        [],
+        ()=>{
+
+          console.log("Dados inseridos corretamente na tabela");
+
+        },
+        (_, error)=>{
+
+          console.error("Erro ao inserir os dados na tabela", error);
+
+        }
       );
     });
 
-    try {
+  }
 
-      db.transaction((tx) => {
-        tx.executeSql(
-          `INSERT INTO usuarios (id, nome, token) VALUES ('${id}', '${nome}', '${token}')`
-        );
-      });
-
-      console.warn("Sucesso ao inserir o dado no banco.");
-      
-    } catch (error) {
-
-      console.warn("Erro ao inserir o dado no banco.", error);
-      
+  /* useEffect(() => {
+    if (db) {
+        db.transaction((tx) => {
+            tx.executeSql(
+                "SELECT * FROM usuarios",
+                [],
+                (_, { rows }) => {
+                    const userData = [];
+                    for (let i = 0; i < rows.length; i++) {
+                        userData.push(rows.item(i));
+                    }
+                    setData(userData);
+                    mostrarView(true);
+                },
+                (_, error) => {
+                    console.error("Erro ao consultar tabela de usuarios:", error);
+                }
+            );
+        });
     }
-
-  } */
+  }, [db]); */
 
   /* API */
     const navigation = useNavigation();
@@ -86,7 +103,7 @@ export default function Carregar_login({route}){
     const [view, mostrarView] = useState(false);
 
     const formData = new URLSearchParams();
-    formData.append('email', 'erick@gmail.com');
+    formData.append('email', 'eli@gmail.com');
     formData.append('senha', '1234');
 
     fetch(`${config.URL_inicial_API}login`, {
@@ -99,19 +116,17 @@ export default function Carregar_login({route}){
     .then(response => response.json())
     .then(data => {
 
+      if (!view) {
         setData(data.data);
         mostrarView(true);
+
+        /* inserirNoBancoLocal(data.data.id, data.data.nome, data.data.token); */
+      }
 
     })
     .catch(errors => {
     console.error('Erro ao enviar solicitação:', errors);
     });
-
-    setTimeout(()=>{
-
-        mostrarView(true)
-
-    }, 2500)
 
     return(
 
