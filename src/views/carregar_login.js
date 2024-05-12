@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react"
-import { Image, View, Text, StyleSheet, TextInput, useWindowDimensions, TouchableNativeFeedback, Alert } from "react-native"
+import { Image, View, Text, StyleSheet, Alert } from "react-native"
 import { useNavigation } from '@react-navigation/native'
 import * as SQLite from "expo-sqlite"
 
@@ -9,12 +9,17 @@ export default function Carregar_login({route}){
   
   /* Banco de dados local - Inicio da view (SQLite) */
   const [db, setDbLocal] = useState(null);
+  const [DATA, setData] = useState([]);
+  const [view, mostrarView] = useState(false);
 
+  const navigation = useNavigation();
+
+  /* Abrindo o Banco de dados */
   useEffect(()=>{
 
     try {
 
-      const db = SQLite.openDatabase("MyBuy.db");
+      const db = SQLite.openDatabase("mybuy.db");
       setDbLocal(db);
 
       console.log("Sucesso ao abrir o banco");
@@ -27,12 +32,13 @@ export default function Carregar_login({route}){
 
   },[])
 
+  /* Criando uma tabela se ela ainda não existe */
   useEffect(()=>{
 
     if (db) {
       db.transaction((tx) => {
         tx.executeSql(
-          "CREATE TABLE IF NOT EXISTS usuarios (id INTEGER PRIMARY KEY AUTOINCREMENT, nome VARCHAR(200), token VARCHAR(200))",
+          "CREATE TABLE IF NOT EXISTS usuarios (id INTEGER, nome VARCHAR, token VARCHAR)",
           [],
           ()=>{
 
@@ -50,15 +56,43 @@ export default function Carregar_login({route}){
 
   },[db])
 
-  function inserirNoBancoLocal(id, nome, token){
+  /* Excluir a tabela */
+  /* useEffect(()=>{
+
+    if (db) {
+      db.transaction((tx) => {
+        tx.executeSql(
+          "DROP TABLE IF EXISTS usuarios",
+          [],
+          ()=>{
+
+            console.log("Tabela excluída com sucesso");
+
+          },
+          (_, error)=>{
+
+            console.error("Erro ao excluir tabela", error);
+
+          }
+        );
+      });
+    }
+
+  },[db]) */
+
+  /* Função para inserir um novo dado na tabela local */
+  function inserirNoBancoLocal(id, nome, token){   
+    
+    console.log("A função inserirNoBandoLocal está sendo chamada");
 
     db.transaction((tx) => {
       tx.executeSql(
-        `INSERT INTO usuarios (id, nome, token) VALUES ('${id}', '${nome}', '${token}')`,
+        `INSERT INTO usuarios (id, nome, token) VALUES (${id}, '${nome}', '${token}')`,
         [],
         ()=>{
 
           console.log("Dados inseridos corretamente na tabela");
+          navigation.navigate("Drawer");
 
         },
         (_, error)=>{
@@ -70,6 +104,17 @@ export default function Carregar_login({route}){
     });
 
   }
+
+  /* Chamando a função para inserir um dado na tabela local */
+  useEffect(()=>{
+
+    if (db && DATA.length > 0 && !view) {
+      const dataP = DATA[0];
+      console.log("Dados a serem inseridos:", dataP);
+      inserirNoBancoLocal(dataP.id, dataP.nome, dataP.token);
+    }
+
+  },[db, DATA, view])
 
   /* useEffect(() => {
     if (db) {
@@ -94,20 +139,18 @@ export default function Carregar_login({route}){
   }, [db]); */
 
   /* API */
-    const navigation = useNavigation();
+    const {email} = route.params
+    const {senha} = route.params
 
-    /* const {email} = route.params
-    const {senha} = route.params */
-
-    const [DATA, setData] = useState([]);
-    const [view, mostrarView] = useState(false);
+    /* const [DATA, setData] = useState([]);
+    const [view, mostrarView] = useState(false); */
 
     const formData = new URLSearchParams();
-    /* formData.append('email', email);
-    formData.append('senha', senha); */
+    formData.append('email', email);
+    formData.append('senha', senha);
 
-    formData.append('email', 'carlos@gmail.com');
-    formData.append('senha', "1234");
+    /* formData.append('email', 'eli@gmail.com');
+    formData.append('senha', "1234"); */
 
     fetch(`${config.URL_inicial_API}login`, {
     method: "POST",
@@ -122,29 +165,12 @@ export default function Carregar_login({route}){
       if (!view) {
         setData(data.data);
         mostrarView(true);
-
-          /* setTimeout(()=>{
-
-            inserirNoBancoLocal(data.data.id, data.data.nome, data.data.token)
-
-          }, 2000) */
-
       }
 
     })
     .catch(errors => {
     console.error('Erro ao enviar solicitação:', errors);
     });
-
-    useEffect(()=>{
-
-      if(DATA){
-
-        inserirNoBancoLocal(DATA.id, DATA.nome, DATA.token)
-
-      }
-
-    }, [db, view])
 
     return(
 
@@ -168,31 +194,15 @@ export default function Carregar_login({route}){
 
                 {DATA !== false ? (
 
-                    DATA.map(item => (
+                  <View>
 
-                        <View key={item.token}>
+                    <Text style={{color: "white"}}>
 
-                            <Text>
+                      Conectado com sucesso!
 
-                                {item.token}
+                    </Text>
 
-                            </Text>
-
-                            <Text>
-
-                                {item.nome}
-
-                            </Text>
-
-                            <Text>
-
-                                {item.id}
-
-                            </Text>
-
-                        </View>
-
-                    ))
+                  </View>
 
                 ) : (
 
