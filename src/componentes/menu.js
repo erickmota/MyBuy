@@ -5,8 +5,8 @@ import { useNavigation } from '@react-navigation/native';
 import * as SQLite from "expo-sqlite"
 
 import config from "../config";
-import { color } from "react-native-elements/dist/helpers";
 
+/* Menu drawer do aplicativo */
 export default function Menu(){   
 
     const navigation = useNavigation();
@@ -30,6 +30,7 @@ export default function Menu(){
 
     },[])
 
+    /* Removendo o banco de dados e deslogando o usuário */
     function sair(){
 
         db.transaction((tx) => {

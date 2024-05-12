@@ -59,30 +59,6 @@ export default function Carregar_login({route}){
 
   },[db])
 
-  /* Excluir a tabela */
-  /* useEffect(()=>{
-
-    if (db) {
-      db.transaction((tx) => {
-        tx.executeSql(
-          "DROP TABLE IF EXISTS usuarios",
-          [],
-          ()=>{
-
-            console.log("Tabela excluída com sucesso");
-
-          },
-          (_, error)=>{
-
-            console.error("Erro ao excluir tabela", error);
-
-          }
-        );
-      });
-    }
-
-  },[db]) */
-
   /* Função para inserir um novo dado na tabela local */
   function inserirNoBancoLocal(id, nome, token){   
     
@@ -120,41 +96,13 @@ export default function Carregar_login({route}){
 
   },[db, DATA, view])
 
-  /* useEffect(() => {
-    if (db) {
-        db.transaction((tx) => {
-            tx.executeSql(
-                "SELECT * FROM usuarios",
-                [],
-                (_, { rows }) => {
-                    const userData = [];
-                    for (let i = 0; i < rows.length; i++) {
-                        userData.push(rows.item(i));
-                    }
-                    setData(userData);
-                    mostrarView(true);
-                },
-                (_, error) => {
-                    console.error("Erro ao consultar tabela de usuarios:", error);
-                }
-            );
-        });
-    }
-  }, [db]); */
-
   /* API */
     const {email} = route.params
     const {senha} = route.params
 
-    /* const [DATA, setData] = useState([]);
-    const [view, mostrarView] = useState(false); */
-
     const formData = new URLSearchParams();
     formData.append('email', email);
     formData.append('senha', senha);
-
-    /* formData.append('email', 'eli@gmail.com');
-    formData.append('senha', "1234"); */
 
     fetch(`${config.URL_inicial_API}login`, {
     method: "POST",
@@ -200,6 +148,7 @@ export default function Carregar_login({route}){
 
                   <View>
 
+                    {/* Texto retornado, quando a API é localizada */}
                     <Text style={{color: "white"}}>
 
                       Conectado com sucesso!
@@ -210,6 +159,7 @@ export default function Carregar_login({route}){
 
                 ) : (
 
+                    /* Alerta retornado quando o usuário não é localizado */
                     Alert.alert(
 
                         "",

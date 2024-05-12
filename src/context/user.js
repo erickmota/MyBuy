@@ -27,50 +27,28 @@ export const UserProvider = ({children}) => {
 
     },[])
 
-    /* Retornar dados */
-    useEffect(() => {
-        if (db) {
-            db.transaction((tx) => {
-                tx.executeSql(
-                    "SELECT * FROM usuarios",
-                    [],
-                    (_, { rows }) => {
-                        const userData = [];
-                        for (let i = 0; i < rows.length; i++) {
-                            userData.push(rows.item(i));
-                        }
-                        setData(userData);
-
-                        console.log("Sucesso no retorno dos dados");
-                    },
-                    (_, error) => {
-                        console.error("Erro ao consultar tabela de usuarios:", error);
-                    }
-                );
-            });
-        }
-      }, [db]);
-
+    /* Função sendo chamada a cada vez que um login é efetuado.
+    Essa função serve para atualizar os dados do contexto. */
     function login(){
 
-        /* db.transaction((tx) => {
+        db.transaction((tx) => {
             tx.executeSql(
-                "DROP TABLE IF EXISTS usuarios",
+                "SELECT * FROM usuarios",
                 [],
-                ()=>{
+                (_, { rows }) => {
+                    const userData = [];
+                    for (let i = 0; i < rows.length; i++) {
+                        userData.push(rows.item(i));
+                    }
+                    setData(userData);
 
-                console.log("Tabela excluída com sucesso");
-
+                    console.log("Sucesso no retorno dos dados");
                 },
-                (_, error)=>{
-
-                console.error("Erro ao excluir tabela", error);
-
+                (_, error) => {
+                    console.error("Erro ao consultar tabela de usuarios:", error);
                 }
             );
-        }); */
-
-        /* setData(null); */
+        });
 
         console.log("login está sendo chamado");
 
