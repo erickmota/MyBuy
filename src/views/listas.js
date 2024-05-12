@@ -1,12 +1,14 @@
+import React, {useState, useEffect} from 'react';
 import { StyleSheet, Text, View, FlatList, TouchableWithoutFeedback } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useNavigation } from '@react-navigation/native';
+import { UserContext } from '../context/user';
 
 import config from "../config"
 
 import IconeMais from "../componentes/botaoAdd"
 
-const DATA = [
+/* const DATA = [
   {
     id: '1',
     title: 'Mercado',
@@ -28,9 +30,24 @@ const DATA = [
     qtdItens: '16'
   },
   
-];
+]; */
 
 export default function App() {
+
+  /* Conexão com a API */
+  const [DATA, setData] = useState([]);
+
+    useEffect(() => {
+        fetch(`${config.URL_inicial_API}5/listas`)
+        .then(response => response.json())
+        .then(data => {
+            setData(data.data);
+            /* console.log("Sucesso no retorno da API - Listas"); */
+        })
+        .catch(error => {
+            console.error('Erro ao buscar dados da API:', error);
+        });
+    }, [DATA]);
 
   const navigation = useNavigation();
   
@@ -48,15 +65,15 @@ export default function App() {
 
           <View style={styles.itemLista}>
 
-            <TouchableWithoutFeedback onPress={() => navigation.navigate('ListaItem', {TituloLista: item.title})}>
+            <TouchableWithoutFeedback onPress={() => navigation.navigate('ListaItem', {TituloLista: item.nome})}>
 
             <View style={{flex: 3, flexDirection: "column"}}>
 
-              <Text style={styles.titleLista}>{item.title}</Text>
+              <Text style={styles.titleLista}>{item.nome}</Text>
 
               <View style={{flexDirection: "row"}}>
 
-                <Text style={styles.qtdItens}>{item.qtdItens} Itens</Text>
+                <Text style={styles.qtdItens}>{item.qtdItens}- Itens</Text>
 
               </View>
 
