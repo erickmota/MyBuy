@@ -1,7 +1,7 @@
 import React, {createContext, useState, useEffect} from "react";
 import * as SQLite from "expo-sqlite"
 
-export const ProdContext = createContext()
+export const UserContext = createContext()
 
 export const ProdProvider = ({children}) => {
 
