@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import { StyleSheet, Text, View, FlatList, TouchableWithoutFeedback } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useNavigation } from '@react-navigation/native';
@@ -37,8 +37,11 @@ export default function App() {
   /* Conexão com a API */
   const [DATA, setData] = useState([]);
 
+  /* Contexto */
+  const { DATAUser } = useContext(UserContext);
+
     useEffect(() => {
-        fetch(`${config.URL_inicial_API}5/listas`)
+        fetch(`${config.URL_inicial_API}${DATAUser[0].id}/listas`)
         .then(response => response.json())
         .then(data => {
             setData(data.data);

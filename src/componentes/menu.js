@@ -1,14 +1,62 @@
-import React from "react";
+import React, {useContext, useEffect, useState} from "react";
 import { View, Text, StyleSheet, TouchableWithoutFeedback } from "react-native";
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useNavigation } from '@react-navigation/native';
+import { UserContext } from '../context/user';
+import * as SQLite from "expo-sqlite"
 
 import config from "../config";
 import { color } from "react-native-elements/dist/helpers";
 
 export default function Menu(){
+    
+    const { logout } = useContext(UserContext);    
 
-    const navigation = useNavigation()
+    const navigation = useNavigation();
+
+    const [db, setDbLocal] = useState(null);
+
+    useEffect(()=>{
+
+        try {
+
+        const db = SQLite.openDatabase("mybuy.db");
+        setDbLocal(db);
+
+        console.log("Sucesso ao abrir o banco");
+        
+        } catch (error) {
+        
+        console.error("conexão com o banco de dados local, falhou", error);
+    
+        }
+
+    },[])
+
+    function sair(){
+
+        logout();
+
+        db.transaction((tx) => {
+            tx.executeSql(
+                "DROP TABLE IF EXISTS usuarios",
+                [],
+                ()=>{
+
+                console.log("Tabela excluída com sucesso");
+
+                },
+                (_, error)=>{
+
+                console.error("Erro ao excluir tabela", error);
+
+                }
+            );
+        });
+
+        navigation.navigate("Login");
+
+    }
 
     return(
 
@@ -159,7 +207,7 @@ export default function Menu(){
 
                 </TouchableWithoutFeedback>
 
-                <TouchableWithoutFeedback onPress={() => {navigation.navigate("Listas")}}>
+                <TouchableWithoutFeedback onPress={()=>{sair()}}>
 
                     <View style={styles.areaItemMenu}>
 

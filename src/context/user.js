@@ -7,7 +7,7 @@ export const UserProvider = ({children}) => {
 
     /* Estados */
     const [db, setDbLocal] = useState(null);
-    const [DATA, setData] = useState([]);
+    const [DATAUser, setData] = useState([]);
 
     /* Abrindo o Banco de dados */
     useEffect(()=>{
@@ -51,9 +51,32 @@ export const UserProvider = ({children}) => {
         }
       }, [db]);
 
+    function logout(){
+
+        /* db.transaction((tx) => {
+            tx.executeSql(
+                "DROP TABLE IF EXISTS usuarios",
+                [],
+                ()=>{
+
+                console.log("Tabela excluída com sucesso");
+
+                },
+                (_, error)=>{
+
+                console.error("Erro ao excluir tabela", error);
+
+                }
+            );
+        }); */
+
+        console.log("logout está sendo chamado");
+
+    }
+
     return(
 
-        <UserContext.Provider value={DATA}>
+        <UserContext.Provider value={{DATAUser, logout}}>
             
             {children}
             
