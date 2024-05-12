@@ -7,7 +7,7 @@ export const UserProvider = ({children}) => {
 
     /* Estados */
     const [db, setDbLocal] = useState(null);
-    const [DATAUser, setData] = useState([]);
+    const [DATAUser, setData] = useState(null);
 
     /* Abrindo o Banco de dados */
     useEffect(()=>{
@@ -51,7 +51,7 @@ export const UserProvider = ({children}) => {
         }
       }, [db]);
 
-    function logout(){
+    function login(){
 
         /* db.transaction((tx) => {
             tx.executeSql(
@@ -70,13 +70,15 @@ export const UserProvider = ({children}) => {
             );
         }); */
 
-        console.log("logout está sendo chamado");
+        /* setData(null); */
+
+        console.log("login está sendo chamado");
 
     }
 
     return(
 
-        <UserContext.Provider value={{DATAUser, logout}}>
+        <UserContext.Provider value={{DATAUser, login}}>
             
             {children}
             

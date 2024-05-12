@@ -2,15 +2,12 @@ import React, {useContext, useEffect, useState} from "react";
 import { View, Text, StyleSheet, TouchableWithoutFeedback } from "react-native";
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useNavigation } from '@react-navigation/native';
-import { UserContext } from '../context/user';
 import * as SQLite from "expo-sqlite"
 
 import config from "../config";
 import { color } from "react-native-elements/dist/helpers";
 
-export default function Menu(){
-    
-    const { logout } = useContext(UserContext);    
+export default function Menu(){   
 
     const navigation = useNavigation();
 
@@ -34,8 +31,6 @@ export default function Menu(){
     },[])
 
     function sair(){
-
-        logout();
 
         db.transaction((tx) => {
             tx.executeSql(

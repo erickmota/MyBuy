@@ -1,11 +1,14 @@
-import React, {useEffect, useState} from "react"
+import React, {useEffect, useState, useContext} from "react"
 import { Image, View, Text, StyleSheet, Alert } from "react-native"
 import { useNavigation } from '@react-navigation/native'
 import * as SQLite from "expo-sqlite"
+import { UserContext } from '../context/user';
 
 import config from "../config";
 
 export default function Carregar_login({route}){
+
+  const { login } = useContext(UserContext); 
   
   /* Banco de dados local - Inicio da view (SQLite) */
   const [db, setDbLocal] = useState(null);
@@ -92,6 +95,7 @@ export default function Carregar_login({route}){
         ()=>{
 
           console.log("Dados inseridos corretamente na tabela");
+          login();
           navigation.navigate("Drawer");
 
         },
