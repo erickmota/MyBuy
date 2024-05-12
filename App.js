@@ -61,7 +61,7 @@ export default function App() {
   return (
 
     <NavigationContainer>
-      <stack.Navigator initialRouteName='Login'>
+      <stack.Navigator initialRouteName='Drawer'>
 
         <stack.Screen name="Drawer" component={DrawerNavigation} options={{ headerShown: false }} />
 
