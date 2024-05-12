@@ -3,7 +3,7 @@ import * as SQLite from "expo-sqlite"
 
 export const UserContext = createContext()
 
-export const ProdProvider = ({children}) => {
+export const UserProvider = ({children}) => {
 
     /* Estados */
     const [db, setDbLocal] = useState(null);
@@ -53,11 +53,11 @@ export const ProdProvider = ({children}) => {
 
     return(
 
-        <ProdContext.Provider value={DATA}>
+        <UserContext.Provider value={DATA}>
             
             {children}
             
-        </ProdContext.Provider>
+        </UserContext.Provider>
 
     )
 
