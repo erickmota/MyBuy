@@ -18,6 +18,9 @@ import Carregar_login from "./src/views/carregar_login"
 /* Componentes */
 import Menu from "./src/componentes/menu"
 
+/* Contexto */
+import { UserProvider } from './src/context/user';
+
 import config from "./src/config"
 
 const stack = createStackNavigator();
@@ -60,79 +63,81 @@ export default function App() {
   
   return (
 
-    <NavigationContainer>
-      <stack.Navigator initialRouteName='Drawer'>
+    <UserProvider>
+      <NavigationContainer>
+        <stack.Navigator initialRouteName='Drawer'>
 
-        <stack.Screen name="Drawer" component={DrawerNavigation} options={{ headerShown: false }} />
+          <stack.Screen name="Drawer" component={DrawerNavigation} options={{ headerShown: false }} />
 
-        <stack.Screen name="Login" component={login} options={{
+          <stack.Screen name="Login" component={login} options={{
 
-          headerShown: false
+            headerShown: false
 
-        }} />
+          }} />
 
-        <stack.Screen name="Cadastro" component={Cadastro} options={{
+          <stack.Screen name="Cadastro" component={Cadastro} options={{
 
-          headerShown: false
+            headerShown: false
 
-        }} />
+          }} />
 
-        <stack.Screen name="Carregar_login" component={Carregar_login} options={{
+          <stack.Screen name="Carregar_login" component={Carregar_login} options={{
 
-          headerShown: false
+            headerShown: false
 
-        }} />
+          }} />
 
-        <stack.Screen name="Adicionar_lista" component={AddLista} options={{
+          <stack.Screen name="Adicionar_lista" component={AddLista} options={{
 
-          title: "Adicionar Lista",
-          headerTintColor: "#FFF",
-          headerStyle: {
+            title: "Adicionar Lista",
+            headerTintColor: "#FFF",
+            headerStyle: {
 
-            backgroundColor: config.cor1,
-            borderWidth: 0,
+              backgroundColor: config.cor1,
+              borderWidth: 0,
 
-          }
+            }
 
-        }} />
-        <stack.Screen name="AddItem" component={AddItem} options={{
+          }} />
+          <stack.Screen name="AddItem" component={AddItem} options={{
 
-          title: "Adicionar item",
-          headerTintColor: "#FFF",
-          headerStyle: {
+            title: "Adicionar item",
+            headerTintColor: "#FFF",
+            headerStyle: {
 
-            backgroundColor: config.cor1,
-            borderWidth: 0,
+              backgroundColor: config.cor1,
+              borderWidth: 0,
 
-          }
+            }
 
-        }} />
-        <stack.Screen name="Categorias" component={Categorias} options={{
+          }} />
+          <stack.Screen name="Categorias" component={Categorias} options={{
 
-          title: "Gerenciar categorias",
-          headerTintColor: "#FFF",
-          headerStyle: {
+            title: "Gerenciar categorias",
+            headerTintColor: "#FFF",
+            headerStyle: {
 
-            backgroundColor: config.cor1,
-            borderWidth: 0,
+              backgroundColor: config.cor1,
+              borderWidth: 0,
 
-          }
+            }
 
-        }} />
-        <stack.Screen name="Adicionar_categoria" component={AddCategoria} options={{
+          }} />
+          <stack.Screen name="Adicionar_categoria" component={AddCategoria} options={{
 
-          title: "Nova categoria",
-          headerTintColor: "#FFF",
-          headerStyle: {
+            title: "Nova categoria",
+            headerTintColor: "#FFF",
+            headerStyle: {
 
-            backgroundColor: config.cor1,
-            borderWidth: 0,
+              backgroundColor: config.cor1,
+              borderWidth: 0,
 
-          }
+            }
 
-        }} />
-      </stack.Navigator>
-    </NavigationContainer>
+          }} />
+        </stack.Navigator>
+      </NavigationContainer>
+    </UserProvider>
 
   );
 
