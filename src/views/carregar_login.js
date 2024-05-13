@@ -72,7 +72,12 @@ export default function Carregar_login({route}){
 
           console.log("Dados inseridos corretamente na tabela");
           login();
-          navigation.navigate("Drawer");
+
+          setTimeout(()=>{
+
+            navigation.navigate("Drawer");
+
+          }, 1500)
 
         },
         (_, error)=>{

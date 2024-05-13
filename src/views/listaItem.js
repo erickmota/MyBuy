@@ -1,12 +1,13 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useContext, useState } from "react";
 import { View, Text, StyleSheet, ScrollView, StatusBar, TouchableNativeFeedback, Image } from "react-native";
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { UserContext } from '../context/user';
 
 import IconeAdd from "../componentes/botaoAdd"
 
 import config from "../config";
 
-const DATA = [
+/* const DATA = [
     {
       id: '1',
       title: 'Macarrão',
@@ -72,9 +73,26 @@ const DATA = [
         qtdItens: '16'
     },
     
-  ];
+  ]; */
 
 export default function ListaItem({route, navigation}){
+
+    const [DATA, setData] = useState([]);
+
+    /* Contexto */
+    const { DATAUser } = useContext(UserContext);
+
+    /* Conexão com a API */
+    useEffect(() => {
+        fetch(`${config.URL_inicial_API}${DATAUser[0].id}/categorias`)
+        .then(response => response.json())
+        .then(data => {
+            setData(data.data);
+        })
+        .catch(error => {
+            console.error('Erro ao buscar dados da API:', error);
+        });
+    }, [DATAUser]);
 
     useEffect(() => {
 
@@ -102,7 +120,7 @@ export default function ListaItem({route, navigation}){
 
                 <View style={styles.areaListas}>
 
-                    <View style={{backgroundColor: "#FFF"}}>
+                    {/* <View style={{backgroundColor: "#FFF"}}>
                     
                         <View>
 
@@ -190,6 +208,24 @@ export default function ListaItem({route, navigation}){
 
                         ))}
 
+                    </View> */}
+
+                    <View style={{backgroundColor: "#FFF"}}>
+
+                        {DATA.map(item=>(
+
+                            <View key={item.id}>
+
+                                <Text style={styles.tituloListas}>
+
+                                    {item.nome}
+
+                                </Text>
+
+                            </View>
+
+                        ))}
+
                     </View>
 
                     <View style={styles.areaCarrinho}>
@@ -204,7 +240,7 @@ export default function ListaItem({route, navigation}){
 
                         </View>
 
-                        {DATA2.map(item => (
+                        {/* {DATA2.map(item => (
 
                         <View key={item.id} style={styles.itemLista}>
 
@@ -233,7 +269,7 @@ export default function ListaItem({route, navigation}){
 
                         </View>
 
-                        ))}
+                        ))} */}
 
                     </View>
 
