@@ -86,8 +86,19 @@ export default function ListaItem({route, navigation}){
     useEffect(() => {
         fetch(`${config.URL_inicial_API}${DATAUser[0].id}/categorias`)
         .then(response => response.json())
-        .then(data => {
-            setData(data.data);
+        .then(async data => {
+            
+            let categoriesWithProducts = await Promise.all(data.data.map(async category => {
+                const response = await fetch(`${config.URL_inicial_API}${DATAUser[0].id}/produtos/8/${category.id}`);
+                const productsData = await response.json();
+                return {
+                    ...category,
+                    produtos: productsData.data
+                };
+            }));
+
+            setData(categoriesWithProducts);
+
         })
         .catch(error => {
             console.error('Erro ao buscar dados da API:', error);
@@ -221,6 +232,24 @@ export default function ListaItem({route, navigation}){
                                     {item.nome}
 
                                 </Text>
+
+                                {
+
+                                    item.produtos.map(prod=>(
+
+                                        <View key={prod.id}>
+
+                                            <Text>
+
+                                                {prod.nome}
+
+                                            </Text>
+
+                                        </View>
+
+                                    ))
+
+                                }
 
                             </View>
 
