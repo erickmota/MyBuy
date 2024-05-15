@@ -131,96 +131,6 @@ export default function ListaItem({route, navigation}){
 
                 <View style={styles.areaListas}>
 
-                    {/* <View style={{backgroundColor: "#FFF"}}>
-                    
-                        <View>
-
-                            <Text style={styles.tituloListas}>
-
-                                Frios
-
-                            </Text>
-
-                        </View>
-
-                        {DATA.map(item => (
-
-                        <View key={item.id} style={styles.itemLista}>
-
-                            <View style={styles.areaFoto}>
-
-                                <Image style={styles.imgProduto} source={{ uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRhRA2DHY1ynTaMMIk4TdlJ1XvTa5UjtiiQ3n0r0WakYg&s' }} />
-
-                            </View>
-
-                            <View style={{flex: 3, flexDirection: "column"}}>
-
-                                <Text style={styles.titleLista}>{item.title}</Text>
-
-                                <View style={{flexDirection: "row"}}>
-
-                                    <Text style={styles.qtdItens}>2 Pacotes</Text>
-
-                                </View>
-
-                            </View>
-
-                            <View style={[styles.iconeLista, {flex:1}]}>
-
-                                <Icon
-                                    name="cart-plus"
-                                    size={25}
-                                    color={"#0ee031"}
-                                    />
-
-                            </View>
-
-                        </View>
-
-                        ))}
-
-                        <View>
-
-                            <Text style={[styles.tituloListas, styles.tituloListasSeguir]}>
-
-                                Limpeza
-
-                            </Text>
-
-                        </View>
-
-                        {DATA.map(item => (
-
-                        <View key={item.id} style={styles.itemLista}>
-
-                            <View style={{flex: 3, flexDirection: "column"}}>
-
-                                <Text style={styles.titleLista}>{item.title}</Text>
-
-                                <View style={{flexDirection: "row"}}>
-
-                                    <Text style={styles.qtdItens}>2 Pacotes</Text>
-
-                                </View>
-
-                            </View>
-
-                            <View style={[styles.iconeLista, {flex:1}]}>
-
-                                <Icon
-                                    name="cart-plus"
-                                    size={25}
-                                    color={"#0ee031"}
-                                    />
-
-                            </View>
-
-                        </View>
-
-                        ))}
-
-                    </View> */}
-
                     <View style={{backgroundColor: "#FFF"}}>
 
                         {DATA.map(item=>(
@@ -237,13 +147,43 @@ export default function ListaItem({route, navigation}){
 
                                     item.produtos.map(prod=>(
 
-                                        <View key={prod.id}>
+                                        <View key={prod.id} style={styles.itemLista}>
 
-                                            <Text>
+                                            <View style={styles.areaFoto}>
 
-                                                {prod.nome}
+                                                <Image style={styles.imgProduto} source={{ uri: 'https://s2-redeglobo.glbimg.com/HoWVXlN5d04yAbbmY8y11NPLjmY=/0x0:5616x3744/984x0/smart/filters:strip_icc()/i.s3.glbimg.com/v1/AUTH_b58693ed41d04a39826739159bf600a0/internal_photos/bs/2020/b/Z/EUa5jfR0SuwgIoStCyAw/abobora.jpg' }} />
 
-                                            </Text>
+                                            </View>
+
+                                            <View style={{flex: 3, flexDirection: "column"}}>
+
+                                                <Text style={styles.titleLista}>
+                                                    
+                                                    {prod.nome}
+                                                    
+                                                </Text>
+
+                                                <View style={{flexDirection: "row"}}>
+
+                                                    <Text style={styles.qtdItens}>
+                                                        
+                                                        2 Pacotes
+                                                        
+                                                    </Text>
+
+                                                </View>
+
+                                            </View>
+
+                                            <View style={[styles.iconeLista, {flex:1}]}>
+
+                                                <Icon
+                                                    name="cart-plus"
+                                                    size={25}
+                                                    color={"#0ee031"}
+                                                    />
+
+                                            </View>
 
                                         </View>
 
@@ -390,7 +330,7 @@ const styles = StyleSheet.create({
 
     titleLista: {
 
-        fontSize: 20,
+        fontSize: 18,
         
     },
 
@@ -402,7 +342,7 @@ const styles = StyleSheet.create({
 
     qtdItens:{
 
-        fontSize: 15,
+        fontSize: 14,
         color: config.corTextoSecundario,
         alignContent: "center",
     
@@ -455,8 +395,8 @@ const styles = StyleSheet.create({
 
     imgProduto:{
 
-        width: 55,
-        height: 55,
+        width: 45,
+        height: 45,
         borderRadius: 50,
 
     },
