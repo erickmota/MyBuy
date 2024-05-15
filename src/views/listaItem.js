@@ -7,83 +7,18 @@ import IconeAdd from "../componentes/botaoAdd"
 
 import config from "../config";
 
-/* const DATA = [
-    {
-      id: '1',
-      title: 'Macarrão',
-      qtdItens: '5'
-    },
-    {
-      id: '2',
-      title: 'Miojo',
-      qtdItens: '20'
-    },
-    {
-      id: '3',
-      title: 'Bife de berinjela',
-      qtdItens: '4'
-    },
-    {
-      id: '4',
-      title: 'Leite',
-      qtdItens: '16'
-    },
-    {
-        id: '5',
-        title: 'Pepino',
-        qtdItens: '16'
-    },
-    {
-        id: '6',
-        title: 'Café',
-        qtdItens: '16'
-    },
-    
-  ];
-
-  const DATA2 = [
-    {
-      id: '1',
-      title: 'Macarrão',
-      qtdItens: '5'
-    },
-    {
-      id: '2',
-      title: 'Miojo de feijão',
-      qtdItens: '20'
-    },
-    {
-      id: '3',
-      title: 'Bife',
-      qtdItens: '4'
-    },
-    {
-      id: '4',
-      title: 'Leite',
-      qtdItens: '16'
-    },
-    {
-        id: '5',
-        title: 'Pepino',
-        qtdItens: '16'
-    },
-    {
-        id: '6',
-        title: 'Café',
-        qtdItens: '16'
-    },
-    
-  ]; */
-
 export default function ListaItem({route, navigation}){
 
     const [DATA, setData] = useState([]);
+    const [DATA_carrinho, setCarrinho] = useState([])
 
     /* Contexto */
     const { DATAUser } = useContext(UserContext);
 
     /* Conexão com a API */
     useEffect(() => {
+
+        /* API produtos e categorias */
         fetch(`${config.URL_inicial_API}${DATAUser[0].id}/categorias`)
         .then(response => response.json())
         .then(async data => {
@@ -103,6 +38,17 @@ export default function ListaItem({route, navigation}){
         .catch(error => {
             console.error('Erro ao buscar dados da API:', error);
         });
+
+        /* API Produtos no carrinho */
+        fetch(`${config.URL_inicial_API}${DATAUser[0].id}/produtos_carrinho/8`)
+        .then(response => response.json())
+        .then(data => {
+            setCarrinho(data.data);
+        })
+        .catch(error => {
+            console.error('Erro ao buscar dados da API dos carrinhos:', error);
+        });
+
     }, [DATAUser]);
 
     useEffect(() => {
@@ -151,7 +97,7 @@ export default function ListaItem({route, navigation}){
 
                                             <View style={styles.areaFoto}>
 
-                                                <Image style={styles.imgProduto} source={{ uri: 'https://s2-redeglobo.glbimg.com/HoWVXlN5d04yAbbmY8y11NPLjmY=/0x0:5616x3744/984x0/smart/filters:strip_icc()/i.s3.glbimg.com/v1/AUTH_b58693ed41d04a39826739159bf600a0/internal_photos/bs/2020/b/Z/EUa5jfR0SuwgIoStCyAw/abobora.jpg' }} />
+                                                <Image style={styles.imgProduto} source={{ uri: `${prod.url}` }} />
 
                                             </View>
 
@@ -209,18 +155,37 @@ export default function ListaItem({route, navigation}){
 
                         </View>
 
-                        {/* {DATA2.map(item => (
+                        {DATA_carrinho.map(item => (
 
                         <View key={item.id} style={styles.itemLista}>
 
+                            <View style={styles.areaFoto}>
+
+                                <Image style={styles.imgProduto} source={{ uri: `${item.url}` }} />
+
+                            </View>
+
                             <View style={{flex: 3, flexDirection: "column"}}>
 
-                                <Text style={[styles.titleLista, styles.itemMarcado]}>{item.title}</Text>
+                                <Text style={[styles.titleLista, styles.itemMarcado]}>
+                                    
+                                    {item.nome}
+                                    
+                                </Text>
                                 
                                 <View style={{flexDirection: "row"}}>
 
-                                    <Text style={styles.qtdItens}>{item.qtdItens} Pacotes /</Text>
-                                    <Text style={[styles.qtdItens, {color: "#8FBC8F"}]}> R$18,58</Text>
+                                    <Text style={styles.qtdItens}>
+                                        
+                                        3 Pacotes /
+                                        
+                                    </Text>
+
+                                    <Text style={[styles.qtdItens, {color: "#8FBC8F"}]}>
+                                        
+                                        R$18,58
+                                        
+                                    </Text>
 
                                 </View>
 
@@ -238,7 +203,7 @@ export default function ListaItem({route, navigation}){
 
                         </View>
 
-                        ))} */}
+                        ))}
 
                     </View>
 
