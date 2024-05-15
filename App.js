@@ -1,8 +1,9 @@
 import 'react-native-gesture-handler';
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createDrawerNavigator } from '@react-navigation/drawer';
+import * as SQLite from "expo-sqlite"
 
 /* Views */
 import Listas from "./src/views/listas"
@@ -22,14 +23,17 @@ import Menu from "./src/componentes/menu"
 import { UserProvider } from './src/context/user';
 
 import config from "./src/config"
+import { View } from 'react-native-web';
 
 const stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
 
 /* Menu lateral */
 function DrawerNavigation() {
+
   return (
-    <Drawer.Navigator drawerContent={Menu} initialRouteName='ListaItem'>
+
+    <Drawer.Navigator drawerContent={Menu} initialRouteName="Listas">
       <Drawer.Screen name="ListaItem" component={ListaItem}  options={{
 
         title: "Lista Item",

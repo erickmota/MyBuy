@@ -3,38 +3,70 @@ import { StyleSheet, Text, View, FlatList, TouchableWithoutFeedback } from 'reac
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useNavigation } from '@react-navigation/native';
 import { UserContext } from '../context/user';
+import * as SQLite from "expo-sqlite"
 
 import config from "../config"
 
 import IconeMais from "../componentes/botaoAdd"
 
-/* const DATA = [
-  {
-    id: '1',
-    title: 'Mercado',
-    qtdItens: '5'
-  },
-  {
-    id: '2',
-    title: 'Mecânico',
-    qtdItens: '20'
-  },
-  {
-    id: '3',
-    title: 'Escola',
-    qtdItens: '4'
-  },
-  {
-    id: '4',
-    title: 'Condomínio',
-    qtdItens: '16'
-  },
-  
-]; */
-
 export default function App() {
 
   const [DATA, setData] = useState([]);
+
+  /* Estados */
+  const [dbs, setDbLocal] = useState(null);
+
+  const navigation = useNavigation();
+
+  /* Abrindo o Banco de dados */
+  useEffect(()=>{
+
+      try {
+
+      const dbs = SQLite.openDatabase("mybuy.db");
+      setDbLocal(dbs);
+
+      console.log("Sucesso ao abrir o banco");
+      
+      } catch (error) {
+      
+      console.error("conexão com o banco de dados local, falhou", error);
+  
+      }
+
+  },[])
+
+  useEffect(()=>{
+
+    if(dbs){
+
+      dbs.transaction((tx) => {
+        tx.executeSql(
+            "SELECT * FROM usuarios WHERE ultima_lista != 0",
+            [],
+            (_, { rows }) => {
+                const userData = [];
+                for (let i = 0; i < rows.length; i++) {
+                    userData.push(rows.item(i));
+                }
+
+                if(userData.length > 0){
+
+                  navigation.navigate("ListaItem", {id_lista: userData[0].ultima_lista});
+
+                }
+
+                console.log(userData);
+            },
+            /* (_, error) => {
+                console.error("-Ultima lista não existe:", error);
+            } */
+        );
+      });
+
+    }
+
+  },[dbs])
 
   /* Contexto */
   const { DATAUser } = useContext(UserContext);
@@ -50,8 +82,6 @@ export default function App() {
             console.error('Erro ao buscar dados da API:', error);
         });
     }, [DATA]);
-
-  const navigation = useNavigation();
   
   return (
 
