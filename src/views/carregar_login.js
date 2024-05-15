@@ -66,7 +66,7 @@ export default function Carregar_login({route}){
 
     db.transaction((tx) => {
       tx.executeSql(
-        `INSERT INTO usuarios (id, nome, token, ultima_lista) VALUES (${id}, '${nome}', '${token}', 8)`,
+        `INSERT INTO usuarios (id, nome, token, ultima_lista) VALUES (${id}, '${nome}', '${token}', 0)`,
         [],
         ()=>{
 

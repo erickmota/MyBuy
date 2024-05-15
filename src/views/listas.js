@@ -97,7 +97,7 @@ export default function App() {
 
           <View style={styles.itemLista}>
 
-            <TouchableWithoutFeedback onPress={() => navigation.navigate('ListaItem', {TituloLista: item.nome})}>
+            <TouchableWithoutFeedback onPress={() => navigation.navigate('ListaItem', {TituloLista: item.nome, id_lista: item.id})}>
 
             <View style={{flex: 3, flexDirection: "column"}}>
 

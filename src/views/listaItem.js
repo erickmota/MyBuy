@@ -9,6 +9,8 @@ import config from "../config";
 
 export default function ListaItem({route, navigation}){
 
+    const {id_lista} = route.params;
+
     const [DATA, setData] = useState([]);
     const [DATA_carrinho, setCarrinho] = useState([])
 
@@ -24,13 +26,15 @@ export default function ListaItem({route, navigation}){
         .then(async data => {
             
             let categoriesWithProducts = await Promise.all(data.data.map(async category => {
-                const response = await fetch(`${config.URL_inicial_API}${DATAUser[0].id}/produtos/8/${category.id}`);
+                const response = await fetch(`${config.URL_inicial_API}${DATAUser[0].id}/produtos/${id_lista}/${category.id}`);
                 const productsData = await response.json();
                 return {
                     ...category,
                     produtos: productsData.data
                 };
             }));
+
+            console.log(id_lista);
 
             setData(categoriesWithProducts);
 
@@ -40,7 +44,7 @@ export default function ListaItem({route, navigation}){
         });
 
         /* API Produtos no carrinho */
-        fetch(`${config.URL_inicial_API}${DATAUser[0].id}/produtos_carrinho/8`)
+        fetch(`${config.URL_inicial_API}${DATAUser[0].id}/produtos_carrinho/${id_lista}`)
         .then(response => response.json())
         .then(data => {
             setCarrinho(data.data);
@@ -79,6 +83,7 @@ export default function ListaItem({route, navigation}){
 
                     <View style={{backgroundColor: "#FFF"}}>
 
+                        {/* Categorias */}
                         {DATA.map(item=>(
 
                             <View key={item.id}>
@@ -90,7 +95,7 @@ export default function ListaItem({route, navigation}){
                                 </Text>
 
                                 {
-
+                                    /* Produtos */
                                     item.produtos.map(prod=>(
 
                                         <View key={prod.id} style={styles.itemLista}>
@@ -155,53 +160,54 @@ export default function ListaItem({route, navigation}){
 
                         </View>
 
+                        {/* Carrinho */}
                         {DATA_carrinho.map(item => (
 
-                        <View key={item.id} style={styles.itemLista}>
+                            <View key={item.id} style={styles.itemLista}>
 
-                            <View style={styles.areaFoto}>
+                                <View style={styles.areaFoto}>
 
-                                <Image style={styles.imgProduto} source={{ uri: `${item.url}` }} />
+                                    <Image style={styles.imgProduto} source={{ uri: `${item.url}` }} />
 
-                            </View>
+                                </View>
 
-                            <View style={{flex: 3, flexDirection: "column"}}>
+                                <View style={{flex: 3, flexDirection: "column"}}>
 
-                                <Text style={[styles.titleLista, styles.itemMarcado]}>
-                                    
-                                    {item.nome}
-                                    
-                                </Text>
-                                
-                                <View style={{flexDirection: "row"}}>
-
-                                    <Text style={styles.qtdItens}>
+                                    <Text style={[styles.titleLista, styles.itemMarcado]}>
                                         
-                                        3 Pacotes /
+                                        {item.nome}
                                         
                                     </Text>
+                                    
+                                    <View style={{flexDirection: "row"}}>
 
-                                    <Text style={[styles.qtdItens, {color: "#8FBC8F"}]}>
-                                        
-                                        R$18,58
-                                        
-                                    </Text>
+                                        <Text style={styles.qtdItens}>
+                                            
+                                            3 Pacotes /
+                                            
+                                        </Text>
+
+                                        <Text style={[styles.qtdItens, {color: "#8FBC8F"}]}>
+                                            
+                                            R$18,58
+                                            
+                                        </Text>
+
+                                    </View>
+
+                                </View>
+
+                                <View style={[styles.iconeLista, {flex: 1}]}>
+
+                                    <Icon
+                                        name="cart-minus"
+                                        size={25}
+                                        color={"#FF0000"}
+                                        />
 
                                 </View>
 
                             </View>
-
-                            <View style={[styles.iconeLista, {flex: 1}]}>
-
-                                <Icon
-                                    name="cart-minus"
-                                    size={25}
-                                    color={"#FF0000"}
-                                    />
-
-                            </View>
-
-                        </View>
 
                         ))}
 
