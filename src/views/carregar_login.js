@@ -41,7 +41,7 @@ export default function Carregar_login({route}){
     if (db) {
       db.transaction((tx) => {
         tx.executeSql(
-          "CREATE TABLE IF NOT EXISTS usuarios (id INTEGER, nome VARCHAR, token VARCHAR)",
+          "CREATE TABLE IF NOT EXISTS usuarios (id INTEGER, nome VARCHAR, token VARCHAR, ultima_lista INTEGER)",
           [],
           ()=>{
 
@@ -66,7 +66,7 @@ export default function Carregar_login({route}){
 
     db.transaction((tx) => {
       tx.executeSql(
-        `INSERT INTO usuarios (id, nome, token) VALUES (${id}, '${nome}', '${token}')`,
+        `INSERT INTO usuarios (id, nome, token, ultima_lista) VALUES (${id}, '${nome}', '${token}', 0)`,
         [],
         ()=>{
 
