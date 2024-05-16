@@ -2,6 +2,7 @@ import React, { useEffect, useContext, useState } from "react";
 import { View, Text, StyleSheet, ScrollView, StatusBar, TouchableNativeFeedback, Image } from "react-native";
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { UserContext } from '../context/user';
+import { useIsFocused } from '@react-navigation/native';
 
 import IconeAdd from "../componentes/botaoAdd"
 
@@ -12,7 +13,8 @@ export default function ListaItem({route, navigation}){
     const {id_lista} = route.params;
 
     const [DATA, setData] = useState([]);
-    const [DATA_carrinho, setCarrinho] = useState([])
+    const [DATA_carrinho, setCarrinho] = useState([]);
+    const [prodTamanho, setProTamanho] = useState({});
 
     /* Contexto */
     const { DATAUser } = useContext(UserContext);
@@ -28,13 +30,14 @@ export default function ListaItem({route, navigation}){
             let categoriesWithProducts = await Promise.all(data.data.map(async category => {
                 const response = await fetch(`${config.URL_inicial_API}${DATAUser[0].id}/produtos/${id_lista}/${category.id}`);
                 const productsData = await response.json();
+
+                /* console.log(productsData); */
+                setProTamanho(productsData);
                 return {
                     ...category,
                     produtos: productsData.data
                 };
             }));
-
-            console.log(id_lista);
 
             setData(categoriesWithProducts);
 
@@ -82,9 +85,87 @@ export default function ListaItem({route, navigation}){
                 <View style={styles.areaListas}>
 
                     <View style={{backgroundColor: "#FFF"}}>
+ 
+                        {prodTamanho.data !== false ? (
+
+                            DATA.map(item=>(
+
+                                <View key={item.id}>
+
+                                    <Text style={styles.tituloListas}>
+
+                                        {item.nome}
+
+                                    </Text>
+
+                                    {
+                                        
+                                        item.produtos.map(prod=>(
+
+                                            <View key={prod.id} style={styles.itemLista}>
+
+                                                <View style={styles.areaFoto}>
+
+                                                    <Image style={styles.imgProduto} source={{ uri: `${prod.url}` }} />
+
+                                                </View>
+
+                                                <View style={{flex: 3, flexDirection: "column"}}>
+
+                                                    <Text style={styles.titleLista}>
+                                                        
+                                                        {prod.nome}
+                                                        
+                                                    </Text>
+
+                                                    <View style={{flexDirection: "row"}}>
+
+                                                        <Text style={styles.qtdItens}>
+                                                            
+                                                            2 Pacotes
+                                                            
+                                                        </Text>
+
+                                                    </View>
+
+                                                </View>
+
+                                                <View style={[styles.iconeLista, {flex:1}]}>
+
+                                                    <Icon
+                                                        name="cart-plus"
+                                                        size={25}
+                                                        color={"#0ee031"}
+                                                        />
+
+                                                </View>
+
+                                            </View>
+
+                                        ))
+
+                                    }
+
+                                </View>
+
+                            ))
+
+                        ):(
+
+                            <View>
+
+                                <Text>
+
+                                    Nenhum produto encontrado!
+
+                                </Text>
+
+                            </View>
+
+                        )}
 
                         {/* Categorias */}
-                        {DATA.map(item=>(
+                        {/* {DATA.map(item=>(
 
                             <View key={item.id}>
 
@@ -95,7 +176,7 @@ export default function ListaItem({route, navigation}){
                                 </Text>
 
                                 {
-                                    /* Produtos */
+                                    
                                     item.produtos.map(prod=>(
 
                                         <View key={prod.id} style={styles.itemLista}>
@@ -144,7 +225,7 @@ export default function ListaItem({route, navigation}){
 
                             </View>
 
-                        ))}
+                        ))} */}
 
                     </View>
 
@@ -161,7 +242,7 @@ export default function ListaItem({route, navigation}){
                         </View>
 
                         {/* Carrinho */}
-                        {DATA_carrinho.map(item => (
+                        {/* {DATA_carrinho.map(item => (
 
                             <View key={item.id} style={styles.itemLista}>
 
@@ -209,7 +290,7 @@ export default function ListaItem({route, navigation}){
 
                             </View>
 
-                        ))}
+                        ))} */}
 
                     </View>
 
