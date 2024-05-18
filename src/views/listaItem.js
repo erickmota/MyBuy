@@ -1,8 +1,8 @@
-import React, { useEffect, useContext, useState } from "react";
+import React, { useEffect, useContext, useState, useCallback } from "react";
 import { View, Text, StyleSheet, ScrollView, StatusBar, TouchableNativeFeedback, Image } from "react-native";
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { UserContext } from '../context/user';
-import { useIsFocused } from '@react-navigation/native';
+import { useFocusEffect } from '@react-navigation/native';
 
 import IconeAdd from "../componentes/botaoAdd"
 
@@ -19,46 +19,74 @@ export default function ListaItem({route, navigation}){
     /* Contexto */
     const { DATAUser } = useContext(UserContext);
 
-    /* Conexão com a API */
-    useEffect(() => {
+    const carregar_API = useCallback(()=>{
 
-        /* API produtos e categorias */
-        fetch(`${config.URL_inicial_API}${DATAUser[0].id}/categorias`)
-        .then(response => response.json())
-        .then(async data => {
-            
-            let categoriesWithProducts = await Promise.all(data.data.map(async category => {
-                const response = await fetch(`${config.URL_inicial_API}${DATAUser[0].id}/produtos/${id_lista}/${category.id}`);
-                const productsData = await response.json();
+        if(DATAUser){
 
-                /* console.log(productsData); */
-                setProTamanho(productsData);
-                return {
-                    ...category,
-                    produtos: productsData.data
-                };
-            }));
+            console.log("Tela ganhou foco")
 
-            setData(categoriesWithProducts);
+            /* API produtos e categorias */
+            fetch(`${config.URL_inicial_API}${DATAUser[0].id}/categorias`)
+            .then(response => response.json())
+            .then(async data => {
+                
+                let categoriesWithProducts = await Promise.all(data.data.map(async category => {
+                    const response = await fetch(`${config.URL_inicial_API}${DATAUser[0].id}/produtos/${id_lista}/${category.id}`);
+                    const productsData = await response.json();
 
-        })
-        .catch(error => {
-            console.error('Erro ao buscar dados da API:', error);
-        });
+                    /* console.log(productsData); */
+                    setProTamanho(productsData);
+                    return {
+                        ...category,
+                        produtos: productsData.data
+                    };
+                }));
 
-        /* API Produtos no carrinho */
-        fetch(`${config.URL_inicial_API}${DATAUser[0].id}/produtos_carrinho/${id_lista}`)
-        .then(response => response.json())
-        .then(data => {
-            setCarrinho(data.data);
-        })
-        .catch(error => {
-            console.error('Erro ao buscar dados da API dos carrinhos:', error);
-        });
+                setData(categoriesWithProducts);
 
-    }, [DATAUser]);
+            })
+            .catch(error => {
+                console.error('Erro ao buscar dados da API:', error);
+            });
 
-    useEffect(() => {
+            /* API Produtos no carrinho */
+            fetch(`${config.URL_inicial_API}${DATAUser[0].id}/produtos_carrinho/${id_lista}`)
+            .then(response => response.json())
+            .then(data => {
+                setCarrinho(data.data);
+            })
+            .catch(error => {
+                console.error('Erro ao buscar dados da API dos carrinhos:', error);
+            });
+
+        }
+
+        else{
+
+            console.log("Não está entrando no if")
+
+        }
+
+    }, [DATAUser, id_lista])
+
+    useFocusEffect(
+        useCallback(() => {
+
+            setData([]);
+            setCarrinho([]);
+            setProTamanho({});
+
+            carregar_API();
+    
+          return () => {
+
+            console.log("Tela perdeu foco")
+            // Você pode adicionar lógica de limpeza aqui, se necessário
+          };
+        }, [carregar_API])
+    );
+
+   /*  useEffect(() => {
 
         if(route.params){
 
@@ -72,7 +100,7 @@ export default function ListaItem({route, navigation}){
 
         }
         
-    }, [route.params, navigation]);
+    }, [route.params, navigation]); */
 
     return(
 
@@ -100,49 +128,65 @@ export default function ListaItem({route, navigation}){
 
                                     {
                                         
-                                        item.produtos.map(prod=>(
+                                        Array.isArray(item.produtos) ? (
 
-                                            <View key={prod.id} style={styles.itemLista}>
+                                            item.produtos.map(prod=>(
 
-                                                <View style={styles.areaFoto}>
-
-                                                    <Image style={styles.imgProduto} source={{ uri: `${prod.url}` }} />
-
-                                                </View>
-
-                                                <View style={{flex: 3, flexDirection: "column"}}>
-
-                                                    <Text style={styles.titleLista}>
-                                                        
-                                                        {prod.nome}
-                                                        
-                                                    </Text>
-
-                                                    <View style={{flexDirection: "row"}}>
-
-                                                        <Text style={styles.qtdItens}>
+                                                <View key={prod.id} style={styles.itemLista}>
+    
+                                                    <View style={styles.areaFoto}>
+    
+                                                        <Image style={styles.imgProduto} source={{ uri: `${prod.url}` }} />
+    
+                                                    </View>
+    
+                                                    <View style={{flex: 3, flexDirection: "column"}}>
+    
+                                                        <Text style={styles.titleLista}>
                                                             
-                                                            2 Pacotes
+                                                            {prod.nome}
                                                             
                                                         </Text>
-
+    
+                                                        <View style={{flexDirection: "row"}}>
+    
+                                                            <Text style={styles.qtdItens}>
+                                                                
+                                                                2 Pacotes
+                                                                
+                                                            </Text>
+    
+                                                        </View>
+    
                                                     </View>
-
+    
+                                                    <View style={[styles.iconeLista, {flex:1}]}>
+    
+                                                        <Icon
+                                                            name="cart-plus"
+                                                            size={25}
+                                                            color={"#0ee031"}
+                                                            />
+    
+                                                    </View>
+    
                                                 </View>
+    
+                                            ))
 
-                                                <View style={[styles.iconeLista, {flex:1}]}>
+                                        ):(
 
-                                                    <Icon
-                                                        name="cart-plus"
-                                                        size={25}
-                                                        color={"#0ee031"}
-                                                        />
+                                            <View>
+                                            
+                                                <Text>
+                                                
+                                                    Nenhum produto nessa categoria
 
-                                                </View>
-
+                                                </Text>
+                                            
                                             </View>
 
-                                        ))
+                                        )
 
                                     }
 
