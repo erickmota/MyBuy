@@ -194,82 +194,102 @@ export default function ListaItem({route, navigation}){
 
                             <View style={styles.itemVazio}>
 
-                                <Text style={styles.textItemVazio}>
-
-                                    Nenhum produto encontrado!
-
-                                </Text>
-
                             </View>
 
                         )}
 
                     </View>
 
-                    <View style={styles.areaCarrinho}>
+                    {DATA_carrinho && DATA_carrinho.length > 0 ? (
 
-                        <View>
+                        <View style={styles.areaCarrinho}>
 
-                            <Text style={[styles.tituloListas, styles.tituloListasCarrinho]}>
+                            <View>
 
-                                SEU CARRINHO
+                                <Text style={[styles.tituloListas, styles.tituloListasCarrinho]}>
 
-                            </Text>
+                                    SEU CARRINHO
 
-                        </View>
+                                </Text>
 
-                        {/* Carrinho */}
-                        {/* {DATA_carrinho.map(item => (
+                            </View>
 
-                            <View key={item.id} style={styles.itemLista}>
+                            {/* Carrinho */}
+                            {DATA_carrinho.map(item => (
 
-                                <View style={styles.areaFoto}>
+                                <View key={item.id} style={styles.itemLista}>
 
-                                    <Image style={styles.imgProduto} source={{ uri: `${item.url}` }} />
+                                    <View style={styles.areaFoto}>
 
-                                </View>
+                                        {item.url !== null ? (
 
-                                <View style={{flex: 3, flexDirection: "column"}}>
+                                            /* Foto que aparecerá caso o item tiver uma foto */
+                                            <Image style={styles.imgProduto} source={{ uri: `${item.url}` }} />
 
-                                    <Text style={[styles.titleLista, styles.itemMarcado]}>
-                                        
-                                        {item.nome}
-                                        
-                                    </Text>
-                                    
-                                    <View style={{flexDirection: "row"}}>
+                                        ):(
 
-                                        <Text style={styles.qtdItens}>
+                                            /* Foto caso o item não tiver uma foto */
+                                            <Image style={styles.imgProduto} source={{ uri: `${config.Foto_prod_nulo}` }} />
+
+                                        )}
+
+                                    </View>
+
+                                    <View style={{flex: 3, flexDirection: "column"}}>
+
+                                        <Text style={[styles.titleLista, styles.itemMarcado]}>
                                             
-                                            3 Pacotes /
-                                            
-                                        </Text>
-
-                                        <Text style={[styles.qtdItens, {color: "#8FBC8F"}]}>
-                                            
-                                            R$18,58
+                                            {item.nome}
                                             
                                         </Text>
+                                        
+                                        <View style={{flexDirection: "row"}}>
+
+                                            <Text style={styles.qtdItens}>
+                                                
+                                                3 Pacotes /
+                                                
+                                            </Text>
+
+                                            <Text style={[styles.qtdItens, {color: "#8FBC8F"}]}>
+                                                
+                                                R$18,58
+                                                
+                                            </Text>
+
+                                        </View>
+
+                                    </View>
+
+                                    <View style={[styles.iconeLista, {flex: 1}]}>
+
+                                        <Icon
+                                            name="cart-minus"
+                                            size={25}
+                                            color={"#FF0000"}
+                                            />
 
                                     </View>
 
                                 </View>
 
-                                <View style={[styles.iconeLista, {flex: 1}]}>
+                            ))}
 
-                                    <Icon
-                                        name="cart-minus"
-                                        size={25}
-                                        color={"#FF0000"}
-                                        />
+                        </View>
 
-                                </View>
+                    ):(
 
-                            </View>
+                        <View style={styles.itemVazio}>
 
-                        ))} */}
+                            <Text style={styles.textItemVazio}>
 
-                    </View>
+                                Nenhum produto por aqui!
+
+                            </Text>
+
+                        </View>
+
+                    )}
 
                 </View>
 
@@ -438,14 +458,14 @@ const styles = StyleSheet.create({
 
     itemVazio:{
 
-        marginVertical: 30,
+        marginVertical: 30
 
     },
 
     textItemVazio:{
 
         fontSize: 15,
-        color: "#BBB",
+        color: "#AAA",
         textAlign: "center"
 
     }
