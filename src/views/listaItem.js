@@ -14,7 +14,6 @@ export default function ListaItem({route, navigation}){
 
     const [DATA, setData] = useState([]);
     const [DATA_carrinho, setCarrinho] = useState([]);
-    const [prodTamanho, setProTamanho] = useState({});
 
     /* Contexto */
     const { DATAUser } = useContext(UserContext);
@@ -38,8 +37,6 @@ export default function ListaItem({route, navigation}){
                         ...category,
                         produtos: productsData.data
                     };
-
-                    setProTamanho(productsData);
 
                 }));
 
@@ -88,7 +85,6 @@ export default function ListaItem({route, navigation}){
 
             setData([]);
             setCarrinho([]);
-            setProTamanho({});
 
             atualiza_nome();
 
