@@ -23,8 +23,6 @@ export default function ListaItem({route, navigation}){
 
         if(DATAUser){
 
-            console.log("Tela ganhou foco")
-
             /* API produtos e categorias */
             fetch(`${config.URL_inicial_API}${DATAUser[0].id}/categorias`)
             .then(response => response.json())
@@ -34,13 +32,19 @@ export default function ListaItem({route, navigation}){
                     const response = await fetch(`${config.URL_inicial_API}${DATAUser[0].id}/produtos/${id_lista}/${category.id}`);
                     const productsData = await response.json();
 
-                    /* console.log(productsData); */
-                    setProTamanho(productsData);
+                    /* setProTamanho(productsData); */
+
                     return {
                         ...category,
                         produtos: productsData.data
                     };
+
+                    setProTamanho(productsData);
+
                 }));
+
+                console.log(categoriesWithProducts);
+                console.log("FIM");
 
                 setData(categoriesWithProducts);
 
@@ -61,32 +65,9 @@ export default function ListaItem({route, navigation}){
 
         }
 
-        else{
-
-            console.log("Não está entrando no if")
-
-        }
-
     }, [DATAUser, id_lista])
 
-    useFocusEffect(
-        useCallback(() => {
-
-            setData([]);
-            setCarrinho([]);
-            setProTamanho({});
-
-            carregar_API();
-    
-          return () => {
-
-            console.log("Tela perdeu foco")
-            // Você pode adicionar lógica de limpeza aqui, se necessário
-          };
-        }, [carregar_API])
-    );
-
-   /*  useEffect(() => {
+    const atualiza_nome = ()=>{
 
         if(route.params){
 
@@ -99,8 +80,25 @@ export default function ListaItem({route, navigation}){
             navigation.setOptions({ title: "Mercado" });
 
         }
-        
-    }, [route.params, navigation]); */
+
+    }
+
+    useFocusEffect(
+        useCallback(() => {
+
+            setData([]);
+            setCarrinho([]);
+            setProTamanho({});
+
+            atualiza_nome();
+
+            carregar_API();
+    
+          return () => {
+
+          };
+        }, [carregar_API])
+    );
 
     return(
 
@@ -114,91 +112,89 @@ export default function ListaItem({route, navigation}){
 
                     <View style={{backgroundColor: "#FFF"}}>
  
-                        {prodTamanho.data !== false ? (
+                        {DATA && DATA.length > 0 ? (
 
                             DATA.map(item=>(
 
-                                <View key={item.id}>
+                                Array.isArray(item.produtos) && item.produtos.length > 0 && (
 
-                                    <Text style={styles.tituloListas}>
+                                    <View key={item.id}>
 
-                                        {item.nome}
+                                        <Text style={styles.tituloListas}>
 
-                                    </Text>
+                                            {item.nome}
 
-                                    {
-                                        
-                                        Array.isArray(item.produtos) ? (
+                                        </Text>
+
+                                        {
 
                                             item.produtos.map(prod=>(
 
                                                 <View key={prod.id} style={styles.itemLista}>
-    
+
                                                     <View style={styles.areaFoto}>
-    
-                                                        <Image style={styles.imgProduto} source={{ uri: `${prod.url}` }} />
-    
+
+                                                        {prod.url !== null ? (
+
+                                                            /* Foto que aparecerá caso o item tiver uma foto */
+                                                            <Image style={styles.imgProduto} source={{ uri: `${prod.url}` }} />
+
+                                                        ):(
+
+                                                            /* Foto caso o item não tiver uma foto */
+                                                            <Image style={styles.imgProduto} source={{ uri: `${config.Foto_prod_nulo}` }} />
+
+                                                        )}
+
                                                     </View>
-    
+
                                                     <View style={{flex: 3, flexDirection: "column"}}>
-    
+
                                                         <Text style={styles.titleLista}>
                                                             
                                                             {prod.nome}
                                                             
                                                         </Text>
-    
+
                                                         <View style={{flexDirection: "row"}}>
-    
+
                                                             <Text style={styles.qtdItens}>
                                                                 
                                                                 2 Pacotes
                                                                 
                                                             </Text>
-    
+
                                                         </View>
-    
+
                                                     </View>
-    
+
                                                     <View style={[styles.iconeLista, {flex:1}]}>
-    
+
                                                         <Icon
                                                             name="cart-plus"
                                                             size={25}
                                                             color={"#0ee031"}
                                                             />
-    
+
                                                     </View>
-    
+
                                                 </View>
-    
+
                                             ))
 
-                                        ):(
+                                        }
 
-                                            <View>
-                                            
-                                                <Text>
-                                                
-                                                    Nenhum produto nessa categoria
+                                    </View>
 
-                                                </Text>
-                                            
-                                            </View>
-
-                                        )
-
-                                    }
-
-                                </View>
+                                )
 
                             ))
 
                         ):(
 
-                            <View>
+                            <View style={styles.itemVazio}>
 
-                                <Text>
+                                <Text style={styles.textItemVazio}>
 
                                     Nenhum produto encontrado!
 
@@ -207,69 +203,6 @@ export default function ListaItem({route, navigation}){
                             </View>
 
                         )}
-
-                        {/* Categorias */}
-                        {/* {DATA.map(item=>(
-
-                            <View key={item.id}>
-
-                                <Text style={styles.tituloListas}>
-
-                                    {item.nome}
-
-                                </Text>
-
-                                {
-                                    
-                                    item.produtos.map(prod=>(
-
-                                        <View key={prod.id} style={styles.itemLista}>
-
-                                            <View style={styles.areaFoto}>
-
-                                                <Image style={styles.imgProduto} source={{ uri: `${prod.url}` }} />
-
-                                            </View>
-
-                                            <View style={{flex: 3, flexDirection: "column"}}>
-
-                                                <Text style={styles.titleLista}>
-                                                    
-                                                    {prod.nome}
-                                                    
-                                                </Text>
-
-                                                <View style={{flexDirection: "row"}}>
-
-                                                    <Text style={styles.qtdItens}>
-                                                        
-                                                        2 Pacotes
-                                                        
-                                                    </Text>
-
-                                                </View>
-
-                                            </View>
-
-                                            <View style={[styles.iconeLista, {flex:1}]}>
-
-                                                <Icon
-                                                    name="cart-plus"
-                                                    size={25}
-                                                    color={"#0ee031"}
-                                                    />
-
-                                            </View>
-
-                                        </View>
-
-                                    ))
-
-                                }
-
-                            </View>
-
-                        ))} */}
 
                     </View>
 
@@ -500,6 +433,20 @@ const styles = StyleSheet.create({
     areaFoto:{
 
         marginRight: 15
+
+    },
+
+    itemVazio:{
+
+        marginVertical: 30,
+
+    },
+
+    textItemVazio:{
+
+        fontSize: 15,
+        color: "#BBB",
+        textAlign: "center"
 
     }
 
