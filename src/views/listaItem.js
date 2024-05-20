@@ -31,8 +31,6 @@ export default function ListaItem({route, navigation}){
                     const response = await fetch(`${config.URL_inicial_API}${DATAUser[0].id}/produtos/${id_lista}/${category.id}`);
                     const productsData = await response.json();
 
-                    /* setProTamanho(productsData); */
-
                     return {
                         ...category,
                         produtos: productsData.data

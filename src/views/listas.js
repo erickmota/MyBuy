@@ -105,7 +105,7 @@ export default function App() {
 
               <View style={{flexDirection: "row"}}>
 
-                <Text style={styles.qtdItens}>{item.qtdItens}- Itens</Text>
+                <Text style={styles.qtdItens}>{item.qtd_produtos} - Produtos</Text>
 
               </View>
 
@@ -174,13 +174,13 @@ const styles = StyleSheet.create({
 
   titleLista: {
 
-    fontSize: 20,
+    fontSize: 17,
     
   },
 
   qtdItens:{
 
-    fontSize: 15,
+    fontSize: 14,
     color: config.corTextoSecundario,
     alignContent: "center",
 
