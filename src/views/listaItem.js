@@ -81,16 +81,16 @@ export default function ListaItem({route, navigation}){
     useFocusEffect(
         useCallback(() => {
 
-            setData([]);
-            setCarrinho([]);
-
             atualiza_nome();
-
             carregar_API();
     
           return () => {
 
+            setData([]);
+            setCarrinho([]);
+
           };
+          
         }, [carregar_API])
     );
 
@@ -154,7 +154,13 @@ export default function ListaItem({route, navigation}){
 
                                                             <Text style={styles.qtdItens}>
                                                                 
-                                                                2 Pacotes
+                                                                2
+                                                                
+                                                            </Text>
+
+                                                            <Text style={styles.qtdItens}>
+                                                                
+                                                                Pacotes
                                                                 
                                                             </Text>
 
@@ -187,6 +193,12 @@ export default function ListaItem({route, navigation}){
                         ):(
 
                             <View style={styles.itemVazio}>
+
+                                <Text style={styles.textItemVazio}>
+
+                                    Carregando...
+
+                                </Text>
 
                             </View>
 
