@@ -116,8 +116,8 @@ export default function App() {
             <View style={[styles.iconeLista, {flex:1}]}>
 
               <Icon
-                name="note-edit-outline"
-                size={25}
+                name="playlist-edit"
+                size={30}
                 color={config.cor2}
                 />
 
