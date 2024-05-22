@@ -15,6 +15,7 @@ import AddCategoria from "./src/views/adicionar_categoria"
 import login from "./src/views/login"
 import Cadastro from "./src/views/cadastro"
 import Carregar_login from "./src/views/carregar_login"
+import Editar_lista from "./src/views/editar_lista"
 
 /* Componentes */
 import Menu from "./src/componentes/menu"
@@ -68,8 +69,10 @@ export default function App() {
   return (
 
     <UserProvider>
+
       <NavigationContainer>
-        <stack.Navigator initialRouteName='Login'>
+
+        <stack.Navigator initialRouteName='Editar_lista'>
 
           <stack.Screen name="Drawer" component={DrawerNavigation} options={{ headerShown: false }} />
 
@@ -91,6 +94,19 @@ export default function App() {
 
           }} />
 
+          <stack.Screen name="Editar_lista" component={Editar_lista} options={{
+
+            title: "Editar Lista",
+            headerTintColor: "#FFF",
+            headerStyle: {
+
+              backgroundColor: config.cor1,
+              borderWidth: 0,
+
+            }
+
+          }} />
+
           <stack.Screen name="Adicionar_lista" component={AddLista} options={{
 
             title: "Adicionar Lista",
@@ -103,6 +119,7 @@ export default function App() {
             }
 
           }} />
+
           <stack.Screen name="AddItem" component={AddItem} options={{
 
             title: "Adicionar item",
@@ -115,6 +132,7 @@ export default function App() {
             }
 
           }} />
+
           <stack.Screen name="Categorias" component={Categorias} options={{
 
             title: "Gerenciar categorias",
@@ -127,6 +145,7 @@ export default function App() {
             }
 
           }} />
+
           <stack.Screen name="Adicionar_categoria" component={AddCategoria} options={{
 
             title: "Nova categoria",
@@ -139,8 +158,11 @@ export default function App() {
             }
 
           }} />
+
         </stack.Navigator>
+
       </NavigationContainer>
+
     </UserProvider>
 
   );
