@@ -5,6 +5,7 @@ import { useNavigation } from '@react-navigation/native';
 import { UserContext } from '../context/user';
 
 import IconeCorreto from "../componentes/botaoCorreto"
+import config from '../config';
 
 export default function Editar_lista(){
 
@@ -45,7 +46,7 @@ const styles = StyleSheet.create({
     titulo:{
 
         marginTop: 30,
-        fontSize: 20,
+        fontSize: config.tamanhoTextosInputs,
         paddingHorizontal: 15
 
     },
