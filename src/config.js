@@ -8,7 +8,7 @@ const config = {
     Foto_prod_nulo: "https://lojaideas.com.br/wp-content/uploads/2023/10/produto-sem-foto-4.png",
 
     /* Dados */
-    URL_inicial_API: "http://192.168.0.15:80/API_MyBuy/"
+    URL_inicial_API: "http://192.168.1.11:80/API_MyBuy/"
 
 };
   
