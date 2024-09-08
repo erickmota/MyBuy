@@ -7,9 +7,11 @@ import { UserContext } from '../context/user';
 import IconeCorreto from "../componentes/botaoCorreto"
 import config from '../config';
 
-export default function Editar_lista(){
+export default function Editar_lista({route}){
 
-    const [number, onChangeNumber] = useState('');
+    const {TituloLista} = route.params;
+
+    const [number, onChangeNumber] = useState(TituloLista);
 
     return(
 
@@ -56,7 +58,7 @@ const styles = StyleSheet.create({
         borderBottomWidth: 1,
         borderBottomColor: "#CCC",
         marginTop: 20,
-        fontSize: 20,
+        fontSize: config.tamanhoTextosInputs,
         marginHorizontal: 15,
         color: "#777"
 

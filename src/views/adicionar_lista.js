@@ -2,6 +2,7 @@ import React from "react";
 import { Text, View, TextInput, StyleSheet } from "react-native";
 
 import IconeCorreto from "../componentes/botaoCorreto"
+import config from '../config';
 
 export default function Adicionar(){
 
@@ -42,7 +43,7 @@ const styles = StyleSheet.create({
     titulo:{
 
         marginTop: 30,
-        fontSize: 20,
+        fontSize: config.tamanhoTextosInputs,
         paddingHorizontal: 15
 
     },

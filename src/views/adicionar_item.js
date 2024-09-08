@@ -138,7 +138,7 @@ const styles = StyleSheet.create({
     titulo:{
 
         marginTop: 30,
-        fontSize: 20,
+        fontSize: config.tamanhoTextosInputs,
         paddingHorizontal: 15
 
     },
@@ -148,7 +148,7 @@ const styles = StyleSheet.create({
         borderBottomWidth: 1,
         borderBottomColor: "#CCC",
         marginTop: 20,
-        fontSize: 20,
+        fontSize: config.tamanhoTextosInputs,
         marginHorizontal: 15,
         color: "#777"
 
@@ -157,7 +157,7 @@ const styles = StyleSheet.create({
     inputQtd:{
 
         marginTop: 20,
-        fontSize: 20,
+        fontSize: config.tamanhoTextosInputs,
         color: "#777"
 
     },

@@ -115,11 +115,15 @@ export default function App() {
 
             <View style={[styles.iconeLista, {flex:1}]}>
 
-              <Icon
-                name="playlist-edit"
-                size={30}
-                color={config.cor2}
-                />
+              <TouchableWithoutFeedback onPress={() => navigation.navigate('Editar_lista', {TituloLista: item.nome})}>
+
+                <Icon
+                  name="playlist-edit"
+                  size={30}
+                  color={config.cor2}
+                  />
+
+              </TouchableWithoutFeedback>
 
             </View>
 
