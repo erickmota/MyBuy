@@ -1,9 +1,9 @@
 import 'react-native-gesture-handler';
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createDrawerNavigator } from '@react-navigation/drawer';
-import * as SQLite from "expo-sqlite"
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 /* Views */
 import Listas from "./src/views/listas"
@@ -15,6 +15,7 @@ import AddCategoria from "./src/views/adicionar_categoria"
 import login from "./src/views/login"
 import Cadastro from "./src/views/cadastro"
 import Carregar_login from "./src/views/carregar_login"
+import Editar_lista from "./src/views/editar_lista"
 
 /* Componentes */
 import Menu from "./src/componentes/menu"
@@ -68,7 +69,9 @@ export default function App() {
   return (
 
     <UserProvider>
+
       <NavigationContainer>
+
         <stack.Navigator initialRouteName='Login'>
 
           <stack.Screen name="Drawer" component={DrawerNavigation} options={{ headerShown: false }} />
@@ -91,6 +94,27 @@ export default function App() {
 
           }} />
 
+          <stack.Screen name="Editar_lista" component={Editar_lista} options={{
+
+            title: "Editar Lista",
+            headerTintColor: "#FFF",
+            headerStyle: {
+
+              backgroundColor: config.cor1,
+              borderWidth: 0,
+
+            },
+            headerRight: () => (
+              <Icon
+                name="share-variant"
+                size={20}
+                color={"white"}
+                style={{marginRight: 10}}
+                />
+            ),
+
+          }} />
+
           <stack.Screen name="Adicionar_lista" component={AddLista} options={{
 
             title: "Adicionar Lista",
@@ -103,6 +127,7 @@ export default function App() {
             }
 
           }} />
+
           <stack.Screen name="AddItem" component={AddItem} options={{
 
             title: "Adicionar item",
@@ -115,6 +140,7 @@ export default function App() {
             }
 
           }} />
+
           <stack.Screen name="Categorias" component={Categorias} options={{
 
             title: "Gerenciar categorias",
@@ -127,6 +153,7 @@ export default function App() {
             }
 
           }} />
+
           <stack.Screen name="Adicionar_categoria" component={AddCategoria} options={{
 
             title: "Nova categoria",
@@ -139,8 +166,11 @@ export default function App() {
             }
 
           }} />
+
         </stack.Navigator>
+
       </NavigationContainer>
+
     </UserProvider>
 
   );

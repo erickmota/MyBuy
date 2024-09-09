@@ -5,15 +5,19 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import config from "../config"
 
-export default function BotaoAdd() {
+export default function BotaoAdd(props) {
 
   const navigation = useNavigation();
+
+  const funcao = props.funcao
 
     return (
 
         <View style={styles.areaIconeMais}>
 
-          <TouchableWithoutFeedback onPress={() => navigation.navigate('Adicionar')}>
+          {/* O componente está chamando uma função passada
+          via parametro(props). */}
+          <TouchableWithoutFeedback onPress={funcao}>
 
             <View style={styles.iconeMais}>
 
