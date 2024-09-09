@@ -10,6 +10,7 @@ import config from '../config';
 export default function Editar_lista({route}){
 
     const {TituloLista} = route.params;
+    const {id_lista} = route.params;
 
     const [number, onChangeNumber] = useState(TituloLista);
 

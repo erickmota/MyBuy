@@ -115,7 +115,7 @@ export default function App() {
 
             <View style={[styles.iconeLista, {flex:1}]}>
 
-              <TouchableWithoutFeedback onPress={() => navigation.navigate('Editar_lista', {TituloLista: item.nome})}>
+              <TouchableWithoutFeedback onPress={() => navigation.navigate('Editar_lista', {TituloLista: item.nome, id_lista: item.id})}>
 
                 <Icon
                   name="playlist-edit"
