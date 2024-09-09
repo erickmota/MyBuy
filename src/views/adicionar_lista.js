@@ -1,12 +1,44 @@
-import React from "react";
+import React, {useContext} from "react";
 import { Text, View, TextInput, StyleSheet } from "react-native";
+import { UserContext } from '../context/user';
+import { useNavigation } from '@react-navigation/native';
 
 import IconeCorreto from "../componentes/botaoCorreto"
 import config from '../config';
 
 export default function Adicionar(){
 
+    const navigation = useNavigation();
+
     const [number, onChangeNumber] = React.useState('');
+
+    /* Contexto */
+    const { DATAUser } = useContext(UserContext);
+
+    /*  */
+    function Inserir_lista(nova_lista){
+
+        const formData = new URLSearchParams();
+        formData.append('nome_lista', nova_lista);
+
+        fetch(`${config.URL_inicial_API}${DATAUser[0].id}/adiciona_lista`, {
+        method: "POST",
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: formData.toString()
+        })
+        .then(response => response.json())
+        .then(data => {
+
+            navigation.navigate("Listas");
+    
+        })
+        .catch(errors => {
+        console.error('Erro ao enviar solicitação:', errors);
+        });
+
+    }
 
     return(
 
@@ -24,7 +56,7 @@ export default function Adicionar(){
             keyboardType="default"
             />
 
-            <IconeCorreto/>
+            <IconeCorreto funcao={() => Inserir_lista(number)}/>
 
         </View>
 
