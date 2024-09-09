@@ -9,10 +9,43 @@ import config from '../config';
 
 export default function Editar_lista({route}){
 
+    const navigation = useNavigation();
+
     const {TituloLista} = route.params;
     const {id_lista} = route.params;
 
     const [number, onChangeNumber] = useState(TituloLista);
+
+    /* Contexto */
+    const { DATAUser } = useContext(UserContext);
+
+    /* Função responsável por atualizar o nome da Lista
+    via API.
+    Ela está sendo chamada via componente */
+    function salvar_nome(novo_nome){
+
+        const formData = new URLSearchParams();
+        formData.append('id_lista', id_lista);
+        formData.append('novo_nome', novo_nome);
+
+        fetch(`${config.URL_inicial_API}${DATAUser[0].id}/atualiza_lista`, {
+        method: "POST",
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: formData.toString()
+        })
+        .then(response => response.json())
+        .then(data => {
+
+            navigation.navigate("Listas");
+    
+        })
+        .catch(errors => {
+        console.error('Erro ao enviar solicitação:', errors);
+        });
+
+    }
 
     return(
 
@@ -30,7 +63,7 @@ export default function Editar_lista({route}){
                 keyboardType="default"
                 />
 
-            <IconeCorreto/>
+            <IconeCorreto funcao={() => salvar_nome(number)}/>
 
         </View>
 
