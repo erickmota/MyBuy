@@ -117,7 +117,7 @@ export default function App() {
 
           <stack.Screen name="Adicionar_lista" component={AddLista} options={{
 
-            title: "Adicionar Lista",
+            title: "Nova lista",
             headerTintColor: "#FFF",
             headerStyle: {
 
