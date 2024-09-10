@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useContext} from 'react';
-import { StyleSheet, Text, View, FlatList, TouchableWithoutFeedback } from 'react-native';
+import { StyleSheet, Text, View, FlatList, TouchableWithoutFeedback, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useNavigation } from '@react-navigation/native';
 import { UserContext } from '../context/user';
@@ -97,7 +97,13 @@ export default function App() {
 
           <View style={styles.itemLista}>
 
-            <TouchableWithoutFeedback onPress={() => navigation.navigate('ListaItem', {TituloLista: item.nome, id_lista: item.id})}>
+            <TouchableOpacity
+
+              activeOpacity={0.3}
+              onPress={() => navigation.navigate('ListaItem', {TituloLista: item.nome, id_lista: item.id})}
+              onLongPress={() => navigation.navigate('Editar_lista', {TituloLista: item.nome, id_lista: item.id})}
+              
+            >
 
             <View style={{flex: 3, flexDirection: "column"}}>
 
@@ -111,7 +117,7 @@ export default function App() {
 
             </View>
 
-            </TouchableWithoutFeedback>
+            </TouchableOpacity>
 
             <View style={[styles.iconeLista, {flex:1}]}>
 
