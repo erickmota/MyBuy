@@ -3,7 +3,6 @@ import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createDrawerNavigator } from '@react-navigation/drawer';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 /* Views */
 import Listas from "./src/views/listas"
@@ -103,15 +102,7 @@ export default function App() {
               backgroundColor: config.cor1,
               borderWidth: 0,
 
-            },
-            headerRight: () => (
-              <Icon
-                name="share-variant"
-                size={20}
-                color={"white"}
-                style={{marginRight: 10}}
-                />
-            ),
+            }
 
           }} />
 

@@ -1,5 +1,5 @@
-import React, {useState, useEffect, useContext} from 'react';
-import { StyleSheet, Text, View, FlatList, TouchableWithoutFeedback, TextInput } from 'react-native';
+import React, {useState, useContext, useLayoutEffect} from 'react';
+import { StyleSheet, Text, View, TextInput, Alert } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useNavigation } from '@react-navigation/native';
 import { UserContext } from '../context/user';
@@ -10,6 +10,48 @@ import config from '../config';
 export default function Editar_lista({route}){
 
     const navigation = useNavigation();
+
+    useLayoutEffect(()=>{
+
+        navigation.setOptions({
+
+            
+            headerRight: () => (
+                <Icon
+                  name="delete-sweep"
+                  size={22}
+                  color={"white"}
+                  style={{marginRight: 10}}
+                  onPress={()=>{
+  
+                    Alert.alert(
+                      "Excluir lista",
+                      "Essa lista e todos os produtos relacionados a ela serão excluidos. Deseja continuar?",
+                      [
+                        {
+                          text: "Cancelar",
+                          onPress: () => console.log("Cancelado"),
+                          style: "cancel"
+                        },
+                        {
+                          text: "Sim",
+                          onPress: () => {
+                            // Ação de exclusão
+                            console.log("Lista excluída");
+                            // Coloque sua lógica de exclusão aqui
+                          }
+                        }
+                      ],
+                      { cancelable: false }
+                    );
+                    
+                  }}
+                  />
+              ),
+
+        })
+
+    },[navigation])
 
     const {TituloLista} = route.params;
     const {id_lista} = route.params;
