@@ -8,7 +8,7 @@ const config = {
     tamanhoTextosInputs: 16,
 
     /* Conteúdos */
-    Foto_prod_nulo: "https://lojaideas.com.br/wp-content/uploads/2023/10/produto-sem-foto-4.png",
+    Foto_prod_nulo: "https://www2.camara.leg.br/atividade-legislativa/comissoes/comissoes-permanentes/cindra/imagens/sem.jpg.gif",
 
 
     /* Dados */
