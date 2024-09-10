@@ -115,7 +115,7 @@ const styles = StyleSheet.create({
     
       titleLista: {
     
-        fontSize: 20,
+        fontSize: config.tamanhoTextosInputs,
         
       },
     
