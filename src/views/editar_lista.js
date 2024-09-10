@@ -9,12 +9,21 @@ import config from '../config';
 
 export default function Editar_lista({route}){
 
+    /* Dados da lista */
+    const {TituloLista} = route.params;
+    const {id_lista} = route.params;
+
+    /* Resultado do input */
+    const [number, onChangeNumber] = useState(TituloLista);
+
+    /* Contexto */
+    const { DATAUser } = useContext(UserContext);
+
     const navigation = useNavigation();
 
     useLayoutEffect(()=>{
 
         navigation.setOptions({
-
             
             headerRight: () => (
                 <Icon
@@ -38,7 +47,9 @@ export default function Editar_lista({route}){
                           onPress: () => {
                             // Ação de exclusão
                             console.log("Lista excluída");
-                            // Coloque sua lógica de exclusão aqui
+                            
+                            apagar_lista();
+
                           }
                         }
                       ],
@@ -53,14 +64,6 @@ export default function Editar_lista({route}){
 
     },[navigation])
 
-    const {TituloLista} = route.params;
-    const {id_lista} = route.params;
-
-    const [number, onChangeNumber] = useState(TituloLista);
-
-    /* Contexto */
-    const { DATAUser } = useContext(UserContext);
-
     /* Função responsável por atualizar o nome da Lista
     via API.
     Ela está sendo chamada via componente */
@@ -71,6 +74,31 @@ export default function Editar_lista({route}){
         formData.append('novo_nome', novo_nome);
 
         fetch(`${config.URL_inicial_API}${DATAUser[0].id}/atualiza_lista`, {
+        method: "POST",
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: formData.toString()
+        })
+        .then(response => response.json())
+        .then(data => {
+
+            navigation.navigate("Listas");
+    
+        })
+        .catch(errors => {
+        console.error('Erro ao enviar solicitação:', errors);
+        });
+
+    }
+
+    /* Função responsável por apagar a lista */
+    const apagar_lista = () => {
+
+        const formData = new URLSearchParams();
+        formData.append('id_lista', id_lista);
+
+        fetch(`${config.URL_inicial_API}${DATAUser[0].id}/deletar_lista`, {
         method: "POST",
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
