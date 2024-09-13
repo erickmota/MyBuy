@@ -1,18 +1,61 @@
-import React, {useState} from "react";
+import React, {useState, useContext} from "react";
 import { View, Text, StyleSheet, TextInput, TouchableWithoutFeedback } from "react-native";
 import { Picker } from '@react-native-picker/picker';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useNavigation } from '@react-navigation/native';
+import { UserContext } from '../context/user';
 
 import IconeCorreto from "../componentes/botaoCorreto"
 import config from "../config";
 
 export default function AddItem(){
 
+    /* Contexto */
+    const { DATAUser } = useContext(UserContext);
+
     const navigation = useNavigation();
 
-    const [number, onChangeNumber] = React.useState('');
+    const [campo_nome, onChangecampo_nome] = React.useState('');
+    const [qtd, onChangeQtd] = React.useState('');
     const [selectedValue, setSelectedValue] = useState("option1");
+
+    function adiciona_item(
+
+        nome_produto,
+        tipo_exibicao,
+        qtd,
+        categoria,
+        lista,
+        foto
+
+    ){
+
+        const formData = new URLSearchParams();
+        formData.append('nome_produto', nome_produto);
+        formData.append('tipo_exibicao', tipo_exibicao);
+        formData.append('qtd', qtd);
+        formData.append('categoria', categoria);
+        formData.append('lista', lista);
+        formData.append('foto', foto);
+
+        fetch(`${config.URL_inicial_API}${DATAUser[0].id}/adiciona_produto`, {
+        method: "POST",
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: formData.toString()
+        })
+        .then(response => response.json())
+        .then(data => {
+
+            navigation.goBack();
+    
+        })
+        .catch(errors => {
+        console.error('Erro ao enviar solicitação:', errors);
+        });
+
+    }
 
     return(
 
@@ -25,8 +68,8 @@ export default function AddItem(){
             </Text>
 
             <TextInput style={styles.input}
-                onChangeText={onChangeNumber}
-                value={number}
+                onChangeText={onChangecampo_nome}
+                value={campo_nome}
                 keyboardType="default"
                 />
 
@@ -69,8 +112,8 @@ export default function AddItem(){
                     </Text>
 
                     <TextInput style={styles.inputQtd}
-                        onChangeText={onChangeNumber}
-                        value={number}
+                        onChangeText={onChangeQtd}
+                        value={qtd}
                         keyboardType="default"
                         />
 
@@ -119,7 +162,7 @@ export default function AddItem(){
 
             </View>
 
-            <IconeCorreto/>
+            <IconeCorreto funcao={() => adiciona_item(campo_nome, 0, qtd, 1, 25, 1)}/>
 
         </View>
 
