@@ -8,13 +8,14 @@ export default function BotaoAdd(props) {
 
   const navigation = useNavigation();
 
-  const caminho = props.caminho
+  const caminho = props.caminho;
+  const id_lista = props.id_lista;
 
     return (
 
         <View style={styles.areaIconeMais}>
 
-          <TouchableWithoutFeedback onPress={() => navigation.navigate(caminho)}>
+          <TouchableWithoutFeedback onPress={() => navigation.navigate(caminho, {id_lista: id_lista})}>
 
             <View style={styles.iconeMais}>
 

@@ -303,7 +303,7 @@ export default function ListaItem({route, navigation}){
 
             <View>
 
-                <IconeAdd caminho={"AddItem"}/>
+                <IconeAdd caminho={"AddItem"} id_lista={id_lista}/>
 
             </View>
 

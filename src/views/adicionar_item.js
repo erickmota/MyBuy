@@ -8,10 +8,12 @@ import { UserContext } from '../context/user';
 import IconeCorreto from "../componentes/botaoCorreto"
 import config from "../config";
 
-export default function AddItem(){
+export default function AddItem({route}){
 
     /* Contexto */
     const { DATAUser } = useContext(UserContext);
+
+    const {id_lista} = route.params;
 
     const navigation = useNavigation();
 
@@ -162,7 +164,7 @@ export default function AddItem(){
 
             </View>
 
-            <IconeCorreto funcao={() => adiciona_item(campo_nome, 0, qtd, 1, 25, 1)}/>
+            <IconeCorreto funcao={() => adiciona_item(campo_nome, 0, qtd, 1, id_lista, 1)}/>
 
         </View>
 
