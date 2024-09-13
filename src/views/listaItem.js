@@ -1,5 +1,5 @@
 import React, { useEffect, useContext, useState, useCallback } from "react";
-import { View, Text, StyleSheet, ScrollView, StatusBar, TouchableNativeFeedback, Image } from "react-native";
+import { View, Text, StyleSheet, ScrollView, StatusBar, TouchableNativeFeedback, Image, TouchableOpacity } from "react-native";
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { UserContext } from '../context/user';
 import { useFocusEffect } from '@react-navigation/native';
@@ -123,6 +123,12 @@ export default function ListaItem({route, navigation}){
                                         {
 
                                             item.produtos.map(prod=>(
+                                                
+                                                <TouchableOpacity
+                                                
+                                                    activeOpacity={0.7}
+                                                
+                                                >
 
                                                 <View key={prod.id} style={styles.itemLista}>
 
@@ -179,6 +185,8 @@ export default function ListaItem({route, navigation}){
                                                     </View>
 
                                                 </View>
+
+                                                </TouchableOpacity>
 
                                             ))
 
