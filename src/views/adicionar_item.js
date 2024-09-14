@@ -77,11 +77,11 @@ export default function AddItem({route}){
 
             <View style={styles.espacoQtd}>
 
-                <View style={{flex: 4}}>
+                <View style={{flex: 5}}>
 
                     <Text style={styles.titulo}>
 
-                        Unidade
+                        Tipo
 
                     </Text>
 
@@ -110,6 +110,46 @@ export default function AddItem({route}){
                     <Text style={styles.titulo}>
 
                         Quantidade
+
+                    </Text>
+
+                    <TextInput style={styles.inputQtd}
+                        onChangeText={onChangeQtd}
+                        value={qtd}
+                        keyboardType="default"
+                        />
+
+                </View>
+
+            </View>
+
+            <View style={styles.espacoValor}>
+
+                <View style={{flex: 6}}>
+
+                    <Text style={styles.titulo}>
+
+                        Valor
+
+                    </Text>
+
+                    <View style={styles.campoSelect}>
+                        
+                    <TextInput style={styles.inputQtd}
+                        onChangeText={onChangeQtd}
+                        value={qtd}
+                        keyboardType="default"
+                        />
+
+                    </View>
+
+                </View>
+
+                <View style={[styles.campoSelect, {flex: 5}]}>
+
+                    <Text style={styles.titulo}>
+
+                        Carrinho?
 
                     </Text>
 
@@ -208,6 +248,12 @@ const styles = StyleSheet.create({
     },
 
     espacoQtd:{
+
+        flexDirection: "row"
+
+    },
+
+    espacoValor:{
 
         flexDirection: "row"
 
