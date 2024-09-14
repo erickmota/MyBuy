@@ -160,13 +160,7 @@ export default function ListaItem({route, navigation}){
 
                                                                 <Text style={styles.qtdItens}>
                                                                     
-                                                                    2
-                                                                    
-                                                                </Text>
-
-                                                                <Text style={styles.qtdItens}>
-                                                                    
-                                                                    Pacotes
+                                                                    {prod.qtd} pacotes
                                                                     
                                                                 </Text>
 

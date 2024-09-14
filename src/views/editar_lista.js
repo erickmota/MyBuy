@@ -35,7 +35,7 @@ export default function Editar_lista({route}){
   
                     Alert.alert(
                       "Excluir lista",
-                      "Essa lista e todos os produtos relacionados a ela serão excluidos. Deseja continuar?",
+                      `A lista "${TituloLista}" e todos os produtos relacionados a ela serão excluidos. Deseja continuar?`,
                       [
                         {
                           text: "Cancelar",

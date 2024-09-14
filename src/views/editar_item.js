@@ -37,7 +37,7 @@ export default function AddItem({route}){
   
                     Alert.alert(
                       "Excluir produto",
-                      "Tem certeza que deseja excuir esse produto?",
+                      `Tem certeza que deseja excluir o item "${nome_produto}"?`,
                       [
                         {
                           text: "Cancelar",
