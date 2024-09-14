@@ -50,7 +50,7 @@ export default function AddItem({route}){
                             // Ação de exclusão
                             console.log("Lista excluída");
                             
-                            apagar_lista();
+                            apagar_item();
 
                           }
                         }
@@ -65,6 +65,31 @@ export default function AddItem({route}){
         })
 
     },[navigation])
+
+    /* Função responsável por apagar o item */
+    const apagar_item = () => {
+
+        const formData = new URLSearchParams();
+        formData.append('id_produto', id_produto);
+
+        fetch(`${config.URL_inicial_API}${DATAUser[0].id}/deleta_produto`, {
+        method: "POST",
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: formData.toString()
+        })
+        .then(response => response.json())
+        .then(data => {
+
+            navigation.goBack();
+    
+        })
+        .catch(errors => {
+        console.error('Erro ao enviar solicitação:', errors);
+        });
+
+    }
 
     /* function adiciona_item(
 
