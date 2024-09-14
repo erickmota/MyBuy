@@ -15,6 +15,7 @@ import login from "./src/views/login"
 import Cadastro from "./src/views/cadastro"
 import Carregar_login from "./src/views/carregar_login"
 import Editar_lista from "./src/views/editar_lista"
+import Editar_Item from "./src/views/editar_item"
 
 /* Componentes */
 import Menu from "./src/componentes/menu"
@@ -122,6 +123,19 @@ export default function App() {
           <stack.Screen name="AddItem" component={AddItem} options={{
 
             title: "Adicionar item",
+            headerTintColor: "#FFF",
+            headerStyle: {
+
+              backgroundColor: config.cor1,
+              borderWidth: 0,
+
+            }
+
+          }} />
+
+          <stack.Screen name="Editar_item" component={Editar_Item} options={{
+
+            title: "Editar produto",
             headerTintColor: "#FFF",
             headerStyle: {
 

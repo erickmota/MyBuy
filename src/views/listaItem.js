@@ -123,12 +123,6 @@ export default function ListaItem({route, navigation}){
                                         {
 
                                             item.produtos.map(prod=>(
-                                                
-                                                <TouchableOpacity
-                                                
-                                                    activeOpacity={0.7}
-                                                
-                                                >
 
                                                 <View key={prod.id} style={styles.itemLista}>
 
@@ -148,31 +142,39 @@ export default function ListaItem({route, navigation}){
 
                                                     </View>
 
-                                                    <View style={{flex: 3, flexDirection: "column"}}>
+                                                    <TouchableOpacity
+                                                    
+                                                        onPress={() => navigation.navigate("Editar_item", {id_lista: prod.id, nome_produto: prod.nome, qtd_produto: prod.qtd})}
+                                                    
+                                                    >
 
-                                                        <Text style={styles.titleLista}>
-                                                            
-                                                            {prod.nome}
-                                                            
-                                                        </Text>
+                                                        <View style={{flex: 3, flexDirection: "column"}}>
 
-                                                        <View style={{flexDirection: "row"}}>
-
-                                                            <Text style={styles.qtdItens}>
+                                                            <Text style={styles.titleLista}>
                                                                 
-                                                                2
+                                                                {prod.nome}
                                                                 
                                                             </Text>
 
-                                                            <Text style={styles.qtdItens}>
-                                                                
-                                                                Pacotes
-                                                                
-                                                            </Text>
+                                                            <View style={{flexDirection: "row"}}>
+
+                                                                <Text style={styles.qtdItens}>
+                                                                    
+                                                                    2
+                                                                    
+                                                                </Text>
+
+                                                                <Text style={styles.qtdItens}>
+                                                                    
+                                                                    Pacotes
+                                                                    
+                                                                </Text>
+
+                                                            </View>
 
                                                         </View>
 
-                                                    </View>
+                                                    </TouchableOpacity>
 
                                                     <View style={[styles.iconeLista, {flex:1}]}>
 
@@ -185,8 +187,6 @@ export default function ListaItem({route, navigation}){
                                                     </View>
 
                                                 </View>
-
-                                                </TouchableOpacity>
 
                                             ))
 
