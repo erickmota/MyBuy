@@ -91,26 +91,14 @@ export default function AddItem({route}){
 
     }
 
-    /* function adiciona_item(
-
-        nome_produto,
-        tipo_exibicao,
-        qtd,
-        categoria,
-        lista,
-        foto
-
-    ){
+    const editar_produto = () => {
 
         const formData = new URLSearchParams();
-        formData.append('nome_produto', nome_produto);
-        formData.append('tipo_exibicao', tipo_exibicao);
-        formData.append('qtd', qtd);
-        formData.append('categoria', categoria);
-        formData.append('lista', lista);
-        formData.append('foto', foto);
+        formData.append('id_produto', id_produto);
+        formData.append('nome_produto', campo_nome);
+        formData.append('qtd_produto', qtd);
 
-        fetch(`${config.URL_inicial_API}${DATAUser[0].id}/adiciona_produto`, {
+        fetch(`${config.URL_inicial_API}${DATAUser[0].id}/edita_produto`, {
         method: "POST",
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
@@ -127,7 +115,7 @@ export default function AddItem({route}){
         console.error('Erro ao enviar solicitação:', errors);
         });
 
-    } */
+    }
 
     return(
 
@@ -234,7 +222,7 @@ export default function AddItem({route}){
 
             </View>
 
-            <IconeCorreto funcao={() => adiciona_item(campo_nome, 0, qtd, 1, id_produto, 1)}/>
+            <IconeCorreto funcao={() => editar_produto()}/>
 
         </View>
 
