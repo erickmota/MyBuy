@@ -1,5 +1,5 @@
 import React, {useState, useContext} from "react";
-import { View, Text, StyleSheet, TextInput, TouchableWithoutFeedback, TouchableOpacity } from "react-native";
+import { View, Text, StyleSheet, TextInput, TouchableWithoutFeedback, TouchableOpacity, ScrollView } from "react-native";
 import { Picker } from '@react-native-picker/picker';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useNavigation } from '@react-navigation/native';
@@ -19,7 +19,9 @@ export default function AddItem({route}){
 
     const [campo_nome, onChangecampo_nome] = React.useState('');
     const [qtd, onChangeQtd] = React.useState('');
+    const [valor, onChangeValor] = React.useState('');
     const [selectedValue, setSelectedValue] = useState("option1");
+    const [Observacao, setObservacao] = useState("");
 
     const [CheckBox, setCheckBox] = useState(false);
     const [corCarrinho, setCorCarrinho] = useState("#AAA");
@@ -82,133 +84,138 @@ export default function AddItem({route}){
 
         <View style={styles.container}>
 
-            <Text style={styles.titulo}>
+            <ScrollView>
 
-                Nome do item
+                <Text style={styles.titulo}>
 
-            </Text>
+                    Nome do item
 
-            <TextInput style={styles.input}
-                onChangeText={onChangecampo_nome}
-                value={campo_nome}
-                keyboardType="default"
-                />
+                </Text>
 
-            <View style={styles.espacoQtd}>
+                <TextInput style={styles.input}
+                    onChangeText={onChangecampo_nome}
+                    value={campo_nome}
+                    keyboardType="default"
+                    />
 
-                <View style={{flex: 5}}>
+                <View style={styles.espacoQtd}>
 
-                    <Text style={styles.titulo}>
+                    <View style={{flex: 5}}>
 
-                        Tipo
+                        <Text style={styles.titulo}>
 
-                    </Text>
+                            Tipo
 
-                    <View style={styles.campoSelect}>
-                        <Picker
-                            selectedValue={selectedValue}
-                            onValueChange={(itemValue, itemIndex) => setSelectedValue(itemValue)}
-                        >
-                            <Picker.Item label="Caixa" value="option1" />
-                            <Picker.Item label="Pacote" value="option2" />
-                            <Picker.Item label="Garrafa" value="option4" />
-                            <Picker.Item label="Lata" value="option5" />
-                            <Picker.Item label="Un" value="option6" />
-                            <Picker.Item label="Kg" value="option7" />
-                            <Picker.Item label="g" value="option8" />
-                            <Picker.Item label="ml" value="option9" />
-                            <Picker.Item label="dz" value="option10" />
+                        </Text>
+
+                        <View style={styles.campoSelect}>
+                            <Picker
+                                selectedValue={selectedValue}
+                                onValueChange={(itemValue, itemIndex) => setSelectedValue(itemValue)}
+                            >
+                                <Picker.Item label="Caixa" value="option1" />
+                                <Picker.Item label="Pacote" value="option2" />
+                                <Picker.Item label="Garrafa" value="option4" />
+                                <Picker.Item label="Lata" value="option5" />
+                                <Picker.Item label="Un" value="option6" />
+                                <Picker.Item label="Kg" value="option7" />
+                                <Picker.Item label="g" value="option8" />
+                                <Picker.Item label="ml" value="option9" />
+                                <Picker.Item label="dz" value="option10" />
+                                
+                            </Picker>
+                        </View>
+
+                    </View>
+
+                    <View style={[styles.campoSelect, {flex: 5}]}>
+
+                        <Text style={styles.titulo}>
+
+                            Quantidade
+
+                        </Text>
+
+                        <TextInput style={styles.inputQtd}
+                            onChangeText={text => onChangeQtd(text.replace(/[^0-9]/g, ''))}
+                            value={qtd}
+                            keyboardType="default"
+                            />
+
+                    </View>
+
+                </View>
+
+                <View style={styles.espacoValor}>
+
+                    <View style={{flex: 6}}>
+
+                        <Text style={styles.titulo}>
+
+                            Valor
+
+                        </Text>
+
+                        <View style={styles.campoSelect}>
                             
-                        </Picker>
-                    </View>
-
-                </View>
-
-                <View style={[styles.campoSelect, {flex: 5}]}>
-
-                    <Text style={styles.titulo}>
-
-                        Quantidade
-
-                    </Text>
-
-                    <TextInput style={styles.inputQtd}
-                        onChangeText={onChangeQtd}
-                        value={qtd}
-                        keyboardType="default"
-                        />
-
-                </View>
-
-            </View>
-
-            <View style={styles.espacoValor}>
-
-                <View style={{flex: 6}}>
-
-                    <Text style={styles.titulo}>
-
-                        Valor
-
-                    </Text>
-
-                    <View style={styles.campoSelect}>
-                        
-                    <TextInput style={styles.inputQtd}
-                        onChangeText={onChangeQtd}
-                        value={qtd}
-                        keyboardType="default"
-                        />
-
-                    </View>
-
-                </View>
-
-                <View style={{flex: 5}}>
-
-                    <Text style={styles.titulo}>
-
-                        Carrinho?
-
-                    </Text>
-
-                    <View style={{flexDirection: "row", top: 5}}>
-
-                        <View style={styles.espacoIconCarrinho}>
-
-                            <Icon
-                                name="cart-variant"
-                                size={35}
-                                style={styles.iconCarrinho}
-                                color={corCarrinho}
+                        <TextInput style={styles.inputQtd}
+                            onChangeText={text => onChangeValor(text.replace(/[^0-9.]/g, ''))}
+                            value={valor}
+                            keyboardType="numeric"
+                            placeholder="0.00"
                             />
 
                         </View>
 
-                        <View style={styles.espacoCheckBox}>
+                    </View>
 
-                            <TouchableOpacity
+                    <View style={{flex: 5}}>
 
-                            activeOpacity={0.3}
-                            onPress={AlterCheckBox}                    
+                        <Text style={styles.titulo}>
 
-                            >
+                            Carrinho?
 
-                                <View style={styles.corpoCheck}>
+                        </Text>
 
-                                    <View>
+                        <View style={{flexDirection: "row", top: 5}}>
 
-                                        {CheckBox && <Text style={styles.xCarrinho}>
+                            <View style={styles.espacoIconCarrinho}>
 
-                                            ✓
+                                <Icon
+                                    name="cart-variant"
+                                    size={35}
+                                    style={styles.iconCarrinho}
+                                    color={corCarrinho}
+                                />
 
-                                        </Text>}
+                            </View>
+
+                            <View style={styles.espacoCheckBox}>
+
+                                <TouchableOpacity
+
+                                activeOpacity={0.3}
+                                onPress={AlterCheckBox}                    
+
+                                >
+
+                                    <View style={styles.corpoCheck}>
+
+                                        <View>
+
+                                            {CheckBox && <Text style={styles.xCarrinho}>
+
+                                                ✓
+
+                                            </Text>}
+
+                                        </View>
 
                                     </View>
 
-                                </View>
+                                </TouchableOpacity>
 
-                            </TouchableOpacity>
+                            </View>
 
                         </View>
 
@@ -216,48 +223,61 @@ export default function AddItem({route}){
 
                 </View>
 
-            </View>
+                <View style={{flexDirection: "row"}}>
 
-            <View style={{flexDirection: "row"}}>
+                    <View style={{flex: 5}}>
 
-                <View style={{flex: 5}}>
+                        <Text style={styles.titulo}>
 
-                    <Text style={styles.titulo}>
+                            Categoria
 
-                        Categoria
+                        </Text>
 
-                    </Text>
+                        <View style={styles.campoSelect}>
+                            <Picker
+                                selectedValue={selectedValue}
+                                onValueChange={(itemValue, itemIndex) => setSelectedValue(itemValue)}
+                            >
+                                <Picker.Item label="Opção 1" value="option1" />
+                                <Picker.Item label="Opção 2" value="option2" />
+                                <Picker.Item label="Opção 3" value="option3" />
+                                <Picker.Item label="Opção 4" value="option4" />
+                            </Picker>
+                        </View>
 
-                    <View style={styles.campoSelect}>
-                        <Picker
-                            selectedValue={selectedValue}
-                            onValueChange={(itemValue, itemIndex) => setSelectedValue(itemValue)}
-                        >
-                            <Picker.Item label="Opção 1" value="option1" />
-                            <Picker.Item label="Opção 2" value="option2" />
-                            <Picker.Item label="Opção 3" value="option3" />
-                            <Picker.Item label="Opção 4" value="option4" />
-                        </Picker>
                     </View>
+
+                    <TouchableWithoutFeedback onPress={() => navigation.navigate('Categorias')}>
+
+                        <View style={{flex: 1, justifyContent: "flex-end", alignItems: "flex-end"}}>
+
+                            <Icon
+                                name="playlist-edit"
+                                size={40}
+                                color={"white"}
+                                style={styles.iconEdit}
+                                />
+
+                        </View>
+
+                    </TouchableWithoutFeedback>
 
                 </View>
 
-                <TouchableWithoutFeedback onPress={() => navigation.navigate('Categorias')}>
+                <Text style={styles.titulo}>
 
-                    <View style={{flex: 1, justifyContent: "flex-end", alignItems: "flex-end"}}>
+                    Observação
 
-                        <Icon
-                            name="playlist-edit"
-                            size={40}
-                            color={"white"}
-                            style={styles.iconEdit}
-                            />
+                </Text>
 
-                    </View>
+                <TextInput style={[styles.input, styles.inputFinal]}
+                    onChangeText={setObservacao}
+                    value={Observacao}
+                    keyboardType="default"
+                    placeholder="Ex: Comprar apenas da marca x"
+                    />
 
-                </TouchableWithoutFeedback>
-
-            </View>
+            </ScrollView>
 
             <IconeCorreto funcao={() => adiciona_item(campo_nome, 0, qtd, 1, id_lista, 1)}/>
 
@@ -333,6 +353,12 @@ const styles = StyleSheet.create({
         textAlign: "center",
         paddingTop: 4
 
+
+    },
+
+    inputFinal:{
+
+        marginBottom: 90
 
     },
 
