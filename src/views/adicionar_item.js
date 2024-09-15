@@ -1,5 +1,5 @@
 import React, {useState, useContext} from "react";
-import { View, Text, StyleSheet, TextInput, TouchableWithoutFeedback } from "react-native";
+import { View, Text, StyleSheet, TextInput, TouchableWithoutFeedback, TouchableOpacity } from "react-native";
 import { Picker } from '@react-native-picker/picker';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useNavigation } from '@react-navigation/native';
@@ -20,6 +20,22 @@ export default function AddItem({route}){
     const [campo_nome, onChangecampo_nome] = React.useState('');
     const [qtd, onChangeQtd] = React.useState('');
     const [selectedValue, setSelectedValue] = useState("option1");
+
+    const [CheckBox, setCheckBox] = useState(false);
+
+    function AlterCheckBox(){
+
+        if(CheckBox == false){
+
+            setCheckBox(true);
+
+        }else{
+
+            setCheckBox(false);
+
+        }
+
+    }
 
     function adiciona_item(
 
@@ -145,7 +161,7 @@ export default function AddItem({route}){
 
                 </View>
 
-                <View style={[styles.campoSelect, {flex: 5}]}>
+                <View style={{flex: 5}}>
 
                     <Text style={styles.titulo}>
 
@@ -153,11 +169,47 @@ export default function AddItem({route}){
 
                     </Text>
 
-                    <TextInput style={styles.inputQtd}
-                        onChangeText={onChangeQtd}
-                        value={qtd}
-                        keyboardType="default"
-                        />
+                    <View style={{flexDirection: "row", top: 5}}>
+
+                        <View style={styles.espacoIconCarrinho}>
+
+                            <Icon
+                                name="cart-variant"
+                                size={35}
+                                style={styles.iconCarrinho}
+                                color={"#AAA"}
+                            />
+
+                        </View>
+
+                        <View style={styles.espacoCheckBox}>
+
+                            <TouchableOpacity
+
+                            activeOpacity={0.3}
+                            onPress={AlterCheckBox}                    
+
+                            >
+
+                                <View style={styles.corpoCheck}>
+
+                                    <View>
+
+                                        {CheckBox && <Text style={styles.xCarrinho}>
+
+                                            ✓
+
+                                        </Text>}
+
+                                    </View>
+
+                                </View>
+
+                            </TouchableOpacity>
+
+                        </View>
+
+                    </View>
 
                 </View>
 
@@ -255,7 +307,7 @@ const styles = StyleSheet.create({
 
     espacoValor:{
 
-        flexDirection: "row"
+        flexDirection: "row",
 
     },
 
@@ -278,6 +330,50 @@ const styles = StyleSheet.create({
         textAlign: "center",
         paddingTop: 4
 
+
+    },
+
+    /* CheckBox */
+
+    espacoIconCarrinho:{
+
+        flex:5,
+        alignItems: "flex-end"
+
+    },
+
+    espacoCheckBox:{
+
+        flex:5,
+        alignItems: "flex-start"
+
+    },
+
+    iconCarrinho:{
+
+        right: 20
+
+    },
+
+    corpoCheck:{
+
+        width:20,
+        height: 20,
+        borderWidth: 1,
+        borderColor: "#777",
+        borderRadius: 6,
+        top: 8,
+        right: 10
+
+    },
+
+    xCarrinho:{
+
+        flexDirection: "row",
+        textAlign: "center",
+        fontSize: 15,
+        top: -3,
+        color: "#21bf31"
 
     }
 
