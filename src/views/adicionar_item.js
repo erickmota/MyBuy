@@ -26,6 +26,8 @@ export default function AddItem({route}){
     const [CheckBox, setCheckBox] = useState(false);
     const [corCarrinho, setCorCarrinho] = useState("#AAA");
 
+    const [placeObrigatorio, setPlaceObrigatorio] = useState("");
+
     function AlterCheckBox(){
 
         if(CheckBox == false){
@@ -53,30 +55,53 @@ export default function AddItem({route}){
 
     ){
 
-        const formData = new URLSearchParams();
-        formData.append('nome_produto', nome_produto);
-        formData.append('tipo_exibicao', tipo_exibicao);
-        formData.append('qtd', qtd);
-        formData.append('categoria', categoria);
-        formData.append('lista', lista);
-        formData.append('foto', foto);
+        /* Validação dos inputs */
+        if(nome_produto.trim() === "" || qtd.trim() === ""){
 
-        fetch(`${config.URL_inicial_API}${DATAUser[0].id}/adiciona_produto`, {
-        method: "POST",
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-        },
-        body: formData.toString()
-        })
-        .then(response => response.json())
-        .then(data => {
+            setPlaceObrigatorio("*");
 
-            navigation.goBack();
-    
-        })
-        .catch(errors => {
-        console.error('Erro ao enviar solicitação:', errors);
-        });
+            setTimeout(() => {
+
+                setPlaceObrigatorio("");
+
+            }, 3000)
+
+            /* changeBorda({backgroundColor: "#f0d5da"});
+
+            setTimeout(() => {
+
+                changeBorda();
+
+            }, 2000) */
+
+        }else{
+
+            const formData = new URLSearchParams();
+            formData.append('nome_produto', nome_produto);
+            formData.append('tipo_exibicao', tipo_exibicao);
+            formData.append('qtd', qtd);
+            formData.append('categoria', categoria);
+            formData.append('lista', lista);
+            formData.append('foto', foto);
+
+            fetch(`${config.URL_inicial_API}${DATAUser[0].id}/adiciona_produto`, {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: formData.toString()
+            })
+            .then(response => response.json())
+            .then(data => {
+
+                navigation.goBack();
+        
+            })
+            .catch(errors => {
+            console.error('Erro ao enviar solicitação:', errors);
+            });
+
+        }
 
     }
 
@@ -92,10 +117,12 @@ export default function AddItem({route}){
 
                 </Text>
 
-                <TextInput style={styles.input}
+                <TextInput style={[styles.input]}
                     onChangeText={onChangecampo_nome}
                     value={campo_nome}
                     keyboardType="default"
+                    placeholder={placeObrigatorio}
+                    placeholderTextColor={"red"}
                     />
 
                 <View style={styles.espacoQtd}>
@@ -136,10 +163,12 @@ export default function AddItem({route}){
 
                         </Text>
 
-                        <TextInput style={styles.inputQtd}
+                        <TextInput style={[styles.inputQtd]}
                             onChangeText={text => onChangeQtd(text.replace(/[^0-9]/g, ''))}
                             value={qtd}
                             keyboardType="default"
+                            placeholder={placeObrigatorio}
+                            placeholderTextColor={"red"}
                             />
 
                     </View>
