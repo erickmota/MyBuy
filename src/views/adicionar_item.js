@@ -22,16 +22,19 @@ export default function AddItem({route}){
     const [selectedValue, setSelectedValue] = useState("option1");
 
     const [CheckBox, setCheckBox] = useState(false);
+    const [corCarrinho, setCorCarrinho] = useState("#AAA");
 
     function AlterCheckBox(){
 
         if(CheckBox == false){
 
             setCheckBox(true);
+            setCorCarrinho("green");
 
         }else{
 
             setCheckBox(false);
+            setCorCarrinho("#AAA");
 
         }
 
@@ -177,7 +180,7 @@ export default function AddItem({route}){
                                 name="cart-variant"
                                 size={35}
                                 style={styles.iconCarrinho}
-                                color={"#AAA"}
+                                color={corCarrinho}
                             />
 
                         </View>
