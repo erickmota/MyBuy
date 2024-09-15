@@ -29,7 +29,7 @@ export default function AddItem({route}){
         if(CheckBox == false){
 
             setCheckBox(true);
-            setCorCarrinho("green");
+            setCorCarrinho("#21bf31");
 
         }else{
 
