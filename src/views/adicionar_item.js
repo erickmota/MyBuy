@@ -20,8 +20,9 @@ export default function AddItem({route}){
     const [campo_nome, onChangecampo_nome] = React.useState('');
     const [qtd, onChangeQtd] = React.useState('');
     const [valor, onChangeValor] = React.useState('');
-    const [selectedValue, setSelectedValue] = useState("option1");
-    const [Observacao, setObservacao] = useState("");
+    const [selectedTipo, setSelectedTipo] = useState("1");
+    const [selectedCategoria, setSelectedCategoria] = useState("option1");
+    const [observacao, setObservacao] = useState("");
 
     const [CheckBox, setCheckBox] = useState(false);
     const [corCarrinho, setCorCarrinho] = useState("#AAA");
@@ -51,7 +52,9 @@ export default function AddItem({route}){
         qtd,
         categoria,
         lista,
-        foto
+        foto,
+        valor,
+        obs
 
     ){
 
@@ -66,15 +69,17 @@ export default function AddItem({route}){
 
             }, 3000)
 
-            /* changeBorda({backgroundColor: "#f0d5da"});
-
-            setTimeout(() => {
-
-                changeBorda();
-
-            }, 2000) */
-
         }else{
+
+            if(CheckBox == true){
+
+                carrinho = 1;
+
+            }else{
+
+                carrinho = 0;
+
+            }
 
             const formData = new URLSearchParams();
             formData.append('nome_produto', nome_produto);
@@ -83,6 +88,9 @@ export default function AddItem({route}){
             formData.append('categoria', categoria);
             formData.append('lista', lista);
             formData.append('foto', foto);
+            formData.append('carrinho', carrinho);
+            formData.append('valor', valor);
+            formData.append('obs', obs);
 
             fetch(`${config.URL_inicial_API}${DATAUser[0].id}/adiciona_produto`, {
             method: "POST",
@@ -137,18 +145,20 @@ export default function AddItem({route}){
 
                         <View style={styles.campoSelect}>
                             <Picker
-                                selectedValue={selectedValue}
-                                onValueChange={(itemValue, itemIndex) => setSelectedValue(itemValue)}
+                                selectedValue={selectedTipo}
+                                onValueChange={(itemValue) => setSelectedTipo(itemValue)}
                             >
-                                <Picker.Item label="Caixa" value="option1" />
-                                <Picker.Item label="Pacote" value="option2" />
-                                <Picker.Item label="Garrafa" value="option4" />
-                                <Picker.Item label="Lata" value="option5" />
-                                <Picker.Item label="Un" value="option6" />
-                                <Picker.Item label="Kg" value="option7" />
-                                <Picker.Item label="g" value="option8" />
-                                <Picker.Item label="ml" value="option9" />
-                                <Picker.Item label="dz" value="option10" />
+                                <Picker.Item label="Un" value="1" />
+                                <Picker.Item label="Kg" value="2" />
+                                <Picker.Item label="g" value="3" />
+                                <Picker.Item label="L" value="4" />
+                                <Picker.Item label="ml" value="5" />
+                                <Picker.Item label="dz" value="6" />
+                                <Picker.Item label="Caixa" value="7" />
+                                <Picker.Item label="Pacote" value="8" />
+                                <Picker.Item label="Garrafa" value="9" />
+                                <Picker.Item label="Lata" value="10" />
+                                <Picker.Item label="Embalagem" value="11" />
                                 
                             </Picker>
                         </View>
@@ -164,9 +174,15 @@ export default function AddItem({route}){
                         </Text>
 
                         <TextInput style={[styles.inputQtd]}
-                            onChangeText={text => onChangeQtd(text.replace(/[^0-9]/g, ''))}
+                            onChangeText={text =>{
+
+                                const replaceNumero = text.replace(/[^0-9.]/g, '');
+                                const replacePonto = replaceNumero.replace(/(\..*)\./g, '$1');
+                                onChangeQtd(replacePonto);
+
+                            }}
                             value={qtd}
-                            keyboardType="default"
+                            keyboardType="numeric"
                             placeholder={placeObrigatorio}
                             placeholderTextColor={"red"}
                             />
@@ -188,7 +204,13 @@ export default function AddItem({route}){
                         <View style={styles.campoSelect}>
                             
                         <TextInput style={styles.inputQtd}
-                            onChangeText={text => onChangeValor(text.replace(/[^0-9.]/g, ''))}
+                        onChangeText={text =>{
+
+                            const replaceNumero = text.replace(/[^0-9.]/g, '');
+                            const replacePonto = replaceNumero.replace(/(\..*)\./g, '$1');
+                            onChangeValor(replacePonto);
+
+                        }}
                             value={valor}
                             keyboardType="numeric"
                             placeholder="0.00"
@@ -264,8 +286,8 @@ export default function AddItem({route}){
 
                         <View style={styles.campoSelect}>
                             <Picker
-                                selectedValue={selectedValue}
-                                onValueChange={(itemValue, itemIndex) => setSelectedValue(itemValue)}
+                                selectedValue={selectedCategoria}
+                                onValueChange={(itemValue) => setSelectedCategoria(itemValue)}
                             >
                                 <Picker.Item label="Opção 1" value="option1" />
                                 <Picker.Item label="Opção 2" value="option2" />
@@ -301,14 +323,14 @@ export default function AddItem({route}){
 
                 <TextInput style={[styles.input, styles.inputFinal]}
                     onChangeText={setObservacao}
-                    value={Observacao}
+                    value={observacao}
                     keyboardType="default"
                     placeholder="Ex: Comprar apenas da marca x"
                     />
 
             </ScrollView>
 
-            <IconeCorreto funcao={() => adiciona_item(campo_nome, 0, qtd, 1, id_lista, 1)}/>
+            <IconeCorreto funcao={() => adiciona_item(campo_nome, selectedTipo, qtd, 1, id_lista, 1, valor, observacao)}/>
 
         </View>
 
