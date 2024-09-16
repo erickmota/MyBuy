@@ -1,5 +1,5 @@
-import React, {useState, useContext} from "react";
-import { View, Text, StyleSheet, TextInput, TouchableWithoutFeedback, TouchableOpacity, ScrollView } from "react-native";
+import React, {useState, useContext, useEffect} from "react";
+import { View, Text, StyleSheet, TextInput, TouchableWithoutFeedback, TouchableOpacity, ScrollView, FlatList } from "react-native";
 import { Picker } from '@react-native-picker/picker';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useNavigation } from '@react-navigation/native';
@@ -12,6 +12,7 @@ export default function AddItem({route}){
 
     /* Contexto */
     const { DATAUser } = useContext(UserContext);
+    const [DATA, setData] = useState([]);
 
     const {id_lista} = route.params;
 
@@ -28,6 +29,18 @@ export default function AddItem({route}){
     const [corCarrinho, setCorCarrinho] = useState("#AAA");
 
     const [placeObrigatorio, setPlaceObrigatorio] = useState("");
+
+    /* Recebendo dados das categorias */
+    useEffect(() => {
+        fetch(`${config.URL_inicial_API}${DATAUser[0].id}/categorias`)
+        .then(response => response.json())
+        .then(data => {
+            setData(data.data);
+        })
+        .catch(error => {
+            console.error('Erro ao buscar dados da API:', error);
+        });
+    }, [DATA]);
 
     function AlterCheckBox(){
 
@@ -289,10 +302,13 @@ export default function AddItem({route}){
                                 selectedValue={selectedCategoria}
                                 onValueChange={(itemValue) => setSelectedCategoria(itemValue)}
                             >
-                                <Picker.Item label="Opção 1" value="option1" />
-                                <Picker.Item label="Opção 2" value="option2" />
-                                <Picker.Item label="Opção 3" value="option3" />
-                                <Picker.Item label="Opção 4" value="option4" />
+
+                                {DATA.map((item) => (
+
+                                    <Picker.Item key={item.id} label={item.nome} value={item.id} />
+
+                                ))}
+
                             </Picker>
                         </View>
 
@@ -330,7 +346,7 @@ export default function AddItem({route}){
 
             </ScrollView>
 
-            <IconeCorreto funcao={() => adiciona_item(campo_nome, selectedTipo, qtd, 1, id_lista, 1, valor, observacao)}/>
+            <IconeCorreto funcao={() => adiciona_item(campo_nome, selectedTipo, qtd, selectedCategoria, id_lista, 1, valor, observacao)}/>
 
         </View>
 
