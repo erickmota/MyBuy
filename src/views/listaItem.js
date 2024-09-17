@@ -16,6 +16,7 @@ export default function ListaItem({route, navigation}){
     const [DATA_carrinho, setCarrinho] = useState([]);
 
     /* Contexto */
+
     const { DATAUser } = useContext(UserContext);
 
     const carregar_API = useCallback(()=>{
@@ -23,6 +24,7 @@ export default function ListaItem({route, navigation}){
         if(DATAUser){
 
             /* API produtos e categorias */
+            
             fetch(`${config.URL_inicial_API}${DATAUser[0].id}/categorias`)
             .then(response => response.json())
             .then(async data => {
@@ -107,6 +109,7 @@ export default function ListaItem({route, navigation}){
     9 = Garrafa
     10 = Lata
     11 = Embalagem */
+
     function verifica_exibicao(numero_exibicao, qtd){
 
         switch (numero_exibicao) {
@@ -222,12 +225,42 @@ export default function ListaItem({route, navigation}){
 
     }
 
+    /* Ajusta o tamanho do texto de observação.
+    Texto e temanho desejado passados por parâmetro */
+
     function ajusta_tamanho_obs(texto, tamanho){
 
         if(texto.length > tamanho){
 
             return texto.substring(0, tamanho)+"...";
 
+        }
+
+    }
+
+    /* Formata o valor para aparece corretamente nos itens do carrinho */
+
+    function formatar_valor(valor){
+
+        if(Number.isInteger(valor)){
+
+            return valor+".00";
+
+        }else{
+
+            /* Retorna o valor com apenas duas casas decimais */
+
+            const numString = valor.toString();
+
+            const parte = numString.split(".");
+
+            const inteiro = parte[0];
+
+            const decimal = parte[1];
+
+            const decimal_atualizado = decimal.substring(0, 2);
+
+            return inteiro+"."+decimal_atualizado
         }
 
     }
@@ -308,7 +341,7 @@ export default function ListaItem({route, navigation}){
 
                                                                     <Text style={styles.obs}>
                                                                         
-                                                                        {ajusta_tamanho_obs(prod.obs, 30)}
+                                                                        * {ajusta_tamanho_obs(prod.obs, 30)}
                                                                         
                                                                     </Text>
 
@@ -366,7 +399,11 @@ export default function ListaItem({route, navigation}){
 
                                 <Text style={[styles.tituloListas, styles.tituloListasCarrinho]}>
 
-                                    SEU CARRINHO
+                                    <Icon
+                                        name="cart-variant"
+                                        size={19}
+                                        color={config.cor1}
+                                    /> Carrinho
 
                                 </Text>
 
@@ -405,13 +442,13 @@ export default function ListaItem({route, navigation}){
 
                                             <Text style={styles.qtdItens}>
                                                 
-                                                3 Pacotes /
+                                            {item.qtd} {verifica_exibicao(parseInt(item.tipo_exibicao), Math.ceil(item.qtd))}{" / "}
                                                 
                                             </Text>
 
-                                            <Text style={[styles.qtdItens, {color: "#8FBC8F"}]}>
+                                            <Text style={[styles.qtdItens, {color: "#6ec0fa"}]}>
                                                 
-                                                R$18,58
+                                                {"R$"}{formatar_valor(parseFloat(item.valor))}
                                                 
                                             </Text>
 
@@ -514,6 +551,7 @@ const styles = StyleSheet.create({
     
     tituloListasCarrinho:{
 
+        fontSize: 18,
         color: config.cor1
 
     }, 

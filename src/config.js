@@ -3,7 +3,7 @@ const config = {
     /* Estilos */
     cor2: "#902dc4",
     cor1: "#7523a0",
-    corTextoSecundario: "#BBB",
+    corTextoSecundario: "#999",
     corTelaLogin: "#e1c6f5",
     corObs: "#faa0a7",
     tamanhoTextosInputs: 16,

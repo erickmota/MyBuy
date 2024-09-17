@@ -122,7 +122,7 @@ export default function App() {
 
           <stack.Screen name="AddItem" component={AddItem} options={{
 
-            title: "Adicionar item",
+            title: "Adicionar produto",
             headerTintColor: "#FFF",
             headerStyle: {
 
