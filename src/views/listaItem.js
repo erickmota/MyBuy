@@ -242,6 +242,36 @@ export default function ListaItem({route, navigation}){
 
     }
 
+    /* 1 = Un
+    2 = Kg
+    3 = g
+    4 = L
+    5 = ml
+    6 = dz
+    7 = Caixa
+    8 = Pacote
+    9 = Garrafa
+    10 = Lata
+    11 = Embalagem */
+
+    function soma_valor_quantidade(qtd, valor, tipo){
+
+        let valor_real = 0;
+
+        if(tipo == 5 || tipo == 3){
+
+            valor_real = valor;
+
+        }else{
+
+            valor_real = qtd * valor;
+
+        }
+
+        return valor_real;
+
+    }
+
     /* Formata o valor para aparece corretamente nos itens do carrinho */
 
     function formatar_valor(valor){
@@ -459,10 +489,12 @@ export default function ListaItem({route, navigation}){
                                             </Text>
 
                                             <Text style={[styles.qtdItens, {color: "#6ec0fa"}]}>
-                                                
-                                                {"R$"}{formatar_valor(parseFloat(item.valor))}
 
-                                                {somar_carrinho(parseFloat(item.valor))}
+                                                {/* Aqui existem 3 funções com funcionamento simultâneo (uma depende da outra para funcionar) */}
+                                                
+                                                {"R$"}{formatar_valor(soma_valor_quantidade(parseInt(item.qtd), parseFloat(item.valor), parseInt(item.tipo_exibicao)))}
+
+                                                {somar_carrinho(parseFloat(soma_valor_quantidade(parseInt(item.qtd), parseFloat(item.valor), parseInt(item.tipo_exibicao))))}
                                                 
                                             </Text>
 
