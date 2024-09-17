@@ -295,9 +295,20 @@ export default function ListaItem({route, navigation}){
 
             const decimal = parte[1];
 
-            const decimal_atualizado = decimal.substring(0, 2);
+            if(decimal.length < 2){
 
-            return inteiro+"."+decimal_atualizado
+                const decimal_atualizado = decimal.substring(0, 2);
+
+                return inteiro+"."+decimal_atualizado+"0"
+
+            }else{
+
+                const decimal_atualizado = decimal.substring(0, 2);
+
+                return inteiro+"."+decimal_atualizado
+
+            }
+            
         }
 
     }
