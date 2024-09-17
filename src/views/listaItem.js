@@ -94,6 +94,134 @@ export default function ListaItem({route, navigation}){
         }, [carregar_API])
     );
 
+    /* Função responsável a nomear os tipos de exibição
+    de acordo com os números do banco:
+    1 = Un
+    2 = Kg
+    3 = g
+    4 = L
+    5 = ml
+    6 = dz
+    7 = Caixa
+    8 = Pacote
+    9 = Garrafa
+    10 = Lata
+    11 = Embalagem */
+    function verifica_exibicao(numero_exibicao, qtd){
+
+        switch (numero_exibicao) {
+
+            case 1:
+
+                return "Un";
+
+            break;
+
+            case 2:
+
+                return "Kg";
+
+            break;
+
+            case 3:
+
+                return "g";
+
+            break;
+
+            case 4:
+
+                return "L";
+
+            break;
+
+            case 5:
+
+                return "ml";
+
+            break;
+
+            case 6:
+
+                return "dz";
+
+            break;
+
+            case 7:
+
+                if(qtd > 1){
+
+                    return "Caixas";
+
+                }else{
+
+                    return "Caixa";
+
+                }
+
+            break;
+
+            case 8:
+
+                if(qtd > 1){
+
+                    return "Pacotes";
+
+                }else{
+
+                    return "Pacote";
+
+                }
+
+            break;
+
+            case 9:
+
+                if(qtd > 1){
+
+                    return "Garrafas";
+
+                }else{
+
+                    return "Garrafa";
+
+                }
+
+            break;
+
+            case 10:
+
+                if(qtd > 1){
+
+                    return "Latas";
+
+                }else{
+
+                    return "Lata";
+
+                }
+
+
+            break;
+
+            case 11:
+
+                if(qtd > 1){
+
+                    return "Embalagens";
+
+                }else{
+
+                    return "Embalagem";
+
+                }
+
+            break;
+
+        }
+
+    }
+
     return(
 
         <View style={styles.container}>
@@ -160,7 +288,7 @@ export default function ListaItem({route, navigation}){
 
                                                                 <Text style={styles.qtdItens}>
                                                                     
-                                                                    {prod.qtd} pacotes
+                                                                    {prod.qtd} {verifica_exibicao(parseInt(prod.tipo_exibicao), Math.ceil(prod.qtd))}
                                                                     
                                                                 </Text>
 
