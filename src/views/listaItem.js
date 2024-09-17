@@ -12,8 +12,12 @@ export default function ListaItem({route, navigation}){
 
     const {id_lista} = route.params;
 
+    /* Estados */
+
     const [DATA, setData] = useState([]);
     const [DATA_carrinho, setCarrinho] = useState([]);
+
+    let soma_carrinho = 0;
 
     /* Contexto */
 
@@ -265,6 +269,14 @@ export default function ListaItem({route, navigation}){
 
     }
 
+    const somar_carrinho = (valor) => {
+
+        const novo_valor = soma_carrinho + valor;
+
+        soma_carrinho = novo_valor;
+
+    }
+
     return(
 
         <View style={styles.container}>
@@ -449,6 +461,8 @@ export default function ListaItem({route, navigation}){
                                             <Text style={[styles.qtdItens, {color: "#6ec0fa"}]}>
                                                 
                                                 {"R$"}{formatar_valor(parseFloat(item.valor))}
+
+                                                {somar_carrinho(parseFloat(item.valor))}
                                                 
                                             </Text>
 
@@ -509,7 +523,7 @@ export default function ListaItem({route, navigation}){
                 <Text style={styles.textBtnComprar}>
 
                     Registrar{"\n"}
-                    <Text style={{fontSize: 20, fontWeight: "bold"}}>R$189,90</Text>
+                    <Text style={{fontSize: 20, fontWeight: "bold"}}>R${formatar_valor(soma_carrinho)}</Text>
 
                 </Text>
 
