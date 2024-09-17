@@ -258,6 +258,9 @@ export default function ListaItem({route, navigation}){
 
         let valor_real = 0;
 
+        /* Se caso o tipo de exibição do produto for 3 (g) ou 5 (ml), o valor retornado como preço de exibição
+        será mantido o mesmo, pois, em "ml" e "g" naõ será calculado pela quantidade. */
+
         if(tipo == 5 || tipo == 3){
 
             valor_real = valor;
@@ -492,9 +495,9 @@ export default function ListaItem({route, navigation}){
 
                                                 {/* Aqui existem 3 funções com funcionamento simultâneo (uma depende da outra para funcionar) */}
                                                 
-                                                {"R$"}{formatar_valor(soma_valor_quantidade(parseInt(item.qtd), parseFloat(item.valor), parseInt(item.tipo_exibicao)))}
+                                                {"R$"}{formatar_valor(soma_valor_quantidade(parseFloat(item.qtd), parseFloat(item.valor), parseInt(item.tipo_exibicao)))}
 
-                                                {somar_carrinho(parseFloat(soma_valor_quantidade(parseInt(item.qtd), parseFloat(item.valor), parseInt(item.tipo_exibicao))))}
+                                                {somar_carrinho(parseFloat(soma_valor_quantidade(parseFloat(item.qtd), parseFloat(item.valor), parseInt(item.tipo_exibicao))))}
                                                 
                                             </Text>
 
