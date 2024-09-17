@@ -222,6 +222,16 @@ export default function ListaItem({route, navigation}){
 
     }
 
+    function ajusta_tamanho_obs(texto, tamanho){
+
+        if(texto.length > tamanho){
+
+            return texto.substring(0, tamanho)+"...";
+
+        }
+
+    }
+
     return(
 
         <View style={styles.container}>
@@ -293,6 +303,18 @@ export default function ListaItem({route, navigation}){
                                                                 </Text>
 
                                                             </View>
+
+                                                            {prod.obs && <View style={{flexDirection: "row"}}>
+
+                                                                    <Text style={styles.obs}>
+                                                                        
+                                                                        {ajusta_tamanho_obs(prod.obs, 30)}
+                                                                        
+                                                                    </Text>
+
+                                                                </View>
+
+                                                            }
 
                                                         </View>
 
@@ -476,7 +498,7 @@ const styles = StyleSheet.create({
     tituloListas: {
 
         color: config.cor2,
-        fontSize: 17,
+        fontSize: 15,
         paddingHorizontal: 15,
         marginTop: 20,
         marginBottom: 5,
@@ -515,7 +537,7 @@ const styles = StyleSheet.create({
 
     titleLista: {
 
-        fontSize: 18,
+        fontSize: 17,
         
     },
 
@@ -527,10 +549,17 @@ const styles = StyleSheet.create({
 
     qtdItens:{
 
-        fontSize: 14,
+        fontSize: 13,
         color: config.corTextoSecundario,
         alignContent: "center",
     
+    },
+
+    obs:{
+
+        fontSize: 13,
+        color: config.corObs
+
     },
 
     iconeLista: {

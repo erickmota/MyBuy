@@ -5,6 +5,7 @@ const config = {
     cor1: "#7523a0",
     corTextoSecundario: "#BBB",
     corTelaLogin: "#e1c6f5",
+    corObs: "#faa0a7",
     tamanhoTextosInputs: 16,
 
     /* Conteúdos */
