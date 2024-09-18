@@ -397,7 +397,7 @@ export default function ListaItem({route, navigation}){
 
                                                                     <Text style={styles.obs}>
                                                                         
-                                                                        * {ajusta_tamanho_obs(prod.obs, 30)}
+                                                                        * {ajusta_tamanho_obs(prod.obs, 37)}
                                                                         
                                                                     </Text>
 
