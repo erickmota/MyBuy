@@ -1,5 +1,5 @@
 import React, { useEffect, useContext, useState, useCallback } from "react";
-import { View, Text, StyleSheet, ScrollView, StatusBar, TouchableNativeFeedback, Image, TouchableOpacity } from "react-native";
+import { View, Text, StyleSheet, ScrollView, StatusBar, TouchableNativeFeedback, Image, TouchableOpacity, TouchableWithoutFeedback, Modal, Button, TextInput } from "react-native";
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { UserContext } from '../context/user';
 import { useFocusEffect } from '@react-navigation/native';
@@ -16,6 +16,12 @@ export default function ListaItem({route, navigation}){
 
     const [DATA, setData] = useState([]);
     const [DATA_carrinho, setCarrinho] = useState([]);
+    const [modalVisible, setModalVisible] = useState(false);
+
+    /* Modal */
+
+    const [qtd, onChangeQtd] = React.useState('');
+    const [valor, onChangeValor] = React.useState('');
 
     let soma_carrinho = 0;
 
@@ -99,6 +105,12 @@ export default function ListaItem({route, navigation}){
           
         }, [carregar_API])
     );
+
+    function add_carrinho(){
+
+        setModalVisible(true);
+        
+    }
 
     /* Função responsável a nomear os tipos de exibição
     de acordo com os números do banco:
@@ -327,6 +339,97 @@ export default function ListaItem({route, navigation}){
 
             <StatusBar backgroundColor={config.cor1} style="light" />
 
+            {/* Modal */}
+
+            <Modal
+                animationType="fade" // ou 'fade', 'none'
+                transparent={true}    // Define se o fundo será transparente
+                visible={modalVisible}
+                onRequestClose={() => setModalVisible(false)} // Fechar modal ao clicar no botão 'voltar'
+            >
+
+                <View style={styles.centeredView}>
+
+                    <View style={styles.modalView}>
+
+                        <TouchableWithoutFeedback onPress={() => setModalVisible(false)}>
+
+                        <View style={styles.areaX}>
+
+                            <Text style={{color: "#f08484"}}>
+
+                                X
+
+                            </Text>
+
+                        </View>
+
+                        </TouchableWithoutFeedback>
+
+                        <View style={styles.corpoInputs}>
+
+                            <View style={styles.areaQtd}>
+
+                                <Text style={styles.titulo}>
+
+                                    Quantidade
+
+                                </Text>
+
+                                <TextInput style={[styles.input]}
+                                onChangeText={text =>{
+
+                                    const replaceNumero = text.replace(/[^0-9.]/g, '');
+                                    const replacePonto = replaceNumero.replace(/(\..*)\./g, '$1');
+                                    onChangeQtd(replacePonto);
+
+                                }}
+                                value={qtd}
+                                keyboardType="numeric"
+                                />
+
+                            </View>
+
+                            <View style={styles.areaValor}>
+
+                                <Text style={styles.titulo}>
+
+                                    Valor
+
+                                </Text>
+
+                                <TextInput style={[styles.input]}
+                                onChangeText={text =>{
+
+                                    const replaceNumero = text.replace(/[^0-9.]/g, '');
+                                    const replacePonto = replaceNumero.replace(/(\..*)\./g, '$1');
+                                    onChangeValor(replacePonto);
+
+                                }}
+                                value={valor}
+                                keyboardType="numeric"
+                                placeholder="0.00"
+                                />
+
+                            </View>                            
+
+                        </View>
+
+                        <View style={styles.AreaBtnConfirmar}>
+
+                            <Button title="Confirmar"/>
+
+                        </View>
+
+                        {/* <Text style={styles.modalText}>Este é um modal!</Text>
+                        <Button title="Fechar" onPress={() => setModalVisible(false)} /> */}
+
+                    </View>
+
+                </View>
+
+            </Modal>
+
             <ScrollView>
 
                 <View style={styles.areaListas}>
@@ -409,15 +512,19 @@ export default function ListaItem({route, navigation}){
 
                                                     </TouchableOpacity>
 
-                                                    <View style={[styles.iconeLista, {flex:1}]}>
+                                                    <TouchableWithoutFeedback onPress={()=> add_carrinho()}>
 
-                                                        <Icon
-                                                            name="cart-plus"
-                                                            size={25}
-                                                            color={"#0ee031"}
-                                                            />
+                                                        <View style={[styles.iconeLista, {flex:1}]}>
 
-                                                    </View>
+                                                            <Icon
+                                                                name="cart-plus"
+                                                                size={25}
+                                                                color={"#0ee031"}
+                                                                />
+
+                                                        </View>
+
+                                                    </TouchableWithoutFeedback >
 
                                                 </View>
 
@@ -730,6 +837,87 @@ const styles = StyleSheet.create({
         fontSize: 15,
         color: "#AAA",
         textAlign: "center"
+
+    },
+
+    /* Modal */
+
+    centeredView: {
+
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'rgba(0,0,0,0.5)', // Fundo semitransparente
+
+      },
+
+      modalView: {
+
+        width: 300,
+        padding: 20,
+        backgroundColor: 'white',
+        borderRadius: 10,
+        shadowColor: '#000',
+        shadowOffset: {
+          width: 0,
+          height: 2,
+
+        },
+
+        shadowOpacity: 0.25,
+        shadowRadius: 4,
+        elevation: 5,
+
+      },
+
+      modalText: {
+        marginBottom: 15,
+        textAlign: 'center',
+        
+      },
+
+      input:{
+
+        borderBottomWidth: 1,
+        borderBottomColor: "#CCC",
+        marginTop: 20,
+        fontSize: config.tamanhoTextosInputs,
+        color: "#777"
+
+    },
+
+    corpoInputs:{
+
+        flexDirection: "row",
+        marginTop: 15
+
+    },
+
+    areaQtd:{
+
+        flex: 1,
+        marginRight: 15
+
+    },
+
+    areaValor:{
+
+        flex: 1,
+        marginLeft: 15
+
+    },
+
+    areaX:{
+
+        position: "absolute",
+        top: 3,
+        left: 8
+
+    },
+
+    AreaBtnConfirmar:{
+
+        marginTop: 20
 
     }
 
