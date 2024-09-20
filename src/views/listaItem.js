@@ -143,6 +143,30 @@ export default function ListaItem({route, navigation}){
 
     }
 
+    function remover_produto_carrinho(id_produto){
+
+        const formData = new URLSearchParams();
+        formData.append('id_produto', id_produto);
+
+        fetch(`${config.URL_inicial_API}${DATAUser[0].id}/remover_produto_carrinho`, {
+        method: "POST",
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: formData.toString()
+        })
+        .then(response => response.json())
+        .then(data => {
+
+            carregar_API();
+    
+        })
+        .catch(errors => {
+        console.error('Erro ao enviar solicitação:', errors);
+        });
+
+    }
+
     /* Função responsável a nomear os tipos de exibição
     de acordo com os números do banco:
     1 = Un
@@ -654,15 +678,19 @@ export default function ListaItem({route, navigation}){
 
                                     </View>
 
-                                    <View style={[styles.iconeLista, {flex: 1}]}>
+                                    <TouchableWithoutFeedback onPress={()=> remover_produto_carrinho(item.id)}>
 
-                                        <Icon
-                                            name="cart-minus"
-                                            size={25}
-                                            color={"#FF0000"}
-                                            />
+                                        <View style={[styles.iconeLista, {flex: 1}]}>
 
-                                    </View>
+                                            <Icon
+                                                name="cart-minus"
+                                                size={25}
+                                                color={"#FF0000"}
+                                                />
+
+                                        </View>
+
+                                    </TouchableWithoutFeedback>
 
                                 </View>
 
