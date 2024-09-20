@@ -358,9 +358,9 @@ export default function ListaItem({route, navigation}){
 
                         <View style={styles.areaX}>
 
-                            <Text style={{color: "#f08484"}}>
+                            <Text style={{color: "#BBB"}}>
 
-                                X
+                                (Cancelar)
 
                             </Text>
 
@@ -419,7 +419,7 @@ export default function ListaItem({route, navigation}){
 
                         <View style={styles.AreaBtnConfirmar}>
 
-                            <Button title="Confirmar"/>
+                            <Button color={config.cor2} title="Confirmar  ->"/>
 
                         </View>
 
