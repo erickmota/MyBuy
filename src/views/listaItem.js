@@ -22,6 +22,7 @@ export default function ListaItem({route, navigation}){
 
     const [qtd, onChangeQtd] = React.useState();
     const [valor, onChangeValor] = React.useState();
+    const [id_produto, setIdProduto] = React.useState();
 
     let soma_carrinho = 0;
 
@@ -106,12 +107,40 @@ export default function ListaItem({route, navigation}){
         }, [carregar_API])
     );
 
-    function add_carrinho(qtd, valor){
+    function add_carrinho_modal(qtd, valor, id_produto){
 
+        setIdProduto(id_produto);
         onChangeQtd(qtd);
         onChangeValor(valor);
         setModalVisible(true);
         
+    }
+
+    const add_carrinho_API = () => {
+
+        const formData = new URLSearchParams();
+        formData.append('id_produto', id_produto);
+        formData.append('qtd', qtd);
+        formData.append('valor', valor);
+
+        fetch(`${config.URL_inicial_API}${DATAUser[0].id}/adicionar_produto_carrinho`, {
+        method: "POST",
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: formData.toString()
+        })
+        .then(response => response.json())
+        .then(data => {
+
+            setModalVisible(false);
+            carregar_API();
+    
+        })
+        .catch(errors => {
+        console.error('Erro ao enviar solicitação:', errors);
+        });
+
     }
 
     /* Função responsável a nomear os tipos de exibição
@@ -419,7 +448,7 @@ export default function ListaItem({route, navigation}){
 
                         <View style={styles.AreaBtnConfirmar}>
 
-                            <Button color={config.cor2} title="Confirmar  ->"/>
+                            <Button onPress={()=> add_carrinho_API()} color={config.cor2} title="Confirmar  ->"/>
 
                         </View>
 
@@ -514,7 +543,7 @@ export default function ListaItem({route, navigation}){
 
                                                     </TouchableOpacity>
 
-                                                    <TouchableWithoutFeedback onPress={()=> add_carrinho(prod.qtd, prod.valor)}>
+                                                    <TouchableWithoutFeedback onPress={()=> add_carrinho_modal(prod.qtd, prod.valor, prod.id)}>
 
                                                         <View style={[styles.iconeLista, {flex:1}]}>
 
