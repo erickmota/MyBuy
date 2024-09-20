@@ -20,8 +20,8 @@ export default function ListaItem({route, navigation}){
 
     /* Modal */
 
-    const [qtd, onChangeQtd] = React.useState('');
-    const [valor, onChangeValor] = React.useState('');
+    const [qtd, onChangeQtd] = React.useState();
+    const [valor, onChangeValor] = React.useState();
 
     let soma_carrinho = 0;
 
@@ -106,8 +106,10 @@ export default function ListaItem({route, navigation}){
         }, [carregar_API])
     );
 
-    function add_carrinho(){
+    function add_carrinho(qtd, valor){
 
+        onChangeQtd(qtd);
+        onChangeValor(valor);
         setModalVisible(true);
         
     }
@@ -512,7 +514,7 @@ export default function ListaItem({route, navigation}){
 
                                                     </TouchableOpacity>
 
-                                                    <TouchableWithoutFeedback onPress={()=> add_carrinho()}>
+                                                    <TouchableWithoutFeedback onPress={()=> add_carrinho(prod.qtd, prod.valor)}>
 
                                                         <View style={[styles.iconeLista, {flex:1}]}>
 
