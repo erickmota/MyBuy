@@ -72,7 +72,7 @@ export default function AddItem({route}){
     ){
 
         /* Validação dos inputs */
-        if(nome_produto.trim() === "" || qtd.trim() === ""){
+        if(nome_produto.trim() === ""){
 
             setPlaceObrigatorio("*");
 
@@ -196,8 +196,6 @@ export default function AddItem({route}){
                             }}
                             value={qtd}
                             keyboardType="numeric"
-                            placeholder={placeObrigatorio}
-                            placeholderTextColor={"red"}
                             />
 
                     </View>

@@ -407,13 +407,13 @@ export default function ListaItem({route, navigation}){
 
                 const decimal_atualizado = decimal.substring(0, 2);
 
-                return inteiro+"."+decimal_atualizado+"0"
+                return parseFloat(inteiro+"."+decimal_atualizado+"0")
 
             }else{
 
                 const decimal_atualizado = decimal.substring(0, 2);
 
-                return inteiro+"."+decimal_atualizado
+                return parseFloat(inteiro+"."+decimal_atualizado)
 
             }
             
