@@ -431,17 +431,27 @@ export default function ListaItem({route, navigation}){
 
                                 </Text>
 
-                                <TextInput style={[styles.input]}
-                                onChangeText={text =>{
+                                <View style={{flexDirection: "row"}}>
 
-                                    const replaceNumero = text.replace(/[^0-9.]/g, '');
-                                    const replacePonto = replaceNumero.replace(/(\..*)\./g, '$1');
-                                    onChangeQtd(replacePonto);
+                                    <Text style={{marginTop: 28, flex: 2, fontSize: 11, color: config.cor2}}>
 
-                                }}
-                                value={qtd}
-                                keyboardType="numeric"
-                                />
+                                        Caix
+
+                                    </Text>
+
+                                    <TextInput style={[styles.input, {flex: 3}]}
+                                    onChangeText={text =>{
+
+                                        const replaceNumero = text.replace(/[^0-9.]/g, '');
+                                        const replacePonto = replaceNumero.replace(/(\..*)\./g, '$1');
+                                        onChangeQtd(replacePonto);
+
+                                    }}
+                                    value={qtd}
+                                    keyboardType="numeric"
+                                    />
+
+                                </View>
 
                             </View>
 
