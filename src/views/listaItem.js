@@ -23,6 +23,7 @@ export default function ListaItem({route, navigation}){
     const [qtd, onChangeQtd] = React.useState();
     const [valor, onChangeValor] = React.useState();
     const [id_produto, setIdProduto] = React.useState();
+    const [tipo, setTipo] = React.useState();
 
     let soma_carrinho = 0;
 
@@ -107,9 +108,10 @@ export default function ListaItem({route, navigation}){
         }, [carregar_API])
     );
 
-    function add_carrinho_modal(qtd, valor, id_produto){
+    function add_carrinho_modal(qtd, valor, id_produto, tipo){
 
         setIdProduto(id_produto);
+        setTipo(tipo);
         onChangeQtd(qtd);
         onChangeValor(valor);
         setModalVisible(true);
@@ -181,7 +183,7 @@ export default function ListaItem({route, navigation}){
     10 = Lata
     11 = Embalagem */
 
-    function verifica_exibicao(numero_exibicao, qtd){
+    function verifica_exibicao(numero_exibicao, qtd, reduzido){
 
         switch (numero_exibicao) {
 
@@ -223,13 +225,21 @@ export default function ListaItem({route, navigation}){
 
             case 7:
 
-                if(qtd > 1){
+                if(reduzido == 1){
 
-                    return "Caixas";
+                    return "Caixa";
 
                 }else{
 
-                    return "Caixa";
+                    if(qtd > 1){
+
+                        return "Caixas";
+    
+                    }else{
+    
+                        return "Caixa";
+    
+                    }
 
                 }
 
@@ -237,13 +247,21 @@ export default function ListaItem({route, navigation}){
 
             case 8:
 
-                if(qtd > 1){
+                if(reduzido == 1){
 
-                    return "Pacotes";
+                    return "Pacote"
 
                 }else{
 
-                    return "Pacote";
+                    if(qtd > 1){
+
+                        return "Pacotes";
+    
+                    }else{
+    
+                        return "Pacote";
+    
+                    }
 
                 }
 
@@ -251,13 +269,21 @@ export default function ListaItem({route, navigation}){
 
             case 9:
 
-                if(qtd > 1){
+                if(reduzido == 1){
 
-                    return "Garrafas";
+                    return "Garrafa";
 
                 }else{
 
-                    return "Garrafa";
+                    if(qtd > 1){
+
+                        return "Garrafas";
+    
+                    }else{
+    
+                        return "Garrafa";
+    
+                    }
 
                 }
 
@@ -265,28 +291,43 @@ export default function ListaItem({route, navigation}){
 
             case 10:
 
-                if(qtd > 1){
-
-                    return "Latas";
-
-                }else{
+                if(reduzido == 1){
 
                     return "Lata";
 
-                }
+                }else{
 
+                    if(qtd > 1){
+
+                        return "Latas";
+    
+                    }else{
+    
+                        return "Lata";
+    
+                    }
+
+                }
 
             break;
 
             case 11:
 
-                if(qtd > 1){
+                if(reduzido == 1){
 
-                    return "Embalagens";
+                    return "Embala";
 
                 }else{
 
-                    return "Embalagem";
+                    if(qtd > 1){
+
+                        return "Embalagens";
+    
+                    }else{
+    
+                        return "Embalagem";
+    
+                    }
 
                 }
 
@@ -437,7 +478,7 @@ export default function ListaItem({route, navigation}){
 
                                         <Text style={{fontSize: 11, color: "white"}}>
 
-                                            Caix
+                                            {verifica_exibicao(parseInt(tipo), false, 1)}
 
                                         </Text>
 
@@ -559,7 +600,7 @@ export default function ListaItem({route, navigation}){
 
                                                                 <Text style={styles.qtdItens}>
                                                                     
-                                                                    {prod.qtd} {verifica_exibicao(parseInt(prod.tipo_exibicao), Math.ceil(prod.qtd))}
+                                                                    {prod.qtd} {verifica_exibicao(parseInt(prod.tipo_exibicao), Math.ceil(prod.qtd), 0)}
                                                                     
                                                                 </Text>
 
@@ -581,7 +622,7 @@ export default function ListaItem({route, navigation}){
 
                                                     </TouchableOpacity>
 
-                                                    <TouchableWithoutFeedback onPress={()=> add_carrinho_modal(prod.qtd, prod.valor, prod.id)}>
+                                                    <TouchableWithoutFeedback onPress={()=> add_carrinho_modal(prod.qtd, prod.valor, prod.id, prod.tipo_exibicao)}>
 
                                                         <View style={[styles.iconeLista, {flex:1}]}>
 
@@ -674,7 +715,7 @@ export default function ListaItem({route, navigation}){
 
                                             <Text style={styles.qtdItens}>
                                                 
-                                            {item.qtd} {verifica_exibicao(parseInt(item.tipo_exibicao), Math.ceil(item.qtd))}{" / "}
+                                            {item.qtd} {verifica_exibicao(parseInt(item.tipo_exibicao), Math.ceil(item.qtd), 0)}{" / "}
                                                 
                                             </Text>
 
