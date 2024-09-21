@@ -346,6 +346,10 @@ export default function ListaItem({route, navigation}){
 
             return texto.substring(0, tamanho)+"...";
 
+        }else{
+
+            return texto;
+
         }
 
     }
