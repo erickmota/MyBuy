@@ -942,14 +942,18 @@ const styles = StyleSheet.create({
 
     itemVazio:{
 
-        marginVertical: 30
+        borderTopWidth: 1,
+        marginTop: -1,
+        borderColor: config.cor1,
+        paddingTop: 30,
+        paddingVertical: 30
 
     },
 
     textItemVazio:{
 
         fontSize: 15,
-        color: "#AAA",
+        color: "#BBB",
         textAlign: "center"
 
     },
