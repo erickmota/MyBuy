@@ -433,11 +433,15 @@ export default function ListaItem({route, navigation}){
 
                                 <View style={{flexDirection: "row"}}>
 
-                                    <Text style={{marginTop: 28, flex: 2, fontSize: 11, color: config.cor2}}>
+                                    <View style={styles.caixaTipo}>
 
-                                        Caix
+                                        <Text style={{fontSize: 11, color: "white"}}>
 
-                                    </Text>
+                                            Caix
+
+                                        </Text>
+
+                                    </View>
 
                                     <TextInput style={[styles.input, {flex: 3}]}
                                     onChangeText={text =>{
@@ -987,6 +991,19 @@ const styles = StyleSheet.create({
     AreaBtnConfirmar:{
 
         marginTop: 20
+
+    },
+
+    caixaTipo:{
+
+        marginTop: 20,
+        flex: 2,
+        borderWidth: 0,
+        marginRight: 15,
+        justifyContent: "center",
+        alignItems: "center",
+        backgroundColor: "#BBB",
+        borderRadius: 7
 
     }
 
