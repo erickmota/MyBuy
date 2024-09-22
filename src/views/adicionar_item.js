@@ -13,6 +13,7 @@ export default function AddItem({route}){
     /* Contexto */
     const { DATAUser } = useContext(UserContext);
     const [DATA, setData] = useState([]);
+    const [DATA_PRODUTOS_EXEMPLO, setDataProdutosExemplo] = useState([]);
 
     const {id_lista} = route.params;
 
@@ -42,7 +43,16 @@ export default function AddItem({route}){
         .catch(error => {
             console.error('Erro ao buscar dados da API:', error);
         });
-    }, [DATA]);
+
+        fetch(`${config.URL_inicial_API}produtos_exemplo`)
+        .then(response => response.json())
+        .then(data => {
+            setDataProdutosExemplo(data.data);
+        })
+        .catch(error => {
+            console.error('Erro ao buscar dados da API:', error);
+        });
+    }, []);
 
     function AlterCheckBox(){
 
@@ -145,9 +155,9 @@ export default function AddItem({route}){
 
         if(texto){
 
-            const resultado = DATA_BUSCA.filter(
+            const resultado = DATA_PRODUTOS_EXEMPLO.filter(
 
-                (item) => item.toLowerCase().includes(texto.toLowerCase())
+                (item) => item.nome.toLowerCase().includes(texto.toLowerCase())
 
             )
 
@@ -187,7 +197,7 @@ export default function AddItem({route}){
 
                     {dataFiltrada.map((item)=>(
 
-                        <Text key={item}>{item}</Text>
+                        <Text key={item.id}>{item.nome}</Text>
 
                     ))}
 
