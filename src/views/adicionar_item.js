@@ -32,6 +32,7 @@ export default function AddItem({route}){
     const [placeObrigatorio, setPlaceObrigatorio] = useState("");
 
     const [dataFiltrada, setDataFiltrada] = useState([]);
+    const [focusLista, setFocusLista] = useState(false);
 
     /* Recebendo dados das categorias */
     useEffect(() => {
@@ -162,6 +163,23 @@ export default function AddItem({route}){
 
     }
 
+    function focus_lista(ativacao){
+
+        if(ativacao == true){
+
+            setFocusLista(true);
+
+        }else{
+
+            setTimeout(()=>{
+
+                setFocusLista(false);
+
+            }, 200)
+        }
+
+    }
+
     return(
 
         <View style={styles.container}>
@@ -180,15 +198,19 @@ export default function AddItem({route}){
                     keyboardType="default"
                     placeholder={placeObrigatorio}
                     placeholderTextColor={"red"}
+                    onFocus={()=> focus_lista(true)}
+                    onBlur={()=> focus_lista(false)}
                     />
 
                 {/* Lista de exemplo */}
 
-                {dataFiltrada.length > 0 && (<View style={styles.listaExemplo}>
+                {dataFiltrada.length > 0 && focusLista == true && (<View style={styles.listaExemplo}>
 
                     {dataFiltrada.slice(0, config.qtd_itens_pesquisa).map((item)=>(
 
-                        <View style={styles.itemPesquisa} key={item.id}>
+                        <TouchableOpacity key={item.id}>
+
+                        <View style={styles.itemPesquisa}>
 
                             <View>
 
@@ -207,6 +229,8 @@ export default function AddItem({route}){
                             </View>
 
                         </View>
+
+                        </TouchableOpacity>
 
                     ))}
 
