@@ -30,6 +30,8 @@ export default function AddItem({route}){
 
     const [placeObrigatorio, setPlaceObrigatorio] = useState("");
 
+    const [dataFiltrada, setDataFiltrada] = useState([]);
+
     /* Recebendo dados das categorias */
     useEffect(() => {
         fetch(`${config.URL_inicial_API}${DATAUser[0].id}/categorias`)
@@ -126,6 +128,39 @@ export default function AddItem({route}){
 
     }
 
+    const DATA_BUSCA = [
+
+        "Banana",
+        "Maça",
+        "Pera",
+        "Beterraba",
+        "Arroz",
+        "Feijão",
+
+    ]
+
+    const filtrar_busca = (texto) => {
+
+        onChangecampo_nome(texto);
+
+        if(texto){
+
+            const resultado = DATA_BUSCA.filter(
+
+                (item) => item.toLowerCase().includes(texto.toLowerCase())
+
+            )
+
+            setDataFiltrada(resultado)
+
+        }else{
+
+            setDataFiltrada([])
+
+        }
+
+    }
+
     return(
 
         <View style={styles.container}>
@@ -139,12 +174,34 @@ export default function AddItem({route}){
                 </Text>
 
                 <TextInput style={[styles.input]}
-                    onChangeText={onChangecampo_nome}
+                    onChangeText={filtrar_busca}
                     value={campo_nome}
                     keyboardType="default"
                     placeholder={placeObrigatorio}
                     placeholderTextColor={"red"}
                     />
+
+                {/* Lista de exemplo */}
+
+                {dataFiltrada.length > 0 && (<FlatList
+                
+                data={dataFiltrada}
+                keyExtractor={(item) => item}
+                style={styles.listaExemplo}
+                renderItem={({ item }) => (
+                    <TouchableOpacity onPress={() => setSearchTerm(item)}>
+
+                        <View>
+
+                            <Text style={styles.suggestion}>{item}</Text>
+
+                        </View>
+
+                      {/* <Text style={styles.suggestion}>{item}</Text> */}
+                    </TouchableOpacity>
+                )}
+                
+                />)}
 
                 <View style={styles.espacoQtd}>
 
@@ -468,6 +525,19 @@ const styles = StyleSheet.create({
         fontSize: 15,
         top: -3,
         color: "#21bf31"
+
+    },
+
+    /* Lista de exemplo */
+
+    listaExemplo:{
+
+        position: 'absolute',
+        zIndex: 1,
+        backgroundColor: "white",
+        right: 15,
+        left: 15,
+        top: 100
 
     }
 
