@@ -186,55 +186,77 @@ export default function AddItem({route}){
 
             <ScrollView>
 
-                <Text style={styles.titulo}>
+                <View>
 
-                    Nome do item
+                    <View>
 
-                </Text>
+                        <Text style={styles.titulo}>
 
-                <TextInput style={[styles.input]}
-                    onChangeText={filtrar_busca}
-                    value={campo_nome}
-                    keyboardType="default"
-                    placeholder={placeObrigatorio}
-                    placeholderTextColor={"red"}
-                    onFocus={()=> focus_lista(true)}
-                    onBlur={()=> focus_lista(false)}
-                    />
+                            Nome do item
 
-                {/* Lista de exemplo */}
+                        </Text>
 
-                {dataFiltrada.length > 0 && focusLista == true && (<View style={styles.listaExemplo}>
+                    </View>
 
-                    {dataFiltrada.slice(0, config.qtd_itens_pesquisa).map((item)=>(
+                    <View style={styles.espacoNome}>
 
-                        <TouchableOpacity key={item.id}>
+                        <View style={styles.espacoInputNome}>
 
-                        <View style={styles.itemPesquisa}>
+                            <TextInput style={[styles.input]}
+                            onChangeText={filtrar_busca}
+                            value={campo_nome}
+                            keyboardType="default"
+                            placeholder={placeObrigatorio}
+                            placeholderTextColor={"red"}
+                            onFocus={()=> focus_lista(true)}
+                            onBlur={()=> focus_lista(false)}
+                            />
 
-                            <View>
+                            {/* Lista de exemplo */}
 
-                                <Image style={styles.imgProduto} source={{ uri: `${item.url}` }} />
+                            {dataFiltrada.length > 0 && focusLista == true && (<View style={styles.listaExemplo}>
 
-                            </View>
+                            {dataFiltrada.slice(0, config.qtd_itens_pesquisa).map((item)=>(
 
-                            <View>
+                                <TouchableOpacity key={item.id}>
 
-                                <Text style={styles.itemPesquisaNome}>
+                                <View style={styles.itemPesquisa}>
 
-                                    {item.nome}
+                                    <View>
 
-                                </Text>
-                                
-                            </View>
+                                        <Image style={styles.imgProduto} source={{ uri: `${item.url}` }} />
+
+                                    </View>
+
+                                    <View>
+
+                                        <Text style={styles.itemPesquisaNome}>
+
+                                            {item.nome}
+
+                                        </Text>
+                                        
+                                    </View>
+
+                                </View>
+
+                                </TouchableOpacity>
+
+                            ))}
+
+                            </View>)}
 
                         </View>
 
-                        </TouchableOpacity>
+                        <View style={styles.espacoFoto}>
 
-                    ))}
+                            <Image style={styles.imgProdutoNome} source={{ uri: `${config.Foto_prod_nulo}` }} />
+                            
+                        </View>
 
-                </View>)}
+                    </View>
+
+                </View>
 
                 <View style={styles.espacoQtd}>
 
@@ -570,7 +592,7 @@ const styles = StyleSheet.create({
         backgroundColor: "white",
         right: 15,
         left: 15,
-        top: 100,
+        top: 48,
         borderBottomWidth: 1,
         borderColor: config.cor2
 
@@ -594,12 +616,40 @@ const styles = StyleSheet.create({
 
     },
 
+    imgProdutoNome:{
+
+        width: 50,
+        height: 50,
+        borderRadius: 50,
+
+    },
+
     itemPesquisaNome:{
 
         fontSize: 14,
         top: 6,
         left: 15,
         color: "#666"
+
+    },
+
+    espacoNome:{
+
+        flexDirection: "row"
+
+    },
+
+    espacoInputNome:{
+
+        flex: 10
+
+    },
+
+    espacoFoto:{
+
+        flex: 2,
+        alignItems: "flex-end",
+        right: 15
 
     }
 

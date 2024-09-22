@@ -13,7 +13,7 @@ const config = {
     qtd_itens_pesquisa: 3, /* Quantidade de itens retornados na pesquisa dos produtos. */
 
     /* Conteúdos */
-    Foto_prod_nulo: "https://www2.camara.leg.br/atividade-legislativa/comissoes/comissoes-permanentes/cindra/imagens/sem.jpg.gif", /* Foto padrão que aparece em um produto sem foto definida. */
+    Foto_prod_nulo: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSHSFDKZsJhNfyuNuvlSdZ_fsJOelRJ4Qi6mw&s", /* Foto padrão que aparece em um produto sem foto definida. */
 
 
     /* Dados */
