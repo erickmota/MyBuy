@@ -183,25 +183,15 @@ export default function AddItem({route}){
 
                 {/* Lista de exemplo */}
 
-                {dataFiltrada.length > 0 && (<FlatList
-                
-                data={dataFiltrada}
-                keyExtractor={(item) => item}
-                style={styles.listaExemplo}
-                renderItem={({ item }) => (
-                    <TouchableOpacity onPress={() => setSearchTerm(item)}>
+                {dataFiltrada.length > 0 && (<View style={styles.listaExemplo}>
 
-                        <View>
+                    {dataFiltrada.map((item)=>(
 
-                            <Text style={styles.suggestion}>{item}</Text>
+                        <Text key={item}>{item}</Text>
 
-                        </View>
+                    ))}
 
-                      {/* <Text style={styles.suggestion}>{item}</Text> */}
-                    </TouchableOpacity>
-                )}
-                
-                />)}
+                </View>)}
 
                 <View style={styles.espacoQtd}>
 
