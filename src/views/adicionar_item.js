@@ -1,5 +1,5 @@
 import React, {useState, useContext, useEffect} from "react";
-import { View, Text, StyleSheet, TextInput, TouchableWithoutFeedback, TouchableOpacity, ScrollView, FlatList } from "react-native";
+import { View, Text, StyleSheet, TextInput, TouchableWithoutFeedback, TouchableOpacity, ScrollView, Image } from "react-native";
 import { Picker } from '@react-native-picker/picker';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useNavigation } from '@react-navigation/native';
@@ -138,16 +138,7 @@ export default function AddItem({route}){
 
     }
 
-    const DATA_BUSCA = [
-
-        "Banana",
-        "Maça",
-        "Pera",
-        "Beterraba",
-        "Arroz",
-        "Feijão",
-
-    ]
+    /* Filtrando o texto de busca retornada da API */
 
     const filtrar_busca = (texto) => {
 
@@ -195,9 +186,27 @@ export default function AddItem({route}){
 
                 {dataFiltrada.length > 0 && (<View style={styles.listaExemplo}>
 
-                    {dataFiltrada.map((item)=>(
+                    {dataFiltrada.slice(0, config.qtd_itens_pesquisa).map((item)=>(
 
-                        <Text key={item.id}>{item.nome}</Text>
+                        <View style={styles.itemPesquisa} key={item.id}>
+
+                            <View>
+
+                                <Image style={styles.imgProduto} source={{ uri: `${item.url}` }} />
+
+                            </View>
+
+                            <View>
+
+                                <Text style={styles.itemPesquisaNome}>
+
+                                    {item.nome}
+
+                                </Text>
+                                
+                            </View>
+
+                        </View>
 
                     ))}
 
@@ -537,7 +546,36 @@ const styles = StyleSheet.create({
         backgroundColor: "white",
         right: 15,
         left: 15,
-        top: 100
+        top: 100,
+        borderBottomWidth: 1,
+        borderColor: config.cor2
+
+    },
+
+    itemPesquisa:{
+
+        paddingVertical: 10,
+        paddingHorizontal: 10,
+        borderColor: config.cor2,
+        borderTopWidth: 1,
+        flexDirection: "row"
+
+    },
+
+    imgProduto:{
+
+        width: 35,
+        height: 35,
+        borderRadius: 50,
+
+    },
+
+    itemPesquisaNome:{
+
+        fontSize: 14,
+        top: 6,
+        left: 15,
+        color: "#666"
 
     }
 
