@@ -19,9 +19,11 @@ export default function AddItem({route}){
 
     const navigation = useNavigation();
 
-    const [campo_nome, onChangecampo_nome] = React.useState('');
-    const [qtd, onChangeQtd] = React.useState('');
-    const [valor, onChangeValor] = React.useState('');
+    /* Estados */
+
+    const [campo_nome, onChangecampo_nome] = useState('');
+    const [qtd, onChangeQtd] = useState('');
+    const [valor, onChangeValor] = useState('');
     const [selectedTipo, setSelectedTipo] = useState("1");
     const [selectedCategoria, setSelectedCategoria] = useState("option1");
     const [observacao, setObservacao] = useState("");
@@ -33,6 +35,8 @@ export default function AddItem({route}){
 
     const [dataFiltrada, setDataFiltrada] = useState([]);
     const [focusLista, setFocusLista] = useState(false);
+
+    const [foto, setFoto] = useState([null, false]);
 
     /* Recebendo dados das categorias */
     useEffect(() => {
@@ -163,6 +167,8 @@ export default function AddItem({route}){
 
     }
 
+    /* Controla quando a lista está com foco ou não. */
+
     function focus_lista(ativacao){
 
         if(ativacao == true){
@@ -177,6 +183,12 @@ export default function AddItem({route}){
 
             }, 200)
         }
+
+    }
+
+    function altera_foto(foto_id, foto_url){
+
+        setFoto([foto_id, foto_url]);
 
     }
 
@@ -218,7 +230,7 @@ export default function AddItem({route}){
 
                             {dataFiltrada.slice(0, config.qtd_itens_pesquisa).map((item)=>(
 
-                                <TouchableOpacity key={item.id}>
+                                <TouchableOpacity key={item.id} onPress={()=> altera_foto(item.id_foto, item.url)}>
 
                                 <View style={styles.itemPesquisa}>
 
@@ -250,7 +262,7 @@ export default function AddItem({route}){
 
                         <View style={styles.espacoFoto}>
 
-                            <Image style={styles.imgProdutoNome} source={{ uri: `${config.Foto_prod_nulo}` }} />
+                            <Image style={styles.imgProdutoNome} source={{ uri: `${foto[1]}` }} />
                             
                         </View>
 
@@ -456,7 +468,7 @@ export default function AddItem({route}){
 
             </ScrollView>
 
-            <IconeCorreto funcao={() => adiciona_item(campo_nome, selectedTipo, qtd, selectedCategoria, id_lista, 1, valor, observacao)}/>
+            <IconeCorreto funcao={() => adiciona_item(campo_nome, selectedTipo, qtd, selectedCategoria, id_lista, foto[0], valor, observacao)}/>
 
         </View>
 
@@ -618,8 +630,8 @@ const styles = StyleSheet.create({
 
     imgProdutoNome:{
 
-        width: 50,
-        height: 50,
+        width: 45,
+        height: 45,
         borderRadius: 50,
 
     },
