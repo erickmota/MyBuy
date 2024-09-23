@@ -36,7 +36,7 @@ export default function AddItem({route}){
     const [dataFiltrada, setDataFiltrada] = useState([]);
     const [focusLista, setFocusLista] = useState(false);
 
-    const [foto, setFoto] = useState([null, false]);
+    const [foto, setFoto] = useState([0, config.Foto_prod_nulo]);
 
     /* Recebendo dados das categorias */
     useEffect(() => {
@@ -75,6 +75,9 @@ export default function AddItem({route}){
 
     }
 
+    /* Função responsável por inserir os dados do produto no banco de dados
+    via API */
+
     function adiciona_item(
 
         nome_produto,
@@ -89,6 +92,7 @@ export default function AddItem({route}){
     ){
 
         /* Validação dos inputs */
+
         if(nome_produto.trim() === ""){
 
             setPlaceObrigatorio("*");
@@ -177,18 +181,38 @@ export default function AddItem({route}){
 
         }else{
 
-            setTimeout(()=>{
+            setFocusLista(false);
 
-                setFocusLista(false);
-
-            }, 200)
         }
 
     }
 
-    function altera_foto(foto_id, foto_url){
+    /* Função responsável por alterar os dados do produto,
+    quando selecionado da lista de exexmplo */
+
+    function altera_dados(foto_id, foto_url, nome, tipo){
+
+        focus_lista(false);
 
         setFoto([foto_id, foto_url]);
+        onChangecampo_nome(nome);
+        setSelectedTipo(tipo);
+
+    }
+
+    /* Função responsável por remover a foto do produto */
+
+    const altera_foto = () => {
+
+        if(foto[0] != 0){
+
+            setFoto([0, config.Foto_prod_nulo]);
+
+        }else{
+
+            /* Nenhuma ação */
+
+        }
 
     }
 
@@ -221,7 +245,6 @@ export default function AddItem({route}){
                             placeholder={placeObrigatorio}
                             placeholderTextColor={"red"}
                             onFocus={()=> focus_lista(true)}
-                            onBlur={()=> focus_lista(false)}
                             />
 
                             {/* Lista de exemplo */}
@@ -230,7 +253,7 @@ export default function AddItem({route}){
 
                             {dataFiltrada.slice(0, config.qtd_itens_pesquisa).map((item)=>(
 
-                                <TouchableOpacity key={item.id} onPress={()=> altera_foto(item.id_foto, item.url)}>
+                                <TouchableOpacity activeOpacity={0.7} key={item.id} onPress={()=> altera_dados(item.id_foto, item.url, item.nome, item.tipo_exibicao)}>
 
                                 <View style={styles.itemPesquisa}>
 
@@ -256,15 +279,33 @@ export default function AddItem({route}){
 
                             ))}
 
+                            <TouchableWithoutFeedback onPress={()=>focus_lista(false)}>
+
+                                <View style={{alignItems: "center", backgroundColor: config.cor2, justifyContent: "center"}}>
+
+                                    <Text style={{color: "white"}}>
+
+                                        X
+
+                                    </Text>
+
+                                </View>
+
+                            </TouchableWithoutFeedback>
+
                             </View>)}
 
                         </View>
 
-                        <View style={styles.espacoFoto}>
+                        <TouchableWithoutFeedback onPress={()=> altera_foto()}>
 
-                            <Image style={styles.imgProdutoNome} source={{ uri: `${foto[1]}` }} />
-                            
-                        </View>
+                            <View style={styles.espacoFoto}>
+
+                                <Image style={styles.imgProdutoNome} source={{ uri: `${foto[1]}` }} />
+                                
+                            </View>
+
+                        </TouchableWithoutFeedback>
 
                     </View>
 
@@ -599,7 +640,7 @@ const styles = StyleSheet.create({
 
     listaExemplo:{
 
-        position: 'absolute',
+        position: "absolute",
         zIndex: 1,
         backgroundColor: "white",
         right: 15,
@@ -612,7 +653,7 @@ const styles = StyleSheet.create({
 
     itemPesquisa:{
 
-        paddingVertical: 10,
+        paddingVertical: 5,
         paddingHorizontal: 10,
         borderColor: config.cor2,
         borderTopWidth: 1,
