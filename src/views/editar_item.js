@@ -26,6 +26,7 @@ export default function EditarItem({route}){
     const {valor_prod} = route.params;
     const {obs} = route.params;
     const {categoria} = route.params;
+    const {carrinho} = route.params;
 
     const navigation = useNavigation();
 
@@ -38,8 +39,8 @@ export default function EditarItem({route}){
     const [selectedCategoria, setSelectedCategoria] = useState(categoria);
     const [observacao, setObservacao] = useState(obs);
 
-    const [CheckBox, setCheckBox] = useState(false);
-    const [corCarrinho, setCorCarrinho] = useState("#AAA");
+    const [CheckBox, setCheckBox] = useState();
+    const [corCarrinho, setCorCarrinho] = useState();
 
     const [placeObrigatorio, setPlaceObrigatorio] = useState("");
 
@@ -47,6 +48,8 @@ export default function EditarItem({route}){
     const [focusLista, setFocusLista] = useState(false);
 
     const [foto, setFoto] = useState([id_foto, url]);
+
+    /* Função responsável por setar o estado correto da foto inicial */
 
     const seta_foto = () => {
 
@@ -57,6 +60,24 @@ export default function EditarItem({route}){
         }else{
 
             setFoto([id_foto, url]);
+
+        }
+
+    }
+
+    /* Função responsável por setar o estado correto do carrinho */
+
+    const seta_carrinho = () => {
+
+        if(carrinho == 1){
+
+            setCheckBox(true);
+            setCorCarrinho("#21bf31");
+
+        }else{
+
+            setCheckBox(false);
+            setCorCarrinho("#AAA");
 
         }
 
@@ -106,6 +127,7 @@ export default function EditarItem({route}){
     },[navigation])
 
     /* Função responsável por apagar o item */
+
     const apagar_item = () => {
 
         const formData = new URLSearchParams();
@@ -152,6 +174,7 @@ export default function EditarItem({route}){
         });
 
         seta_foto();
+        seta_carrinho();
 
     }, []);
 
@@ -171,6 +194,20 @@ export default function EditarItem({route}){
 
         }else{
 
+            /* Verificando se o checkbox do carrinho está ativo */
+
+            let carrinho_set = 0;
+
+            if(CheckBox == true){
+
+                carrinho_set = 1;
+
+            }else{
+
+                carrinho_set = 0;
+
+            }
+
             const formData = new URLSearchParams();
             formData.append('id_produto', id_produto);
             formData.append('nome_produto', campo_nome);
@@ -178,7 +215,7 @@ export default function EditarItem({route}){
             formData.append('qtd', qtd);
             formData.append('id_categorias', selectedCategoria);
             formData.append('id_fotos', foto[0]);
-            formData.append('carrinho', 0);
+            formData.append('carrinho', carrinho_set);
             formData.append('valor', valor);
             formData.append('obs', observacao);
     

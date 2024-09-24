@@ -598,7 +598,8 @@ export default function ListaItem({route, navigation}){
                                                             tipo_exibicao: prod.tipo_exibicao,
                                                             valor_prod: prod.valor,
                                                             obs: prod.obs,
-                                                            categoria: prod.id_categorias
+                                                            categoria: prod.id_categorias,
+                                                            carrinho: prod.carrinho
                                                         
                                                         })}
                                                     
@@ -719,6 +720,25 @@ export default function ListaItem({route, navigation}){
 
                                     </View>
 
+                                    <TouchableOpacity
+                                    
+                                        onPress={() => navigation.navigate("Editar_item", {
+                                                                
+                                            id_produto: item.id,
+                                            nome_produto: item.nome,
+                                            qtd_produto: item.qtd,
+                                            id_foto: item.id_foto,
+                                            url: item.url,
+                                            tipo_exibicao: item.tipo_exibicao,
+                                            valor_prod: item.valor,
+                                            obs: item.obs,
+                                            categoria: item.id_categorias,
+                                            carrinho: item.carrinho
+                                        
+                                        })}
+                                    
+                                    >
+
                                     <View style={{flex: 3, flexDirection: "column"}}>
 
                                         <Text style={[styles.titleLista, styles.itemMarcado]}>
@@ -748,6 +768,8 @@ export default function ListaItem({route, navigation}){
                                         </View>
 
                                     </View>
+
+                                    </TouchableOpacity>
 
                                     <TouchableWithoutFeedback onPress={()=> remover_produto_carrinho(item.id)}>
 

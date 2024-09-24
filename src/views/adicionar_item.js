@@ -105,6 +105,8 @@ export default function AddItem({route}){
 
         }else{
 
+            /* Verificando se o checkbox do carrinho está ativo */
+
             if(CheckBox == true){
 
                 carrinho = 1;
