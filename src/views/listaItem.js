@@ -588,7 +588,19 @@ export default function ListaItem({route, navigation}){
 
                                                     <TouchableOpacity
                                                     
-                                                        onPress={() => navigation.navigate("Editar_item", {id_produto: prod.id, nome_produto: prod.nome, qtd_produto: prod.qtd})}
+                                                        onPress={() => navigation.navigate("Editar_item", {
+                                                            
+                                                            id_produto: prod.id,
+                                                            nome_produto: prod.nome,
+                                                            qtd_produto: prod.qtd,
+                                                            id_foto: prod.id_foto,
+                                                            url: prod.url,
+                                                            tipo_exibicao: prod.tipo_exibicao,
+                                                            valor_prod: prod.valor,
+                                                            obs: prod.obs,
+                                                            categoria: prod.id_categorias
+                                                        
+                                                        })}
                                                     
                                                     >
 
