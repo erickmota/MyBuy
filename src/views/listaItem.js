@@ -448,23 +448,11 @@ export default function ListaItem({route, navigation}){
                 onRequestClose={() => setModalVisible(false)} // Fechar modal ao clicar no botão 'voltar'
             >
 
+                <TouchableWithoutFeedback onPress={() => setModalVisible(false)}>
+
                 <View style={styles.centeredView}>
 
                     <View style={styles.modalView}>
-
-                        <TouchableWithoutFeedback onPress={() => setModalVisible(false)}>
-
-                        <View style={styles.areaX}>
-
-                            <Text style={{color: "#BBB"}}>
-
-                                (Cancelar)
-
-                            </Text>
-
-                        </View>
-
-                        </TouchableWithoutFeedback>
 
                         <View style={styles.corpoInputs}>
 
@@ -541,6 +529,8 @@ export default function ListaItem({route, navigation}){
                     </View>
 
                 </View>
+
+                </TouchableWithoutFeedback>
 
             </Modal>
 
@@ -1044,8 +1034,7 @@ const styles = StyleSheet.create({
 
     corpoInputs:{
 
-        flexDirection: "row",
-        marginTop: 15
+        flexDirection: "row"
 
     },
 
