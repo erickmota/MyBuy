@@ -157,33 +157,49 @@ export default function EditarItem({route}){
 
     const editar_produto = () => {
 
-        const formData = new URLSearchParams();
-        formData.append('id_produto', id_produto);
-        formData.append('nome_produto', campo_nome);
-        formData.append('tipo_exibicao', selectedTipo);
-        formData.append('qtd', qtd);
-        formData.append('id_categorias', selectedCategoria);
-        formData.append('id_fotos', foto[0]);
-        formData.append('carrinho', 0);
-        formData.append('valor', valor);
-        formData.append('obs', observacao);
+        /* Validação dos inputs */
 
-        fetch(`${config.URL_inicial_API}${DATAUser[0].id}/edita_produto`, {
-        method: "POST",
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-        },
-        body: formData.toString()
-        })
-        .then(response => response.json())
-        .then(data => {
+        if(campo_nome.trim() === ""){
 
-            navigation.goBack();
+            setPlaceObrigatorio("*");
+
+            setTimeout(() => {
+
+                setPlaceObrigatorio("");
+
+            }, 3000)
+
+        }else{
+
+            const formData = new URLSearchParams();
+            formData.append('id_produto', id_produto);
+            formData.append('nome_produto', campo_nome);
+            formData.append('tipo_exibicao', selectedTipo);
+            formData.append('qtd', qtd);
+            formData.append('id_categorias', selectedCategoria);
+            formData.append('id_fotos', foto[0]);
+            formData.append('carrinho', 0);
+            formData.append('valor', valor);
+            formData.append('obs', observacao);
     
-        })
-        .catch(errors => {
-        console.error('Erro ao enviar solicitação:', errors);
-        });
+            fetch(`${config.URL_inicial_API}${DATAUser[0].id}/edita_produto`, {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: formData.toString()
+            })
+            .then(response => response.json())
+            .then(data => {
+    
+                navigation.goBack();
+        
+            })
+            .catch(errors => {
+            console.error('Erro ao enviar solicitação:', errors);
+            });
+
+        }
 
     }
 
