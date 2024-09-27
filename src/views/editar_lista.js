@@ -1,4 +1,4 @@
-import React, {useState, useContext, useLayoutEffect} from 'react';
+import React, {useState, useContext, useLayoutEffect, useEffect} from 'react';
 import { StyleSheet, Text, View, TextInput, Alert,Image } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useNavigation } from '@react-navigation/native';
@@ -18,6 +18,8 @@ export default function Editar_lista({route}){
 
     /* Contexto */
     const { DATAUser } = useContext(UserContext);
+    const [DATA_dono, setDataDono] = useState({});
+    const [DATA_membros, setDataMembros] = useState([]);
 
     const navigation = useNavigation();
 
@@ -63,6 +65,21 @@ export default function Editar_lista({route}){
         })
 
     },[navigation])
+
+    /* Conexão com a API */
+    useEffect(() => {
+
+        fetch(`${config.URL_inicial_API}${DATAUser[0].id}/usuarios_lista/${id_lista}`)
+        .then(response => response.json())
+        .then(data => {
+            setDataDono(data.data.Dono);
+            setDataMembros(data.data.Membros);
+        })
+        .catch(error => {
+            console.error('Erro ao buscar dados da API:', error);
+        });
+
+    }, [DATA_membros]);
 
     /* Função responsável por atualizar o nome da Lista
     via API.
@@ -182,7 +199,7 @@ export default function Editar_lista({route}){
 
                             <Text style={styles.nomeUsuario}>
 
-                                Erick Mota
+                                {DATA_dono.nome}
 
                             </Text>
 
@@ -200,65 +217,39 @@ export default function Editar_lista({route}){
 
                     </View>
 
-                    <View style={styles.participante}>
+                    {DATA_membros.map(membros=>(
 
-                        <View style={styles.areaImg}>
+                        <View key={membros.id} style={styles.participante}>
 
-                            <Image style={styles.imgUsuario} source={{ uri: `https://www.designi.com.br/images/preview/12161378.jpg` }} />
+                            <View style={styles.areaImg}>
 
-                        </View>
+                                <Image style={styles.imgUsuario} source={{ uri: `https://www.designi.com.br/images/preview/12161378.jpg` }} />
 
-                        <View style={styles.areaNome}>
+                            </View>
 
-                            <Text style={styles.nomeUsuario}>
+                            <View style={styles.areaNome}>
 
-                                Marcelo Avelar
+                                <Text style={styles.nomeUsuario}>
 
-                            </Text>
+                                    {membros.nome}
 
-                        </View>
+                                </Text>
 
-                        <View style={styles.areaBtn}>
+                            </View>
 
-                            <Text style={styles.textRemover}>
+                            <View style={styles.areaBtn}>
 
-                                REMOVER
+                                <Text style={styles.textRemover}>
 
-                            </Text>
+                                    REMOVER
 
-                        </View>
+                                </Text>
 
-                    </View>
-
-                    <View style={styles.participante}>
-
-                        <View style={styles.areaImg}>
-
-                            <Image style={styles.imgUsuario} source={{ uri: `https://blog.portalpos.com.br/app/uploads/2023/08/pessoa-criteriosa.jpg` }} />
+                            </View>
 
                         </View>
 
-                        <View style={styles.areaNome}>
-
-                            <Text style={styles.nomeUsuario}>
-
-                                Rubens Dias
-
-                            </Text>
-
-                        </View>
-
-                        <View style={styles.areaBtn}>
-
-                            <Text style={styles.textRemover}>
-
-                                REMOVER
-
-                            </Text>
-
-                        </View>
-
-                    </View>
+                    ))}
 
                 </View>
 
