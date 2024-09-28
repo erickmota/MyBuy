@@ -10,15 +10,25 @@ import config from '../config';
 export default function Editar_lista({route}){
 
     /* Dados da lista */
+
     const {TituloLista} = route.params;
     const {id_lista} = route.params;
 
     /* Resultado do input */
+
     const [number, onChangeNumber] = useState(TituloLista);
 
     /* Contexto */
+
     const { DATAUser } = useContext(UserContext);
+
+    /* Estado para o controle do retorno do dono */
+
     const [DATA_dono, setDataDono] = useState({});
+
+    /* Estado para controle das confirmações retornadas da API */
+
+    const [DATA_confirmacoes, setDataConfirmacoes] = useState({});
     const [DATA_membros, setDataMembros] = useState([]);
 
     const navigation = useNavigation();
@@ -47,8 +57,8 @@ export default function Editar_lista({route}){
                         {
                           text: "Sim",
                           onPress: () => {
+
                             // Ação de exclusão
-                            console.log("Lista excluída");
                             
                             apagar_lista();
 
@@ -66,7 +76,8 @@ export default function Editar_lista({route}){
 
     },[navigation])
 
-    /* Conexão com a API */
+    /* Conexão com a API para retornar os membros da lista */
+
     useEffect(() => {
 
         fetch(`${config.URL_inicial_API}${DATAUser[0].id}/usuarios_lista/${id_lista}`)
@@ -74,6 +85,7 @@ export default function Editar_lista({route}){
         .then(data => {
             setDataDono(data.data.Dono);
             setDataMembros(data.data.Membros);
+            setDataConfirmacoes(data.data.Confirmacoes);
         })
         .catch(error => {
             console.error('Erro ao buscar dados da API:', error);
@@ -84,6 +96,7 @@ export default function Editar_lista({route}){
     /* Função responsável por atualizar o nome da Lista
     via API.
     Ela está sendo chamada via componente */
+
     function salvar_nome(novo_nome){
 
         const formData = new URLSearchParams();
@@ -110,6 +123,7 @@ export default function Editar_lista({route}){
     }
 
     /* Função responsável por apagar a lista */
+
     const apagar_lista = () => {
 
         const formData = new URLSearchParams();
@@ -239,11 +253,15 @@ export default function Editar_lista({route}){
 
                             <View style={styles.areaBtn}>
 
-                                <Text style={styles.textRemover}>
+                                {DATA_confirmacoes.dono_lista == true && (
 
-                                    REMOVER
+                                    <Text style={styles.textRemover}>
 
-                                </Text>
+                                        REMOVER
+
+                                    </Text>
+
+                                )}
 
                             </View>
 
