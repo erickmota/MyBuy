@@ -56,20 +56,24 @@ export default function ListaItem({route, navigation}){
                 const response = await fetch(`${config.URL_inicial_API}${DATAUser[0].id}/produtos/${id_lista}`);
                 const allProductsData = await response.json();
 
-                // Agora, adicione os produtos que não estão em nenhuma categoria do usuário
-                const uncategorizedProducts = allProductsData.data.filter(product => {
-                    return !categoriesWithProducts.some(category => 
-                        category.produtos.some(prod => prod.id === product.id)
-                    );
-                });
+                if(Array.isArray(allProductsData.data) && allProductsData.data.length > 0){
 
-                // Se houver produtos não categorizados, crie uma categoria "Genérica" para eles
-                if (uncategorizedProducts.length > 0) {
-                    categoriesWithProducts.push({
-                        id: 'uncategorized', // Um ID genérico para a nova categoria
-                        nome: 'Outros', // Nome para a categoria "genérica"
-                        produtos: uncategorizedProducts
+                    // Agora, adicione os produtos que não estão em nenhuma categoria do usuário
+                    const uncategorizedProducts = allProductsData.data.filter(product => {
+                        return !categoriesWithProducts.some(category => 
+                            category.produtos.some(prod => prod.id === product.id)
+                        );
                     });
+
+                    // Se houver produtos não categorizados, crie uma categoria "Genérica" para eles
+                    if (uncategorizedProducts.length > 0) {
+                        categoriesWithProducts.push({
+                            id: 'uncategorized', // Um ID genérico para a nova categoria
+                            nome: 'Outros', // Nome para a categoria "genérica"
+                            produtos: uncategorizedProducts
+                        });
+                    }
+
                 }
 
                 console.log(categoriesWithProducts);
