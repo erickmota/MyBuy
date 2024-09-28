@@ -68,8 +68,8 @@ export default function ListaItem({route, navigation}){
                     // Se houver produtos não categorizados, crie uma categoria "Genérica" para eles
                     if (uncategorizedProducts.length > 0) {
                         categoriesWithProducts.push({
-                            id: 'uncategorized', // Um ID genérico para a nova categoria
-                            nome: 'Outros', // Nome para a categoria "genérica"
+                            id: "nulo", // Um ID genérico para a nova categoria
+                            nome: 'Compartilhados', // Nome para a categoria "genérica"
                             produtos: uncategorizedProducts
                         });
                     }
@@ -598,6 +598,20 @@ export default function ListaItem({route, navigation}){
 
                                                         )}
 
+                                                        {item.id == "nulo" && (
+
+                                                            prod.foto_dono == null ? (
+
+                                                                <Image style={styles.imgUsuarios} source={{ uri: `${config.Foto_usuario_nulo}` }} />
+
+                                                            ):(
+
+                                                                <Image style={styles.imgUsuarios} source={{ uri: `${prod.foto_dono}` }} />
+
+                                                            )
+
+                                                        )}
+
                                                     </View>
 
                                                     <TouchableOpacity
@@ -1100,6 +1114,17 @@ const styles = StyleSheet.create({
         alignItems: "center",
         backgroundColor: "#BBB",
         borderRadius: 7
+
+    },
+
+    imgUsuarios:{
+
+        width: 24,
+        height: 24,
+        borderRadius: 50,
+        marginTop: -19,
+        borderWidth: 2,
+        borderColor: "white"
 
     }
 

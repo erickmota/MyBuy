@@ -14,6 +14,7 @@ const config = {
 
     /* Conteúdos */
     Foto_prod_nulo: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSHSFDKZsJhNfyuNuvlSdZ_fsJOelRJ4Qi6mw&s", /* Foto padrão que aparece em um produto sem foto definida. */
+    Foto_usuario_nulo: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSseB6uZeeMH55OlfcMvLSB_O1j4c9eCKFcLQ&s",
 
 
     /* Dados */
