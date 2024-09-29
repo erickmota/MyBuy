@@ -3,6 +3,8 @@ import { View, Text, StyleSheet, ScrollView, StatusBar, TouchableNativeFeedback,
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { UserContext } from '../context/user';
 import { useFocusEffect } from '@react-navigation/native';
+import FlashMessage from 'react-native-flash-message';
+import { showMessage } from 'react-native-flash-message';
 
 import IconeAdd from "../componentes/botaoAdd"
 
@@ -457,11 +459,25 @@ export default function ListaItem({route, navigation}){
 
     }
 
+    function mostrar_alerta_permissao(){
+
+        showMessage({
+            message: "Impossível prosseguir",
+            description: "Produtos compartilhados por terceiros, não podem ser editados.",
+            type: "info", // ou "danger", "info", etc.
+            icon: "auto",
+            duration: 3000
+        });
+
+    }
+
     return(
 
         <View style={styles.container}>
 
             <StatusBar backgroundColor={config.cor1} style="light" />
+
+            <FlashMessage position="top" />
 
             {/* Modal */}
 
@@ -619,24 +635,32 @@ export default function ListaItem({route, navigation}){
                                                         activeOpacity={0.5}
                                                         onPress={() =>
 
-                                                            {if(item.id != "nulo"){
+                                                            {
+                                                                
+                                                                if(item.id != "nulo"){
 
-                                                                navigation.navigate("Editar_item", {
-                                                            
-                                                                    id_produto: prod.id,
-                                                                    nome_produto: prod.nome,
-                                                                    qtd_produto: prod.qtd,
-                                                                    id_foto: prod.id_foto,
-                                                                    url: prod.url,
-                                                                    tipo_exibicao: prod.tipo_exibicao,
-                                                                    valor_prod: prod.valor,
-                                                                    obs: prod.obs,
-                                                                    categoria: prod.id_categorias,
-                                                                    carrinho: prod.carrinho
-                                                            
-                                                                })
+                                                                    navigation.navigate("Editar_item", {
+                                                                
+                                                                        id_produto: prod.id,
+                                                                        nome_produto: prod.nome,
+                                                                        qtd_produto: prod.qtd,
+                                                                        id_foto: prod.id_foto,
+                                                                        url: prod.url,
+                                                                        tipo_exibicao: prod.tipo_exibicao,
+                                                                        valor_prod: prod.valor,
+                                                                        obs: prod.obs,
+                                                                        categoria: prod.id_categorias,
+                                                                        carrinho: prod.carrinho
+                                                                
+                                                                    })
 
-                                                            }}
+                                                                }else{
+
+                                                                    mostrar_alerta_permissao();
+
+                                                                }
+                                                        
+                                                        }
                                                     
                                                     }
                                                     
@@ -762,24 +786,32 @@ export default function ListaItem({route, navigation}){
                                         activeOpacity={0.5}
                                         onPress={() =>
 
-                                            {if(item.id_dono == DATAUser[0].id){
+                                            {
+                                                
+                                                if(item.id_dono == DATAUser[0].id){
 
-                                                navigation.navigate("Editar_item", {
-                                                                
-                                                    id_produto: item.id,
-                                                    nome_produto: item.nome,
-                                                    qtd_produto: item.qtd,
-                                                    id_foto: item.id_foto,
-                                                    url: item.url,
-                                                    tipo_exibicao: item.tipo_exibicao,
-                                                    valor_prod: item.valor,
-                                                    obs: item.obs,
-                                                    categoria: item.id_categorias,
-                                                    carrinho: item.carrinho
-                                            
-                                                })
+                                                    navigation.navigate("Editar_item", {
+                                                                    
+                                                        id_produto: item.id,
+                                                        nome_produto: item.nome,
+                                                        qtd_produto: item.qtd,
+                                                        id_foto: item.id_foto,
+                                                        url: item.url,
+                                                        tipo_exibicao: item.tipo_exibicao,
+                                                        valor_prod: item.valor,
+                                                        obs: item.obs,
+                                                        categoria: item.id_categorias,
+                                                        carrinho: item.carrinho
+                                                
+                                                    })
 
-                                            }}
+                                                }else{
+
+                                                    mostrar_alerta_permissao();
+
+                                                }
+                                        
+                                            }
                                     
                                         }
                                     
