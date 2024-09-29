@@ -96,7 +96,7 @@ export default function App() {
 
           <stack.Screen name="Editar_lista" component={Editar_lista} options={{
 
-            title: "Editar Lista",
+            title: "Informações da lista",
             headerTintColor: "#FFF",
             headerStyle: {
 

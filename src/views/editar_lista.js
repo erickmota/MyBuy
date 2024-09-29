@@ -161,9 +161,10 @@ export default function Editar_lista({route}){
                 </Text>
 
                 <TextInput style={styles.input}
-                onChangeText={onChangeNumber}
-                value={number}
-                keyboardType="default"
+                    onChangeText={onChangeNumber}
+                    value={number}
+                    keyboardType="default"
+                    editable={DATA_confirmacoes.dono_lista}
                 />
 
             </View>
@@ -273,7 +274,11 @@ export default function Editar_lista({route}){
 
             </View>
 
-            <IconeCorreto funcao={() => salvar_nome(number)}/>
+                {DATA_confirmacoes.dono_lista == true && (
+
+                    <IconeCorreto funcao={() => salvar_nome(number)}/>
+
+                )}
 
         </View>
 
