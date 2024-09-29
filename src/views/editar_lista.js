@@ -274,7 +274,7 @@ export default function Editar_lista({route}){
 
             </View>
 
-                {DATA_confirmacoes.dono_lista == true && (
+                {DATA_confirmacoes.dono_lista && DATA_confirmacoes.dono_lista == true && (
 
                     <IconeCorreto funcao={() => salvar_nome(number)}/>
 
