@@ -1,5 +1,5 @@
 import React, {useState, useContext, useLayoutEffect, useEffect} from 'react';
-import { StyleSheet, Text, View, TextInput, Alert,Image } from 'react-native';
+import { StyleSheet, Text, View, TextInput, Alert, Image, TouchableWithoutFeedback, Modal, Button} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useNavigation } from '@react-navigation/native';
 import { UserContext } from '../context/user';
@@ -30,6 +30,10 @@ export default function Editar_lista({route}){
 
     const [DATA_confirmacoes, setDataConfirmacoes] = useState({});
     const [DATA_membros, setDataMembros] = useState([]);
+
+    const [modalVisible, setModalVisible] = useState(false);
+    const [valorEmail, setEmail] = useState("");
+    const [loadView, setLoad] = useState(false);
 
     const navigation = useNavigation();
 
@@ -91,7 +95,7 @@ export default function Editar_lista({route}){
             console.error('Erro ao buscar dados da API:', error);
         });
 
-    }, []);
+    }, [loadView]);
 
     /* Função responsável por atualizar o nome da Lista
     via API.
@@ -148,9 +152,93 @@ export default function Editar_lista({route}){
 
     }
 
+    /* Adiciona um novo usuário a lista */
+
+    const adicionar_usuario = ()=> {
+
+        const formData = new URLSearchParams();
+        formData.append('id_lista', id_lista);
+        formData.append('email_usuario', valorEmail); /* Mudar */
+
+        fetch(`${config.URL_inicial_API}${DATAUser[0].id}/adicionar_usuario_lista`, {
+        method: "POST",
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: formData.toString()
+        })
+        .then(response => response.json())
+        .then(data => {
+
+            if(loadView == false){
+
+                setLoad(true);
+
+            }else{
+
+                setLoad(false);
+
+            }
+
+            setModalVisible(false)
+    
+        })
+        .catch(errors => {
+        console.error('Erro ao enviar solicitação:', errors);
+        });
+
+    }
+
     return(
 
         <View style={styles.container}>
+
+            <Modal
+                animationType="fade" // ou 'fade', 'none'
+                transparent={true}    // Define se o fundo será transparente
+                visible={modalVisible}
+                onRequestClose={() => setModalVisible(false)} // Fechar modal ao clicar no botão 'voltar'
+            >
+
+                <TouchableWithoutFeedback onPress={() => setModalVisible(false)}>
+
+                <View style={styles.centeredView}>
+
+                    <View style={styles.modalView}>
+
+                        <View style={styles.corpoInputs}>
+
+                            <Text style={styles.tituloModal}>
+
+                                Convidar
+
+                            </Text>
+
+                            <TextInput style={[styles.inputModal]}
+                            onChangeText={setEmail}
+                                value={valorEmail}
+                                keyboardType="default"
+                                placeholder="Insira o e-mail do usuário"
+                            />                          
+
+                        </View>
+
+                        <View style={styles.AreaBtnConfirmar}>
+
+                            <Button onPress={()=>adicionar_usuario()} color={config.cor2} title="Enviar convite  ->"/>
+
+                        </View>
+
+                        {/* <Text style={styles.modalText}>Este é um modal!</Text>
+                        <Button title="Fechar" onPress={() => setModalVisible(false)} /> */}
+
+                    </View>
+
+                </View>
+
+                </TouchableWithoutFeedback>
+
+            </Modal>
 
             <View>
 
@@ -185,16 +273,20 @@ export default function Editar_lista({route}){
 
                     <View style={styles.areaIcon}>
 
-                        <View style={styles.BtnIconShare}>
+                        <TouchableWithoutFeedback onPress={()=> {setModalVisible(true)}}>
 
-                            <Icon
-                                name="share-variant"
-                                size={17}
-                                color={"white"}
-                                style={styles.iconShare}
-                            />
+                            <View style={styles.BtnIconShare}>
 
-                        </View>
+                                <Icon
+                                    name="share-variant"
+                                    size={17}
+                                    color={"white"}
+                                    style={styles.iconShare}
+                                />
+
+                            </View>
+
+                        </TouchableWithoutFeedback>
 
                     </View>
 
@@ -422,6 +514,53 @@ const styles = StyleSheet.create({
 
         right: 1
 
-    }
+    },
+
+    /* Modal */
+
+    centeredView: {
+
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'rgba(0,0,0,0.5)', // Fundo semitransparente
+
+      },
+
+      modalView: {
+
+        width: 300,
+        padding: 20,
+        backgroundColor: 'white',
+        borderRadius: 10,
+        shadowColor: '#000',
+        shadowOffset: {
+          width: 0,
+          height: 2,
+
+        },
+
+        shadowOpacity: 0.25,
+        shadowRadius: 4,
+        elevation: 5,
+
+      },
+
+      inputModal:{
+
+        borderBottomWidth: 1,
+        borderBottomColor: "#CCC",
+        marginTop: 15,
+        fontSize: config.tamanhoTextosInputs,
+        color: "#777"
+
+    },
+
+    AreaBtnConfirmar:{
+
+        marginTop: 20
+
+    },
+
 
 })
