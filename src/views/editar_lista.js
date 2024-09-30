@@ -156,36 +156,40 @@ export default function Editar_lista({route}){
 
     const adicionar_usuario = ()=> {
 
-        const formData = new URLSearchParams();
-        formData.append('id_lista', id_lista);
-        formData.append('email_usuario', valorEmail); /* Mudar */
+        if(DATA_confirmacoes.dono_lista == true){
 
-        fetch(`${config.URL_inicial_API}${DATAUser[0].id}/adicionar_usuario_lista`, {
-        method: "POST",
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-        },
-        body: formData.toString()
-        })
-        .then(response => response.json())
-        .then(data => {
-
-            if(loadView == false){
-
-                setLoad(true);
-
-            }else{
-
-                setLoad(false);
-
-            }
-
-            setModalVisible(false)
+            const formData = new URLSearchParams();
+            formData.append('id_lista', id_lista);
+            formData.append('email_usuario', valorEmail); /* Mudar */
     
-        })
-        .catch(errors => {
-        console.error('Erro ao enviar solicitação:', errors);
-        });
+            fetch(`${config.URL_inicial_API}${DATAUser[0].id}/adicionar_usuario_lista`, {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: formData.toString()
+            })
+            .then(response => response.json())
+            .then(data => {
+    
+                if(loadView == false){
+    
+                    setLoad(true);
+    
+                }else{
+    
+                    setLoad(false);
+    
+                }
+    
+                setModalVisible(false)
+        
+            })
+            .catch(errors => {
+            console.error('Erro ao enviar solicitação:', errors);
+            });
+
+        }
 
     }
 
@@ -273,7 +277,15 @@ export default function Editar_lista({route}){
 
                     <View style={styles.areaIcon}>
 
-                        <TouchableWithoutFeedback onPress={()=> {setModalVisible(true)}}>
+                        <TouchableWithoutFeedback onPress={()=> {
+                            
+                                if(DATA_confirmacoes.dono_lista == true){
+
+                                    setModalVisible(true)
+
+                                }
+                                
+                            }}>
 
                             <View style={styles.BtnIconShare}>
 
