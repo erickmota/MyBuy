@@ -47,38 +47,17 @@ export default function Editar_lista({route}){
                   size={22}
                   color={"white"}
                   style={{marginRight: 10}}
-                  onPress={()=>{
-  
-                    Alert.alert(
-                      "Excluir lista",
-                      `A lista "${TituloLista}" e todos os produtos relacionados a ela serão excluidos. Deseja continuar?`,
-                      [
-                        {
-                          text: "Cancelar",
-                          onPress: () => console.log("Cancelado"),
-                          style: "cancel"
-                        },
-                        {
-                          text: "Sim",
-                          onPress: () => {
+                  onPress={()=>
 
-                            // Ação de exclusão
-                            
-                            apagar_lista();
-
-                          }
-                        }
-                      ],
-                      { cancelable: false }
-                    );
+                    btn_apagar()
                     
-                  }}
+                  }
                   />
               ),
 
         })
 
-    },[navigation])
+    },[DATA_confirmacoes])
 
     /* Conexão com a API para retornar os membros da lista */
 
@@ -160,7 +139,7 @@ export default function Editar_lista({route}){
 
             const formData = new URLSearchParams();
             formData.append('id_lista', id_lista);
-            formData.append('email_usuario', valorEmail); /* Mudar */
+            formData.append('email_usuario', valorEmail);
     
             fetch(`${config.URL_inicial_API}${DATAUser[0].id}/adicionar_usuario_lista`, {
             method: "POST",
@@ -193,6 +172,110 @@ export default function Editar_lista({route}){
 
     }
 
+    /* Remove um usuário da lista */
+
+    const remover_usuario = (id_usuario) => {
+
+        console.log(DATAUser[0].id);
+
+        const formData = new URLSearchParams();
+        formData.append('id_lista', id_lista);
+        formData.append('id_usuario', id_usuario);
+
+        fetch(`${config.URL_inicial_API}${DATAUser[0].id}/remover_usuario_lista`, {
+        method: "POST",
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: formData.toString()
+        })
+        .then(response => response.json())
+        .then(data => {
+
+            if(DATA_confirmacoes.dono_lista == true){
+
+                if(loadView == false){
+
+                    setLoad(true);
+    
+                }else{
+    
+                    setLoad(false);
+    
+                }
+
+            }else{
+
+                navigation.navigate("Listas");
+
+            }
+    
+        })
+        .catch(errors => {
+        console.error('Erro ao enviar solicitação:', errors);
+        });
+
+    }
+
+    const btn_apagar = () => {
+
+        if(DATA_confirmacoes.dono_lista == true){
+
+            Alert.alert(
+                "Excluir lista",
+                `A lista "${TituloLista}" e todos os produtos relacionados a ela serão excluidos. Deseja continuar?`,
+                [
+                  {
+                    text: "Cancelar",
+                    onPress: () => console.log("Cancelado"),
+                    style: "cancel"
+                  },
+                  {
+                    text: "Sim",
+                    onPress: () => {
+
+                      // Ação de exclusão
+                      
+                      apagar_lista();
+
+                    }
+                  }
+                ],
+                { cancelable: false }
+            );
+
+        }else{
+
+            Alert.alert(
+                "Sair da lista",
+                `Deseja mesmo sair da lista "${TituloLista}"? Os produtos compartilhados por você, `+
+                "ainda continuaram disponíveis, para os outros participantes.",
+                [
+                  {
+                    text: "Cancelar",
+                    onPress: () => console.log("Cancelado"),
+                    style: "cancel"
+                  },
+                  {
+                    text: "Sim",
+                    onPress: () => {
+
+                      // Ação de exclusão
+                      
+                      remover_usuario(DATAUser[0].id);
+
+                    }
+                  }
+                ],
+                { cancelable: false }
+            );
+
+        }
+
+        console.log(DATA_confirmacoes.dono_lista);
+
+    }
+
     return(
 
         <View style={styles.container}>
@@ -214,7 +297,7 @@ export default function Editar_lista({route}){
 
                             <Text style={styles.tituloModal}>
 
-                                Convidar
+                                Adicionar
 
                             </Text>
 
@@ -229,7 +312,7 @@ export default function Editar_lista({route}){
 
                         <View style={styles.AreaBtnConfirmar}>
 
-                            <Button onPress={()=>adicionar_usuario()} color={config.cor2} title="Enviar convite  ->"/>
+                            <Button onPress={()=>adicionar_usuario()} color={config.cor2} title="Adicionar usuário  ->"/>
 
                         </View>
 
@@ -360,11 +443,40 @@ export default function Editar_lista({route}){
 
                                 {DATA_confirmacoes.dono_lista == true && (
 
-                                    <Text style={styles.textRemover}>
+                                    <TouchableWithoutFeedback onPress={()=> {
 
-                                        REMOVER
+                                            Alert.alert(
+                                                `Remover membro`,
+                                                `O usuário "${membros.nome}" será removido dessa lista. Deseja continuar?`,
+                                                [
+                                                {
+                                                    text: "Cancelar",
+                                                    onPress: () => console.log("Cancelado"),
+                                                    style: "cancel"
+                                                },
+                                                {
+                                                    text: "Sim",
+                                                    onPress: () => {
+                        
+                                                    // Ação de exclusão
+                                                    
+                                                    remover_usuario(membros.id);
+                        
+                                                    }
+                                                }
+                                                ],
+                                                { cancelable: false }
+                                            );
+                                        
+                                        }}>
 
-                                    </Text>
+                                        <Text style={styles.textRemover}>
+
+                                            REMOVER
+
+                                        </Text>
+
+                                    </TouchableWithoutFeedback>
 
                                 )}
 

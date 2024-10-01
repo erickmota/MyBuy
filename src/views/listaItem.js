@@ -679,6 +679,22 @@ export default function ListaItem({route, navigation}){
                                                                 <Text style={styles.qtdItens}>
                                                                     
                                                                     {prod.qtd} {verifica_exibicao(parseInt(prod.tipo_exibicao), Math.ceil(prod.qtd), 0)}
+
+                                                                    {prod.nome_dono != undefined ? (
+
+                                                                        (" | ")
+
+                                                                    ): null}
+                                                                    
+                                                                </Text>
+
+                                                                <Text style={[styles.qtdItens, styles.nomeDonoProd]}>
+
+                                                                    {prod.nome_dono != undefined ? (
+
+                                                                        prod.nome_dono
+
+                                                                    ): null}
                                                                     
                                                                 </Text>
 
@@ -988,6 +1004,13 @@ const styles = StyleSheet.create({
         color: config.corTextoSecundario,
         alignContent: "center",
     
+    },
+
+    nomeDonoProd:{
+
+        color: config.cor2,
+        opacity: 0.8
+
     },
 
     obs:{
