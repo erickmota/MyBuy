@@ -19,6 +19,7 @@ export default function ListaItem({route, navigation}){
     const [DATA, setData] = useState([]);
     const [DATA_carrinho, setCarrinho] = useState([]);
     const [modalVisible, setModalVisible] = useState(false);
+    const [DATA_confirmacoes, setDataConfirmacoes] = useState({});
 
     /* Modal */
 
@@ -46,10 +47,9 @@ export default function ListaItem({route, navigation}){
                 let categoriesWithProducts = await Promise.all(data.data.map(async category => {
                     const response = await fetch(`${config.URL_inicial_API}${DATAUser[0].id}/produtos/${id_lista}/${category.id}`);
                     const productsData = await response.json();
-
                     return {
                         ...category,
-                        produtos: productsData.data  || []
+                        produtos: productsData.data.Produtos  || []
                     };
 
                 }));
@@ -58,10 +58,12 @@ export default function ListaItem({route, navigation}){
                 const response = await fetch(`${config.URL_inicial_API}${DATAUser[0].id}/produtos/${id_lista}`);
                 const allProductsData = await response.json();
 
-                if(Array.isArray(allProductsData.data) && allProductsData.data.length > 0){
+                if(Array.isArray(allProductsData.data.Produtos) && allProductsData.data.Produtos.length > 0){
+
+                    setDataConfirmacoes(allProductsData.data.Confirmacoes);
 
                     // Agora, adicione os produtos que não estão em nenhuma categoria do usuário
-                    const uncategorizedProducts = allProductsData.data.filter(product => {
+                    const uncategorizedProducts = allProductsData.data.Produtos.filter(product => {
                         return !categoriesWithProducts.some(category => 
                             category.produtos.some(prod => prod.id === product.id)
                         );
@@ -92,7 +94,7 @@ export default function ListaItem({route, navigation}){
             fetch(`${config.URL_inicial_API}${DATAUser[0].id}/produtos_carrinho/${id_lista}`)
             .then(response => response.json())
             .then(data => {
-                setCarrinho(data.data);
+                setCarrinho(data.data.Produtos);
             })
             .catch(error => {
                 console.error('Erro ao buscar dados da API dos carrinhos:', error);
@@ -637,7 +639,7 @@ export default function ListaItem({route, navigation}){
 
                                                             {
                                                                 
-                                                                if(item.id != "nulo"){
+                                                                if(item.id != "nulo" || DATA_confirmacoes.dono_lista == true){
 
                                                                     navigation.navigate("Editar_item", {
                                                                 
