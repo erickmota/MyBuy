@@ -464,11 +464,11 @@ export default function ListaItem({route, navigation}){
     function mostrar_alerta_permissao(){
 
         showMessage({
-            message: "Impossível prosseguir",
-            description: "Produtos compartilhados por terceiros, não podem ser editados.",
-            type: "info", // ou "danger", "info", etc.
+            message: "Impossível prosseguir!",
+            description: "Apenas o administrador da lista, tem permissão para editar produto compartilhados.",
+            type: "danger", // ou "danger", "info", etc.
             icon: "auto",
-            duration: 3000
+            duration: 3500
         });
 
     }
