@@ -563,26 +563,59 @@ export default function EditarItem({route}){
 
                     <View style={{flex: 5}}>
 
-                        <Text style={styles.titulo}>
+                        {categoria == "nulo" ? (
 
-                            Categoria
+                            <View>
 
-                        </Text>
+                                <Text style={[styles.titulo, {opacity: 0.3}]}>
 
-                        <View style={styles.campoSelect}>
-                            <Picker
-                                selectedValue={selectedCategoria}
-                                onValueChange={(itemValue) => setSelectedCategoria(itemValue)}
-                            >
+                                    Categoria
 
-                                {DATA.map((item) => (
+                                </Text>
 
-                                    <Picker.Item key={item.id} label={item.nome} value={item.id} />
+                                <View style={[styles.campoSelect, {opacity: 0.3}]}>
+                                    <Picker
+                                        selectedValue={selectedCategoria}
+                                        onValueChange={(itemValue) => setSelectedCategoria(itemValue)}
+                                        enabled={false}
+                                    >
 
-                                ))}
+                                    <Picker.Item key={false} label="Categoria compartilhada" value={false} />
 
-                            </Picker>
-                        </View>
+                                    </Picker>
+                                </View>
+
+                            </View>
+
+                        ):(
+
+                            <View>
+
+                                <Text style={styles.titulo}>
+
+                                        Categoria
+
+                                </Text>
+
+                                <View style={styles.campoSelect}>
+                                    <Picker
+                                        selectedValue={selectedCategoria}
+                                        onValueChange={(itemValue) => setSelectedCategoria(itemValue)}
+                                        enabled={true}
+                                    >
+
+                                        {DATA.map((item) => (
+
+                                            <Picker.Item key={item.id} label={item.nome} value={item.id} />
+
+                                        ))}
+
+                                    </Picker>
+                                </View>
+
+                            </View>
+                            
+                        )}
 
                     </View>
 
