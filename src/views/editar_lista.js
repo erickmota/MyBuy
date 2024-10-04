@@ -393,7 +393,7 @@ export default function Editar_lista({route}){
 
                         <View style={styles.areaImg}>
 
-                            <Image style={styles.imgUsuario} source={{ uri: `https://pessoaepessoa.com.br/wp-content/uploads/2023/04/Roberto_Pessoa.png` }} />
+                            <Image style={styles.imgUsuario} source={{ uri: `${DATA_dono.foto_url}` }} />
 
                         </View>
 
@@ -425,7 +425,15 @@ export default function Editar_lista({route}){
 
                             <View style={styles.areaImg}>
 
-                                <Image style={styles.imgUsuario} source={{ uri: `https://www.designi.com.br/images/preview/12161378.jpg` }} />
+                                {membros.foto_url != null ? (
+
+                                    <Image style={styles.imgUsuario} source={{ uri: `${membros.foto_url}` }} />
+
+                                ):(
+
+                                    <Image style={styles.imgUsuario} source={{ uri: `${config.Foto_usuario_nulo}` }} />
+
+                                )}
 
                             </View>
 
