@@ -1,4 +1,4 @@
-import React, { useEffect, useContext, useState, useCallback } from "react";
+import React, {useContext, useState, useCallback } from "react";
 import { View, Text, StyleSheet, ScrollView, StatusBar, TouchableNativeFeedback, Image, TouchableOpacity, TouchableWithoutFeedback, Modal, Button, TextInput } from "react-native";
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { UserContext } from '../context/user';
@@ -465,7 +465,7 @@ export default function ListaItem({route, navigation}){
 
         showMessage({
             message: "Impossível prosseguir!",
-            description: "Apenas o administrador da lista, tem permissão para editar produto compartilhados.",
+            description: "Apenas o administrador da lista, tem permissão para editar produtos compartilhados.",
             type: "danger", // ou "danger", "info", etc.
             icon: "auto",
             duration: 3500

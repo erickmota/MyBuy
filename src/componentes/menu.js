@@ -132,7 +132,7 @@ export default function Menu(){
 
                 </TouchableWithoutFeedback>
 
-                <TouchableWithoutFeedback onPress={() => {navigation.navigate("Listas")}}>
+                <TouchableWithoutFeedback onPress={() => {navigation.navigate("MinhasCompras")}}>
 
                     <View style={styles.areaItemMenu}>
 

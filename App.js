@@ -16,6 +16,7 @@ import Cadastro from "./src/views/cadastro"
 import Carregar_login from "./src/views/carregar_login"
 import Editar_lista from "./src/views/editar_lista"
 import Editar_Item from "./src/views/editar_item"
+import Minhas_compras from "./src/views/minhas_compras"
 
 /* Componentes */
 import Menu from "./src/componentes/menu"
@@ -35,6 +36,7 @@ function DrawerNavigation() {
   return (
 
     <Drawer.Navigator drawerContent={Menu} initialRouteName="Listas">
+
       <Drawer.Screen name="ListaItem" component={ListaItem}  options={{
 
         title: "Lista Item",
@@ -47,6 +49,7 @@ function DrawerNavigation() {
         }
 
       }} />
+
       <Drawer.Screen name="Listas" component={Listas} options={{
 
         title: "Minhas listas",
@@ -59,6 +62,20 @@ function DrawerNavigation() {
         }
 
       }} />
+
+      <Drawer.Screen name="MinhasCompras" component={Minhas_compras} options={{
+
+      title: "Minhas compras",
+      headerTintColor: "#FFF",
+      headerStyle: {
+
+        backgroundColor: config.cor1,
+        borderWidth: 0,
+
+      }
+
+      }} />
+
     </Drawer.Navigator>
   );
 }
