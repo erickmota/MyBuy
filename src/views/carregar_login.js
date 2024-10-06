@@ -41,7 +41,7 @@ export default function Carregar_login({route}){
     if (db) {
       db.transaction((tx) => {
         tx.executeSql(
-          "CREATE TABLE IF NOT EXISTS usuarios (id INTEGER, nome VARCHAR, token VARCHAR, ultima_lista INTEGER)",
+          "CREATE TABLE IF NOT EXISTS usuarios (id INTEGER, nome VARCHAR, token VARCHAR, foto_url VARCHAR, ultima_lista INTEGER)",
           [],
           ()=>{
 
@@ -60,13 +60,13 @@ export default function Carregar_login({route}){
   },[db])
 
   /* Função para inserir um novo dado na tabela local */
-  function inserirNoBancoLocal(id, nome, token){   
+  function inserirNoBancoLocal(id, nome, token, foto_url){   
     
     console.log("A função inserirNoBandoLocal está sendo chamada");
 
     db.transaction((tx) => {
       tx.executeSql(
-        `INSERT INTO usuarios (id, nome, token, ultima_lista) VALUES (${id}, '${nome}', '${token}', 0)`,
+        `INSERT INTO usuarios (id, nome, token, foto_url, ultima_lista) VALUES (${id}, '${nome}', '${token}', '${foto_url}', 0)`,
         [],
         ()=>{
 
@@ -96,7 +96,7 @@ export default function Carregar_login({route}){
     if (db && DATA.length > 0 && !view) {
       const dataP = DATA[0];
       console.log("Dados a serem inseridos:", dataP);
-      inserirNoBancoLocal(dataP.id, dataP.nome, dataP.token);
+      inserirNoBancoLocal(dataP.id, dataP.nome, dataP.token, dataP.foto_url);
     }
 
   },[db, DATA, view])

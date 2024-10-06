@@ -1,8 +1,9 @@
 import React, {useContext, useEffect, useState} from "react";
-import { View, Text, StyleSheet, TouchableWithoutFeedback } from "react-native";
+import { View, Text, StyleSheet, TouchableWithoutFeedback, Image } from "react-native";
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useNavigation } from '@react-navigation/native';
 import * as SQLite from "expo-sqlite"
+import { UserContext } from '../context/user';
 
 import config from "../config";
 
@@ -13,6 +14,9 @@ export default function Menu(){
 
     const [db, setDbLocal] = useState(null);
 
+    /* Contexto */
+    const { DATAUser } = useContext(UserContext);
+
     useEffect(()=>{
 
         try {
@@ -20,7 +24,7 @@ export default function Menu(){
         const db = SQLite.openDatabase("mybuy.db");
         setDbLocal(db);
 
-        console.log("Sucesso ao abrir o banco");
+        console.log("Sucesso ao abrir o bancos");
         
         } catch (error) {
         
@@ -54,6 +58,12 @@ export default function Menu(){
 
     }
 
+    const log = () => {
+
+        console.log(config.Foto_usuario_nulo);
+
+    }
+
     return(
 
         <View style={styles.container}>
@@ -81,16 +91,19 @@ export default function Menu(){
 
                     <View style={styles.areaItemMenu}>
 
-                        <Icon
-                            name="account"
-                            style={styles.iconMenu}
-                            size={25}
-                            color={config.cor2}
-                            />
+                        {DATAUser[0].foto_url != "null" ? (
+
+                            <Image style={styles.imgUsuario} source={{ uri: `${DATAUser[0].foto_url}` }} />
+
+                        ):(
+
+                            <Image style={styles.imgUsuario} source={{ uri: `${config.Foto_usuario_nulo}` }} />
+
+                        )}
 
                         <Text style={styles.itemMenu}>
 
-                            ErickMota
+                            {DATAUser[0].nome}
 
                         </Text>
 
@@ -140,7 +153,7 @@ export default function Menu(){
 
                 </TouchableWithoutFeedback>
 
-                <TouchableWithoutFeedback onPress={() => {navigation.navigate("Listas")}}>
+                <TouchableWithoutFeedback onPress={() => log()}>
 
                     <View style={styles.areaItemMenu}>
 
@@ -314,6 +327,16 @@ const styles = StyleSheet.create({
         marginLeft: 20,
         marginRight: 20
 
-    }
+    },
+
+    imgUsuario:{
+
+        width: 35,
+        height: 35,
+        borderRadius: 50,
+        marginRight: 20,
+        marginLeft: 5,
+
+    },
 
 })
