@@ -99,7 +99,7 @@ export default function App() {
 
             <TouchableOpacity
 
-              activeOpacity={0.3}
+              activeOpacity={config.opacity_btn}
               onPress={() => navigation.navigate('ListaItem', {TituloLista: item.nome, id_lista: item.id})}
               onLongPress={() => navigation.navigate('Editar_lista', {TituloLista: item.nome, id_lista: item.id})}
               
@@ -112,6 +112,27 @@ export default function App() {
               <View style={{flexDirection: "row"}}>
 
                 <Text style={styles.qtdItens}>{item.qtd_produtos} - Produtos</Text>
+
+                {item.qtd_usuarios > 1 && (
+
+                  <View style={{flexDirection: "row"}}>
+
+                    <Text style={styles.barraIcon}>
+
+                    -
+
+                    </Text>
+
+                    <Icon
+                    name="account-multiple"
+                    size={21}
+                    style={styles.iconShare}
+                    />
+
+
+                  </View>
+
+                )}
 
               </View>
 
@@ -201,6 +222,20 @@ const styles = StyleSheet.create({
     alignItems: "flex-end",
     flex: 1,
     justifyContent: "center"
+
+  },
+
+  iconShare:{
+
+    left: 10,
+    color: "#CCC"
+
+  },
+
+  barraIcon:{
+
+    left: 5,
+    color: config.corTextoSecundario
 
   }
 

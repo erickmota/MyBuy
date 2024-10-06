@@ -634,7 +634,7 @@ export default function ListaItem({route, navigation}){
 
                                                     <TouchableOpacity
                                                     
-                                                        activeOpacity={0.5}
+                                                        activeOpacity={config.opacity_btn}
                                                         onPress={() =>
 
                                                             {
@@ -824,7 +824,7 @@ export default function ListaItem({route, navigation}){
 
                                     <TouchableOpacity
                                     
-                                        activeOpacity={0.5}
+                                        activeOpacity={config.opacity_btn}
                                         onPress={() =>
 
                                             {

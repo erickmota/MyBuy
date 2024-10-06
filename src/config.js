@@ -11,6 +11,7 @@ const config = {
     /* Parâmtros */
 
     qtd_itens_pesquisa: 3, /* Quantidade de itens retornados na pesquisa dos produtos. */
+    opacity_btn: 0.5, /* Valor padrão dos opacitys */
 
     /* Conteúdos */
     Foto_prod_nulo: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSHSFDKZsJhNfyuNuvlSdZ_fsJOelRJ4Qi6mw&s", /* Foto padrão que aparece em um produto sem foto definida. */
