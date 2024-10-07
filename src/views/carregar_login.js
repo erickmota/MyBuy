@@ -57,6 +57,25 @@ export default function Carregar_login({route}){
       });
     }
 
+    /* if (db) {
+      db.transaction((tx) => {
+        tx.executeSql(
+          "DROP TABLE IF EXISTS usuarios",
+          [],
+          ()=>{
+
+            console.log("Tabela apagada com sucesso");
+
+          },
+          (_, error)=>{
+
+            console.error("Erro ao apagar a tabela", error);
+
+          }
+        );
+      });
+    } */
+
   },[db])
 
   /* Função para inserir um novo dado na tabela local */

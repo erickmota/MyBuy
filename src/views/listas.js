@@ -228,7 +228,8 @@ const styles = StyleSheet.create({
   iconShare:{
 
     left: 10,
-    color: "#CCC"
+    color: "#CCC",
+    top: 1
 
   },
 
