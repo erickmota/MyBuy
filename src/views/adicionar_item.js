@@ -49,6 +49,7 @@ export default function AddItem({route}){
             console.error('Erro ao buscar dados da API:', error);
         });
 
+        /* Recebendo dados dos produtos de exemplo */
         fetch(`${config.URL_inicial_API}produtos_exemplo`)
         .then(response => response.json())
         .then(data => {
