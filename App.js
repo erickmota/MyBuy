@@ -17,6 +17,7 @@ import Carregar_login from "./src/views/carregar_login"
 import Editar_lista from "./src/views/editar_lista"
 import Editar_Item from "./src/views/editar_item"
 import Minhas_compras from "./src/views/minhas_compras"
+import Minhas_compras_itens from "./src/views/minhas_compras_itens"
 
 /* Componentes */
 import Menu from "./src/componentes/menu"
@@ -186,6 +187,19 @@ export default function App() {
               borderWidth: 0,
 
             }
+
+          }} />
+
+          <stack.Screen name="Minhas_compras_itens" component={Minhas_compras_itens} options={{
+
+          title: "Compra teste",
+          headerTintColor: "#FFF",
+          headerStyle: {
+
+            backgroundColor: config.cor1,
+            borderWidth: 0,
+
+          }
 
           }} />
 
