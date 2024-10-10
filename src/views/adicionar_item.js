@@ -37,9 +37,11 @@ export default function AddItem({route}){
     const [focusLista, setFocusLista] = useState(false);
 
     const [foto, setFoto] = useState([0, config.Foto_prod_nulo]);
+    const [id_base, setIdBase] = useState(0);
 
     /* Recebendo dados das categorias */
     useEffect(() => {
+        
         fetch(`${config.URL_inicial_API}${DATAUser[0].id}/categorias`)
         .then(response => response.json())
         .then(data => {
@@ -50,7 +52,7 @@ export default function AddItem({route}){
         });
 
         /* Recebendo dados dos produtos de exemplo */
-        fetch(`${config.URL_inicial_API}produtos_exemplo`)
+        fetch(`${config.URL_inicial_API}/${DATAUser[0].id}/produtos_exemplo_usuario`)
         .then(response => response.json())
         .then(data => {
             setDataProdutosExemplo(data.data);
@@ -58,6 +60,7 @@ export default function AddItem({route}){
         .catch(error => {
             console.error('Erro ao buscar dados da API:', error);
         });
+
     }, []);
 
     function AlterCheckBox(){
@@ -88,9 +91,20 @@ export default function AddItem({route}){
         lista,
         foto,
         valor,
-        obs
+        obs,
+        id_bases
 
     ){
+
+        console.log("nome: "+nome_produto);
+        console.log("Tipo: "+tipo_exibicao);
+        console.log("Qtd: "+qtd);
+        console.log("Categoria: "+categoria);
+        console.log("Lista: "+lista);
+        console.log("Foto: "+foto);
+        console.log("Valor: "+valor);
+        console.log("Obs: "+obs);
+        console.log("Base: "+id_bases);
 
         /* Validação dos inputs */
 
@@ -128,6 +142,7 @@ export default function AddItem({route}){
             formData.append('carrinho', carrinho);
             formData.append('valor', valor);
             formData.append('obs', obs);
+            formData.append('produtos_usuario', id_bases);
 
             fetch(`${config.URL_inicial_API}${DATAUser[0].id}/adiciona_produto`, {
             method: "POST",
@@ -193,13 +208,23 @@ export default function AddItem({route}){
     /* Função responsável por alterar os dados do produto,
     quando selecionado da lista de exexmplo */
 
-    function altera_dados(foto_id, foto_url, nome, tipo){
+    function altera_dados(foto_id, foto_url, nome, tipo, id_base, exemplo){
 
         focus_lista(false);
 
         setFoto([foto_id, foto_url]);
         onChangecampo_nome(nome);
         setSelectedTipo(tipo);
+
+        if(exemplo == true){
+
+            setIdBase(0);
+
+        }else{
+
+            setIdBase(id_base);
+
+        }
 
     }
 
@@ -256,13 +281,21 @@ export default function AddItem({route}){
 
                             {dataFiltrada.slice(0, config.qtd_itens_pesquisa).map((item)=>(
 
-                                <TouchableOpacity activeOpacity={0.7} key={item.id} onPress={()=> altera_dados(item.id_foto, item.url, item.nome, item.tipo_exibicao)}>
+                                <TouchableOpacity activeOpacity={0.7} key={item.id} onPress={()=> altera_dados(item.id_foto, item.url, item.nome, item.tipo_exibicao, item.id, item.exemplo)}>
 
                                 <View style={styles.itemPesquisa}>
 
                                     <View>
 
-                                        <Image style={styles.imgProduto} source={{ uri: `${item.url}` }} />
+                                        {item.url == null ? (
+
+                                            <Image style={styles.imgProduto} source={{ uri: `${config.Foto_prod_nulo}` }} />
+
+                                        ):(
+
+                                            <Image style={styles.imgProduto} source={{ uri: `${item.url}` }} />
+
+                                        )}
 
                                     </View>
 
@@ -512,7 +545,7 @@ export default function AddItem({route}){
 
             </ScrollView>
 
-            <IconeCorreto funcao={() => adiciona_item(campo_nome, selectedTipo, qtd, selectedCategoria, id_lista, foto[0], valor, observacao)}/>
+            <IconeCorreto funcao={() => adiciona_item(campo_nome, selectedTipo, qtd, selectedCategoria, id_lista, foto[0], valor, observacao, id_base)}/>
 
         </View>
 
