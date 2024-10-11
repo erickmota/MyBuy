@@ -37,7 +37,6 @@ export default function AddItem({route}){
     const [focusLista, setFocusLista] = useState(false);
 
     const [foto, setFoto] = useState([0, config.Foto_prod_nulo]);
-    const [id_base, setIdBase] = useState(0);
 
     /* Recebendo dados das categorias */
     useEffect(() => {
@@ -91,8 +90,7 @@ export default function AddItem({route}){
         lista,
         foto,
         valor,
-        obs,
-        id_bases
+        obs
 
     ){
 
@@ -104,7 +102,6 @@ export default function AddItem({route}){
         console.log("Foto: "+foto);
         console.log("Valor: "+valor);
         console.log("Obs: "+obs);
-        console.log("Base: "+id_bases);
 
         /* Validação dos inputs */
 
@@ -142,7 +139,6 @@ export default function AddItem({route}){
             formData.append('carrinho', carrinho);
             formData.append('valor', valor);
             formData.append('obs', obs);
-            formData.append('produtos_usuario', id_bases);
 
             fetch(`${config.URL_inicial_API}${DATAUser[0].id}/adiciona_produto`, {
             method: "POST",
@@ -208,23 +204,22 @@ export default function AddItem({route}){
     /* Função responsável por alterar os dados do produto,
     quando selecionado da lista de exexmplo */
 
-    function altera_dados(foto_id, foto_url, nome, tipo, id_base, exemplo){
+    function altera_dados(foto_id, foto_url, nome, tipo){
 
         focus_lista(false);
 
-        setFoto([foto_id, foto_url]);
-        onChangecampo_nome(nome);
-        setSelectedTipo(tipo);
+        if(foto_id == null){
 
-        if(exemplo == true){
-
-            setIdBase(0);
+            setFoto([0, config.Foto_prod_nulo]);
 
         }else{
 
-            setIdBase(id_base);
+            setFoto([foto_id, foto_url]);
 
         }
+
+        onChangecampo_nome(nome);
+        setSelectedTipo(tipo);
 
     }
 
@@ -545,7 +540,7 @@ export default function AddItem({route}){
 
             </ScrollView>
 
-            <IconeCorreto funcao={() => adiciona_item(campo_nome, selectedTipo, qtd, selectedCategoria, id_lista, foto[0], valor, observacao, id_base)}/>
+            <IconeCorreto funcao={() => adiciona_item(campo_nome, selectedTipo, qtd, selectedCategoria, id_lista, foto[0], valor, observacao)}/>
 
         </View>
 

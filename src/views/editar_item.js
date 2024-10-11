@@ -164,7 +164,8 @@ export default function EditarItem({route}){
             console.error('Erro ao buscar dados da API:', error);
         });
 
-        fetch(`${config.URL_inicial_API}produtos_exemplo`)
+        /* Recebendo dados dos produtos de exemplo */
+        fetch(`${config.URL_inicial_API}/${DATAUser[0].id}/produtos_exemplo_usuario`)
         .then(response => response.json())
         .then(data => {
             setDataProdutosExemplo(data.data);
@@ -303,7 +304,16 @@ export default function EditarItem({route}){
 
         focus_lista(false);
 
-        setFoto([foto_id, foto_url]);
+        if(foto_id == null){
+
+            setFoto([0, config.Foto_prod_nulo]);
+
+        }else{
+
+            setFoto([foto_id, foto_url]);
+
+        }
+        
         onChangecampo_nome(nome);
         setSelectedTipo(tipo);
 
