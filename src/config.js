@@ -19,7 +19,7 @@ const config = {
 
 
     /* Dados */
-    URL_inicial_API: "http://192.168.1.8:80/API_MyBuy/"
+    URL_inicial_API: "http://192.168.1.7:80/API_MyBuy/"
 
 };
   

@@ -325,7 +325,7 @@ export default function EditarItem({route}){
 
         if(foto[0] != 0){
 
-            setFoto([0, config.Foto_prod_nulo]);
+            /* setFoto([0, config.Foto_prod_nulo]); */
 
         }else{
 
