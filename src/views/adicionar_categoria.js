@@ -1,12 +1,43 @@
-import React from "react";
+import React, {useContext}  from "react";
 import { Text, View, TextInput, StyleSheet } from "react-native";
+import { useNavigation } from '@react-navigation/native';
 
 import IconeCorreto from "../componentes/botaoCorreto"
 import config from "../config";
+import { UserContext } from '../context/user';
 
 export default function AddCategoria(){
 
+    const navigation = useNavigation();
+
     const [number, onChangeNumber] = React.useState('');
+
+    /* Contexto */
+    const { DATAUser } = useContext(UserContext);
+
+    function Inserir_categoria(nova_categoria){
+
+        const formData = new URLSearchParams();
+        formData.append('nome_categoria', nova_categoria);
+
+        fetch(`${config.URL_inicial_API}${DATAUser[0].id}/adiciona_categoria`, {
+        method: "POST",
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: formData.toString()
+        })
+        .then(response => response.json())
+        .then(data => {
+
+            navigation.navigate("Categorias");
+    
+        })
+        .catch(errors => {
+        console.error('Erro ao enviar solicitação:', errors);
+        });
+
+    }
 
     return(
 
@@ -24,7 +55,7 @@ export default function AddCategoria(){
             keyboardType="default"
             />
 
-            <IconeCorreto/>
+            <IconeCorreto funcao={() => Inserir_categoria(number)}/>
 
         </View>
 

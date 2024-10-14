@@ -60,7 +60,7 @@ export default function AddItem({route}){
             console.error('Erro ao buscar dados da API:', error);
         });
 
-    }, []);
+    }, [DATA_PRODUTOS_EXEMPLO]);
 
     function AlterCheckBox(){
 

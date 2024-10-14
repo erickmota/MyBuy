@@ -177,7 +177,7 @@ export default function EditarItem({route}){
         seta_foto();
         seta_carrinho();
 
-    }, []);
+    }, [DATA_PRODUTOS_EXEMPLO]);
 
     const editar_produto = () => {
 
