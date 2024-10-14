@@ -10,7 +10,7 @@ const config = {
 
     /* Parâmtros */
 
-    qtd_itens_pesquisa: 3, /* Quantidade de itens retornados na pesquisa dos produtos. */
+    qtd_itens_pesquisa: 5, /* Quantidade de itens retornados na pesquisa dos produtos. */
     opacity_btn: 0.5, /* Valor padrão dos opacitys */
 
     /* Conteúdos */
