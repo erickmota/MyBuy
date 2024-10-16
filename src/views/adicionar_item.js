@@ -44,7 +44,7 @@ export default function AddItem({route}){
         fetch(`${config.URL_inicial_API}${DATAUser[0].id}/categorias`)
         .then(response => response.json())
         .then(data => {
-            setData(data.data);
+            setData(data.data.categorias);
         })
         .catch(error => {
             console.error('Erro ao buscar dados da API:', error);

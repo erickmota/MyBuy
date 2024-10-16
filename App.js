@@ -166,7 +166,7 @@ export default function App() {
 
           <stack.Screen name="Categorias" component={Categorias} options={{
 
-            title: "Gerenciar categorias",
+            title: "Minhas categorias",
             headerTintColor: "#FFF",
             headerStyle: {
 

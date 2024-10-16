@@ -53,6 +53,7 @@ export default function AddCategoria(){
             onChangeText={onChangeNumber}
             value={number}
             keyboardType="default"
+            maxLength={30}
             />
 
             <IconeCorreto funcao={() => Inserir_categoria(number)}/>

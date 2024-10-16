@@ -50,7 +50,6 @@ export default function EditarItem({route}){
     const [foto, setFoto] = useState([id_foto, url]);
 
     /* Função responsável por setar o estado correto da foto inicial */
-
     const seta_foto = () => {
 
         if(id_foto == null){
@@ -66,8 +65,7 @@ export default function EditarItem({route}){
     }
 
     /* Função responsável por setar o estado correto do carrinho */
-
-    const seta_carrinho = () => {
+    useEffect(()=>{
 
         if(carrinho == 1){
 
@@ -81,7 +79,7 @@ export default function EditarItem({route}){
 
         }
 
-    }
+    }, [])
 
     useLayoutEffect(()=>{
 
@@ -158,7 +156,7 @@ export default function EditarItem({route}){
         fetch(`${config.URL_inicial_API}${DATAUser[0].id}/categorias`)
         .then(response => response.json())
         .then(data => {
-            setData(data.data);
+            setData(data.data.categorias);
         })
         .catch(error => {
             console.error('Erro ao buscar dados da API:', error);
@@ -175,9 +173,8 @@ export default function EditarItem({route}){
         });
 
         seta_foto();
-        seta_carrinho();
 
-    }, [DATA_PRODUTOS_EXEMPLO]);
+    }, [DATA]);
 
     const editar_produto = () => {
 
@@ -540,8 +537,8 @@ export default function EditarItem({route}){
 
                                 <TouchableOpacity
 
-                                activeOpacity={0.3}
-                                onPress={AlterCheckBox}                    
+                                    activeOpacity={0.3}
+                                    onPress={AlterCheckBox}                    
 
                                 >
 
@@ -585,7 +582,7 @@ export default function EditarItem({route}){
 
                                 <View style={[styles.campoSelect, {opacity: 0.3}]}>
                                     <Picker
-                                        selectedValue={selectedCategoria}
+                                        selectedValue={parseInt(selectedCategoria)}
                                         onValueChange={(itemValue) => setSelectedCategoria(itemValue)}
                                         enabled={false}
                                     >
@@ -609,7 +606,7 @@ export default function EditarItem({route}){
 
                                 <View style={styles.campoSelect}>
                                     <Picker
-                                        selectedValue={selectedCategoria}
+                                        selectedValue={parseInt(selectedCategoria)}
                                         onValueChange={(itemValue) => setSelectedCategoria(itemValue)}
                                         enabled={true}
                                     >

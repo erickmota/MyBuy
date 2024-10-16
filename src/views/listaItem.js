@@ -44,7 +44,7 @@ export default function ListaItem({route, navigation}){
             .then(response => response.json())
             .then(async data => {
                 
-                let categoriesWithProducts = await Promise.all(data.data.map(async category => {
+                let categoriesWithProducts = await Promise.all(data.data.categorias.map(async category => {
                     const response = await fetch(`${config.URL_inicial_API}${DATAUser[0].id}/produtos/${id_lista}/${category.id}`);
                     const productsData = await response.json();
                     return {
