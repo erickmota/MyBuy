@@ -19,7 +19,9 @@ export default function ListaItem({route, navigation}){
     const [DATA, setData] = useState([]);
     const [DATA_carrinho, setCarrinho] = useState([]);
     const [modalVisible, setModalVisible] = useState(false);
+    const [modalRegistrarVisible, setModalRegistrarVisible] = useState(false);
     const [DATA_confirmacoes, setDataConfirmacoes] = useState({});
+    const [mercado, onChangeMercado] = useState("");
 
     /* Modal */
 
@@ -466,12 +468,38 @@ export default function ListaItem({route, navigation}){
         showMessage({
             message: "Impossível prosseguir!",
             description: "Apenas o administrador da lista, tem permissão para editar produtos compartilhados.",
-            type: "danger", // ou "danger", "info", etc.
+            type: "warning", // ou "danger", "info", etc.
             icon: "auto",
             duration: 3500
         });
 
     }
+
+    function mostrar_alerta_carrinho(){
+
+        showMessage({
+            message: "Carrinho não definido!",
+            description: "Você precisa ter ao menos um produto no carrinho, para criar um registro de compra.",
+            type: "info", // ou "danger", "info", etc.
+            icon: "auto",
+            duration: 3500
+        });
+
+    }
+
+    const setar_modal_registro = () => {
+
+        if(DATA_confirmacoes.produtos_carrinho < 1){
+
+            mostrar_alerta_carrinho()
+
+        }else{
+
+            setModalRegistrarVisible(true);
+
+        }
+  
+      }
 
     return(
 
@@ -973,7 +1001,7 @@ export default function ListaItem({route, navigation}){
 
             </View>
 
-            <TouchableNativeFeedback>
+            <TouchableNativeFeedback onPress={()=> setar_modal_registro()}>
 
             <View style={styles.containerBtnComprar}>
 
@@ -993,6 +1021,84 @@ export default function ListaItem({route, navigation}){
             </View>
 
             </TouchableNativeFeedback>
+
+            {/* Modal de registro em compras */}
+            <Modal
+            
+              animationType="fade" // ou 'fade', 'none'
+              transparent={true}    // Define se o fundo será transparente
+              visible={modalRegistrarVisible}
+              onRequestClose={() => setModalRegistrarVisible(false)} // Fechar modal ao clicar no botão 'voltar'
+
+            >
+
+              <TouchableWithoutFeedback onPress={() => setModalRegistrarVisible(false)}>
+
+                <View style={styles.centeredView}>
+
+                    <View style={styles.modalView}>
+
+                      <View style={styles.corpoModal}>
+
+                        <View style={{flexDirection: "row", justifyContent: "center", borderBottomWidth: 1, paddingBottom: 10, borderColor: "#CCC"}}>
+
+                          <Text style={{fontWeight: "700"}}>
+
+                            Valor da compra:{" "}
+
+                          </Text>
+
+                          <Text style={{fontWeight: "700", color: "#6ec0fa"}}>
+
+                            R${formatar_valor(soma_carrinho)}
+
+                          </Text>
+
+                        </View>
+
+                        <View style={{marginTop: 20}}>
+
+                          <Text>
+
+                            Em qual mercado você está efetuando essa compra?
+
+                          </Text>
+
+                        </View>
+
+                        <View>
+
+                            <TextInput style={[styles.input]}
+                                onChangeText={onChangeMercado}
+                                value={mercado}
+                                keyboardType="default"
+                                maxLength={30}
+                                placeholder="Insira o nome do mercado"
+                            />
+
+                            <Text style={{fontSize: 11, color: config.cor2, marginTop: 5, opacity: 0.7}}>
+
+                            * Dê um nome, que consiga lembrar facilmente depois"
+
+                            </Text>
+
+                        </View>
+
+                        <View style={styles.AreaBtnConfirmar}>
+
+                            <Button onPress={()=> atualiza_nome()} color={config.cor2} title="Registrar compra  ->"/>
+
+                        </View>
+
+                      </View>
+                      
+                    </View>
+
+                </View>
+
+              </TouchableWithoutFeedback>
+
+            </Modal>
 
         </View>
 
@@ -1177,7 +1283,7 @@ const styles = StyleSheet.create({
         width: 300,
         padding: 20,
         backgroundColor: 'white',
-        borderRadius: 10,
+        borderRadius: 5,
         shadowColor: '#000',
         shadowOffset: {
           width: 0,

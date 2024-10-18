@@ -298,7 +298,7 @@ const styles = StyleSheet.create({
         width: 300,
         padding: 20,
         backgroundColor: 'white',
-        borderRadius: 10,
+        borderRadius: 5,
         shadowColor: '#000',
         shadowOffset: {
           width: 0,
