@@ -1,4 +1,4 @@
-import React, {useContext, useState, useCallback } from "react";
+import React, {useContext, useState, useCallback, useEffect } from "react";
 import { View, Text, StyleSheet, ScrollView, StatusBar, TouchableNativeFeedback, Image, TouchableOpacity, TouchableWithoutFeedback, Modal, Button, TextInput } from "react-native";
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { UserContext } from '../context/user';
@@ -22,6 +22,9 @@ export default function ListaItem({route, navigation}){
     const [modalRegistrarVisible, setModalRegistrarVisible] = useState(false);
     const [DATA_confirmacoes, setDataConfirmacoes] = useState({});
     const [mercado, onChangeMercado] = useState("");
+    const [DATA_mercados, setDataMercados] = useState([]);
+    const [dataFiltradaMercados, setDataFiltradaMercados] = useState([]);
+    const [focusLista, setFocusLista] = useState(false);
 
     /* Modal */
 
@@ -196,6 +199,92 @@ export default function ListaItem({route, navigation}){
         .catch(errors => {
         console.error('Erro ao enviar solicitação:', errors);
         });
+
+    }
+
+    /* Registra a compra no histórico. API */
+    const registrar_compra = () => {
+
+        const formData = new URLSearchParams();
+        formData.append('nome_mercado', mercado);
+        formData.append('id_lista', id_lista);
+
+        fetch(`${config.URL_inicial_API}${DATAUser[0].id}/cadastrar_compra`, {
+        method: "POST",
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: formData.toString()
+        })
+        .then(response => response.json())
+        .then(data => {
+
+            navigation.navigate("MinhasCompras");
+    
+        })
+        .catch(errors => {
+        console.error('Erro ao enviar solicitação:', errors);
+        });
+
+    }
+
+    /* Recebendo dados dos mercados de exemplo */
+    useEffect(() => {
+        
+        fetch(`${config.URL_inicial_API}${DATAUser[0].id}/mercados`)
+        .then(response => response.json())
+        .then(data => {
+            setDataMercados(data.data);
+        })
+        .catch(error => {
+            console.error('Erro ao buscar dados da API:', error);
+        });
+
+    }, []);
+    
+    const filtrar_busca_mercados = (texto) => {
+
+        onChangeMercado(texto);
+
+        if(texto && DATA_mercados.length > 0){
+
+            const resultado = DATA_mercados.filter(
+
+                (item) => item.nome.toLowerCase().includes(texto.toLowerCase())
+
+            )
+
+            setDataFiltradaMercados(resultado)
+
+        }else{
+
+            setDataFiltradaMercados([])
+
+        }
+
+    }
+
+    function completar_nome_mercado(nome){
+
+        onChangeMercado(nome);
+
+        focus_lista(false);
+
+    }
+
+    /* Controla quando a lista está com foco ou não. */
+
+    function focus_lista(ativacao){
+
+        if(ativacao == true){
+
+            setFocusLista(true);
+
+        }else{
+
+            setFocusLista(false);
+
+        }
 
     }
 
@@ -1069,12 +1158,42 @@ export default function ListaItem({route, navigation}){
                         <View>
 
                             <TextInput style={[styles.input]}
-                                onChangeText={onChangeMercado}
+                                onChangeText={filtrar_busca_mercados}
+                                onFocus={() => focus_lista(true)}
+                                onChange={() => focus_lista(true)}
                                 value={mercado}
                                 keyboardType="default"
                                 maxLength={30}
                                 placeholder="Insira o nome do mercado"
                             />
+
+                            {/* Espaço lista de exemplos, mercado */}
+
+                            {dataFiltradaMercados.length > 0 && focusLista == true && (
+
+                                <View style={styles.exemplosMercadosEspaco}>
+
+                                    {dataFiltradaMercados.slice(0, 2).map((item)=>(
+
+                                        <TouchableWithoutFeedback onPress={()=> completar_nome_mercado(item.nome)}>
+
+                                            <View style={styles.itemExemplosMercados}>
+
+                                                <Text style={styles.nomeMercadoExemplo}>
+
+                                                    {item.nome}
+
+                                                </Text>
+
+                                            </View>
+
+                                        </TouchableWithoutFeedback>
+
+                                    ))}
+
+                                </View>
+
+                            )}
 
                             <Text style={{fontSize: 11, color: config.cor2, marginTop: 5, opacity: 0.7}}>
 
@@ -1086,7 +1205,7 @@ export default function ListaItem({route, navigation}){
 
                         <View style={styles.AreaBtnConfirmar}>
 
-                            <Button onPress={()=> atualiza_nome()} color={config.cor2} title="Registrar compra  ->"/>
+                            <Button onPress={()=> registrar_compra()} color={config.cor2} title="Registrar compra  ->"/>
 
                         </View>
 
@@ -1368,6 +1487,33 @@ const styles = StyleSheet.create({
         marginTop: -19,
         borderWidth: 2,
         borderColor: "white"
+
+    },
+
+    /* Espaço exemplos mercados */
+
+    exemplosMercadosEspaco:{
+
+        position: "absolute",
+        zIndex: 1,
+        backgroundColor: "#EEE",
+        right: 0,
+        left: 0,
+        top: 48,
+
+    },
+
+    itemExemplosMercados:{
+
+        paddingVertical: 2,
+        borderBottomWidth: 1,
+        borderColor: "#CCC"
+
+    },
+
+    nomeMercadoExemplo:{
+
+        color: "#333"
 
     }
 
