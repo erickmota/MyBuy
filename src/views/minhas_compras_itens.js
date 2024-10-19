@@ -1,12 +1,53 @@
-import React, {useState, useContext, useLayoutEffect, useEffect} from 'react';
+import React, {useState, useContext, useLayoutEffect, useEffect, useCallback} from 'react';
 import { StyleSheet, Text, View, ScrollView, TextInput, Alert, Image, TouchableWithoutFeedback, Modal, Button} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useNavigation } from '@react-navigation/native';
 import { UserContext } from '../context/user';
+import { useFocusEffect } from '@react-navigation/native';
 
 import config from '../config';
 
-export default function Minhas_compras_itens(){
+export default function Minhas_compras_itens({route}){
+
+    /* Dados da lista */
+
+    const {id_compra} = route.params;
+    const {data} = route.params;
+    const {horas} = route.params;
+    const {valor_total} = route.params;
+    const {mercado} = route.params;
+
+    /* Contexto */
+    const { DATAUser } = useContext(UserContext);
+
+    /* Estados */
+    const [DATA, setData] = useState([]);
+
+    /* Conexão com a API da página compras */
+    const carregar_API = useCallback(() => {
+
+        fetch(`${config.URL_inicial_API}${DATAUser[0].id}/produtos_compra/${id_compra}`)
+        .then(response => response.json())
+        .then(data => {
+            setData(data.data);
+        })
+        .catch(error => {
+            console.error('Erro ao buscar dados da API:', error);
+        });
+
+    }, []);
+
+    useFocusEffect(
+        useCallback(() => {
+
+            carregar_API();
+    
+          return () => {
+
+          };
+          
+        }, [])
+    );
 
     return(
 
@@ -14,13 +55,13 @@ export default function Minhas_compras_itens(){
 
             <View style={styles.areaData}>
 
-                <Text>16/10/1996 - 16:54</Text>
+                <Text>{data} - {horas}</Text>
 
             </View>
 
             <View style={styles.areaMercado}>
 
-                <Text>Comercial esperança - Raposo Tavares</Text>
+                <Text>{mercado}</Text>
 
             </View>
 
@@ -58,141 +99,43 @@ export default function Minhas_compras_itens(){
 
             </View>
 
-            <View style={[styles.corpoTable, styles.itemTable]}>
+            {DATA.map(item => (
 
-                <View style={styles.colunaItem}>
+                <View key={item.id} style={[styles.corpoTable, styles.itemTable]}>
 
-                    <Text>
+                    <View style={styles.colunaItem}>
 
-                        Arroz
+                        <Text>
 
-                    </Text>
+                            {item.nome_produto}
 
-                </View>
+                        </Text>
 
-                <View style={styles.colunaQtd}>
+                    </View>
 
-                    <Text>
+                    <View style={styles.colunaQtd}>
 
-                        2 kg
+                        <Text>
 
-                    </Text>
+                            {item.qtd} {item.tipo_exibicao}
 
-                </View>
+                        </Text>
 
-                <View style={styles.colunaValor}>
+                    </View>
 
-                    <Text>
+                    <View style={styles.colunaValor}>
 
-                        R$15.99
+                        <Text>
 
-                    </Text>
+                            R${item.preco_produto}
 
-                </View>
+                        </Text>
 
-            </View>
-
-            <View style={[styles.corpoTable, styles.itemTable]}>
-
-                <View style={styles.colunaItem}>
-
-                    <Text>
-
-                        Feijão
-
-                    </Text>
+                    </View>
 
                 </View>
 
-                <View style={styles.colunaQtd}>
-
-                    <Text>
-
-                        2 kg
-
-                    </Text>
-
-                </View>
-
-                <View style={styles.colunaValor}>
-
-                    <Text>
-
-                        R$15.99
-
-                    </Text>
-
-                </View>
-
-            </View>
-
-            <View style={[styles.corpoTable, styles.itemTable]}>
-
-                <View style={styles.colunaItem}>
-
-                    <Text>
-
-                        Milho de pipoca
-
-                    </Text>
-
-                </View>
-
-                <View style={styles.colunaQtd}>
-
-                    <Text>
-
-                        2 kg
-
-                    </Text>
-
-                </View>
-
-                <View style={styles.colunaValor}>
-
-                    <Text>
-
-                        R$15.99
-
-                    </Text>
-
-                </View>
-
-            </View>
-
-            <View style={[styles.corpoTable, styles.itemTable]}>
-
-                <View style={styles.colunaItem}>
-
-                    <Text>
-
-                        Café
-
-                    </Text>
-
-                </View>
-
-                <View style={styles.colunaQtd}>
-
-                    <Text>
-
-                        2 kg
-
-                    </Text>
-
-                </View>
-
-                <View style={styles.colunaValor}>
-
-                    <Text>
-
-                        R$15.99
-
-                    </Text>
-
-                </View>
-
-            </View>
+            ))}
 
             <View style={[styles.corpoTable, styles.areaTotal]}>
 
@@ -204,7 +147,7 @@ export default function Minhas_compras_itens(){
 
                 <Text style={styles.textValor}>
 
-                    R$449.25
+                    R${valor_total}
 
                 </Text>
 

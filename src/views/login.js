@@ -1,5 +1,5 @@
 import React, {useState} from "react"
-import { View, Text, StyleSheet, TextInput, useWindowDimensions, TouchableNativeFeedback} from "react-native"
+import { View, Text, StyleSheet, TextInput, useWindowDimensions, TouchableNativeFeedback, StatusBar} from "react-native"
 import { useNavigation } from '@react-navigation/native';
 
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -44,6 +44,8 @@ export default function Login(){
     return(
 
         <View style={styles.container}>
+
+            <StatusBar backgroundColor={config.cor1} style="light" />
 
             <View style={[styles.areaLogin, {width: larguraEspacoLogin}]}>
 

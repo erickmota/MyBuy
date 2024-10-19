@@ -67,9 +67,23 @@ export default function Minhas_compras(){
 
     return(
 
-        <View style={StyleSheet.container}>
+        <View style={styles.container}>
 
-            <ScrollView>
+            {DATA == false ? (
+
+                <View style={{flex: 1, justifyContent: "center", alignItems: "center"}}>
+
+                    <Text style={{color: config.corTextoSecundario}}>
+
+                        Recuperando suas compras...
+
+                    </Text>
+
+                </View>
+
+            ):(
+
+                <ScrollView>
 
                 {DATA.map((item, index, array) => (
 
@@ -77,7 +91,13 @@ export default function Minhas_compras(){
 
                         <TouchableWithoutFeedback
                         
-                            onPress={()=> navigation.navigate("Minhas_compras_itens")}
+                            onPress={()=> navigation.navigate("Minhas_compras_itens", {
+                                id_compra: item.id,
+                                data: item.data,
+                                horas: item.horas,
+                                valor_total: item.valor_compra,
+                                mercado: item.nome_mercado
+                            })}
                         
                         >
 
@@ -187,6 +207,8 @@ export default function Minhas_compras(){
 
             </ScrollView>
 
+            )}
+
         </View>
 
     )
@@ -197,7 +219,7 @@ const styles = StyleSheet.create({
 
     container: {
 
-        flex:1,
+        flex:1
     
     },
 
