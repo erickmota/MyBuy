@@ -71,17 +71,17 @@ export default function App() {
   /* Contexto */
   const { DATAUser } = useContext(UserContext);
 
-    /* Conexão com a API */
-    useEffect(() => {
-        fetch(`${config.URL_inicial_API}${DATAUser[0].id}/listas`)
-        .then(response => response.json())
-        .then(data => {
-            setData(data.data);
-        })
-        .catch(error => {
-            console.error('Erro ao buscar dados da API:', error);
-        });
-    }, [DATA]);
+  /* Conexão com a API */
+  useEffect(() => {
+      fetch(`${config.URL_inicial_API}${DATAUser[0].id}/listas`)
+      .then(response => response.json())
+      .then(data => {
+          setData(data.data);
+      })
+      .catch(error => {
+          console.error('Erro ao buscar dados da API:', error);
+      });
+  }, [DATA]);
   
   return (
 

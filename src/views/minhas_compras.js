@@ -1,14 +1,47 @@
-import React, {useState, useContext, useLayoutEffect, useEffect} from 'react';
+import React, {useState, useContext, useLayoutEffect, useEffect, useCallback} from 'react';
 import { StyleSheet, Text, View, ScrollView, TextInput, Alert, Image, TouchableWithoutFeedback, Modal, Button, TouchableOpacity} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useNavigation } from '@react-navigation/native';
 import { UserContext } from '../context/user';
+import { useFocusEffect } from '@react-navigation/native';
 
 import config from '../config';
 
 export default function Minhas_compras(){
 
     const navigation = useNavigation();
+
+    /* Contexto */
+    const { DATAUser } = useContext(UserContext);
+
+    /* Estados */
+    const [DATA, setData] = useState([]);
+
+    /* Conexão com a API da página compras */
+    const carregar_API = useCallback(() => {
+
+        fetch(`${config.URL_inicial_API}${DATAUser[0].id}/compras`)
+        .then(response => response.json())
+        .then(data => {
+            setData(data.data);
+        })
+        .catch(error => {
+            console.error('Erro ao buscar dados da API:', error);
+        });
+
+    }, []);
+
+    useFocusEffect(
+        useCallback(() => {
+
+            carregar_API();
+    
+          return () => {
+
+          };
+          
+        }, [])
+    );
 
     useLayoutEffect(()=>{
 
@@ -38,285 +71,119 @@ export default function Minhas_compras(){
 
             <ScrollView>
 
-                <TouchableWithoutFeedback
-                
-                    onPress={()=> navigation.navigate("Minhas_compras_itens")}
-                
-                >
+                {DATA.map((item, index, array) => (
 
-                    <View style={styles.boxCompra}>
+                    <View key={item.id}>
 
-                        <View style={styles.fundoData}>
+                        <TouchableWithoutFeedback
+                        
+                            onPress={()=> navigation.navigate("Minhas_compras_itens")}
+                        
+                        >
 
-                            <Icon
-                                name="calendar-blank-outline"
-                                size={25}
-                                style={styles.iconCalendar}
-                            />
+                            <View style={styles.boxCompra}>
 
-                            <Text style={styles.textoData}>
+                                <View style={styles.fundoData}>
 
-                                06/10/2024
+                                    <Icon
+                                        name="calendar-blank-outline"
+                                        size={25}
+                                        style={styles.iconCalendar}
+                                    />
 
-                            </Text>
+                                    <Text style={styles.textoData}>
 
-                            <Icon
-                                name="clock-time-eight-outline"
-                                size={24}
-                                style={styles.iconTime}
-                            />
+                                        {item.data}
 
-                            <Text style={styles.textoData}>
+                                    </Text>
 
-                                16:54
+                                    <Icon
+                                        name="clock-time-eight-outline"
+                                        size={24}
+                                        style={styles.iconTime}
+                                    />
 
-                            </Text>
+                                    <Text style={styles.textoData}>
 
-                        </View>
+                                        {item.horas}
 
-                        <View style={styles.contentBox}>
+                                    </Text>
 
-                            <View style={styles.areaQtd}>
+                                </View>
 
-                                <Icon
-                                    name="shopping-outline"
-                                    size={30}
-                                    style={styles.iconBag}
-                                />
+                                <View style={styles.contentBox}>
 
-                                <Text style={styles.textBag}>
+                                    <View style={styles.areaQtd}>
 
-                                    25 Itens
+                                        <Icon
+                                            name="shopping-outline"
+                                            size={30}
+                                            style={styles.iconBag}
+                                        />
 
-                                </Text>
+                                        <Text style={styles.textBag}>
+
+                                            {item.qtd_itens} Itens
+
+                                        </Text>
+
+                                    </View>
+
+                                    <View style={styles.areaValor}>
+
+                                        <Icon
+                                            name="cash-register"
+                                            size={30}
+                                            style={styles.iconCash}
+                                        />
+
+                                        <Text style={styles.textValor}>
+
+                                            R${item.valor_compra}
+
+                                        </Text>
+
+                                    </View>
+
+                                </View>
+
+                                <View style={styles.areaMercado}>
+
+                                    <Icon
+                                        name="map-marker-outline"
+                                        size={25}
+                                        style={styles.iconLocal}
+                                    />
+
+                                    <Text style={styles.textoMercado}>
+
+                                        {item.nome_mercado}
+
+                                    </Text>
+
+                                </View>
 
                             </View>
 
-                            <View style={styles.areaValor}>
+                        </TouchableWithoutFeedback>
+
+                        {index !== array.length - 1 && (
+
+                            <View style={styles.areaRisco}>
 
                                 <Icon
-                                    name="cash-register"
+                                    name="timeline-text-outline"
                                     size={30}
-                                    style={styles.iconCash}
+                                    style={styles.iconDivisor}
                                 />
-
-                                <Text style={styles.textValor}>
-
-                                    R$1425.89
-
-                                </Text>
 
                             </View>
 
-                        </View>
-
-                        <View style={styles.areaMercado}>
-
-                            <Icon
-                                name="map-marker-outline"
-                                size={25}
-                                style={styles.iconLocal}
-                            />
-
-                            <Text style={styles.textoMercado}>
-
-                                Comercial esperança - L4
-
-                            </Text>
-
-                        </View>
+                        )}
 
                     </View>
 
-                </TouchableWithoutFeedback>
-
-                <View style={styles.areaRisco}>
-
-                    <Icon
-                        name="timeline-text-outline"
-                        size={30}
-                        style={styles.iconDivisor}
-                    />
-
-                </View>
-
-                <View style={styles.boxCompra}>
-
-                    <View style={styles.fundoData}>
-
-                        <Icon
-                            name="calendar-blank-outline"
-                            size={25}
-                            style={styles.iconCalendar}
-                        />
-
-                        <Text style={styles.textoData}>
-
-                            06/10/2024
-
-                        </Text>
-
-                        <Icon
-                            name="clock-time-eight-outline"
-                            size={24}
-                            style={styles.iconTime}
-                        />
-
-                        <Text style={styles.textoData}>
-
-                            16:54
-
-                        </Text>
-
-                    </View>
-
-                    <View style={styles.contentBox}>
-
-                        <View style={styles.areaQtd}>
-
-                            <Icon
-                                name="shopping-outline"
-                                size={30}
-                                style={styles.iconBag}
-                            />
-
-                            <Text style={styles.textBag}>
-
-                                25 Itens
-
-                            </Text>
-
-                        </View>
-
-                        <View style={styles.areaValor}>
-
-                            <Icon
-                                name="cash-register"
-                                size={30}
-                                style={styles.iconCash}
-                            />
-
-                            <Text style={styles.textValor}>
-
-                                R$1425.89
-
-                            </Text>
-
-                        </View>
-
-                    </View>
-
-                    <View style={styles.areaMercado}>
-
-                        <Icon
-                            name="map-marker-outline"
-                            size={25}
-                            style={styles.iconLocal}
-                        />
-
-                        <Text style={styles.textoMercado}>
-
-                            Comercial esperança - L4
-
-                        </Text>
-
-                    </View>
-
-                </View>
-
-                <View style={styles.areaRisco}>
-
-                    <Icon
-                        name="timeline-text-outline"
-                        size={30}
-                        style={styles.iconDivisor}
-                    />
-
-                </View>
-
-                <View style={styles.boxCompra}>
-
-                    <View style={styles.fundoData}>
-
-                        <Icon
-                            name="calendar-blank-outline"
-                            size={25}
-                            style={styles.iconCalendar}
-                        />
-
-                        <Text style={styles.textoData}>
-
-                            06/10/2024
-
-                        </Text>
-
-                        <Icon
-                            name="clock-time-eight-outline"
-                            size={24}
-                            style={styles.iconTime}
-                        />
-
-                        <Text style={styles.textoData}>
-
-                            16:54
-
-                        </Text>
-
-                    </View>
-
-                    <View style={styles.contentBox}>
-
-                        <View style={styles.areaQtd}>
-
-                            <Icon
-                                name="shopping-outline"
-                                size={30}
-                                style={styles.iconBag}
-                            />
-
-                            <Text style={styles.textBag}>
-
-                                25 Itens
-
-                            </Text>
-
-                        </View>
-
-                        <View style={styles.areaValor}>
-
-                            <Icon
-                                name="cash-register"
-                                size={30}
-                                style={styles.iconCash}
-                            />
-
-                            <Text style={styles.textValor}>
-
-                                R$1425.89
-
-                            </Text>
-
-                        </View>
-
-                    </View>
-
-                    <View style={styles.areaMercado}>
-
-                        <Icon
-                            name="map-marker-outline"
-                            size={25}
-                            style={styles.iconLocal}
-                        />
-
-                        <Text style={styles.textoMercado}>
-
-                            Comercial esperança - L4
-
-                        </Text>
-
-                    </View>
-
-                </View>
+                ))}
 
             </ScrollView>
 
@@ -343,7 +210,7 @@ const styles = StyleSheet.create({
         borderColor: "#CCC",
         margin: 10,
         backgroundColor: "#FFF",
-        borderRadius: 20,
+        borderRadius: 5,
         elevation: 7,
 
     },

@@ -26,12 +26,15 @@ export default function ListaItem({route, navigation}){
     const [dataFiltradaMercados, setDataFiltradaMercados] = useState([]);
     const [focusLista, setFocusLista] = useState(false);
 
-    /* Modal */
+    /* Modal registrar compra */
+    const [placeObrigatorio, setPlaceObrigatorio] = useState("Insira o nome do mercado");
+    const [placeObrigatorioColor, setPlaceObrigatorioColor] = useState("#CCC");
 
-    const [qtd, onChangeQtd] = React.useState();
-    const [valor, onChangeValor] = React.useState();
-    const [id_produto, setIdProduto] = React.useState();
-    const [tipo, setTipo] = React.useState();
+    /* Modal adicionar ao carrinho */
+    const [qtd, onChangeQtd] = useState();
+    const [valor, onChangeValor] = useState();
+    const [id_produto, setIdProduto] = useState();
+    const [tipo, setTipo] = useState();
 
     let soma_carrinho = 0;
 
@@ -205,26 +208,42 @@ export default function ListaItem({route, navigation}){
     /* Registra a compra no histórico. API */
     const registrar_compra = () => {
 
-        const formData = new URLSearchParams();
-        formData.append('nome_mercado', mercado);
-        formData.append('id_lista', id_lista);
+        if(mercado.trim() === ""){
 
-        fetch(`${config.URL_inicial_API}${DATAUser[0].id}/cadastrar_compra`, {
-        method: "POST",
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-        },
-        body: formData.toString()
-        })
-        .then(response => response.json())
-        .then(data => {
+            setPlaceObrigatorioColor("red");
+            setPlaceObrigatorio("*");
 
-            navigation.navigate("MinhasCompras");
+            setTimeout(() => {
+
+                setPlaceObrigatorioColor("#CCC");
+                setPlaceObrigatorio("Insira o nome do mercado");
+
+            }, 2000)
+
+        }else{
+
+            const formData = new URLSearchParams();
+            formData.append('nome_mercado', mercado);
+            formData.append('id_lista', id_lista);
     
-        })
-        .catch(errors => {
-        console.error('Erro ao enviar solicitação:', errors);
-        });
+            fetch(`${config.URL_inicial_API}${DATAUser[0].id}/cadastrar_compra`, {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: formData.toString()
+            })
+            .then(response => response.json())
+            .then(data => {
+    
+                navigation.navigate("MinhasCompras");
+        
+            })
+            .catch(errors => {
+            console.error('Erro ao enviar solicitação:', errors);
+            });
+
+        }
 
     }
 
@@ -1133,7 +1152,7 @@ export default function ListaItem({route, navigation}){
 
                           <Text style={{fontWeight: "700"}}>
 
-                            Valor da compra:{" "}
+                            Valor total:{" "}
 
                           </Text>
 
@@ -1164,7 +1183,8 @@ export default function ListaItem({route, navigation}){
                                 value={mercado}
                                 keyboardType="default"
                                 maxLength={30}
-                                placeholder="Insira o nome do mercado"
+                                placeholder={placeObrigatorio}
+                                placeholderTextColor={placeObrigatorioColor}
                             />
 
                             {/* Espaço lista de exemplos, mercado */}
@@ -1197,7 +1217,7 @@ export default function ListaItem({route, navigation}){
 
                             <Text style={{fontSize: 11, color: config.cor2, marginTop: 5, opacity: 0.7}}>
 
-                            * Dê um nome, que consiga lembrar facilmente depois"
+                            * Dica: dê o nome e o bairro do mercado. Exemplo: "Bom Lugar - Vila Pedroso"
 
                             </Text>
 
