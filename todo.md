@@ -3,6 +3,8 @@
 ## Pequenos ajustes
 
 - [ ] Definir o key stractor nos mercados retornados no modal de registro de compras.
+- [ ] Alterar título da View produtos_itens
+- [ ] Colocar nomes dos tipo, no plural, na View produtos_itens
 
 ## Funcionalidades
 
