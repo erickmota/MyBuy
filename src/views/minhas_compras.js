@@ -4,6 +4,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useNavigation } from '@react-navigation/native';
 import { UserContext } from '../context/user';
 import { useFocusEffect } from '@react-navigation/native';
+import DateTimePicker from '@react-native-community/datetimepicker';
 
 import config from '../config';
 
@@ -16,6 +17,10 @@ export default function Minhas_compras(){
 
     /* Estados */
     const [DATA, setData] = useState([]);
+
+    /* DataPicker */
+    const [date, setDate] = useState(new Date());
+    const [open, setOpen] = useState(false);
 
     /* Conexão com a API da página compras */
     const carregar_API = useCallback(() => {
@@ -55,7 +60,7 @@ export default function Minhas_compras(){
                   style={{marginRight: 10}}
                   onPress={()=>
 
-                    btn_apagar()
+                    setOpen(true)
                     
                   }
                   />
@@ -68,6 +73,19 @@ export default function Minhas_compras(){
     return(
 
         <View style={styles.container}>
+
+            {/* DataPicker */}
+            {open && (
+            <DateTimePicker
+                value={date}
+                mode="date"
+                display="default"
+                onChange={(event, selectedDate) => {
+                setOpen(false);
+                setDate(selectedDate || date);
+                }}
+            />
+            )}
 
             {DATA == false ? (
 
