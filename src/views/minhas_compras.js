@@ -1,5 +1,5 @@
-import React, {useState, useContext, useLayoutEffect, useEffect, useCallback} from 'react';
-import { StyleSheet, Text, View, ScrollView, TextInput, Alert, Image, TouchableWithoutFeedback, Modal, Button, TouchableOpacity} from 'react-native';
+import React, {useState, useContext, useLayoutEffect, useCallback} from 'react';
+import { StyleSheet, Text, View, ScrollView, Image, TouchableWithoutFeedback, Modal, Button} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useNavigation } from '@react-navigation/native';
 import { UserContext } from '../context/user';
@@ -316,11 +316,7 @@ export default function Minhas_compras(){
 
                 <View style={{flex: 1, justifyContent: "center", alignItems: "center"}}>
 
-                    <Text style={{color: config.corTextoSecundario}}>
-
-                        Recuperando suas compras...
-
-                    </Text>
+                    <Image style={styles.gif_load} source={require("../img/carregando.gif")} />
 
                 </View>
 
@@ -680,8 +676,15 @@ const styles = StyleSheet.create({
 
         marginTop: 30
 
-    }
+    },
 
     /* ***** */
+
+    gif_load:{
+
+        width: 70,
+        height: 70
+
+    }
 
 })
