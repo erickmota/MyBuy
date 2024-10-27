@@ -5,6 +5,7 @@ import { useNavigation } from '@react-navigation/native';
 import { UserContext } from '../context/user';
 import { useFocusEffect } from '@react-navigation/native';
 import DateTimePicker from '@react-native-community/datetimepicker';
+import { Menu } from 'react-native-paper';
 
 import config from '../config';
 
@@ -17,26 +18,49 @@ export default function Minhas_compras(){
 
     /* Estados */
     const [DATA, setData] = useState([]);
+    const [URL_API, setURL_API] = useState("mes_atual");
+    const [load_API, setLoadApi] = useState();
 
     /* DataPicker */
     const [date, setDate] = useState(new Date());
     const [open, setOpen] = useState(false);
+    const [date2, setDate2] = useState(new Date());
+    const [open2, setOpen2] = useState(false);
+
+    /* Menu popup */
+    const [visible, setVisible] = useState(false);
+    const openMenu = () => setVisible(true);
+    const closeMenu = () => setVisible(false);
+
+    /* Modal */
+    const [modalVisible, setModalVisible] = useState(false);
+    const [datas_selecionadas, setDatasSelecionadas] = useState([
+
+        "1996-10-16",
+        "2024-10-27"
+
+    ]);
 
     /* Conexão com a API da página compras */
     const carregar_API = useCallback(() => {
 
-        fetch(`${config.URL_inicial_API}${DATAUser[0].id}/compras`)
+        setLoadApi(true);
+        fetch(`${config.URL_inicial_API}${DATAUser[0].id}/compras/${URL_API}`)
         .then(response => response.json())
         .then(data => {
             setData(data.data);
+            setVisible(false);
+            setModalVisible(false);
+            setLoadApi(false);
         })
         .catch(error => {
             console.error('Erro ao buscar dados da API:', error);
         });
 
-    }, []);
+    }, [URL_API]);
 
     useFocusEffect(
+
         useCallback(() => {
 
             carregar_API();
@@ -45,7 +69,8 @@ export default function Minhas_compras(){
 
           };
           
-        }, [])
+        }, [URL_API])
+
     );
 
     useLayoutEffect(()=>{
@@ -53,22 +78,120 @@ export default function Minhas_compras(){
         navigation.setOptions({
             
             headerRight: () => (
-                <Icon
-                  name="calendar-blank-outline"
-                  size={25}
-                  color={"white"}
-                  style={{marginRight: 10}}
-                  onPress={()=>
+                    <View style={{ flexDirection: 'row' }}>
+                        <Menu
+                            visible={visible}
+                            onDismiss={closeMenu}
+                            anchor={
+                                <Icon
+                                    name="filter-variant-plus"
+                                    size={25}
+                                    color={"white"}
+                                    style={{ marginRight: 10 }}
+                                    onPress={openMenu}
+                                />
+                            }
+                        >
+                            <Menu.Item style={URL_API == "mes_atual" ? {backgroundColor: config.cor2} : null} onPress={() => set_URL_API("mes_atual")} title={<View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                            <Icon
+                                    name="sort-calendar-descending"
+                                    size={30}
+                                    color={URL_API == "mes_atual" ? "white": "#444"}
+                                    style={{ marginRight: 10 }}
+                                    onPress={openMenu}
+                                />
+                                <Text style={URL_API == "mes_atual" ? {marginLeft: 0, color: "white"}:{marginLeft: 0, color: "#444"}}>Mês atual</Text>
+                            </View>} />
 
-                    setOpen(true)
-                    
-                  }
-                  />
+                            <Menu.Item style={URL_API == "mes_passado" ? {backgroundColor: config.cor2} : null} onPress={() => set_URL_API("mes_passado")} title={<View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                            <Icon
+                                    name="sort-calendar-ascending"
+                                    size={30}
+                                    color={URL_API == "mes_passado" ? "white": "#444"}
+                                    style={{ marginRight: 10 }}
+                                    onPress={openMenu}
+                                />
+                                <Text style={URL_API == "mes_passado" ? {marginLeft: 0, color: "white"}:{marginLeft: 0, color: "#444"}}>Mês passado</Text>
+                            </View>} />
+
+                            <Menu.Item style={divide_url(URL_API) == "escolher_datas" ? {backgroundColor: config.cor2} : null} onPress={() => {setModalVisible(true)}} title={<View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                            <Icon
+                                    name="calendar-range"
+                                    size={28}
+                                    color={divide_url(URL_API) == "escolher_datas" ? "white": "#444"}
+                                    style={{ marginLeft: -3 }}
+                                    onPress={openMenu}
+                                />
+                                <Text style={divide_url(URL_API) == "escolher_datas" ? {marginLeft: 14, color: "white"}:{marginLeft: 14, color: "#444"}}>Selecionar datas</Text>
+                            </View>} />
+
+                        </Menu>
+                    </View>
               ),
 
         })
 
-    },[])
+    },[visible, URL_API])
+
+    const set_URL_API = (tipo) => {
+
+        switch(tipo){
+
+            case "mes_atual":
+
+                setURL_API("mes_atual");
+
+            break;
+
+            case "mes_passado":
+
+                setURL_API("mes_passado");
+
+            break;
+
+            case "escolher_datas":
+
+                setURL_API(`escolher_datas/${formatDate(date, "banco")}/${formatDate(date2, "banco")}`);
+
+            break;
+
+        }
+
+    }
+
+    const formatDate = (date, tipo) => {
+
+        const day = date.getDate().toString().padStart(2, '0');
+        const month = (date.getMonth() + 1).toString().padStart(2, '0'); // +1 porque os meses começam em 0
+        const year = date.getFullYear();
+
+        switch(tipo){
+
+            case "exibicao":
+
+                data_formatada = `${day}/${month}/${year}`;
+
+            break;
+
+            case "banco":
+
+                data_formatada = `${year}-${month}-${day}`;
+
+            break;
+
+        }
+
+        return data_formatada;
+
+    };
+
+    const divide_url = (url) => {
+
+        url_inicial = url.split("/");
+
+        return url_inicial[0]
+
+    }
 
     return(
 
@@ -87,7 +210,109 @@ export default function Minhas_compras(){
             />
             )}
 
-            {DATA == false ? (
+            {/* DataPicker 2 */}
+            {open2 && (
+            <DateTimePicker
+                value={date2}
+                mode="date"
+                display="default"
+                onChange={(event, selectedDate) => {
+                setOpen2(false);
+                setDate2(selectedDate || date2);
+                }}
+            />
+            )}
+
+            <Modal
+                animationType="fade" // ou 'fade', 'none'
+                transparent={true}    // Define se o fundo será transparente
+                visible={modalVisible}
+                onRequestClose={() => setModalVisible(false)} // Fechar modal ao clicar no botão 'voltar'
+            >
+
+                <TouchableWithoutFeedback onPress={() => setModalVisible(false)}>
+
+                <View style={styles.centeredView}>
+
+                    <View style={styles.modalView}>
+
+                        <View style={styles.corpoModal}>
+
+                            <View style={styles.viewData1}>
+
+                                <TouchableWithoutFeedback onPress={()=> setOpen(true) }>
+
+                                    <View style={{alignItems: "center"}}>
+
+                                        <Icon
+                                            name="sort-calendar-ascending"
+                                            size={40}
+                                            color={"#888"}
+                                        />
+
+                                        <Text>
+
+                                            {formatDate(date, "exibicao")}
+
+                                        </Text>
+
+                                    </View>
+
+                                </TouchableWithoutFeedback>
+
+                            </View>
+
+                            <View>
+
+                                <Text style={{color: "#DDD"}}>
+
+                                    ATÉ
+
+                                </Text>
+
+                            </View>
+
+                            <View style={styles.viewData1}>
+
+                            <TouchableWithoutFeedback onPress={()=> setOpen2(true) }>
+
+                                <View style={{alignItems: "center"}}>
+
+                                    <Icon
+                                        name="sort-calendar-descending"
+                                        size={40}
+                                        color={"#888"}
+                                    />
+
+                                    <Text>
+
+                                        {formatDate(date2, "exibicao")}
+
+                                    </Text>
+
+                                </View>
+
+                                </TouchableWithoutFeedback>
+
+                            </View>
+
+                        </View>
+
+                        <View style={styles.viewBtn}>
+
+                            <Button onPress={()=> set_URL_API("escolher_datas")} title='Filtrar' color={config.cor2} />
+
+                        </View>
+                      
+                    </View>
+
+                </View>
+
+                </TouchableWithoutFeedback>
+
+            </Modal>
+
+            {load_API == true ? (
 
                 <View style={{flex: 1, justifyContent: "center", alignItems: "center"}}>
 
@@ -100,6 +325,20 @@ export default function Minhas_compras(){
                 </View>
 
             ):(
+
+                (DATA == false)?(
+
+                    <View style={{flex: 1, justifyContent: "center", alignItems: "center"}}>
+
+                        <Text style={{color: config.corTextoSecundario}}>
+
+                            Nenhuma compra disponível
+
+                        </Text>
+
+                    </View>
+
+                ):(
 
                 <ScrollView>
 
@@ -223,7 +462,9 @@ export default function Minhas_compras(){
 
                 ))}
 
-            </ScrollView>
+                </ScrollView>
+
+                )
 
             )}
 
@@ -387,6 +628,59 @@ const styles = StyleSheet.create({
         color: "#BBB"
 
     },
+
+    /* ***** */
+
+    /* Modal */
+
+    centeredView: {
+
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'rgba(0,0,0,0.5)', // Fundo semitransparente
+
+    },
+
+    modalView: {
+
+    width: 300,
+    padding: 20,
+    backgroundColor: 'white',
+    borderRadius: 5,
+    shadowColor: '#000',
+    shadowOffset: {
+        width: 0,
+        height: 2,
+
+    },
+
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+
+    },
+
+    corpoModal:{
+
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "center"
+
+    },
+
+    viewData1:{
+
+        alignItems: "center",
+        marginHorizontal: 25
+
+    },
+
+    viewBtn:{
+
+        marginTop: 30
+
+    }
 
     /* ***** */
 

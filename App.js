@@ -3,6 +3,7 @@ import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createDrawerNavigator } from '@react-navigation/drawer';
+import { Provider as PaperProvider } from 'react-native-paper';
 
 /* Views */
 import Listas from "./src/views/listas"
@@ -86,35 +87,115 @@ export default function App() {
   
   return (
 
-    <UserProvider>
+    <PaperProvider>
 
-      <NavigationContainer>
+      <UserProvider>
 
-        <stack.Navigator initialRouteName='Login'>
+        <NavigationContainer>
 
-          <stack.Screen name="Drawer" component={DrawerNavigation} options={{ headerShown: false }} />
+          <stack.Navigator initialRouteName='Login'>
 
-          <stack.Screen name="Login" component={login} options={{
+            <stack.Screen name="Drawer" component={DrawerNavigation} options={{ headerShown: false }} />
 
-            headerShown: false
+            <stack.Screen name="Login" component={login} options={{
 
-          }} />
+              headerShown: false
 
-          <stack.Screen name="Cadastro" component={Cadastro} options={{
+            }} />
 
-            headerShown: false
+            <stack.Screen name="Cadastro" component={Cadastro} options={{
 
-          }} />
+              headerShown: false
 
-          <stack.Screen name="Carregar_login" component={Carregar_login} options={{
+            }} />
 
-            headerShown: false
+            <stack.Screen name="Carregar_login" component={Carregar_login} options={{
 
-          }} />
+              headerShown: false
 
-          <stack.Screen name="Editar_lista" component={Editar_lista} options={{
+            }} />
 
-            title: "Informações da lista",
+            <stack.Screen name="Editar_lista" component={Editar_lista} options={{
+
+              title: "Informações da lista",
+              headerTintColor: "#FFF",
+              headerStyle: {
+
+                backgroundColor: config.cor1,
+                borderWidth: 0,
+
+              }
+
+            }} />
+
+            <stack.Screen name="Adicionar_lista" component={AddLista} options={{
+
+              title: "Nova lista",
+              headerTintColor: "#FFF",
+              headerStyle: {
+
+                backgroundColor: config.cor1,
+                borderWidth: 0,
+
+              }
+
+            }} />
+
+            <stack.Screen name="AddItem" component={AddItem} options={{
+
+              title: "Adicionar produto",
+              headerTintColor: "#FFF",
+              headerStyle: {
+
+                backgroundColor: config.cor1,
+                borderWidth: 0,
+
+              }
+
+            }} />
+
+            <stack.Screen name="Editar_item" component={Editar_Item} options={{
+
+              title: "Editar produto",
+              headerTintColor: "#FFF",
+              headerStyle: {
+
+                backgroundColor: config.cor1,
+                borderWidth: 0,
+
+              }
+
+            }} />
+
+            <stack.Screen name="Categorias" component={Categorias} options={{
+
+              title: "Minhas categorias",
+              headerTintColor: "#FFF",
+              headerStyle: {
+
+                backgroundColor: config.cor1,
+                borderWidth: 0,
+
+              }
+
+            }} />
+
+            <stack.Screen name="Adicionar_categoria" component={AddCategoria} options={{
+
+              title: "Nova categoria",
+              headerTintColor: "#FFF",
+              headerStyle: {
+
+                backgroundColor: config.cor1,
+                borderWidth: 0,
+
+              }
+
+            }} />
+
+            <stack.Screen name="Minhas_compras_itens" component={Minhas_compras_itens} options={{
+
+            title: "Compra teste",
             headerTintColor: "#FFF",
             headerStyle: {
 
@@ -123,91 +204,15 @@ export default function App() {
 
             }
 
-          }} />
+            }} />
 
-          <stack.Screen name="Adicionar_lista" component={AddLista} options={{
+          </stack.Navigator>
 
-            title: "Nova lista",
-            headerTintColor: "#FFF",
-            headerStyle: {
+        </NavigationContainer>
 
-              backgroundColor: config.cor1,
-              borderWidth: 0,
+      </UserProvider>
 
-            }
-
-          }} />
-
-          <stack.Screen name="AddItem" component={AddItem} options={{
-
-            title: "Adicionar produto",
-            headerTintColor: "#FFF",
-            headerStyle: {
-
-              backgroundColor: config.cor1,
-              borderWidth: 0,
-
-            }
-
-          }} />
-
-          <stack.Screen name="Editar_item" component={Editar_Item} options={{
-
-            title: "Editar produto",
-            headerTintColor: "#FFF",
-            headerStyle: {
-
-              backgroundColor: config.cor1,
-              borderWidth: 0,
-
-            }
-
-          }} />
-
-          <stack.Screen name="Categorias" component={Categorias} options={{
-
-            title: "Minhas categorias",
-            headerTintColor: "#FFF",
-            headerStyle: {
-
-              backgroundColor: config.cor1,
-              borderWidth: 0,
-
-            }
-
-          }} />
-
-          <stack.Screen name="Adicionar_categoria" component={AddCategoria} options={{
-
-            title: "Nova categoria",
-            headerTintColor: "#FFF",
-            headerStyle: {
-
-              backgroundColor: config.cor1,
-              borderWidth: 0,
-
-            }
-
-          }} />
-
-          <stack.Screen name="Minhas_compras_itens" component={Minhas_compras_itens} options={{
-
-          title: "Compra teste",
-          headerTintColor: "#FFF",
-          headerStyle: {
-
-            backgroundColor: config.cor1,
-            borderWidth: 0,
-
-          }
-
-          }} />
-
-        </stack.Navigator>
-
-      </NavigationContainer>
-
-    </UserProvider>
+    </PaperProvider>
 
   );
 
