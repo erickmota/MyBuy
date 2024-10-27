@@ -18,6 +18,7 @@ export default function ListaItem({route, navigation}){
 
     const [DATA, setData] = useState([]);
     const [DATA_carrinho, setCarrinho] = useState([]);
+
     const [modalVisible, setModalVisible] = useState(false);
     const [modalRegistrarVisible, setModalRegistrarVisible] = useState(false);
     const [DATA_confirmacoes, setDataConfirmacoes] = useState({});
@@ -96,7 +97,7 @@ export default function ListaItem({route, navigation}){
             })
             .catch(error => {
                 console.error('Erro ao buscar dados da API:', error);
-            });
+            })
 
             /* API Produtos no carrinho */
             fetch(`${config.URL_inicial_API}${DATAUser[0].id}/produtos_carrinho/${id_lista}`)
@@ -106,7 +107,7 @@ export default function ListaItem({route, navigation}){
             })
             .catch(error => {
                 console.error('Erro ao buscar dados da API dos carrinhos:', error);
-            });
+            })
 
         }
 
@@ -717,7 +718,7 @@ export default function ListaItem({route, navigation}){
                 <View style={styles.areaListas}>
 
                     <View style={{backgroundColor: "#FFF"}}>
- 
+
                         {DATA && DATA.length > 0 ? (
 
                             DATA.map(item=>(
@@ -923,11 +924,7 @@ export default function ListaItem({route, navigation}){
 
                             <View style={styles.itemVazio}>
 
-                                <Text style={styles.textItemVazio}>
-
-                                    Carregando...
-
-                                </Text>
+                                <Image style={styles.gif_load} source={require("../img/carregando.gif")} />
 
                             </View>
 
@@ -1091,7 +1088,7 @@ export default function ListaItem({route, navigation}){
 
                             <Text style={styles.textItemVazio}>
 
-                                Nenhum produto por aqui!
+                                Nada encontrado!
 
                             </Text>
 
@@ -1394,7 +1391,8 @@ const styles = StyleSheet.create({
         marginTop: -1,
         borderColor: config.cor1,
         paddingTop: 30,
-        paddingVertical: 30
+        paddingVertical: 30,
+        alignItems: "center"
 
     },
 
@@ -1534,6 +1532,13 @@ const styles = StyleSheet.create({
     nomeMercadoExemplo:{
 
         color: "#333"
+
+    },
+
+    gif_load:{
+
+        width: 70,
+        height: 70
 
     }
 
