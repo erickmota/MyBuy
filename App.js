@@ -19,6 +19,7 @@ import Editar_lista from "./src/views/editar_lista"
 import Editar_Item from "./src/views/editar_item"
 import Minhas_compras from "./src/views/minhas_compras"
 import Minhas_compras_itens from "./src/views/minhas_compras_itens"
+import Despesas from "./src/views/despesas"
 
 /* Componentes */
 import Menu from "./src/componentes/menu"
@@ -67,14 +68,27 @@ function DrawerNavigation() {
 
       <Drawer.Screen name="MinhasCompras" component={Minhas_compras} options={{
 
-      title: "Minhas compras",
-      headerTintColor: "#FFF",
-      headerStyle: {
+        title: "Minhas compras",
+        headerTintColor: "#FFF",
+        headerStyle: {
 
-        backgroundColor: config.cor1,
-        borderWidth: 0,
+          backgroundColor: config.cor1,
+          borderWidth: 0,
 
-      }
+        }
+
+      }} />
+
+      <Drawer.Screen name="Despesas" component={Despesas} options={{
+
+        title: "Minhas despesas",
+        headerTintColor: "#FFF",
+        headerStyle: {
+
+          backgroundColor: config.cor1,
+          borderWidth: 0,
+
+        }
 
       }} />
 

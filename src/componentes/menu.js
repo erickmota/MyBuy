@@ -153,7 +153,7 @@ export default function Menu(){
 
                 </TouchableWithoutFeedback>
 
-                <TouchableWithoutFeedback onPress={() => log()}>
+                <TouchableWithoutFeedback onPress={() => {navigation.navigate("Despesas")}}>
 
                     <View style={styles.areaItemMenu}>
 
