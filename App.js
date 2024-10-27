@@ -195,7 +195,7 @@ export default function App() {
 
             <stack.Screen name="Minhas_compras_itens" component={Minhas_compras_itens} options={{
 
-            title: "Compra teste",
+            title: "Dados da compra",
             headerTintColor: "#FFF",
             headerStyle: {
 

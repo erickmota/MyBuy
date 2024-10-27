@@ -13,3 +13,10 @@
 - **Passos para reproduzir**: Cria uma nova lista, adiciona um item e em seguida adiciona esse item ao carrinho, aí tenta registrar a compra.
 - **Status**: Aberto.
 - **Data de descoberta**: 19/10/24.
+
+## Botões de ação do Android
+
+- **Descrição**: O botão de ação voltar do Android não funciona corretamente.
+- **Passos para reproduzir**: Pressionar o botão na view de listas.
+- **Status**: Aberto.
+- **Data de descoberta**: 27/10/24.

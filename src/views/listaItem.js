@@ -242,7 +242,15 @@ export default function ListaItem({route, navigation}){
             })
             .catch(errors => {
             console.error('Erro ao enviar solicitação:', errors);
-            });
+            })
+
+            .finally(()=>{
+
+                onChangeMercado("");
+                setData([]);
+                setCarrinho([]);
+
+            })
 
         }
 
@@ -1194,7 +1202,7 @@ export default function ListaItem({route, navigation}){
 
                                         <TouchableWithoutFeedback onPress={()=> completar_nome_mercado(item.nome)}>
 
-                                            <View style={styles.itemExemplosMercados}>
+                                            <View key={item.id} style={styles.itemExemplosMercados}>
 
                                                 <Text style={styles.nomeMercadoExemplo}>
 
