@@ -1200,9 +1200,9 @@ export default function ListaItem({route, navigation}){
 
                                     {dataFiltradaMercados.slice(0, 2).map((item)=>(
 
-                                        <TouchableWithoutFeedback onPress={()=> completar_nome_mercado(item.nome)}>
+                                        <TouchableWithoutFeedback key={item.id} onPress={()=> completar_nome_mercado(item.nome)}>
 
-                                            <View key={item.id} style={styles.itemExemplosMercados}>
+                                            <View style={styles.itemExemplosMercados}>
 
                                                 <Text style={styles.nomeMercadoExemplo}>
 
