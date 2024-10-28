@@ -1,8 +1,9 @@
 import React, {useLayoutEffect, useState} from 'react';
-import { StyleSheet, Text, View} from 'react-native';
+import { StyleSheet, Text, View, Dimensions} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { Menu } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
+import { BarChart } from 'react-native-chart-kit';
 
 import config from '../../config';
 
@@ -92,11 +93,33 @@ export default function Categorias(){
 
         <View style={styles.container}>
 
-            <Text>
-
-                PG categorias
-
-            </Text>
+<BarChart
+        data={{
+          labels: ['A', 'B', 'C', 'D'],
+          datasets: [
+            {
+              data: [3, 7, 5, 9],
+            },
+          ],
+        }}
+        width={Dimensions.get('window').width - 16} // Largura do gráfico
+        height={220} // Altura do gráfico
+        yAxisLabel=""
+        chartConfig={{
+          backgroundColor: '#000',
+          backgroundGradientFrom: '#FFF',
+          backgroundGradientTo: '#FFF',
+          decimalPlaces: 0, // Casas decimais
+          color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
+          style: {
+            borderRadius: 16,
+          },
+        }}
+        style={{
+          marginVertical: 8,
+          borderRadius: 16,
+        }}
+      />
 
         </View>
 
