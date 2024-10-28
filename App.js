@@ -4,6 +4,8 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { Provider as PaperProvider } from 'react-native-paper';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 /* Views */
 import Listas from "./src/views/listas"
@@ -20,6 +22,10 @@ import Editar_Item from "./src/views/editar_item"
 import Minhas_compras from "./src/views/minhas_compras"
 import Minhas_compras_itens from "./src/views/minhas_compras_itens"
 import Despesas from "./src/views/despesas"
+/* Despesas */
+import Despesas_categorias from "./src/views/pg-despesas/categoria.js"
+import Despesas_mercados from "./src/views/pg-despesas/mercados.js"
+import Despesas_produtos from "./src/views/pg-despesas/produtos.js"
 
 /* Componentes */
 import Menu from "./src/componentes/menu"
@@ -32,6 +38,63 @@ import { View } from 'react-native-web';
 
 const stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
+const Tab = createBottomTabNavigator();
+
+/* Menu Página despesas */
+function Tabs_despesas() {
+
+  return (
+
+    <Tab.Navigator
+      initialRouteName="Home"
+      screenOptions={{
+        tabBarActiveTintColor: config.cor2, // Cor do ícone ativo
+        tabBarInactiveTintColor: '#777', // Cor do ícone inativo
+        tabBarStyle: { 
+          backgroundColor: '#EEE', // Cor de fundo da barra
+          height: 60,
+          paddingBottom: 5
+        }
+      }}
+    >
+      <Tab.Screen
+        name="Categorias"
+        component={Despesas_categorias}
+        options={{
+          tabBarLabel: "Categorias",
+          tabBarIcon: ({ color }) => (
+            <Icon name="format-list-bulleted-square" color={color} size={30} />
+          ),
+          headerShown: false
+        }}
+      />
+      <Tab.Screen
+        name="Mercados"
+        component={Despesas_mercados}
+        options={{
+          tabBarLabel: 'Mercados',
+          tabBarIcon: ({ color }) => (
+            <Icon name="shopping" color={color} size={30} />
+          ),
+          headerShown: false
+        }}
+      />
+      <Tab.Screen
+        name="Produtos"
+        component={Despesas_produtos}
+        options={{
+          tabBarLabel: 'Produtos',
+          tabBarIcon: ({ color }) => (
+            <Icon name="fruit-grapes" color={color} size={30} />
+          ),
+          headerShown: false
+        }}
+      />
+    </Tab.Navigator>
+
+  );
+
+}
 
 /* Menu lateral */
 function DrawerNavigation() {
@@ -79,7 +142,7 @@ function DrawerNavigation() {
 
       }} />
 
-      <Drawer.Screen name="Despesas" component={Despesas} options={{
+      <Drawer.Screen name="Despesas" component={Tabs_despesas} options={{
 
         title: "Minhas despesas",
         headerTintColor: "#FFF",
