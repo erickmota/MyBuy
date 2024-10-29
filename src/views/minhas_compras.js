@@ -483,12 +483,11 @@ const styles = StyleSheet.create({
     boxCompra:{
 
         height: 200,
-        borderWidth: 1,
         borderColor: "#CCC",
         margin: 10,
         backgroundColor: "#FFF",
-        borderRadius: 5,
-        elevation: 7,
+        borderRadius: 2,
+        elevation: 5,
 
     },
 
@@ -499,8 +498,8 @@ const styles = StyleSheet.create({
         backgroundColor: config.cor2,
         alignItems: "center",
         justifyContent: "center",
-        borderTopRightRadius: 5,
-        borderTopLeftRadius: 5
+        borderTopRightRadius: 2,
+        borderTopLeftRadius: 2
 
     },
 
