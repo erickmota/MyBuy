@@ -4,6 +4,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { Menu } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
 import { BarChart } from 'react-native-chart-kit';
+import { PieChart } from 'react-native-chart-kit';
 
 import config from '../../config';
 
@@ -89,37 +90,106 @@ export default function Categorias(){
 
     }
 
+    const data = [
+        {
+          name: "Seoul",
+          population: 21500000,
+          color: "rgba(131, 167, 234, 1)",
+          legendFontColor: "#7F7F7F",
+          legendFontSize: 15
+        },
+        {
+          name: "Toronto",
+          population: 2800000,
+          color: "#F00",
+          legendFontColor: "#7F7F7F",
+          legendFontSize: 15
+        },
+        {
+          name: "Beijing",
+          population: 527612,
+          color: "red",
+          legendFontColor: "#7F7F7F",
+          legendFontSize: 15
+        },
+        {
+          name: "New York",
+          population: 8538000,
+          color: "#ffffff",
+          legendFontColor: "#7F7F7F",
+          legendFontSize: 15
+        },
+        {
+          name: "Moscow",
+          population: 11920000,
+          color: "rgb(0, 0, 255)",
+          legendFontColor: "#7F7F7F",
+          legendFontSize: 15
+        },
+        {
+            name: "Moscow",
+            population: 11920000,
+            color: "rgb(0, 0, 255)",
+            legendFontColor: "#7F7F7F",
+            legendFontSize: 15
+          },
+          {
+            name: "Moscow",
+            population: 11920000,
+            color: "rgb(0, 0, 255)",
+            legendFontColor: "#7F7F7F",
+            legendFontSize: 15
+          },
+          {
+            name: "Moscow",
+            population: 11920000,
+            color: "rgb(0, 0, 255)",
+            legendFontColor: "#7F7F7F",
+            legendFontSize: 15
+          },
+          {
+            name: "Moscow",
+            population: 11920000,
+            color: "rgb(0, 0, 255)",
+            legendFontColor: "#7F7F7F",
+            legendFontSize: 15
+          },
+          {
+            name: "Moscow",
+            population: 11920000,
+            color: "rgb(0, 0, 255)",
+            legendFontColor: "#7F7F7F",
+            legendFontSize: 15
+          },
+      ];
+
+      const chartConfig = {
+        backgroundGradientFrom: "#1E2923",
+        backgroundGradientFromOpacity: 0,
+        backgroundGradientTo: "#08130D",
+        backgroundGradientToOpacity: 0.5,
+        color: (opacity = 1) => `rgba(26, 255, 146, ${opacity})`,
+        strokeWidth: 2, // optional, default 3
+        barPercentage: 0.5,
+        useShadowColorFromDataset: false // optional
+      };
+
     return(
 
         <View style={styles.container}>
 
-<BarChart
-        data={{
-          labels: ['A', 'B', 'C', 'D'],
-          datasets: [
-            {
-              data: [3, 7, 5, 9],
-            },
-          ],
-        }}
-        width={Dimensions.get('window').width - 16} // Largura do gráfico
-        height={220} // Altura do gráfico
-        yAxisLabel=""
-        chartConfig={{
-          backgroundColor: '#000',
-          backgroundGradientFrom: '#FFF',
-          backgroundGradientTo: '#FFF',
-          decimalPlaces: 0, // Casas decimais
-          color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
-          style: {
-            borderRadius: 16,
-          },
-        }}
-        style={{
-          marginVertical: 8,
-          borderRadius: 16,
-        }}
-      />
+            <PieChart
+            data={data}
+            width={Dimensions.get('window').width - 20}
+            height={250}
+            chartConfig={chartConfig}
+            accessor={"population"}
+            backgroundColor={"transparent"}
+            paddingLeft={"15"}
+            center={[10, 10]}
+            absolute={false}
+            hasLegend={true}
+            />
 
         </View>
 
