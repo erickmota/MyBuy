@@ -132,8 +132,8 @@ const styles = StyleSheet.create({
 
         backgroundColor: "#FFF",
         height: "auto",
-        borderRadius: 20,
-        elevation: 10,
+        borderRadius: 5,
+        elevation: 15,
         paddingVertical: 35
 
     },
@@ -165,7 +165,7 @@ const styles = StyleSheet.create({
 
     botoes:{
 
-        marginTop: 30
+        marginTop: 50
 
     },
 

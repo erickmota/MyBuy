@@ -26,6 +26,7 @@ import Despesas from "./src/views/despesas"
 import Despesas_categorias from "./src/views/pg-despesas/categoria.js"
 import Despesas_mercados from "./src/views/pg-despesas/mercados.js"
 import Despesas_produtos from "./src/views/pg-despesas/produtos.js"
+import Despesas_gerais from "./src/views/pg-despesas/geral.js"
 
 /* Componentes */
 import Menu from "./src/componentes/menu"
@@ -58,6 +59,17 @@ function Tabs_despesas() {
       }}
     >
       <Tab.Screen
+        name="Geral"
+        component={Despesas_gerais}
+        options={{
+          tabBarLabel: "Geral",
+          tabBarIcon: ({ color }) => (
+            <Icon name="chart-areaspline" color={color} size={28} />
+          ),
+          headerShown: false
+        }}
+      />
+      <Tab.Screen
         name="Categorias"
         component={Despesas_categorias}
         options={{
@@ -74,7 +86,7 @@ function Tabs_despesas() {
         options={{
           tabBarLabel: 'Mercados',
           tabBarIcon: ({ color }) => (
-            <Icon name="shopping" color={color} size={30} />
+            <Icon name="store" color={color} size={32} />
           ),
           headerShown: false
         }}
@@ -85,7 +97,7 @@ function Tabs_despesas() {
         options={{
           tabBarLabel: 'Produtos',
           tabBarIcon: ({ color }) => (
-            <Icon name="fruit-grapes" color={color} size={30} />
+            <Icon name="shopping" color={color} size={28} />
           ),
           headerShown: false
         }}
