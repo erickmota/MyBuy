@@ -18,6 +18,7 @@ export default function ListaItem({route, navigation}){
 
     const [DATA, setData] = useState([]);
     const [DATA_carrinho, setCarrinho] = useState([]);
+    const [load_API, setLoadApi] = useState(true);
 
     const [modalVisible, setModalVisible] = useState(false);
     const [modalRegistrarVisible, setModalRegistrarVisible] = useState(false);
@@ -93,6 +94,7 @@ export default function ListaItem({route, navigation}){
                 console.log("FIM");
 
                 setData(categoriesWithProducts);
+                setLoadApi(false);
 
             })
             .catch(error => {
@@ -104,6 +106,7 @@ export default function ListaItem({route, navigation}){
             .then(response => response.json())
             .then(data => {
                 setCarrinho(data.data.Produtos);
+                
             })
             .catch(error => {
                 console.error('Erro ao buscar dados da API dos carrinhos:', error);
@@ -139,6 +142,7 @@ export default function ListaItem({route, navigation}){
 
             setData([]);
             setCarrinho([]);
+            setLoadApi(true);
 
           };
           
@@ -173,6 +177,7 @@ export default function ListaItem({route, navigation}){
         .then(data => {
 
             setModalVisible(false);
+            setLoadApi(true);
             carregar_API();
     
         })
@@ -183,6 +188,8 @@ export default function ListaItem({route, navigation}){
     }
 
     function remover_produto_carrinho(id_produto){
+
+        setLoadApi(true);
 
         const formData = new URLSearchParams();
         formData.append('id_produto', id_produto);
@@ -721,218 +728,394 @@ export default function ListaItem({route, navigation}){
 
             </Modal>
 
-            <ScrollView>
+            {load_API == true ? (
 
-                <View style={styles.areaListas}>
+                <View style={{flex: 1, justifyContent: "center", alignItems: "center"}}>
 
-                    <View style={{backgroundColor: "#FFF"}}>
+                    <Image style={styles.gif_load} source={require("../img/carregando.gif")} />
 
-                        {DATA && DATA.length > 0 ? (
+                </View>
 
-                            DATA.map(item=>(
+            ):(
 
-                                Array.isArray(item.produtos) && item.produtos.length > 0 && (
+                <ScrollView>
 
-                                    <View key={item.id}>
+                    <View style={styles.areaListas}>
 
-                                        <Text style={styles.tituloListas}>
+                        <View style={{backgroundColor: "#FFF"}}>
 
-                                            {item.nome}
+                            {DATA && DATA.length > 0 ? (
 
-                                        </Text>
+                                DATA.map(item=>(
 
-                                        {
+                                    Array.isArray(item.produtos) && item.produtos.length > 0 && (
 
-                                            item.produtos.map(prod=>(
+                                        <View key={item.id}>
 
-                                                <View key={prod.id} style={styles.itemLista}>
+                                            <Text style={styles.tituloListas}>
 
-                                                    <View style={styles.areaFoto}>
+                                                {item.nome}
 
-                                                        {prod.url !== null ? (
+                                            </Text>
 
-                                                            /* Foto que aparecerá caso o item tiver uma foto */
-                                                            <Image style={styles.imgProduto} source={{ uri: `${prod.url}` }} />
+                                            {
 
-                                                        ):(
+                                                item.produtos.map(prod=>(
 
-                                                            /* Foto caso o item não tiver uma foto */
-                                                            <Image style={styles.imgProduto} source={{ uri: `${config.Foto_prod_nulo}` }} />
+                                                    <View key={prod.id} style={styles.itemLista}>
 
-                                                        )}
+                                                        <View style={styles.areaFoto}>
 
-                                                        {item.id == "nulo" && (
+                                                            {prod.url !== null ? (
 
-                                                            prod.foto_dono == null ? (
-
-                                                                <Image style={styles.imgUsuarios} source={{ uri: `${config.Foto_usuario_nulo}` }} />
+                                                                /* Foto que aparecerá caso o item tiver uma foto */
+                                                                <Image style={styles.imgProduto} source={{ uri: `${prod.url}` }} />
 
                                                             ):(
 
-                                                                <Image style={styles.imgUsuarios} source={{ uri: `${prod.foto_dono}` }} />
-
-                                                            )
-
-                                                        )}
-
-                                                    </View>
-
-                                                    <TouchableOpacity
-                                                    
-                                                        activeOpacity={config.opacity_btn}
-                                                        onPress={() =>
-
-                                                            {
-                                                                
-                                                                if(item.id != "nulo" || DATA_confirmacoes.dono_lista == true){
-
-                                                                    if(item.id == "nulo"){
-
-                                                                        navigation.navigate("Editar_item", {
-                                                                
-                                                                            id_produto: prod.id,
-                                                                            nome_produto: prod.nome,
-                                                                            qtd_produto: prod.qtd,
-                                                                            id_foto: prod.id_foto,
-                                                                            url: prod.url,
-                                                                            tipo_exibicao: prod.tipo_exibicao,
-                                                                            valor_prod: prod.valor,
-                                                                            obs: prod.obs,
-                                                                            categoria: "nulo",
-                                                                            carrinho: prod.carrinho
-                                                                    
-                                                                        })
-
-                                                                    }else{
-
-                                                                        navigation.navigate("Editar_item", {
-                                                                
-                                                                            id_produto: prod.id,
-                                                                            nome_produto: prod.nome,
-                                                                            qtd_produto: prod.qtd,
-                                                                            id_foto: prod.id_foto,
-                                                                            url: prod.url,
-                                                                            tipo_exibicao: prod.tipo_exibicao,
-                                                                            valor_prod: prod.valor,
-                                                                            obs: prod.obs,
-                                                                            categoria: prod.id_categorias,
-                                                                            carrinho: prod.carrinho
-                                                                    
-                                                                        })
-
-                                                                    }
-
-                                                                    console.log("Categoria: "+prod.id_categorias);
-
-                                                                }else{
-
-                                                                    mostrar_alerta_permissao();
-
-                                                                }
-                                                        
-                                                        }
-                                                    
-                                                    }
-                                                    
-                                                    >
-
-                                                        <View style={{flex: 3, flexDirection: "column"}}>
-
-                                                            {prod.qtd > 0 || item.id == "nulo" || prod.obs != "" ? (
-
-                                                                <Text style={styles.titleLista}>
-                                                                                                                                
-                                                                    {prod.nome}
-
-                                                                </Text>
-
-                                                            ):(
-
-                                                                <Text style={[styles.titleLista, {marginTop: 10}]}>
-                                                                    
-                                                                    {prod.nome}
-                                                                    
-                                                                </Text>
+                                                                /* Foto caso o item não tiver uma foto */
+                                                                <Image style={styles.imgProduto} source={{ uri: `${config.Foto_prod_nulo}` }} />
 
                                                             )}
 
-                                                            {prod.qtd > 0 || item.id == "nulo" ? (
+                                                            {item.id == "nulo" && (
 
-                                                                <View style={{flexDirection: "row"}}>
+                                                                prod.foto_dono == null ? (
 
-                                                                    <Text style={styles.qtdItens}>
+                                                                    <Image style={styles.imgUsuarios} source={{ uri: `${config.Foto_usuario_nulo}` }} />
+
+                                                                ):(
+
+                                                                    <Image style={styles.imgUsuarios} source={{ uri: `${prod.foto_dono}` }} />
+
+                                                                )
+
+                                                            )}
+
+                                                        </View>
+
+                                                        <TouchableOpacity
+                                                        
+                                                            activeOpacity={config.opacity_btn}
+                                                            onPress={() =>
+
+                                                                {
+                                                                    
+                                                                    if(item.id != "nulo" || DATA_confirmacoes.dono_lista == true){
+
+                                                                        if(item.id == "nulo"){
+
+                                                                            navigation.navigate("Editar_item", {
+                                                                    
+                                                                                id_produto: prod.id,
+                                                                                nome_produto: prod.nome,
+                                                                                qtd_produto: prod.qtd,
+                                                                                id_foto: prod.id_foto,
+                                                                                url: prod.url,
+                                                                                tipo_exibicao: prod.tipo_exibicao,
+                                                                                valor_prod: prod.valor,
+                                                                                obs: prod.obs,
+                                                                                categoria: "nulo",
+                                                                                carrinho: prod.carrinho
                                                                         
-                                                                        {prod.qtd} {verifica_exibicao(parseInt(prod.tipo_exibicao), Math.ceil(prod.qtd), 0)}
+                                                                            })
 
-                                                                        {prod.nome_dono != undefined ? (
+                                                                        }else{
 
-                                                                            (" | ")
-
-                                                                        ): null}
+                                                                            navigation.navigate("Editar_item", {
+                                                                    
+                                                                                id_produto: prod.id,
+                                                                                nome_produto: prod.nome,
+                                                                                qtd_produto: prod.qtd,
+                                                                                id_foto: prod.id_foto,
+                                                                                url: prod.url,
+                                                                                tipo_exibicao: prod.tipo_exibicao,
+                                                                                valor_prod: prod.valor,
+                                                                                obs: prod.obs,
+                                                                                categoria: prod.id_categorias,
+                                                                                carrinho: prod.carrinho
                                                                         
-                                                                    </Text>
+                                                                            })
 
-                                                                    <Text style={[styles.qtdItens, styles.nomeDonoProd]}>
+                                                                        }
 
-                                                                        {prod.nome_dono != undefined ? (
+                                                                        console.log("Categoria: "+prod.id_categorias);
 
-                                                                            prod.nome_dono
+                                                                    }else{
 
-                                                                        ): null}
-                                                                        
-                                                                    </Text>
+                                                                        mostrar_alerta_permissao();
 
-                                                                </View>
-
-                                                            ):null}
-
-                                                            {prod.obs && <View style={{flexDirection: "row"}}>
-
-                                                                    <Text style={styles.obs}>
-                                                                        
-                                                                        * {ajusta_tamanho_obs(prod.obs, 37)}
-                                                                        
-                                                                    </Text>
-
-                                                                </View>
-
+                                                                    }
+                                                            
                                                             }
+                                                        
+                                                        }
+                                                        
+                                                        >
 
-                                                        </View>
+                                                            <View style={{flex: 3, flexDirection: "column"}}>
 
-                                                    </TouchableOpacity>
+                                                                {prod.qtd > 0 || item.id == "nulo" || prod.obs != "" ? (
 
-                                                    <TouchableWithoutFeedback onPress={()=> add_carrinho_modal(prod.qtd, prod.valor, prod.id, prod.tipo_exibicao)}>
+                                                                    <Text style={styles.titleLista}>
+                                                                                                                                    
+                                                                        {prod.nome}
 
-                                                        <View style={[styles.iconeLista, {flex:1}]}>
+                                                                    </Text>
 
-                                                            <Icon
-                                                                name="cart-plus"
-                                                                size={25}
-                                                                color={"#0ee031"}
-                                                                />
+                                                                ):(
 
-                                                        </View>
+                                                                    <Text style={[styles.titleLista, {marginTop: 10}]}>
+                                                                        
+                                                                        {prod.nome}
+                                                                        
+                                                                    </Text>
 
-                                                    </TouchableWithoutFeedback >
+                                                                )}
 
-                                                </View>
+                                                                {prod.qtd > 0 || item.id == "nulo" ? (
 
-                                            ))
+                                                                    <View style={{flexDirection: "row"}}>
 
-                                        }
+                                                                        <Text style={styles.qtdItens}>
+                                                                            
+                                                                            {prod.qtd} {verifica_exibicao(parseInt(prod.tipo_exibicao), Math.ceil(prod.qtd), 0)}
+
+                                                                            {prod.nome_dono != undefined ? (
+
+                                                                                (" | ")
+
+                                                                            ): null}
+                                                                            
+                                                                        </Text>
+
+                                                                        <Text style={[styles.qtdItens, styles.nomeDonoProd]}>
+
+                                                                            {prod.nome_dono != undefined ? (
+
+                                                                                prod.nome_dono
+
+                                                                            ): null}
+                                                                            
+                                                                        </Text>
+
+                                                                    </View>
+
+                                                                ):null}
+
+                                                                {prod.obs && <View style={{flexDirection: "row"}}>
+
+                                                                        <Text style={styles.obs}>
+                                                                            
+                                                                            * {ajusta_tamanho_obs(prod.obs, 37)}
+                                                                            
+                                                                        </Text>
+
+                                                                    </View>
+
+                                                                }
+
+                                                            </View>
+
+                                                        </TouchableOpacity>
+
+                                                        <TouchableWithoutFeedback onPress={()=> add_carrinho_modal(prod.qtd, prod.valor, prod.id, prod.tipo_exibicao)}>
+
+                                                            <View style={[styles.iconeLista, {flex:1}]}>
+
+                                                                <Icon
+                                                                    name="cart-plus"
+                                                                    size={25}
+                                                                    color={"#0ee031"}
+                                                                    />
+
+                                                            </View>
+
+                                                        </TouchableWithoutFeedback >
+
+                                                    </View>
+
+                                                ))
+
+                                            }
+
+                                        </View>
+
+                                    )
+
+                                ))
+
+                            ):(
+
+                                <View style={styles.itemVazio}>
+
+                                    <Image style={styles.gif_load} source={require("../img/carregando.gif")} />
+
+                                </View>
+
+                            )}
+
+                        </View>
+
+                        {DATA_carrinho && DATA_carrinho.length > 0 ? (
+
+                            <View style={styles.areaCarrinho}>
+
+                                <View>
+
+                                    <Text style={[styles.tituloListas, styles.tituloListasCarrinho]}>
+
+                                        <Icon
+                                            name="cart-variant"
+                                            size={19}
+                                            color={config.cor1}
+                                        /> Carrinho
+
+                                    </Text>
+
+                                </View>
+
+                                {/* Carrinho */}
+                                {DATA_carrinho.map(item => (
+
+                                    <View key={item.id} style={styles.itemLista}>
+
+                                        <View style={styles.areaFoto}>
+
+                                            {item.url !== null ? (
+
+                                                /* Foto que aparecerá caso o item tiver uma foto */
+                                                <Image style={styles.imgProduto} source={{ uri: `${item.url}` }} />
+
+                                            ):(
+
+                                                /* Foto caso o item não tiver uma foto */
+                                                <Image style={styles.imgProduto} source={{ uri: `${config.Foto_prod_nulo}` }} />
+
+                                            )}
+
+                                        </View>
+
+                                        <TouchableOpacity
+                                        
+                                            activeOpacity={config.opacity_btn}
+                                            onPress={() =>
+
+                                                {
+                                                    
+                                                    if(item.id_dono == DATAUser[0].id || DATA_confirmacoes.dono_lista == true){
+
+                                                        if(item.id_dono != DATAUser[0].id){
+
+                                                            navigation.navigate("Editar_item", {
+                                                                        
+                                                                id_produto: item.id,
+                                                                nome_produto: item.nome,
+                                                                qtd_produto: item.qtd,
+                                                                id_foto: item.id_foto,
+                                                                url: item.url,
+                                                                tipo_exibicao: item.tipo_exibicao,
+                                                                valor_prod: item.valor,
+                                                                obs: item.obs,
+                                                                categoria: "nulo",
+                                                                carrinho: item.carrinho
+                                                        
+                                                            })
+
+                                                        }else{
+
+                                                            navigation.navigate("Editar_item", {
+                                                                        
+                                                                id_produto: item.id,
+                                                                nome_produto: item.nome,
+                                                                qtd_produto: item.qtd,
+                                                                id_foto: item.id_foto,
+                                                                url: item.url,
+                                                                tipo_exibicao: item.tipo_exibicao,
+                                                                valor_prod: item.valor,
+                                                                obs: item.obs,
+                                                                categoria: item.id_categorias,
+                                                                carrinho: item.carrinho
+                                                        
+                                                            })
+
+                                                        }
+
+                                                        console.log("Categoria: "+item.id_categorias);
+
+                                                    }else{
+
+                                                        mostrar_alerta_permissao();
+
+                                                    }
+                                            
+                                                }
+                                        
+                                            }
+                                        
+                                        >
+
+                                        <View style={{flex: 3, flexDirection: "column"}}>
+
+                                            <Text style={[styles.titleLista, styles.itemMarcado]}>
+                                                
+                                                {item.nome}
+                                                
+                                            </Text>
+                                            
+                                            <View style={{flexDirection: "row"}}>
+
+                                                <Text style={styles.qtdItens}>
+                                                    
+                                                {item.qtd} {verifica_exibicao(parseInt(item.tipo_exibicao), Math.ceil(item.qtd), 0)}{" / "}
+                                                    
+                                                </Text>
+
+                                                <Text style={[styles.qtdItens, {color: "#6ec0fa"}]}>
+
+                                                    {/* Aqui existem 3 funções com funcionamento simultâneo (uma depende da outra para funcionar) */}
+                                                    
+                                                    {"R$"}{formatar_valor(soma_valor_quantidade(parseFloat(item.qtd), parseFloat(item.valor), parseInt(item.tipo_exibicao)))}
+
+                                                    {somar_carrinho(parseFloat(soma_valor_quantidade(parseFloat(item.qtd), parseFloat(item.valor), parseInt(item.tipo_exibicao))))}
+                                                    
+                                                </Text>
+
+                                            </View>
+
+                                        </View>
+
+                                        </TouchableOpacity>
+
+                                        <TouchableWithoutFeedback onPress={()=> remover_produto_carrinho(item.id)}>
+
+                                            <View style={[styles.iconeLista, {flex: 1}]}>
+
+                                                <Icon
+                                                    name="cart-minus"
+                                                    size={25}
+                                                    color={"#FF0000"}
+                                                    />
+
+                                            </View>
+
+                                        </TouchableWithoutFeedback>
 
                                     </View>
 
-                                )
+                                ))}
 
-                            ))
+                            </View>
 
                         ):(
 
                             <View style={styles.itemVazio}>
 
-                                <Image style={styles.gif_load} source={require("../img/carregando.gif")} />
+                                <Text style={styles.textItemVazio}>
+
+                                    Nada encontrado!
+
+                                </Text>
 
                             </View>
 
@@ -940,173 +1123,9 @@ export default function ListaItem({route, navigation}){
 
                     </View>
 
-                    {DATA_carrinho && DATA_carrinho.length > 0 ? (
+                </ScrollView>
 
-                        <View style={styles.areaCarrinho}>
-
-                            <View>
-
-                                <Text style={[styles.tituloListas, styles.tituloListasCarrinho]}>
-
-                                    <Icon
-                                        name="cart-variant"
-                                        size={19}
-                                        color={config.cor1}
-                                    /> Carrinho
-
-                                </Text>
-
-                            </View>
-
-                            {/* Carrinho */}
-                            {DATA_carrinho.map(item => (
-
-                                <View key={item.id} style={styles.itemLista}>
-
-                                    <View style={styles.areaFoto}>
-
-                                        {item.url !== null ? (
-
-                                            /* Foto que aparecerá caso o item tiver uma foto */
-                                            <Image style={styles.imgProduto} source={{ uri: `${item.url}` }} />
-
-                                        ):(
-
-                                            /* Foto caso o item não tiver uma foto */
-                                            <Image style={styles.imgProduto} source={{ uri: `${config.Foto_prod_nulo}` }} />
-
-                                        )}
-
-                                    </View>
-
-                                    <TouchableOpacity
-                                    
-                                        activeOpacity={config.opacity_btn}
-                                        onPress={() =>
-
-                                            {
-                                                
-                                                if(item.id_dono == DATAUser[0].id || DATA_confirmacoes.dono_lista == true){
-
-                                                    if(item.id_dono != DATAUser[0].id){
-
-                                                        navigation.navigate("Editar_item", {
-                                                                    
-                                                            id_produto: item.id,
-                                                            nome_produto: item.nome,
-                                                            qtd_produto: item.qtd,
-                                                            id_foto: item.id_foto,
-                                                            url: item.url,
-                                                            tipo_exibicao: item.tipo_exibicao,
-                                                            valor_prod: item.valor,
-                                                            obs: item.obs,
-                                                            categoria: "nulo",
-                                                            carrinho: item.carrinho
-                                                    
-                                                        })
-
-                                                    }else{
-
-                                                        navigation.navigate("Editar_item", {
-                                                                    
-                                                            id_produto: item.id,
-                                                            nome_produto: item.nome,
-                                                            qtd_produto: item.qtd,
-                                                            id_foto: item.id_foto,
-                                                            url: item.url,
-                                                            tipo_exibicao: item.tipo_exibicao,
-                                                            valor_prod: item.valor,
-                                                            obs: item.obs,
-                                                            categoria: item.id_categorias,
-                                                            carrinho: item.carrinho
-                                                    
-                                                        })
-
-                                                    }
-
-                                                    console.log("Categoria: "+item.id_categorias);
-
-                                                }else{
-
-                                                    mostrar_alerta_permissao();
-
-                                                }
-                                        
-                                            }
-                                    
-                                        }
-                                    
-                                    >
-
-                                    <View style={{flex: 3, flexDirection: "column"}}>
-
-                                        <Text style={[styles.titleLista, styles.itemMarcado]}>
-                                            
-                                            {item.nome}
-                                            
-                                        </Text>
-                                        
-                                        <View style={{flexDirection: "row"}}>
-
-                                            <Text style={styles.qtdItens}>
-                                                
-                                            {item.qtd} {verifica_exibicao(parseInt(item.tipo_exibicao), Math.ceil(item.qtd), 0)}{" / "}
-                                                
-                                            </Text>
-
-                                            <Text style={[styles.qtdItens, {color: "#6ec0fa"}]}>
-
-                                                {/* Aqui existem 3 funções com funcionamento simultâneo (uma depende da outra para funcionar) */}
-                                                
-                                                {"R$"}{formatar_valor(soma_valor_quantidade(parseFloat(item.qtd), parseFloat(item.valor), parseInt(item.tipo_exibicao)))}
-
-                                                {somar_carrinho(parseFloat(soma_valor_quantidade(parseFloat(item.qtd), parseFloat(item.valor), parseInt(item.tipo_exibicao))))}
-                                                
-                                            </Text>
-
-                                        </View>
-
-                                    </View>
-
-                                    </TouchableOpacity>
-
-                                    <TouchableWithoutFeedback onPress={()=> remover_produto_carrinho(item.id)}>
-
-                                        <View style={[styles.iconeLista, {flex: 1}]}>
-
-                                            <Icon
-                                                name="cart-minus"
-                                                size={25}
-                                                color={"#FF0000"}
-                                                />
-
-                                        </View>
-
-                                    </TouchableWithoutFeedback>
-
-                                </View>
-
-                            ))}
-
-                        </View>
-
-                    ):(
-
-                        <View style={styles.itemVazio}>
-
-                            <Text style={styles.textItemVazio}>
-
-                                Nada encontrado!
-
-                            </Text>
-
-                        </View>
-
-                    )}
-
-                </View>
-
-            </ScrollView>
+            )}
 
             <View>
 
