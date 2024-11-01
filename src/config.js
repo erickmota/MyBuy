@@ -19,7 +19,8 @@ const config = {
 
 
     /* Dados */
-    URL_inicial_API: "https://testes.erickmota.com/"
+    URL_inicial_API: "https://testes.erickmota.com/" //Web
+    /* URL_inicial_API: "http://192.168.1.9:80/API_MyBuy/" */ //Local
 
 };
   
