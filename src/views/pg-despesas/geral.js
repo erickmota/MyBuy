@@ -1,5 +1,5 @@
-import React, {useLayoutEffect, useState} from 'react';
-import { StyleSheet, Text, View, Dimensions,ScrollView} from 'react-native';
+import React, {useEffect, useLayoutEffect, useState, useContext} from 'react';
+import { StyleSheet, Text, View, Dimensions, ScrollView, Image} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { Menu } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
@@ -7,15 +7,90 @@ import { BarChart } from 'react-native-chart-kit';
 import { PieChart } from 'react-native-chart-kit';
 import { LineChart } from 'react-native-chart-kit';
 import { ProgressChart } from 'react-native-chart-kit';
+import { UserContext } from '../../context/user';
 
 import config from '../../config';
 import { color } from 'react-native-elements/dist/helpers';
 
 export default function Categorias(){
 
+    /* Contexto */
+    const { DATAUser } = useContext(UserContext);
+
+    const [DATA, setData] = useState([]);
+    const [DATA_totalMedia, setData_totalMedia] = useState([]);
+    const [DATA_detalhes, setData_detalhes] = useState([]);
+    const [load_API, set_loadAPI] = useState(true);
+
     const [selectedValue, setSelectedValue] = useState(null);
     const [selectedX, setSelectedX] = useState(null);
     const [selectedY, setSelectedY] = useState(null);
+
+    useEffect(()=>{
+
+        const fetchData = async () => {
+
+            try{
+
+                const [resposta_1, resposta_2, resposta_3] = await Promise.all([
+
+                    fetch(`${config.URL_inicial_API}${DATAUser[0].id}/graficos/geral/2024`),
+                    fetch(`${config.URL_inicial_API}${DATAUser[0].id}/graficos/total_media/2024`),
+                    fetch(`${config.URL_inicial_API}${DATAUser[0].id}/graficos/detalhes_compras/2024`)
+
+                ]);
+
+                const [data_1, data_2, data_3] = await Promise.all([
+
+                    resposta_1.json(),
+                    resposta_2.json(),
+                    resposta_3.json()
+
+                ]);
+
+                setData(data_1.data);
+                setData_totalMedia(data_2.data);
+                setData_detalhes(data_3.data);
+
+                set_loadAPI(false);
+    
+            }catch(error){
+    
+                console.error('Erro ao buscar dados da API:', error);
+    
+            }
+
+        }
+
+        fetchData();
+
+    }, [])
+
+    const data2 = {
+        labels: [
+
+            "Jan",
+            "Fev",
+            "Mar",
+            "Abr",
+            "Mai",
+            "Jun",
+            "Jul",
+            "Ago",
+            "Set",
+            "Out",
+            "Nov",
+            "Dez",
+
+        ], // rótulos do eixo X
+        datasets: [
+            {
+            data: DATA, // valores do eixo Y
+            color: (opacity = 1) => `rgba(134, 65, 244, ${opacity})`, // opcional
+            strokeWidth: 2 // opcional
+            }
+        ]
+        };
 
     const handleDataPointClick = (data) => {
         
@@ -34,482 +109,382 @@ export default function Categorias(){
 
     const navigation = useNavigation();
 
-    const data = [
-        {
-          name: "Bebidas",
-          population: 5000000,
-          color: "rgba(131, 167, 234, 1)",
-          legendFontColor: "#7F7F7F",
-          legendFontSize: 15
-        },
-        {
-          name: "Mistura de café",
-          population: 2800000,
-          color: "#F00",
-          legendFontColor: "#7F7F7F",
-          legendFontSize: 15
-        },
-        {
-          name: "Beijing",
-          population: 527612,
-          color: "red",
-          legendFontColor: "#7F7F7F",
-          legendFontSize: 15
-        },
-        {
-          name: "New York",
-          population: 8538000,
-          color: "#CCC",
-          legendFontColor: "#7F7F7F",
-          legendFontSize: 15
-        },
-        {
-          name: "Moscow",
-          population: 11920000,
-          color: "rgb(0, 4, 255)",
-          legendFontColor: "#7F7F7F",
-          legendFontSize: 15
-        },
-        {
-            name: "Moscow",
-            population: 11920000,
-            color: "rgb(0, 150, 255)",
-            legendFontColor: "#7F7F7F",
-            legendFontSize: 15
-          },
-          {
-            name: "Moscow",
-            population: 11920000,
-            color: "rgb(55, 0, 255)",
-            legendFontColor: "#7F7F7F",
-            legendFontSize: 15
-          },
-          {
-            name: "Moscow",
-            population: 11920000,
-            color: "rgb(79, 0, 255)",
-            legendFontColor: "#7F7F7F",
-            legendFontSize: 15
-          },
-          {
-            name: "Moscow",
-            population: 11920000,
-            color: "rgb(128, 50, 255)",
-            legendFontColor: "#7F7F7F",
-            legendFontSize: 15
-          },
-          {
-            name: "Moscow",
-            population: 0,
-            color: "rgb(80, 0, 255)",
-            legendFontColor: "#7F7F7F",
-            legendFontSize: 15
-          }
-      ];
+    const chartConfig = {
+    backgroundGradientFrom: "#FFF",
+    backgroundGradientFromOpacity: 0,
+    backgroundGradientTo: "#FFF",
+    backgroundGradientToOpacity: 0.5,
+    color: (opacity = 1) => `rgba(128, 128, 128, ${opacity})`,
+    strokeWidth: 1, // optional, default 3
+    barPercentage: 0.5,
+    useShadowColorFromDataset: false, // optional
+    style: {
+        borderRadius: 16,
+    },
+    propsForDots: {
+        r: "6",
+        strokeWidth: "4",
+        stroke: "#FFF"
+    },
+    propsForBackgroundLines:{
 
-      const data2 = {
-        labels: [
+        strokeWidth: 1,
+        stroke: "#ddd",
+        strokeDasharray: [4, 4],
+        opacity: 0.5
 
-            "Jan",
-            "Fev",
-            "Mar",
-            "Abr",
-            "Mai",
-            "Jun",
-            "Jul",
-            "Ago",
-            "Set",
-            "Out",
-            "Nov",
-            "Dez",
+    }
+    };
 
-        ], // rótulos do eixo X
-        datasets: [
-          {
-            data: [20, 22, 21, 20, 22, 22, 21, 19, 20.4, 20, 18, 19], // valores do eixo Y
-            color: (opacity = 1) => `rgba(134, 65, 244, ${opacity})`, // opcional
-            strokeWidth: 2 // opcional
-          }
-        ]
-      };
+    function posicao_valor(valor){
 
-      const data3 = {
-        labels: ["Gastos"], // optional
-        data: [0.4]
-      };
+        posicao = 0;
 
-      const chartConfig = {
-        backgroundGradientFrom: "#FFF",
-        backgroundGradientFromOpacity: 0,
-        backgroundGradientTo: "#FFF",
-        backgroundGradientToOpacity: 0.5,
-        color: (opacity = 1) => `rgba(128, 128, 128, ${opacity})`,
-        strokeWidth: 1, // optional, default 3
-        barPercentage: 0.5,
-        useShadowColorFromDataset: false, // optional
-        style: {
-            borderRadius: 16,
-        },
-        propsForDots: {
-            r: "6",
-            strokeWidth: "4",
-            stroke: "#FFF"
-        },
-        propsForBackgroundLines:{
+        if(valor >= 0 && valor < 10){
 
-            strokeWidth: 1,
-            stroke: "#ddd",
-            strokeDasharray: [4, 4],
-            opacity: 0.5
+            posicao = selectedX - 47;
+
+        }else if(valor >= 10 && valor < 100){
+
+            posicao = selectedX - 53;
+
+        }else if(valor >= 100 && valor < 1000){
+
+            posicao = selectedX - 60;
+
+        }else if(valor >= 1000 && valor < 10000){
+
+            posicao = selectedX - 67;
+
+        }else if(valor >= 10000 && valor < 100000){
+
+            posicao = selectedX - 77;
+
+        }else{
+
+            posicao = selectedX - 90;
 
         }
-      };
+
+        return posicao;
+
+    }
 
     return(
 
         <View style={styles.container}>
 
-            <ScrollView>
+            {load_API == true ? (
 
-            <View style={[styles.container_padrao, styles.container_abaixo, {paddingVertical: 10}]}>
+                <View style={{flex: 1, justifyContent: "center", alignItems: "center"}}>
 
-                <View style={{flexDirection: "row", justifyContent: "center"}}>
-
-                    <Text style={{fontSize: 16, color: "#333"}}>
-
-                        Depesas totais do mês atual:{" "}
-
-                    </Text>
-
-                    <Text style={{fontSize: 16, color: "red"}}>
-
-                        R$835,56
-
-                    </Text>
+                    <Image style={styles.gif_load} source={require("../../img/carregando.gif")} />
 
                 </View>
 
-                <View>
+            ):(
 
-                    <Text style={{textAlign: "center", marginLeft: 65, color: config.corTextoSecundario}}>
+                <ScrollView>
 
-                        Mês anterior: R$545,58
+                    <View style={[styles.container_padrao, styles.container_abaixo, {paddingVertical: 10}]}>
 
-                    </Text>
+                        <View style={{flexDirection: "row", justifyContent: "center"}}>
 
-                </View>
+                            <Text style={{fontSize: 16, color: "#333"}}>
 
-            </View>
+                                Depesas totais do mês atual:{" "}
 
-            <View style={[styles.container_padrao, styles.container_abaixo, styles.container_grafico]}>
+                            </Text>
 
-                <ScrollView
-                
-                horizontal
+                            <Text style={{fontSize: 16, color: "red"}}>
 
-                >
+                                R$835,56
 
-                    <LineChart
-                        data={data2}
-                        width={Dimensions.get("window").width}
-                        height={250}
-                        chartConfig={chartConfig}
-                        accessor={"population"}
-                        backgroundColor={"transparent"}
-                        paddingLeft={"0"}
-                        center={[10, 10]}
-                        absolute={false}
-                        hasLegend={true}
-                        avoidFalseZero={false}
-                        bezier={true}
-                        withDots={true}
-                        onDataPointClick={handleDataPointClick}
-                    />
-                    {selectedValue !== null && (
-                        <View style={{ position: 'absolute', left: selectedX - 40, top: selectedY - 10 }}>
-                            <Text style={{ color: config.cor2, fontSize: 12 }}>R${selectedValue}</Text>
+                            </Text>
+
                         </View>
-                    )}
+
+                        <View>
+
+                            <Text style={{textAlign: "center", marginLeft: 65, color: config.corTextoSecundario}}>
+
+                                Mês anterior: R$545,58
+
+                            </Text>
+
+                        </View>
+
+                    </View>
+
+                    <View style={[styles.container_padrao, styles.container_abaixo, styles.container_grafico]}>
+
+                        <ScrollView
+                        
+                        horizontal
+
+                        >
+
+                            {DATA.length > 0 ? (
+
+                                <LineChart
+                                data={data2}
+                                width={Dimensions.get("window").width}
+                                height={250}
+                                chartConfig={chartConfig}
+                                accessor={"population"}
+                                backgroundColor={"transparent"}
+                                paddingLeft={"0"}
+                                center={[10, 10]}
+                                absolute={false}
+                                hasLegend={true}
+                                avoidFalseZero={false}
+                                bezier={true}
+                                withDots={true}
+                                onDataPointClick={handleDataPointClick}
+                                fromZero={true}
+                                animation={true}
+                                />
+
+                            ):null}
+                            {selectedValue !== null && (
+                                <View style={{ position: 'absolute', left: posicao_valor(selectedValue), top: selectedY - 10 }}>
+                                    <Text style={{ color: config.cor2, fontSize: 12, backgroundColor: "#FFF" }}>R${selectedValue.toFixed(2)}</Text>
+                                </View>
+                            )}
+
+                        </ScrollView>
+
+                        <View style={{flexDirection: "row"}}>
+
+                            <Text style={{color: config.corTextoSecundario, fontStyle: "italic"}}>
+
+                                Total do ano:{" "}
+
+                            </Text>
+
+                            <Text style={{color: "#6ec0fa", fontStyle: "italic"}}>
+
+                                R${DATA_totalMedia.total.toFixed(2)}
+
+                            </Text>
+
+                        </View>
+
+                        <View style={{flexDirection: "row"}}>
+
+                            <Text style={{color: config.corTextoSecundario, fontStyle: "italic"}}>
+
+                                A média mensal é de:{" "}
+
+                            </Text>
+
+                            <Text style={{color: "#6ec0fa", fontStyle: "italic"}}>
+
+                                R${DATA_totalMedia.media.toFixed(2)}
+
+                            </Text>
+
+                        </View>
+
+                        <Text style={{color: config.corTextoSecundario, marginTop: 10}}>
+
+                            Despesas de:
+
+                        </Text>
+
+                        <Text style={styles.txtPeriodo}>
+
+                            2024
+
+                        </Text>
+
+                    </View>
+
+                    <View style={[styles.container_padrao, styles.container_abaixo]}>
+
+                        <View style={styles.linha_nomes_legendas}>
+
+                            <View style={{flex: 2}}>
+
+                                <Text style={{paddingLeft: 5}}>
+
+                                    
+
+                                </Text>
+
+                            </View>
+
+                            <View style={{flex: 1}}>
+
+                                <Text style={{textAlign: "center", color: config.corTextoSecundario, fontSize: 10}}>
+
+                                    Compras
+
+                                </Text>
+
+                                <Text style={{textAlign: "center", color: config.corTextoSecundario, fontSize: 10}}>
+
+                                    efetuadas
+
+                                </Text>
+
+                            </View>
+
+                            <View style={{flex: 1}}>
+
+                                <Text style={{textAlign: "right", paddingRight: 5}}>
+
+                                    
+
+                                </Text>
+
+                            </View>
+
+                        </View>
+
+                        {DATA_detalhes.map(item=>(
+
+                            item.qtd_compras > 0 ? (
+
+                                <View key={item.nome} style={styles.linha_nomes}>
+
+                                    <View style={styles.linha_nomes_principal}>
+
+                                        <View style={{flex: 2}}>
+
+                                            <Text style={{paddingLeft: 5}}>
+
+                                                {item.nome}
+
+                                            </Text>
+
+                                        </View>
+
+                                        <View style={{flex: 1}}>
+
+                                            <Text style={{textAlign: "center"}}>
+
+                                                {item.qtd_compras}
+
+                                            </Text>
+
+                                        </View>
+
+                                        <View style={{flex: 1}}>
+
+                                            <Text style={{textAlign: "right", paddingRight: 5}}>
+
+                                                R${item.valor_total.toFixed(2)}
+
+                                            </Text>
+
+                                        </View>
+
+                                    </View>
+
+                                    <View style={styles.area_legenda}>
+
+                                        {/* Linha */}
+                                        <View style={{flexDirection: "row", justifyContent: "flex-end", paddingVertical: 2}}>
+
+                                            <Text style={styles.txt_legenda}>
+
+                                                Categoria mais utilizada: {" "}
+
+                                            </Text>
+
+                                            {item.categoria_principal == null ? (
+
+                                                <Text style={[styles.txt_legenda, styles.txt_legenda_principal]}>
+
+                                                    Indisponível
+
+                                                </Text>
+
+                                            ):(
+
+                                                <Text style={[styles.txt_legenda, styles.txt_legenda_principal]}>
+
+                                                    {item.categoria_principal}
+
+                                                </Text>
+                                                
+                                            )}
+
+                                        </View>
+
+                                        {/* Linha */}
+                                        <View style={{flexDirection: "row", justifyContent: "flex-end", paddingVertical: 2}}>
+
+                                            <Text style={styles.txt_legenda}>
+
+                                                Mecado mais frequente: {" "}
+
+                                            </Text>
+
+                                            {item.mercado_principal == null ? (
+
+                                                <Text style={[styles.txt_legenda, styles.txt_legenda_principal]}>
+
+                                                    Indisponível
+
+                                                </Text>
+
+                                            ):(
+
+                                                <Text style={[styles.txt_legenda, styles.txt_legenda_principal]}>
+
+                                                    {item.mercado_principal}
+
+                                                </Text>
+
+                                            )}
+
+                                        </View>
+
+                                        {/* Linha */}
+                                        <View style={{flexDirection: "row", justifyContent: "flex-end", paddingVertical: 2}}>
+
+                                            <Text style={styles.txt_legenda}>
+
+                                                Produto com maior gasto: {" "}
+
+                                            </Text>
+
+                                            {item.produto_principal == null ? (
+
+                                                <Text style={[styles.txt_legenda, styles.txt_legenda_principal]}>
+
+                                                    Indisponível
+
+                                                </Text>
+
+                                            ):(
+
+                                                <Text style={[styles.txt_legenda, styles.txt_legenda_principal]}>
+
+                                                    {item.produto_principal}
+
+                                                </Text>
+
+
+                                            )}
+
+                                        </View>
+
+                                    </View>
+
+                                </View>
+
+                            ):null
+
+                        ))}
+
+                    </View>
 
                 </ScrollView>
 
-                <View style={{flexDirection: "row"}}>
-
-                    <Text style={{color: config.corTextoSecundario, fontStyle: "italic"}}>
-
-                        Total do ano:{" "}
-
-                    </Text>
-
-                    <Text style={{color: "#6ec0fa", fontStyle: "italic"}}>
-
-                        R$2556,32
-
-                    </Text>
-
-                </View>
-
-                <View style={{flexDirection: "row"}}>
-
-                    <Text style={{color: config.corTextoSecundario, fontStyle: "italic"}}>
-
-                        A média mensal é de:{" "}
-
-                    </Text>
-
-                    <Text style={{color: "#6ec0fa", fontStyle: "italic"}}>
-
-                        R$556,32
-
-                    </Text>
-
-                </View>
-
-                <Text style={{color: config.corTextoSecundario, marginTop: 10}}>
-
-                    Despesas de:
-
-                </Text>
-
-                <Text style={styles.txtPeriodo}>
-
-                    2024
-
-                </Text>
-
-            </View>
-
-            <View style={[styles.container_padrao, styles.container_abaixo]}>
-
-                <View style={styles.linha_nomes_legendas}>
-
-                    <View style={{flex: 2}}>
-
-                        <Text style={{paddingLeft: 5}}>
-
-                            
-
-                        </Text>
-
-                    </View>
-
-                    <View style={{flex: 1}}>
-
-                        <Text style={{textAlign: "center", color: config.corTextoSecundario, fontSize: 10}}>
-
-                            Compras
-
-                        </Text>
-
-                        <Text style={{textAlign: "center", color: config.corTextoSecundario, fontSize: 10}}>
-
-                            efetuadas
-
-                        </Text>
-
-                    </View>
-
-                    <View style={{flex: 1}}>
-
-                        <Text style={{textAlign: "right", paddingRight: 5}}>
-
-                            
-
-                        </Text>
-
-                    </View>
-
-                </View>
-
-                <View style={styles.linha_nomes}>
-
-                    <View style={styles.linha_nomes_principal}>
-
-                        <View style={{flex: 2}}>
-
-                            <Text style={{paddingLeft: 5}}>
-
-                                Dezembro
-
-                            </Text>
-
-                        </View>
-
-                        <View style={{flex: 1}}>
-
-                            <Text style={{textAlign: "center"}}>
-
-                                17
-
-                            </Text>
-
-                        </View>
-
-                        <View style={{flex: 1}}>
-
-                            <Text style={{textAlign: "right", paddingRight: 5}}>
-
-                                R$566,65
-
-                            </Text>
-
-                        </View>
-
-                    </View>
-
-                    <View style={styles.area_legenda}>
-
-                        {/* Linha */}
-                        <View style={{flexDirection: "row", justifyContent: "flex-end", paddingVertical: 2}}>
-
-                            <Text style={styles.txt_legenda}>
-
-                                Categoria mais utilizada: {" "}
-
-                            </Text>
-
-                            <Text style={[styles.txt_legenda, styles.txt_legenda_principal]}>
-
-                                Mistura de café
-
-                            </Text>
-
-                        </View>
-
-                        {/* Linha */}
-                        <View style={{flexDirection: "row", justifyContent: "flex-end", paddingVertical: 2}}>
-
-                            <Text style={styles.txt_legenda}>
-
-                                Mecado mais frequente: {" "}
-
-                            </Text>
-
-                            <Text style={[styles.txt_legenda, styles.txt_legenda_principal]}>
-
-                                Comercial Esperança - Loja
-
-                            </Text>
-
-                        </View>
-
-                        {/* Linha */}
-                        <View style={{flexDirection: "row", justifyContent: "flex-end", paddingVertical: 2}}>
-
-                            <Text style={styles.txt_legenda}>
-
-                                Produto com maior gasto: {" "}
-
-                            </Text>
-
-                            <Text style={[styles.txt_legenda, styles.txt_legenda_principal]}>
-
-                                Café premium
-
-                            </Text>
-
-                        </View>
-
-                    </View>
-
-                </View>
-
-                <View style={styles.linha_nomes}>
-
-                    <View style={styles.linha_nomes_principal}>
-
-                        <View style={{flex: 2}}>
-
-                            <Text style={{paddingLeft: 5}}>
-
-                                Novembro
-
-                            </Text>
-
-                        </View>
-
-                        <View style={{flex: 1}}>
-
-                            <Text style={{textAlign: "center"}}>
-
-                                17
-
-                            </Text>
-
-                        </View>
-
-                        <View style={{flex: 1}}>
-
-                            <Text style={{textAlign: "right", paddingRight: 5}}>
-
-                                R$566,65
-
-                            </Text>
-
-                        </View>
-
-                    </View>
-
-                    <View style={styles.area_legenda}>
-
-                        {/* Linha */}
-                        <View style={{flexDirection: "row", justifyContent: "flex-end", paddingVertical: 2}}>
-
-                            <Text style={styles.txt_legenda}>
-
-                                Categoria mais utilizada: {" "}
-
-                            </Text>
-
-                            <Text style={[styles.txt_legenda, styles.txt_legenda_principal]}>
-
-                                Mistura de café
-
-                            </Text>
-
-                        </View>
-
-                        {/* Linha */}
-                        <View style={{flexDirection: "row", justifyContent: "flex-end", paddingVertical: 2}}>
-
-                            <Text style={styles.txt_legenda}>
-
-                                Mecado mais frequente: {" "}
-
-                            </Text>
-
-                            <Text style={[styles.txt_legenda, styles.txt_legenda_principal]}>
-
-                                Comercial Esperança - Loja
-
-                            </Text>
-
-                        </View>
-
-                        {/* Linha */}
-                        <View style={{flexDirection: "row", justifyContent: "flex-end", paddingVertical: 2}}>
-
-                            <Text style={styles.txt_legenda}>
-
-                                Produto com maior gasto: {" "}
-
-                            </Text>
-
-                            <Text style={[styles.txt_legenda, styles.txt_legenda_principal]}>
-
-                                Café premium
-
-                            </Text>
-
-                        </View>
-
-                    </View>
-
-                </View>
-
-            </View>
-
-            </ScrollView>
+            )}
 
         </View>
 
@@ -670,6 +645,15 @@ const styles = StyleSheet.create({
     container_nomes:{
 
         minHeight: 150
+
+    },
+
+    /* ***** */
+
+    gif_load:{
+
+        width: 70,
+        height: 70
 
     }
 

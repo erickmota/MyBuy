@@ -428,11 +428,23 @@ export default function Minhas_compras(){
                                         style={styles.iconLocal}
                                     />
 
-                                    <Text style={styles.textoMercado}>
+                                    {item.nome_mercado == null ? (
 
-                                        {item.nome_mercado}
+                                        <Text style={styles.textoMercado}>
 
-                                    </Text>
+                                            Indisponível
+
+                                        </Text>
+
+                                    ):(
+
+                                        <Text style={styles.textoMercado}>
+
+                                            {item.nome_mercado}
+
+                                        </Text>
+
+                                    )}
 
                                 </View>
 
