@@ -1,5 +1,5 @@
-import React, {useEffect, useLayoutEffect, useState, useContext} from 'react';
-import { StyleSheet, Text, View, Dimensions, ScrollView, Image} from 'react-native';
+import React, {useEffect, useLayoutEffect, useState, useContext, useCallback,} from 'react';
+import { StyleSheet, Text, View, Dimensions, ScrollView, Image, Modal, TouchableWithoutFeedback, FlatList, TouchableNativeFeedback} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { Menu } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
@@ -8,6 +8,7 @@ import { PieChart } from 'react-native-chart-kit';
 import { LineChart } from 'react-native-chart-kit';
 import { ProgressChart } from 'react-native-chart-kit';
 import { UserContext } from '../../context/user';
+import { useFocusEffect } from '@react-navigation/native';
 
 import config from '../../config';
 import { color } from 'react-native-elements/dist/helpers';
@@ -20,37 +21,55 @@ export default function Categorias(){
     const [DATA, setData] = useState([]);
     const [DATA_totalMedia, setData_totalMedia] = useState([]);
     const [DATA_detalhes, setData_detalhes] = useState([]);
+    const [DATA_mes, setData_mes] = useState([]);
     const [load_API, set_loadAPI] = useState(true);
 
     const [selectedValue, setSelectedValue] = useState(null);
     const [selectedX, setSelectedX] = useState(null);
     const [selectedY, setSelectedY] = useState(null);
 
-    useEffect(()=>{
+    /* Modal */
+    const [modalVisible, setModalVisible] = useState(false);
+
+    const [Ano_selecionado, setAnoSelecionado] = useState(new Date().getFullYear());
+
+    const carregar_API = useCallback(() => {
 
         const fetchData = async () => {
 
             try{
 
-                const [resposta_1, resposta_2, resposta_3] = await Promise.all([
+                const [resposta_1, resposta_2, resposta_3, resposta_4] = await Promise.all([
 
-                    fetch(`${config.URL_inicial_API}${DATAUser[0].id}/graficos/geral/2024`),
-                    fetch(`${config.URL_inicial_API}${DATAUser[0].id}/graficos/total_media/2024`),
-                    fetch(`${config.URL_inicial_API}${DATAUser[0].id}/graficos/detalhes_compras/2024`)
+                    fetch(`${config.URL_inicial_API}${DATAUser[0].id}/graficos/geral/${Ano_selecionado}`),
+                    fetch(`${config.URL_inicial_API}${DATAUser[0].id}/graficos/total_media/${Ano_selecionado}`),
+                    fetch(`${config.URL_inicial_API}${DATAUser[0].id}/graficos/detalhes_compras/${Ano_selecionado}`),
+                    fetch(`${config.URL_inicial_API}${DATAUser[0].id}/graficos/valor_mes`)
 
                 ]);
 
-                const [data_1, data_2, data_3] = await Promise.all([
+                const [data_1, data_2, data_3, data_4] = await Promise.all([
 
                     resposta_1.json(),
                     resposta_2.json(),
-                    resposta_3.json()
+                    resposta_3.json(),
+                    resposta_4.json()
 
                 ]);
 
-                setData(data_1.data);
+                if(data_1.data == null){
+                    
+                    setData([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
+
+                }else{
+
+                    setData(data_1.data);
+
+                }
+
                 setData_totalMedia(data_2.data);
                 setData_detalhes(data_3.data);
+                setData_mes(data_4.data);
 
                 set_loadAPI(false);
     
@@ -64,7 +83,28 @@ export default function Categorias(){
 
         fetchData();
 
-    }, [])
+    }, [Ano_selecionado])
+
+    useFocusEffect(
+
+        useCallback(() => {
+
+            carregar_API();
+    
+          return () => {
+
+            setData([]);
+            setData_totalMedia([]);
+            setData_detalhes([]);
+            setData_mes([]);
+
+            set_loadAPI(true);
+
+          };
+          
+        }, [Ano_selecionado])
+
+    );
 
     const data2 = {
         labels: [
@@ -142,15 +182,15 @@ export default function Categorias(){
 
         if(valor >= 0 && valor < 10){
 
-            posicao = selectedX - 47;
+            posicao = selectedX - 50;
 
         }else if(valor >= 10 && valor < 100){
 
-            posicao = selectedX - 53;
+            posicao = selectedX - 58;
 
         }else if(valor >= 100 && valor < 1000){
 
-            posicao = selectedX - 60;
+            posicao = selectedX - 65;
 
         }else if(valor >= 1000 && valor < 10000){
 
@@ -170,9 +210,79 @@ export default function Categorias(){
 
     }
 
+    function retorna_datas(){
+
+        const data_atual = new Date();
+        var ano_atual = data_atual.getFullYear();
+
+        const DATA_anos = [];
+
+        var i = 0
+
+        while(i <= 10){
+
+            DATA_anos.push(ano_atual);
+
+            ano_atual--;
+
+            i++;
+        }
+
+        return DATA_anos
+
+    }
+
     return(
 
         <View style={styles.container}>
+
+            <Modal
+                animationType="fade" // ou 'fade', 'none'
+                transparent={true}    // Define se o fundo será transparente
+                visible={modalVisible}
+                onRequestClose={() => setModalVisible(false)} // Fechar modal ao clicar no botão 'voltar'
+            >
+
+                <TouchableWithoutFeedback onPress={() => setModalVisible(false)}>
+
+                <View style={styles.centeredView}>
+
+                    <View style={styles.modalView}>
+
+                        <FlatList
+                        data={retorna_datas()}
+                        renderItem={({item}) =>
+                        
+                            <View>
+
+                                <TouchableNativeFeedback onPress={()=> {setAnoSelecionado(item), setModalVisible(false)}}>
+
+                                    <View style={styles.item_lista_anos}>
+
+                                        <Text>
+
+                                            {item}
+
+                                        </Text>
+
+                                    </View>
+
+                                </TouchableNativeFeedback>
+
+                            </View>
+                        
+                        }
+
+                        keyExtractor={item => item}
+                        />
+                      
+                    </View>
+
+                </View>
+
+                </TouchableWithoutFeedback>
+
+            </Modal>
 
             {load_API == true ? (
 
@@ -196,9 +306,9 @@ export default function Categorias(){
 
                             </Text>
 
-                            <Text style={{fontSize: 16, color: "red"}}>
+                            <Text style={DATA_mes.mes_atual >= DATA_mes.mes_anterior ? {fontSize: 16, color: "red"}:{fontSize: 16, color: "#4aff7d"}}>
 
-                                R$835,56
+                                R${DATA_mes.mes_atual.toFixed(2)}
 
                             </Text>
 
@@ -208,7 +318,7 @@ export default function Categorias(){
 
                             <Text style={{textAlign: "center", marginLeft: 65, color: config.corTextoSecundario}}>
 
-                                Mês anterior: R$545,58
+                                Mês anterior: R${DATA_mes.mes_anterior.toFixed(2)}
 
                             </Text>
 
@@ -224,28 +334,22 @@ export default function Categorias(){
 
                         >
 
-                            {DATA.length > 0 ? (
+                            <LineChart
+                            data={data2}
+                            width={Dimensions.get("window").width}
+                            height={300}
+                            chartConfig={chartConfig}
+                            backgroundColor={"transparent"}
+                            paddingLeft={"0"}
+                            center={[10, 10]}
+                            absolute={false}
+                            hasLegend={true}
+                            avoidFalseZero={false}
+                            bezier={true}
+                            withDots={true}
+                            onDataPointClick={handleDataPointClick}
+                            />
 
-                                <LineChart
-                                data={data2}
-                                width={Dimensions.get("window").width}
-                                height={250}
-                                chartConfig={chartConfig}
-                                accessor={"population"}
-                                backgroundColor={"transparent"}
-                                paddingLeft={"0"}
-                                center={[10, 10]}
-                                absolute={false}
-                                hasLegend={true}
-                                avoidFalseZero={false}
-                                bezier={true}
-                                withDots={true}
-                                onDataPointClick={handleDataPointClick}
-                                fromZero={true}
-                                animation={true}
-                                />
-
-                            ):null}
                             {selectedValue !== null && (
                                 <View style={{ position: 'absolute', left: posicao_valor(selectedValue), top: selectedY - 10 }}>
                                     <Text style={{ color: config.cor2, fontSize: 12, backgroundColor: "#FFF" }}>R${selectedValue.toFixed(2)}</Text>
@@ -262,11 +366,23 @@ export default function Categorias(){
 
                             </Text>
 
-                            <Text style={{color: "#6ec0fa", fontStyle: "italic"}}>
+                            {DATA_totalMedia == false? (
 
-                                R${DATA_totalMedia.total.toFixed(2)}
+                                <Text style={{color: "#6ec0fa", fontStyle: "italic"}}>
 
-                            </Text>
+                                    Indisponível
+
+                                </Text>
+
+                            ):(
+
+                                <Text style={{color: "#6ec0fa", fontStyle: "italic"}}>
+
+                                    R${DATA_totalMedia.total.toFixed(2)}
+
+                                </Text>
+
+                            )}
 
                         </View>
 
@@ -278,11 +394,23 @@ export default function Categorias(){
 
                             </Text>
 
-                            <Text style={{color: "#6ec0fa", fontStyle: "italic"}}>
+                            {DATA_totalMedia == false ? (
 
-                                R${DATA_totalMedia.media.toFixed(2)}
+                                <Text style={{color: "#6ec0fa", fontStyle: "italic"}}>
 
-                            </Text>
+                                    Indisponível
+
+                                </Text>
+
+                            ):(
+
+                                <Text style={{color: "#6ec0fa", fontStyle: "italic"}}>
+
+                                    R${DATA_totalMedia.media.toFixed(2)}
+
+                                </Text>
+
+                            )}
 
                         </View>
 
@@ -292,15 +420,29 @@ export default function Categorias(){
 
                         </Text>
 
-                        <Text style={styles.txtPeriodo}>
+                        <TouchableWithoutFeedback onPress={()=> setModalVisible(true)}>
 
-                            2024
+                            <Text style={styles.txtPeriodo}>
 
-                        </Text>
+                                {Ano_selecionado}
+
+                            </Text>
+
+                        </TouchableWithoutFeedback>
 
                     </View>
 
-                    <View style={[styles.container_padrao, styles.container_abaixo]}>
+                    <View style={[{alignItems: "center", paddingVertical: 8}]}>
+
+                        <Icon
+                            name="arrow-down-thick"
+                            size={25}
+                            color={"#DDD"}
+                        />
+
+                    </View>
+
+                    <View style={[styles.container_padrao]}>
 
                         <View style={styles.linha_nomes_legendas}>
 
@@ -342,143 +484,159 @@ export default function Categorias(){
 
                         </View>
 
-                        {DATA_detalhes.map(item=>(
+                        {DATA_totalMedia == false ? (
 
-                            item.qtd_compras > 0 ? (
+                            <View style={{justifyContent: "center", alignItems: "center", height: 50}}>
 
-                                <View key={item.nome} style={styles.linha_nomes}>
+                                <Text style={{color: config.corTextoSecundario}}>
 
-                                    <View style={styles.linha_nomes_principal}>
+                                    Nenhuma compra disponível
 
-                                        <View style={{flex: 2}}>
+                                </Text>
 
-                                            <Text style={{paddingLeft: 5}}>
+                            </View>
 
-                                                {item.nome}
+                        ):(
 
-                                            </Text>
+                            DATA_detalhes.map(item=>(
+
+                                item.qtd_compras > 0 ? (
+
+                                    <View key={item.nome} style={styles.linha_nomes}>
+
+                                        <View style={styles.linha_nomes_principal}>
+
+                                            <View style={{flex: 2}}>
+
+                                                <Text style={{paddingLeft: 5}}>
+
+                                                    {item.nome}
+
+                                                </Text>
+
+                                            </View>
+
+                                            <View style={{flex: 1}}>
+
+                                                <Text style={{textAlign: "center"}}>
+
+                                                    {item.qtd_compras}
+
+                                                </Text>
+
+                                            </View>
+
+                                            <View style={{flex: 1}}>
+
+                                                <Text style={{textAlign: "right", paddingRight: 5}}>
+
+                                                    R${item.valor_total.toFixed(2)}
+
+                                                </Text>
+
+                                            </View>
 
                                         </View>
 
-                                        <View style={{flex: 1}}>
+                                        <View style={styles.area_legenda}>
 
-                                            <Text style={{textAlign: "center"}}>
+                                            {/* Linha */}
+                                            <View style={{flexDirection: "row", justifyContent: "flex-end", paddingVertical: 2}}>
 
-                                                {item.qtd_compras}
+                                                <Text style={styles.txt_legenda}>
 
-                                            </Text>
+                                                    Categoria mais utilizada: {" "}
 
-                                        </View>
+                                                </Text>
 
-                                        <View style={{flex: 1}}>
+                                                {item.categoria_principal == null ? (
 
-                                            <Text style={{textAlign: "right", paddingRight: 5}}>
+                                                    <Text style={[styles.txt_legenda, styles.txt_legenda_principal]}>
 
-                                                R${item.valor_total.toFixed(2)}
+                                                        Indisponível
 
-                                            </Text>
+                                                    </Text>
+
+                                                ):(
+
+                                                    <Text style={[styles.txt_legenda, styles.txt_legenda_principal]}>
+
+                                                        {item.categoria_principal}
+
+                                                    </Text>
+                                                    
+                                                )}
+
+                                            </View>
+
+                                            {/* Linha */}
+                                            <View style={{flexDirection: "row", justifyContent: "flex-end", paddingVertical: 2}}>
+
+                                                <Text style={styles.txt_legenda}>
+
+                                                    Mecado mais frequente: {" "}
+
+                                                </Text>
+
+                                                {item.mercado_principal == null ? (
+
+                                                    <Text style={[styles.txt_legenda, styles.txt_legenda_principal]}>
+
+                                                        Indisponível
+
+                                                    </Text>
+
+                                                ):(
+
+                                                    <Text style={[styles.txt_legenda, styles.txt_legenda_principal]}>
+
+                                                        {item.mercado_principal}
+
+                                                    </Text>
+
+                                                )}
+
+                                            </View>
+
+                                            {/* Linha */}
+                                            <View style={{flexDirection: "row", justifyContent: "flex-end", paddingVertical: 2}}>
+
+                                                <Text style={styles.txt_legenda}>
+
+                                                    Produto com maior gasto: {" "}
+
+                                                </Text>
+
+                                                {item.produto_principal == null ? (
+
+                                                    <Text style={[styles.txt_legenda, styles.txt_legenda_principal]}>
+
+                                                        Indisponível
+
+                                                    </Text>
+
+                                                ):(
+
+                                                    <Text style={[styles.txt_legenda, styles.txt_legenda_principal]}>
+
+                                                        {item.produto_principal}
+
+                                                    </Text>
+
+
+                                                )}
+
+                                            </View>
 
                                         </View>
 
                                     </View>
 
-                                    <View style={styles.area_legenda}>
+                                ):null
 
-                                        {/* Linha */}
-                                        <View style={{flexDirection: "row", justifyContent: "flex-end", paddingVertical: 2}}>
+                            ))
 
-                                            <Text style={styles.txt_legenda}>
-
-                                                Categoria mais utilizada: {" "}
-
-                                            </Text>
-
-                                            {item.categoria_principal == null ? (
-
-                                                <Text style={[styles.txt_legenda, styles.txt_legenda_principal]}>
-
-                                                    Indisponível
-
-                                                </Text>
-
-                                            ):(
-
-                                                <Text style={[styles.txt_legenda, styles.txt_legenda_principal]}>
-
-                                                    {item.categoria_principal}
-
-                                                </Text>
-                                                
-                                            )}
-
-                                        </View>
-
-                                        {/* Linha */}
-                                        <View style={{flexDirection: "row", justifyContent: "flex-end", paddingVertical: 2}}>
-
-                                            <Text style={styles.txt_legenda}>
-
-                                                Mecado mais frequente: {" "}
-
-                                            </Text>
-
-                                            {item.mercado_principal == null ? (
-
-                                                <Text style={[styles.txt_legenda, styles.txt_legenda_principal]}>
-
-                                                    Indisponível
-
-                                                </Text>
-
-                                            ):(
-
-                                                <Text style={[styles.txt_legenda, styles.txt_legenda_principal]}>
-
-                                                    {item.mercado_principal}
-
-                                                </Text>
-
-                                            )}
-
-                                        </View>
-
-                                        {/* Linha */}
-                                        <View style={{flexDirection: "row", justifyContent: "flex-end", paddingVertical: 2}}>
-
-                                            <Text style={styles.txt_legenda}>
-
-                                                Produto com maior gasto: {" "}
-
-                                            </Text>
-
-                                            {item.produto_principal == null ? (
-
-                                                <Text style={[styles.txt_legenda, styles.txt_legenda_principal]}>
-
-                                                    Indisponível
-
-                                                </Text>
-
-                                            ):(
-
-                                                <Text style={[styles.txt_legenda, styles.txt_legenda_principal]}>
-
-                                                    {item.produto_principal}
-
-                                                </Text>
-
-
-                                            )}
-
-                                        </View>
-
-                                    </View>
-
-                                </View>
-
-                            ):null
-
-                        ))}
+                        )}
 
                     </View>
 
@@ -654,6 +812,42 @@ const styles = StyleSheet.create({
 
         width: 70,
         height: 70
+
+    },
+
+    /* Modal */
+
+    centeredView: {
+
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'rgba(0,0,0,0.5)', // Fundo semitransparente
+
+    },
+
+    modalView: {
+
+    width: 300,
+    backgroundColor: 'white',
+    borderRadius: 5,
+    shadowColor: '#000',
+    shadowOffset: {
+        width: 0,
+        height: 2,
+
+    },
+
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+
+    },
+
+    item_lista_anos:{
+
+        paddingVertical: 15,
+        paddingHorizontal: 10
 
     }
 
