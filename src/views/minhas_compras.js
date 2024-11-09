@@ -457,8 +457,8 @@ export default function Minhas_compras(){
                             <View style={styles.areaRisco}>
 
                                 <Icon
-                                    name="timeline-text-outline"
-                                    size={30}
+                                    name="chevron-down"
+                                    size={25}
                                     style={styles.iconDivisor}
                                 />
 
@@ -507,7 +507,7 @@ const styles = StyleSheet.create({
 
         flex: 1,
         flexDirection: "row",
-        backgroundColor: config.cor2,
+        backgroundColor: "#BBB",
         alignItems: "center",
         justifyContent: "center",
         borderTopRightRadius: 2,
@@ -517,14 +517,14 @@ const styles = StyleSheet.create({
 
     iconCalendar:{
 
-        color: "#FFF",
+        color: "white",
         marginRight: 5
 
     },
 
     iconTime:{
 
-        color: "#FFF",
+        color: "white",
         marginLeft: 30,
         marginRight: 5
 
@@ -620,7 +620,7 @@ const styles = StyleSheet.create({
     areaRisco:{
 
         alignItems: "center",
-        marginVertical: 10
+        marginVertical: 5
 
     },
 
@@ -632,7 +632,7 @@ const styles = StyleSheet.create({
 
     iconDivisor:{
 
-        color: "#BBB"
+        color: "#DDD"
 
     },
 

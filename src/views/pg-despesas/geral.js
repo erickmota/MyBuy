@@ -296,7 +296,7 @@ export default function Categorias(){
 
                 <ScrollView>
 
-                    <View style={[styles.container_padrao, styles.container_abaixo, {paddingVertical: 10}]}>
+                    <View style={[styles.container_padrao, styles.container_abaixo, {paddingVertical: 30}]}>
 
                         <View style={{flexDirection: "row", justifyContent: "center"}}>
 
@@ -435,7 +435,7 @@ export default function Categorias(){
                     <View style={[{alignItems: "center", paddingVertical: 8}]}>
 
                         <Icon
-                            name="arrow-down-thick"
+                            name="chevron-down"
                             size={25}
                             color={"#DDD"}
                         />
@@ -448,7 +448,7 @@ export default function Categorias(){
 
                             <View style={{flex: 2}}>
 
-                                <Text style={{paddingLeft: 5}}>
+                                <Text>
 
                                     
 
@@ -474,7 +474,7 @@ export default function Categorias(){
 
                             <View style={{flex: 1}}>
 
-                                <Text style={{textAlign: "right", paddingRight: 5}}>
+                                <Text>
 
                                     
 
@@ -603,7 +603,7 @@ export default function Categorias(){
 
                                                 <Text style={styles.txt_legenda}>
 
-                                                    Produto com maior gasto: {" "}
+                                                    Produto mais comprado: {" "}
 
                                                 </Text>
 
