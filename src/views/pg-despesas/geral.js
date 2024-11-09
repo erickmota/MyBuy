@@ -296,31 +296,79 @@ export default function Categorias(){
 
                 <ScrollView>
 
-                    <View style={[styles.container_padrao, styles.container_abaixo, {paddingVertical: 30}]}>
+                    <View style={[styles.barraPeriodo]}>
+
+                        <TouchableWithoutFeedback onPress={()=> setModalVisible(true)}>
+
+                            <Text style={styles.txtPeriodo}>
+
+                                {Ano_selecionado}
+
+                            </Text>
+
+                        </TouchableWithoutFeedback>
+
+                    </View>
+
+                    <View style={[styles.container_padrao, {paddingVertical: 30}]}>
 
                         <View style={{flexDirection: "row", justifyContent: "center"}}>
 
-                            <Text style={{fontSize: 16, color: "#333"}}>
+                            <Text style={{color: config.corTextoSecundario}}>
 
-                                Depesas totais do mês atual:{" "}
-
-                            </Text>
-
-                            <Text style={DATA_mes.mes_atual >= DATA_mes.mes_anterior ? {fontSize: 16, color: "red"}:{fontSize: 16, color: "#4aff7d"}}>
-
-                                R${DATA_mes.mes_atual.toFixed(2)}
+                                Total do ano:{" "}
 
                             </Text>
+
+                            {DATA_totalMedia == false ? (
+
+                                <Text style={{color: "#6ec0fa"}}>
+
+                                    Indisponível
+
+                                </Text>
+
+                            ):(
+
+                                <Text style={{color: "#6ec0fa"}}>
+
+                                    R${DATA_totalMedia.total.toFixed(2)}
+
+                                </Text>
+
+                            )}
 
                         </View>
 
                         <View>
 
-                            <Text style={{textAlign: "center", marginLeft: 65, color: config.corTextoSecundario}}>
+                            <View style={{flexDirection: "row", justifyContent: "center"}}>
 
-                                Mês anterior: R${DATA_mes.mes_anterior.toFixed(2)}
+                                <Text style={{textAlign: "center", color: config.corTextoSecundario}}>
 
-                            </Text>
+                                    Média mensal:{" "}
+
+                                </Text>
+
+                                {DATA_totalMedia == false ? (
+
+                                    <Text style={{textAlign: "center", color: config.corObs}}>
+
+                                        Indisponível
+
+                                    </Text>
+
+                                ):(
+
+                                    <Text style={{textAlign: "center", color: config.corObs}}>
+
+                                        R${DATA_totalMedia.media.toFixed(2)}
+
+                                    </Text>
+                                    
+                                )}
+
+                            </View>
 
                         </View>
 
@@ -358,7 +406,7 @@ export default function Categorias(){
 
                         </ScrollView>
 
-                        <View style={{flexDirection: "row"}}>
+                        {/* <View style={{flexDirection: "row"}}>
 
                             <Text style={{color: config.corTextoSecundario, fontStyle: "italic"}}>
 
@@ -412,15 +460,15 @@ export default function Categorias(){
 
                             )}
 
-                        </View>
+                        </View> */}
 
-                        <Text style={{color: config.corTextoSecundario, marginTop: 10}}>
+                        {/* <Text style={{color: config.corTextoSecundario, marginTop: 10}}>
 
                             Despesas de:
 
-                        </Text>
+                        </Text> */}
 
-                        <TouchableWithoutFeedback onPress={()=> setModalVisible(true)}>
+                        {/* <TouchableWithoutFeedback onPress={()=> setModalVisible(true)}>
 
                             <Text style={styles.txtPeriodo}>
 
@@ -428,7 +476,7 @@ export default function Categorias(){
 
                             </Text>
 
-                        </TouchableWithoutFeedback>
+                        </TouchableWithoutFeedback> */}
 
                     </View>
 
@@ -559,7 +607,7 @@ export default function Categorias(){
 
                                                 ):(
 
-                                                    <Text style={[styles.txt_legenda, styles.txt_legenda_principal]}>
+                                                    <Text style={[styles.txt_legenda, styles.txt_legenda_principal, {color: "#6ec0fa"}]}>
 
                                                         {item.categoria_principal}
 
@@ -588,7 +636,7 @@ export default function Categorias(){
 
                                                 ):(
 
-                                                    <Text style={[styles.txt_legenda, styles.txt_legenda_principal]}>
+                                                    <Text style={[styles.txt_legenda, styles.txt_legenda_principal, {color: "#6ec0fa"}]}>
 
                                                         {item.mercado_principal}
 
@@ -617,7 +665,7 @@ export default function Categorias(){
 
                                                 ):(
 
-                                                    <Text style={[styles.txt_legenda, styles.txt_legenda_principal]}>
+                                                    <Text style={[styles.txt_legenda, styles.txt_legenda_principal, {color: "#6ec0fa"}]}>
 
                                                         {item.produto_principal}
 
@@ -663,9 +711,6 @@ const styles = StyleSheet.create({
 
     barraPeriodo:{
 
-        backgroundColor: "#FFF",
-        borderBottomWidth: 2,
-        borderBottomColor: config.cor1,
         padding: 10,
         justifyContent: "center",
         alignItems: "center"
@@ -692,8 +737,7 @@ const styles = StyleSheet.create({
         paddingVertical: 7,
         paddingHorizontal: 20,
         backgroundColor: config.cor2,
-        borderRadius: 20,
-        marginTop: 5
+        borderRadius: 20
 
     },
 
@@ -720,9 +764,9 @@ const styles = StyleSheet.create({
 
     container_grafico:{
 
-        paddingBottom: 22,
         justifyContent: "center",
         alignItems: "center",
+        paddingTop: 15
 
     },
 
