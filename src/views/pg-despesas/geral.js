@@ -39,21 +39,19 @@ export default function Categorias(){
 
             try{
 
-                const [resposta_1, resposta_2, resposta_3, resposta_4] = await Promise.all([
+                const [resposta_1, resposta_2, resposta_3] = await Promise.all([
 
                     fetch(`${config.URL_inicial_API}${DATAUser[0].id}/graficos/geral/${Ano_selecionado}`),
                     fetch(`${config.URL_inicial_API}${DATAUser[0].id}/graficos/total_media/${Ano_selecionado}`),
-                    fetch(`${config.URL_inicial_API}${DATAUser[0].id}/graficos/detalhes_compras/${Ano_selecionado}`),
-                    fetch(`${config.URL_inicial_API}${DATAUser[0].id}/graficos/valor_mes`)
+                    fetch(`${config.URL_inicial_API}${DATAUser[0].id}/graficos/detalhes_compras/${Ano_selecionado}`)
 
                 ]);
 
-                const [data_1, data_2, data_3, data_4] = await Promise.all([
+                const [data_1, data_2, data_3] = await Promise.all([
 
                     resposta_1.json(),
                     resposta_2.json(),
-                    resposta_3.json(),
-                    resposta_4.json()
+                    resposta_3.json()
 
                 ]);
 
@@ -69,7 +67,6 @@ export default function Categorias(){
 
                 setData_totalMedia(data_2.data);
                 setData_detalhes(data_3.data);
-                setData_mes(data_4.data);
 
                 set_loadAPI(false);
     
@@ -651,7 +648,7 @@ export default function Categorias(){
 
                                                 <Text style={styles.txt_legenda}>
 
-                                                    Produto mais comprado: {" "}
+                                                    Produto mais recorrente: {" "}
 
                                                 </Text>
 
