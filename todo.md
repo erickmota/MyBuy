@@ -10,7 +10,7 @@
 
 - [x] View Minhas Compras mostrando todos os itens
 - [x] Filtrar compras por datas
-- [ ] View Minhas despesas
+- [x] View Minhas despesas
 - [ ] View configurações
 - [ ] View Sobre
 - [ ] View Meus Produtos rastreados
@@ -22,3 +22,5 @@
 - [ ] Adicionar seção comprados, na lista.
 - [ ] Entrar sem fazer login, quando conectado
 - [ ] Salvar última lista vizualizada
+- [ ] Criar máscara para o valor, em todos os módulos
+- [ ] Incluir históricos de ações
