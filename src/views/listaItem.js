@@ -1,10 +1,11 @@
-import React, {useContext, useState, useCallback, useEffect } from "react";
+import React, {useContext, useState, useCallback, useEffect, useLayoutEffect } from "react";
 import { View, Text, StyleSheet, ScrollView, StatusBar, TouchableNativeFeedback, Image, TouchableOpacity, TouchableWithoutFeedback, Modal, Button, TextInput } from "react-native";
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { UserContext } from '../context/user';
 import { useFocusEffect } from '@react-navigation/native';
 import FlashMessage from 'react-native-flash-message';
 import { showMessage } from 'react-native-flash-message';
+import { Menu } from 'react-native-paper';
 
 import IconeAdd from "../componentes/botaoAdd"
 
@@ -37,6 +38,11 @@ export default function ListaItem({route, navigation}){
     const [valor, onChangeValor] = useState();
     const [id_produto, setIdProduto] = useState();
     const [tipo, setTipo] = useState();
+
+    /* Menu popup */
+    const [visible, setVisible] = useState(false);
+    const openMenu = () => setVisible(true);
+    const closeMenu = () => setVisible(false);
 
     let soma_carrinho = 0;
 
@@ -148,6 +154,55 @@ export default function ListaItem({route, navigation}){
           
         }, [carregar_API])
     );
+
+    useLayoutEffect(()=>{
+
+        navigation.setOptions({
+            
+            headerRight: () => (
+                    <View style={{ flexDirection: 'row' }}>
+                        <Menu
+                            visible={visible}
+                            onDismiss={closeMenu}
+                            anchor={
+                                <Icon
+                                    name="settings-helper"
+                                    size={35}
+                                    color={"white"}
+                                    style={{ marginRight: 15, transform: [{rotate: "270deg"}] }}
+                                    onPress={openMenu}
+                                />
+                            }
+                        >
+                            <Menu.Item title={<View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                            <Icon
+                                    name="history"
+                                    size={25}
+                                    color={"#444"}
+                                    style={{ marginRight: 10 }}
+                                    onPress={openMenu}
+                                />
+                                <Text style={{marginLeft: 0, color: "#444"}}>Histórico</Text>
+                            </View>} />
+
+                            <Menu.Item title={<View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                            <Icon
+                                    name="cart-remove"
+                                    size={25}
+                                    color={"#444"}
+                                    style={{ marginRight: 10 }}
+                                    onPress={openMenu}
+                                />
+                                <Text style={{marginLeft: 0, color: "#444"}}>Limpar carrinho</Text>
+                            </View>} />
+
+                        </Menu>
+                    </View>
+              ),
+
+        })
+
+    },[visible])
 
     function add_carrinho_modal(qtd, valor, id_produto, tipo){
 
