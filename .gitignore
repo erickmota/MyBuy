@@ -37,3 +37,7 @@ yarn-error.*
 # md's
 
 internal-todo.md
+
+# arquivos
+
+src/config.js
