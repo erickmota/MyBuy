@@ -174,15 +174,14 @@ export default function ListaItem({route, navigation}){
                                 />
                             }
                         >
-                            <Menu.Item title={<View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                            <Menu.Item onPress={()=> [navigation.navigate("Historico_lista"), setVisible(false)]} title={<View style={{ flexDirection: 'row', alignItems: 'center' }}>
                             <Icon
                                     name="history"
                                     size={25}
                                     color={"#444"}
                                     style={{ marginRight: 10 }}
-                                    onPress={openMenu}
                                 />
-                                <Text style={{marginLeft: 0, color: "#444"}}>Histórico</Text>
+                                <Text style={{marginLeft: 0, color: "#444"}}>Histórico da lista</Text>
                             </View>} />
 
                             <Menu.Item title={<View style={{ flexDirection: 'row', alignItems: 'center' }}>
@@ -191,7 +190,6 @@ export default function ListaItem({route, navigation}){
                                     size={25}
                                     color={"#444"}
                                     style={{ marginRight: 10 }}
-                                    onPress={openMenu}
                                 />
                                 <Text style={{marginLeft: 0, color: "#444"}}>Limpar carrinho</Text>
                             </View>} />

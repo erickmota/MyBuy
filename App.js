@@ -21,7 +21,7 @@ import Editar_lista from "./src/views/editar_lista"
 import Editar_Item from "./src/views/editar_item"
 import Minhas_compras from "./src/views/minhas_compras"
 import Minhas_compras_itens from "./src/views/minhas_compras_itens"
-import Despesas from "./src/views/despesas"
+import Historico_lista from "./src/views/historico_lista"
 /* Despesas */
 import Despesas_categorias from "./src/views/pg-despesas/categoria.js"
 import Despesas_mercados from "./src/views/pg-despesas/mercados.js"
@@ -285,6 +285,19 @@ export default function App() {
             <stack.Screen name="Minhas_compras_itens" component={Minhas_compras_itens} options={{
 
             title: "Dados da compra",
+            headerTintColor: "#FFF",
+            headerStyle: {
+
+              backgroundColor: config.cor1,
+              borderWidth: 0,
+
+            }
+
+            }} />
+
+            <stack.Screen name="Historico_lista" component={Historico_lista} options={{
+
+            title: "Histórico da lista",
             headerTintColor: "#FFF",
             headerStyle: {
 
