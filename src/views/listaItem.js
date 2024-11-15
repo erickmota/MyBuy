@@ -853,56 +853,48 @@ export default function ListaItem({route, navigation}){
                                                             onPress={() =>
 
                                                                 {
+
+                                                                    if(item.id == "nulo"){
+
+                                                                        navigation.navigate("Editar_item", {
+                                                                
+                                                                            id_produto: prod.id,
+                                                                            nome_produto: prod.nome,
+                                                                            qtd_produto: prod.qtd,
+                                                                            id_foto: prod.id_foto,
+                                                                            url: prod.url,
+                                                                            tipo_exibicao: prod.tipo_exibicao,
+                                                                            valor_prod: prod.valor,
+                                                                            obs: prod.obs,
+                                                                            categoria: "nulo",
+                                                                            carrinho: prod.carrinho
                                                                     
-                                                                    if(item.id != "nulo" || DATA_confirmacoes.dono_lista == true){
-
-                                                                        if(item.id == "nulo"){
-
-                                                                            navigation.navigate("Editar_item", {
-                                                                    
-                                                                                id_produto: prod.id,
-                                                                                nome_produto: prod.nome,
-                                                                                qtd_produto: prod.qtd,
-                                                                                id_foto: prod.id_foto,
-                                                                                url: prod.url,
-                                                                                tipo_exibicao: prod.tipo_exibicao,
-                                                                                valor_prod: prod.valor,
-                                                                                obs: prod.obs,
-                                                                                categoria: "nulo",
-                                                                                carrinho: prod.carrinho
-                                                                        
-                                                                            })
-
-                                                                        }else{
-
-                                                                            navigation.navigate("Editar_item", {
-                                                                    
-                                                                                id_produto: prod.id,
-                                                                                nome_produto: prod.nome,
-                                                                                qtd_produto: prod.qtd,
-                                                                                id_foto: prod.id_foto,
-                                                                                url: prod.url,
-                                                                                tipo_exibicao: prod.tipo_exibicao,
-                                                                                valor_prod: prod.valor,
-                                                                                obs: prod.obs,
-                                                                                categoria: prod.id_categorias,
-                                                                                carrinho: prod.carrinho
-                                                                        
-                                                                            })
-
-                                                                        }
-
-                                                                        console.log("Categoria: "+prod.id_categorias);
+                                                                        })
 
                                                                     }else{
 
-                                                                        mostrar_alerta_permissao();
+                                                                        navigation.navigate("Editar_item", {
+                                                                
+                                                                            id_produto: prod.id,
+                                                                            nome_produto: prod.nome,
+                                                                            qtd_produto: prod.qtd,
+                                                                            id_foto: prod.id_foto,
+                                                                            url: prod.url,
+                                                                            tipo_exibicao: prod.tipo_exibicao,
+                                                                            valor_prod: prod.valor,
+                                                                            obs: prod.obs,
+                                                                            categoria: prod.id_categorias,
+                                                                            carrinho: prod.carrinho
+                                                                    
+                                                                        })
 
                                                                     }
+
+                                                                    console.log("Categoria: "+prod.id_categorias);
                                                             
-                                                            }
+                                                                }
                                                         
-                                                        }
+                                                            }
                                                         
                                                         >
 
