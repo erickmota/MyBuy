@@ -17,6 +17,8 @@ export default function ListaItem({route, navigation}){
 
     /* Estados */
 
+    const [nome_lista, setNomeLista] = useState();
+
     const [DATA, setData] = useState([]);
     const [DATA_carrinho, setCarrinho] = useState([]);
     const [load_API, setLoadApi] = useState(true);
@@ -128,13 +130,18 @@ export default function ListaItem({route, navigation}){
 
             const {TituloLista} = route.params
 
+            setNomeLista(TituloLista);
+
             navigation.setOptions({ title: TituloLista });
 
-        }else{
-
-            navigation.setOptions({ title: "Mercado" });
-
         }
+
+    }
+
+    const atualiza_nome_out = ()=>{
+
+        navigation.setOptions({ title: ""});
+        setNomeLista("");
 
     }
 
@@ -149,10 +156,11 @@ export default function ListaItem({route, navigation}){
             setData([]);
             setCarrinho([]);
             setLoadApi(true);
+            atualiza_nome_out();
 
           };
           
-        }, [carregar_API])
+        }, [carregar_API, route.params])
     );
 
     useLayoutEffect(()=>{
@@ -181,7 +189,17 @@ export default function ListaItem({route, navigation}){
                                     color={"#444"}
                                     style={{ marginRight: 10 }}
                                 />
-                                <Text style={{marginLeft: 0, color: "#444"}}>Histórico da lista</Text>
+                                <Text style={{marginLeft: 0, color: "#444"}}>Histórico</Text>
+                            </View>} />
+
+                            <Menu.Item onPress={()=> [navigation.navigate('Editar_lista', {TituloLista: nome_lista, id_lista: id_lista, origem: "item"}), setVisible(false)]} title={<View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                            <Icon
+                                    name="pencil-box-outline"
+                                    size={25}
+                                    color={"#444"}
+                                    style={{ marginRight: 10 }}
+                                />
+                                <Text style={{marginLeft: 0, color: "#444"}}>Configurações</Text>
                             </View>} />
 
                             <Menu.Item title={<View style={{ flexDirection: 'row', alignItems: 'center' }}>

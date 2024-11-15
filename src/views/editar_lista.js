@@ -13,6 +13,7 @@ export default function Editar_lista({route}){
 
     const {TituloLista} = route.params;
     const {id_lista} = route.params;
+    const {origem} = route.params;
 
     /* Resultado do input */
 
@@ -96,7 +97,15 @@ export default function Editar_lista({route}){
         .then(response => response.json())
         .then(data => {
 
-            navigation.navigate("Listas");
+            if(origem == "listas"){
+
+                navigation.navigate("Listas");
+
+            }else if(origem == "item"){
+
+                navigation.navigate("ListaItem", {TituloLista: novo_nome, id_lista: id_lista});
+
+            }
     
         })
         .catch(errors => {

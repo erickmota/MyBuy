@@ -25,7 +25,7 @@
 
 - **Descrição**: O nome das listas não atualizam ao entrar nelas, depois que o nome é editado.
 - **Passos para reproduzir**: Editar o nome da lista, e posteriormente, entrar nela.
-- **Status**: Aberto.
+- **Status**: Fechado em 15/11/24.
 - **Data de descoberta**: 13/11/24.
 
 ## Produto mais recorrente, no gráfico geral

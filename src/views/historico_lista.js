@@ -150,7 +150,7 @@ export default function Historico_lista({route}){
 
                         <View style={[index === 0 ? styles.linha_balao_1:null, styles.linha_balao, item.id_usuario == DATAUser[0].id ? {justifyContent: "flex-start"}:{justifyContent: "flex-end"}]}>
 
-                            <View style={[styles.balao, item.tipo == 1 || item.tipo == 3 || item.tipo == 6 || item.tipo == 8 ? {borderColor: "#54ff71"}: item.tipo == 2 || item.tipo == 5 ? {borderColor: "#ebd50e"}: item.tipo == 4 || item.tipo == 7 ? {borderColor: "red"}:null]}>
+                            <View style={[styles.balao, item.tipo == 1 || item.tipo == 3 || item.tipo == 6 ? {borderColor: "#54ff71"}: item.tipo == 2 || item.tipo == 5 ? {borderColor: "#ebd50e"}: item.tipo == 4 || item.tipo == 7 ? {borderColor: "red"}: item.tipo == 8 ? {borderColor: config.cor2}:null]}>
 
                                 <Text style={{color: "#666"}}>
 

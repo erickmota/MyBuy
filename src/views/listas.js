@@ -134,7 +134,7 @@ export default function App() {
 
                 activeOpacity={config.opacity_btn}
                 onPress={() => navigation.navigate('ListaItem', {TituloLista: item.nome, id_lista: item.id})}
-                onLongPress={() => navigation.navigate('Editar_lista', {TituloLista: item.nome, id_lista: item.id})}
+                onLongPress={() => navigation.navigate('Editar_lista', {TituloLista: item.nome, id_lista: item.id, origem: "listas"})}
                 
               >
 
@@ -175,10 +175,10 @@ export default function App() {
 
               <View style={[styles.iconeLista, {flex:1}]}>
 
-                <TouchableWithoutFeedback onPress={() => navigation.navigate('Editar_lista', {TituloLista: item.nome, id_lista: item.id})}>
+                <TouchableWithoutFeedback onPress={() => navigation.navigate('Editar_lista', {TituloLista: item.nome, id_lista: item.id, origem: "listas"})}>
 
                   <Icon
-                    name="playlist-edit"
+                    name="pencil-box"
                     size={30}
                     color={config.cor2}
                     />
