@@ -20,3 +20,17 @@
 - **Passos para reproduzir**: Pressionar o botão na view de listas.
 - **Status**: Aberto.
 - **Data de descoberta**: 27/10/24.
+
+## Nome da lista
+
+- **Descrição**: O nome das listas não atualizam ao entrar nelas, depois que o nome é editado.
+- **Passos para reproduzir**: Editar o nome da lista, e posteriormente, entrar nela.
+- **Status**: Aberto.
+- **Data de descoberta**: 13/11/24.
+
+## Produto mais recorrente, no gráfico geral
+
+- **Descrição**: O produto mais recorrente, mostrado no gráfico geral, está sendo exibido incorretamente.
+- **Passos para reproduzir**: ***
+- **Status**: Aberto.
+- **Data de descoberta**: 14/11/24.

@@ -174,7 +174,7 @@ export default function ListaItem({route, navigation}){
                                 />
                             }
                         >
-                            <Menu.Item onPress={()=> [navigation.navigate("Historico_lista"), setVisible(false)]} title={<View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                            <Menu.Item onPress={()=> [navigation.navigate("Historico_lista", {id_lista: id_lista}), setVisible(false)]} title={<View style={{ flexDirection: 'row', alignItems: 'center' }}>
                             <Icon
                                     name="history"
                                     size={25}

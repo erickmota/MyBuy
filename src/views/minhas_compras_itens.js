@@ -99,59 +99,63 @@ export default function Minhas_compras_itens({route}){
 
             </View>
 
-            {DATA.map(item => (
+            <ScrollView>
 
-                <View key={item.id} style={[styles.corpoTable, styles.itemTable]}>
+                {DATA.map(item => (
 
-                    <View style={styles.colunaItem}>
+                    <View key={item.id} style={[styles.corpoTable, styles.itemTable]}>
 
-                        <Text>
+                        <View style={styles.colunaItem}>
 
-                            {item.nome_produto}
+                            <Text>
 
-                        </Text>
+                                {item.nome_produto}
+
+                            </Text>
+
+                        </View>
+
+                        <View style={styles.colunaQtd}>
+
+                            <Text>
+
+                                {item.qtd} {item.tipo_exibicao}
+
+                            </Text>
+
+                        </View>
+
+                        <View style={styles.colunaValor}>
+
+                            <Text>
+
+                                R${item.preco_produto}
+
+                            </Text>
+
+                        </View>
 
                     </View>
 
-                    <View style={styles.colunaQtd}>
+                ))}
 
-                        <Text>
+                <View style={[styles.corpoTable, styles.areaTotal]}>
 
-                            {item.qtd} {item.tipo_exibicao}
+                    <Text style={styles.textTotal}>
 
-                        </Text>
+                        Total:
 
-                    </View>
+                    </Text>
 
-                    <View style={styles.colunaValor}>
+                    <Text style={styles.textValor}>
 
-                        <Text>
+                        R${valor_total}
 
-                            R${item.preco_produto}
-
-                        </Text>
-
-                    </View>
+                    </Text>
 
                 </View>
 
-            ))}
-
-            <View style={[styles.corpoTable, styles.areaTotal]}>
-
-                <Text style={styles.textTotal}>
-
-                    Total:
-
-                </Text>
-
-                <Text style={styles.textValor}>
-
-                    R${valor_total}
-
-                </Text>
-
-            </View>
+            </ScrollView>
 
         </View>
 
