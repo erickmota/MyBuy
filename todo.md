@@ -4,7 +4,6 @@
 
 - [x] Definir o key stractor nos mercados retornados no modal de registro de compras.
 - [x] Alterar título da View produtos_itens
-- [ ] Colocar nomes dos tipo, no plural, na View produtos_itens
 
 ## Funcionalidades
 
@@ -23,4 +22,4 @@
 - [ ] Entrar sem fazer login, quando conectado
 - [ ] Salvar última lista vizualizada
 - [ ] Criar máscara para o valor, em todos os módulos
-- [ ] Incluir históricos de ações
+- [x] Incluir históricos de ações

@@ -640,18 +640,6 @@ export default function ListaItem({route, navigation}){
 
     }
 
-    function mostrar_alerta_permissao(){
-
-        showMessage({
-            message: "Impossível prosseguir!",
-            description: "Apenas o administrador da lista, tem permissão para editar produtos compartilhados.",
-            type: "warning", // ou "danger", "info", etc.
-            icon: "auto",
-            duration: 3500
-        });
-
-    }
-
     function mostrar_alerta_carrinho(){
 
         showMessage({
@@ -1047,52 +1035,44 @@ export default function ListaItem({route, navigation}){
                                             onPress={() =>
 
                                                 {
+
+                                                    if(item.id_dono != DATAUser[0].id){
+
+                                                        navigation.navigate("Editar_item", {
+                                                                    
+                                                            id_produto: item.id,
+                                                            nome_produto: item.nome,
+                                                            qtd_produto: item.qtd,
+                                                            id_foto: item.id_foto,
+                                                            url: item.url,
+                                                            tipo_exibicao: item.tipo_exibicao,
+                                                            valor_prod: item.valor,
+                                                            obs: item.obs,
+                                                            categoria: "nulo",
+                                                            carrinho: item.carrinho
                                                     
-                                                    if(item.id_dono == DATAUser[0].id || DATA_confirmacoes.dono_lista == true){
-
-                                                        if(item.id_dono != DATAUser[0].id){
-
-                                                            navigation.navigate("Editar_item", {
-                                                                        
-                                                                id_produto: item.id,
-                                                                nome_produto: item.nome,
-                                                                qtd_produto: item.qtd,
-                                                                id_foto: item.id_foto,
-                                                                url: item.url,
-                                                                tipo_exibicao: item.tipo_exibicao,
-                                                                valor_prod: item.valor,
-                                                                obs: item.obs,
-                                                                categoria: "nulo",
-                                                                carrinho: item.carrinho
-                                                        
-                                                            })
-
-                                                        }else{
-
-                                                            navigation.navigate("Editar_item", {
-                                                                        
-                                                                id_produto: item.id,
-                                                                nome_produto: item.nome,
-                                                                qtd_produto: item.qtd,
-                                                                id_foto: item.id_foto,
-                                                                url: item.url,
-                                                                tipo_exibicao: item.tipo_exibicao,
-                                                                valor_prod: item.valor,
-                                                                obs: item.obs,
-                                                                categoria: item.id_categorias,
-                                                                carrinho: item.carrinho
-                                                        
-                                                            })
-
-                                                        }
-
-                                                        console.log("Categoria: "+item.id_categorias);
+                                                        })
 
                                                     }else{
 
-                                                        mostrar_alerta_permissao();
+                                                        navigation.navigate("Editar_item", {
+                                                                    
+                                                            id_produto: item.id,
+                                                            nome_produto: item.nome,
+                                                            qtd_produto: item.qtd,
+                                                            id_foto: item.id_foto,
+                                                            url: item.url,
+                                                            tipo_exibicao: item.tipo_exibicao,
+                                                            valor_prod: item.valor,
+                                                            obs: item.obs,
+                                                            categoria: item.id_categorias,
+                                                            carrinho: item.carrinho
+                                                    
+                                                        })
 
                                                     }
+
+                                                    console.log("Categoria: "+item.id_categorias);
                                             
                                                 }
                                         

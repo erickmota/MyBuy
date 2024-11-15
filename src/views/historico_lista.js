@@ -109,9 +109,15 @@ export default function Historico_lista({route}){
 
                                     <View style={[styles.item_lista, index !== array.length - 1 ? {borderBottomWidth: 1}:{borderBottomWidth: 0}]}>
 
+                                        <Text style={[styles.txt_item_lista, {color: "#777", fontSize: 11}]}>
+
+                                            {item.qtd} {item.tipo_exibicao} /
+
+                                        </Text>
+                                        
                                         <Text style={styles.txt_item_lista}>
 
-                                            {item.qtd} {item.tipo_exibicao} - {item.nome_produto}
+                                            {item.nome_produto}
 
                                         </Text>
 
@@ -288,7 +294,9 @@ const styles = StyleSheet.create({
     item_lista:{
 
         paddingVertical: 10,
-        borderBottomColor: "#CCC"
+        borderBottomColor: "#EEE",
+        flexDirection: "row",
+        alignItems: "center"
 
     },
 
