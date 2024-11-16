@@ -212,6 +212,26 @@ export default function ListaItem({route, navigation}){
                                 <Text style={{marginLeft: 0, color: "#444"}}>Limpar carrinho</Text>
                             </View>} />
 
+                            <Menu.Item onPress={()=> btn_desmarcar_comprados()} title={<View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                            <Icon
+                                    name="label-off-outline"
+                                    size={25}
+                                    color={"#444"}
+                                    style={{ marginRight: 10 }}
+                                />
+                                <Text style={{marginLeft: 0, color: "#444"}}>Desmarcar comprados</Text>
+                            </View>} />
+
+                            <Menu.Item onPress={()=> btn_remover_comprados()} title={<View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                            <Icon
+                                    name="archive-remove-outline"
+                                    size={25}
+                                    color={"#444"}
+                                    style={{ marginRight: 10 }}
+                                />
+                                <Text style={{marginLeft: 0, color: "#444"}}>Remover comprados</Text>
+                            </View>} />
+
                         </Menu>
                     </View>
               ),
@@ -295,6 +315,66 @@ export default function ListaItem({route, navigation}){
                   
                   setVisible(false);
                   limpar_carrinho();
+
+                }
+              }
+            ],
+            { cancelable: false }
+        );
+
+    }
+
+    function btn_desmarcar_comprados(){
+
+        Alert.alert(
+            "Desmarcar comprados",
+            "Todos os itens terão a tag 'comprado' removida. Deseja continuar?",
+            [
+              {
+                text: "Cancelar",
+                onPress: () => {
+
+                    setVisible(false);
+
+                },
+                style: "cancel"
+              },
+              {
+                text: "Sim",
+                onPress: () => {
+                  
+                  setVisible(false);
+                  /* limpar_carrinho(); */
+
+                }
+              }
+            ],
+            { cancelable: false }
+        );
+
+    }
+
+    function btn_remover_comprados(){
+
+        Alert.alert(
+            "Remover comprados",
+            "Todos os itens com a marcação 'comprado', serão excluídos da lista. Deseja continuar?",
+            [
+              {
+                text: "Cancelar",
+                onPress: () => {
+
+                    setVisible(false);
+
+                },
+                style: "cancel"
+              },
+              {
+                text: "Sim",
+                onPress: () => {
+                  
+                  setVisible(false);
+                  /* limpar_carrinho(); */
 
                 }
               }
@@ -995,6 +1075,16 @@ export default function ListaItem({route, navigation}){
                                                                             ): null}
                                                                             
                                                                         </Text>
+
+                                                                        {prod.carrinho == 2 ? (
+
+                                                                            <Text style={[styles.qtdItens, {color: "#09f"}]}>
+
+                                                                                {" "}| Comprado
+
+                                                                            </Text>
+
+                                                                        ):null}
 
                                                                     </View>
 
