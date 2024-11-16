@@ -1,5 +1,5 @@
 import React, {useContext, useState, useCallback, useEffect, useLayoutEffect } from "react";
-import { View, Text, StyleSheet, ScrollView, StatusBar, TouchableNativeFeedback, Image, TouchableOpacity, TouchableWithoutFeedback, Modal, Button, TextInput } from "react-native";
+import { View, Text, StyleSheet, ScrollView, StatusBar, TouchableNativeFeedback, Image, TouchableOpacity, TouchableWithoutFeedback, Modal, Button, TextInput, Alert } from "react-native";
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { UserContext } from '../context/user';
 import { useFocusEffect } from '@react-navigation/native';
@@ -202,7 +202,7 @@ export default function ListaItem({route, navigation}){
                                 <Text style={{marginLeft: 0, color: "#444"}}>Configurações</Text>
                             </View>} />
 
-                            <Menu.Item title={<View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                            <Menu.Item onPress={()=> btn_limpar_carrinho()} title={<View style={{ flexDirection: 'row', alignItems: 'center' }}>
                             <Icon
                                     name="cart-remove"
                                     size={25}
@@ -255,6 +255,52 @@ export default function ListaItem({route, navigation}){
         .catch(errors => {
         console.error('Erro ao enviar solicitação:', errors);
         });
+
+    }
+
+    const limpar_carrinho = () => {
+
+        setLoadApi(true);
+        fetch(`${config.URL_inicial_API}${DATAUser[0].id}/limpar_carrinho/${id_lista}`)
+        .then(response => response.json())
+        .then(data => {
+
+            carregar_API();
+
+        })
+        .catch(error => {
+            console.error('Erro ao buscar dados da API:', error);
+        });
+
+    }
+
+    function btn_limpar_carrinho(){
+
+        Alert.alert(
+            "Limpar carrinho",
+            "Todos os produtos serão removidos do carrinho e movidos de volta a lista, deseja continuar?",
+            [
+              {
+                text: "Cancelar",
+                onPress: () => {
+
+                    setVisible(false);
+
+                },
+                style: "cancel"
+              },
+              {
+                text: "Sim",
+                onPress: () => {
+                  
+                  setVisible(false);
+                  limpar_carrinho();
+
+                }
+              }
+            ],
+            { cancelable: false }
+        );
 
     }
 

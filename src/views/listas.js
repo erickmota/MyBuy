@@ -179,7 +179,7 @@ export default function App() {
 
                   <Icon
                     name="pencil-box"
-                    size={30}
+                    size={28}
                     color={config.cor2}
                     />
 
