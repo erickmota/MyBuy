@@ -1078,9 +1078,9 @@ export default function ListaItem({route, navigation}){
 
                                                                         {prod.carrinho == 2 ? (
 
-                                                                            <Text style={[styles.qtdItens, {color: "#09f"}]}>
+                                                                            <Text style={[styles.qtdItens, {color: "#FFF", backgroundColor: "#0AF", borderRadius: 5, paddingHorizontal: 8, fontSize: 8, marginLeft: 7, paddingTop: 4}]}>
 
-                                                                                {" "}| Comprado
+                                                                                COMPRADO
 
                                                                             </Text>
 

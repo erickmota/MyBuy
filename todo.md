@@ -4,6 +4,7 @@
 
 - [ ] Inserir um botão de "adicionar usuário" na view de configurações da lista.
 - [ ] Definir limite de caracteres para os nomes dos produtos.
+- [ ] Definir limite de caracteres para os nomes dos usuários.
 - [x] Definir o key stractor nos mercados retornados no modal de registro de compras.
 - [x] Alterar título da View produtos_itens
 
