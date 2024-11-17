@@ -1,5 +1,5 @@
 import React, {useState, useContext, useLayoutEffect, useCallback, useRef, useEffect} from 'react';
-import { StyleSheet, Text, View, ScrollView, Image, TouchableWithoutFeedback, Modal, Button, StatusBar, Dimensions} from 'react-native';
+import { StyleSheet, Text, View, ScrollView, Image, TouchableWithoutFeedback, Modal, Button, StatusBar, Dimensions, TouchableOpacity} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useNavigation } from '@react-navigation/native';
 import { UserContext } from '../context/user';
@@ -95,7 +95,7 @@ export default function Historico_lista({route}){
                 onRequestClose={() => setModalVisible(false)} // Fechar modal ao clicar no botão 'voltar'
             >
 
-                <TouchableWithoutFeedback onPress={() => setModalVisible(false)}>
+                <TouchableWithoutFeedback onPress={() => {[setModalVisible(false)]}}>
 
                 <View style={styles.centeredView}>
 
@@ -150,7 +150,7 @@ export default function Historico_lista({route}){
 
                         <View style={[index === 0 ? styles.linha_balao_1:null, styles.linha_balao, item.id_usuario == DATAUser[0].id ? {justifyContent: "flex-start"}:{justifyContent: "flex-end"}]}>
 
-                            <View style={[styles.balao, item.tipo == 1 || item.tipo == 3 || item.tipo == 6 ? {borderColor: "#54ff71"}: item.tipo == 2 || item.tipo == 5 || item.tipo == 9 ? {borderColor: "#ebd50e"}: item.tipo == 4 || item.tipo == 7 ? {borderColor: "red"}: item.tipo == 8 ? {borderColor: config.cor2}:null]}>
+                            <View style={[styles.balao, item.tipo == 1 || item.tipo == 3 || item.tipo == 6 ? {borderColor: "#54ff71"}: item.tipo == 2 || item.tipo == 5 || item.tipo == 9 || item.tipo == 10 || item.tipo == 11 ? {borderColor: "#ebd50e"}: item.tipo == 4 || item.tipo == 7 ? {borderColor: "red"}: item.tipo == 8 ? {borderColor: config.cor2}:null]}>
 
                                 <Text style={{color: "#666"}}>
 
@@ -182,7 +182,10 @@ export default function Historico_lista({route}){
 
                                 {item.id_compras != null && (
 
-                                    <TouchableWithoutFeedback onPress={()=> chamar_modal(item.id_compras)}>
+                                    <TouchableOpacity
+                                    onPress={()=> chamar_modal(item.id_compras)}
+                                    activeOpacity={config.opacity_btn}
+                                    >
 
                                         <Text style={{marginTop: 5, color: "#09F", fontWeight: "500"}}>
 
@@ -190,7 +193,7 @@ export default function Historico_lista({route}){
 
                                         </Text>
 
-                                    </TouchableWithoutFeedback>
+                                    </TouchableOpacity>
 
                                 )}
 

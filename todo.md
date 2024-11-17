@@ -2,6 +2,7 @@
 
 ## Pequenos ajustes
 
+- [ ] Incluir loading ao carregar itens comprados do histórico de listas
 - [ ] Inserir um botão de "adicionar usuário" na view de configurações da lista.
 - [ ] Definir limite de caracteres para os nomes dos produtos.
 - [ ] Definir limite de caracteres para os nomes dos usuários.
@@ -9,6 +10,12 @@
 - [x] Alterar título da View produtos_itens
 
 ## Funcionalidades
+- [ ] Corrigir dalay nos botões que dependem de API, com uma mensagem de progresso, nos seguintes itens:
+ - Botão incluir produto na lista
+ - Botão editar produto da lista
+ - Botão editar lista
+ - Botão adicionar item ao carrinho
+ - Botão registrar compra
 - [ ] Incluir as seguintes funcionalidades no menu listaitem:
  - Configurações
  - Histórico

@@ -278,10 +278,26 @@ export default function ListaItem({route, navigation}){
 
     }
 
-    const limpar_carrinho = () => {
+    const limpar_carrinho = (tipo) => {
 
         setLoadApi(true);
-        fetch(`${config.URL_inicial_API}${DATAUser[0].id}/limpar_carrinho/${id_lista}`)
+        fetch(`${config.URL_inicial_API}${DATAUser[0].id}/${tipo}/${id_lista}`)
+        .then(response => response.json())
+        .then(data => {
+
+            carregar_API();
+
+        })
+        .catch(error => {
+            console.error('Erro ao buscar dados da API:', error);
+        });
+
+    }
+
+    const remover_comprados = () => {
+
+        setLoadApi(true);
+        fetch(`${config.URL_inicial_API}${DATAUser[0].id}/remover_comprados/${id_lista}`)
         .then(response => response.json())
         .then(data => {
 
@@ -314,7 +330,7 @@ export default function ListaItem({route, navigation}){
                 onPress: () => {
                   
                   setVisible(false);
-                  limpar_carrinho();
+                  limpar_carrinho("limpar_carrinho");
 
                 }
               }
@@ -328,7 +344,7 @@ export default function ListaItem({route, navigation}){
 
         Alert.alert(
             "Desmarcar comprados",
-            "Todos os itens terão a tag 'comprado' removida. Deseja continuar?",
+            "Todos os itens terão a etiqueta 'comprado' removida. Deseja continuar?",
             [
               {
                 text: "Cancelar",
@@ -344,7 +360,7 @@ export default function ListaItem({route, navigation}){
                 onPress: () => {
                   
                   setVisible(false);
-                  /* limpar_carrinho(); */
+                  limpar_carrinho("desmarcar_comprados");
 
                 }
               }
@@ -358,7 +374,7 @@ export default function ListaItem({route, navigation}){
 
         Alert.alert(
             "Remover comprados",
-            "Todos os itens com a marcação 'comprado', serão excluídos da lista. Deseja continuar?",
+            "Todos os itens com a etiqueta 'comprado', serão excluídos da lista. Deseja continuar?",
             [
               {
                 text: "Cancelar",
@@ -374,7 +390,7 @@ export default function ListaItem({route, navigation}){
                 onPress: () => {
                   
                   setVisible(false);
-                  /* limpar_carrinho(); */
+                  remover_comprados();
 
                 }
               }
@@ -1078,7 +1094,7 @@ export default function ListaItem({route, navigation}){
 
                                                                         {prod.carrinho == 2 ? (
 
-                                                                            <Text style={[styles.qtdItens, {color: "#FFF", backgroundColor: "#0AF", borderRadius: 5, paddingHorizontal: 8, fontSize: 8, marginLeft: 7, paddingTop: 4}]}>
+                                                                            <Text style={[styles.qtdItens, {color: "#FFF", backgroundColor: "#0AF", borderRadius: 5, paddingHorizontal: 5, fontSize: 7, marginLeft: 7, paddingTop: 5}]}>
 
                                                                                 COMPRADO
 
