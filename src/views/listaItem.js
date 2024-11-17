@@ -4,7 +4,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { UserContext } from '../context/user';
 import { useFocusEffect } from '@react-navigation/native';
 import FlashMessage from 'react-native-flash-message';
-import { showMessage } from 'react-native-flash-message';
+import { showMessage, hideMessage } from 'react-native-flash-message';
 import { Menu } from 'react-native-paper';
 
 import IconeAdd from "../componentes/botaoAdd"
@@ -97,6 +97,8 @@ export default function ListaItem({route, navigation}){
                     }
 
                 }
+
+                mostrar_alerta_inserindo_carrinho("hide");
 
                 console.log(categoriesWithProducts);
                 console.log("FIM");
@@ -250,8 +252,37 @@ export default function ListaItem({route, navigation}){
         
     }
 
-    const add_carrinho_API = () => {
+    const add_carrinho_API = async () => {
 
+        mostrar_alerta_inserindo_carrinho("show_inserindo");
+        setModalVisible(false);
+
+        const formData = new URLSearchParams();
+        formData.append('id_produto', id_produto);
+        formData.append('qtd', qtd);
+        formData.append('valor', valor);
+
+        try {
+
+            const resposta = await fetch(`${config.URL_inicial_API}${DATAUser[0].id}/adicionar_produto_carrinho`, {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: formData.toString()
+            });
+
+            const data = await resposta.json();
+
+            carregar_API();
+            
+        } catch (error) {
+
+            console.error('Erro ao buscar dados da API:', error);
+            
+        }
+
+        /* mostrar_alerta_inserindo_carrinho("show");
         const formData = new URLSearchParams();
         formData.append('id_produto', id_produto);
         formData.append('qtd', qtd);
@@ -268,13 +299,13 @@ export default function ListaItem({route, navigation}){
         .then(data => {
 
             setModalVisible(false);
-            setLoadApi(true);
             carregar_API();
+            mostrar_alerta_inserindo_carrinho("hide")
     
         })
         .catch(errors => {
         console.error('Erro ao enviar solicitação:', errors);
-        });
+        }); */
 
     }
 
@@ -402,7 +433,8 @@ export default function ListaItem({route, navigation}){
 
     function remover_produto_carrinho(id_produto){
 
-        setLoadApi(true);
+        /* setLoadApi(true); */
+        mostrar_alerta_inserindo_carrinho("show_removendo");
 
         const formData = new URLSearchParams();
         formData.append('id_produto', id_produto);
@@ -811,6 +843,43 @@ export default function ListaItem({route, navigation}){
         });
 
     }
+
+    function mostrar_alerta_inserindo_carrinho(estado){
+        
+        switch(estado){
+
+            case "show_inserindo":
+
+                showMessage({
+                    message: "Inserindo produto no carrinho...",
+                    type: "success", // ou "danger", "info", etc.
+                    icon: "none",
+                    duration: 0
+                });
+
+            break;
+
+            case "show_removendo":
+
+                showMessage({
+                    message: "Removendo produto do carrinho...",
+                    type: "danger", // ou "danger", "info", etc.
+                    icon: "none",
+                    duration: 0
+                });
+
+            break;
+
+            case "hide":
+
+                hideMessage();
+
+            break;
+
+        }
+    }
+
+
 
     const setar_modal_registro = () => {
 
