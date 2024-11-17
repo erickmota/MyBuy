@@ -16,7 +16,7 @@
  - Botão editar lista
  - Botão adicionar item ao carrinho
  - Botão registrar compra
-- [ ] Incluir as seguintes funcionalidades no menu listaitem:
+- [x] Incluir as seguintes funcionalidades no menu listaitem:
  - Configurações
  - Histórico
  - Limpar carrinho
@@ -29,7 +29,6 @@
 - [ ] Integrar API do facebook e do google, para o login
 - [ ] Criar notificações (para quando um usuário é adicionado em uma lista)
 - [ ] Botão para imprimir relatório de compra
-- [ ] Criar ícone loading personalizado
 - [ ] Adicionar seção comprados, na lista.
 - [ ] Entrar sem fazer login, quando conectado
 - [ ] Salvar última lista vizualizada
