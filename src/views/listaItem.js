@@ -70,11 +70,23 @@ export default function ListaItem({route, navigation}){
                         produtos: productsData.data.Produtos  || []
                     };
 
-                }));
+                })
+            
+            );
 
                 // Após buscar todas as categorias do usuário, busque todos os produtos
-                const response = await fetch(`${config.URL_inicial_API}${DATAUser[0].id}/produtos/${id_lista}`);
-                const allProductsData = await response.json();
+                const [response, response2] = await Promise.all([
+
+                    fetch(`${config.URL_inicial_API}${DATAUser[0].id}/produtos/${id_lista}`),
+                    fetch(`${config.URL_inicial_API}${DATAUser[0].id}/produtos_carrinho/${id_lista}`)
+
+                ])
+                const [allProductsData, data2] = await Promise.all([
+
+                    response.json(),
+                    response2.json()
+
+                ])
 
                 if(Array.isArray(allProductsData.data.Produtos) && allProductsData.data.Produtos.length > 0){
 
@@ -98,6 +110,8 @@ export default function ListaItem({route, navigation}){
 
                 }
 
+                setCarrinho(data2.data.Produtos);
+
                 mostrar_alerta_inserindo_carrinho("hide");
 
                 console.log(categoriesWithProducts);
@@ -112,7 +126,7 @@ export default function ListaItem({route, navigation}){
             })
 
             /* API Produtos no carrinho */
-            fetch(`${config.URL_inicial_API}${DATAUser[0].id}/produtos_carrinho/${id_lista}`)
+            /* fetch(`${config.URL_inicial_API}${DATAUser[0].id}/produtos_carrinho/${id_lista}`)
             .then(response => response.json())
             .then(data => {
                 setCarrinho(data.data.Produtos);
@@ -120,7 +134,7 @@ export default function ListaItem({route, navigation}){
             })
             .catch(error => {
                 console.error('Erro ao buscar dados da API dos carrinhos:', error);
-            })
+            }) */
 
         }
 
@@ -851,10 +865,21 @@ export default function ListaItem({route, navigation}){
             case "show_inserindo":
 
                 showMessage({
-                    message: "Inserindo produto no carrinho...",
+                    message: "",
                     type: "success", // ou "danger", "info", etc.
                     icon: "none",
-                    duration: 0
+                    duration: 0,
+                    renderCustomContent: () => (
+                        <View style={{ flexDirection: "row", alignItems: "center", marginTop: -25 }}>
+                            <Image
+                                source={require("../img/carregando.gif")}
+                                style={{width: 40, height: 40}}
+                            />
+                            <Text style={{ marginLeft: 8, color: "#fff", fontSize: 16 }}>
+                                Inserindo item no carrinho...
+                            </Text>
+                        </View>
+                    ),
                 });
 
             break;
@@ -862,10 +887,21 @@ export default function ListaItem({route, navigation}){
             case "show_removendo":
 
                 showMessage({
-                    message: "Removendo produto do carrinho...",
+                    message: "",
                     type: "danger", // ou "danger", "info", etc.
                     icon: "none",
-                    duration: 0
+                    duration: 0,
+                    renderCustomContent: () => (
+                        <View style={{ flexDirection: "row", alignItems: "center", marginTop: -25 }}>
+                            <Image
+                                source={require("../img/carregando.gif")}
+                                style={{width: 40, height: 40}}
+                            />
+                            <Text style={{ marginLeft: 8, color: "#fff", fontSize: 16 }}>
+                                Removendo item do carrinho...
+                            </Text>
+                        </View>
+                    ),
                 });
 
             break;
