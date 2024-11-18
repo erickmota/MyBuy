@@ -1,9 +1,11 @@
 import React, {useState, useContext, useEffect} from "react";
-import { View, Text, StyleSheet, TextInput, TouchableWithoutFeedback, TouchableOpacity, ScrollView, Image } from "react-native";
+import { View, Text, StyleSheet, TextInput, TouchableWithoutFeedback, TouchableOpacity, ScrollView, Image, StatusBar } from "react-native";
 import { Picker } from '@react-native-picker/picker';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useNavigation } from '@react-navigation/native';
 import { UserContext } from '../context/user';
+import FlashMessage from 'react-native-flash-message';
+import { showMessage, hideMessage } from 'react-native-flash-message';
 
 import IconeCorreto from "../componentes/botaoCorreto"
 import config from "../config";
@@ -114,6 +116,8 @@ export default function AddItem({route}){
                 setPlaceObrigatorio("");
 
             }, 3000)
+
+            hideMessage();
 
         }else{
 
@@ -239,9 +243,40 @@ export default function AddItem({route}){
 
     }
 
+    function mostrar_alerta(){
+
+        showMessage({
+            message: "",
+            type: "info", // ou "danger", "info", etc.
+            icon: "none",
+            duration: 0,
+            renderCustomContent: () => (
+                <View style={{ flexDirection: "row", alignItems: "center", marginTop: -25 }}>
+                    <Image
+                        source={require("../img/carregando.gif")}
+                        style={{width: 40, height: 40}}
+                    />
+                    <Text style={{ marginLeft: 8, color: "#fff", fontSize: 16 }}>
+                        Inserindo item na lista...
+                    </Text>
+                </View>
+            ),
+        });
+
+    }
+
+    function btn_inserir(){
+
+        mostrar_alerta();
+        adiciona_item(campo_nome, selectedTipo, qtd, selectedCategoria, id_lista, foto[0], valor, observacao)
+
+    }
+
     return(
 
         <View style={styles.container}>
+
+        <StatusBar backgroundColor={config.cor1} style="light" />
 
             <ScrollView>
 
@@ -540,7 +575,7 @@ export default function AddItem({route}){
 
             </ScrollView>
 
-            <IconeCorreto funcao={() => adiciona_item(campo_nome, selectedTipo, qtd, selectedCategoria, id_lista, foto[0], valor, observacao)}/>
+            <IconeCorreto funcao={() => btn_inserir()}/>
 
         </View>
 

@@ -3,6 +3,8 @@ import { StyleSheet, Text, View, TextInput, Alert, Image, TouchableWithoutFeedba
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useNavigation } from '@react-navigation/native';
 import { UserContext } from '../context/user';
+import FlashMessage from 'react-native-flash-message';
+import { showMessage, hideMessage } from 'react-native-flash-message';
 
 import IconeCorreto from "../componentes/botaoCorreto"
 import config from '../config';
@@ -285,6 +287,35 @@ export default function Editar_lista({route}){
 
     }
 
+    function mostrar_alerta(){
+
+        showMessage({
+            message: "",
+            type: "info", // ou "danger", "info", etc.
+            icon: "none",
+            duration: 0,
+            renderCustomContent: () => (
+                <View style={{ flexDirection: "row", alignItems: "center", marginTop: -25 }}>
+                    <Image
+                        source={require("../img/carregando.gif")}
+                        style={{width: 40, height: 40}}
+                    />
+                    <Text style={{ marginLeft: 8, color: "#fff", fontSize: 16 }}>
+                        Aleterando lista...
+                    </Text>
+                </View>
+            ),
+        });
+
+    }
+
+    function btn_inserir(){
+
+        mostrar_alerta();
+        salvar_nome(number);
+
+    }
+
     return(
 
         <View style={styles.container}>
@@ -509,7 +540,7 @@ export default function Editar_lista({route}){
 
                 {DATA_confirmacoes.dono_lista && DATA_confirmacoes.dono_lista == true && (
 
-                    <IconeCorreto funcao={() => salvar_nome(number)}/>
+                    <IconeCorreto funcao={() => btn_inserir()}/>
 
                 )}
 

@@ -4,6 +4,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { Provider as PaperProvider } from 'react-native-paper';
+import FlashMessage from "react-native-flash-message";
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
@@ -311,6 +312,10 @@ export default function App() {
           </stack.Navigator>
 
         </NavigationContainer>
+
+        {<FlashMessage
+          position="top"
+        />}
 
       </UserProvider>
 

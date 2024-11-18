@@ -5,6 +5,8 @@ import { useNavigation } from '@react-navigation/native';
 import { UserContext } from '../context/user';
 import { useFocusEffect } from '@react-navigation/native';
 import * as SQLite from "expo-sqlite"
+import FlashMessage from 'react-native-flash-message';
+import { showMessage, hideMessage } from 'react-native-flash-message';
 
 import config from "../config"
 
@@ -79,6 +81,7 @@ export default function App() {
       .then(response => response.json())
       .then(data => {
           setData(data.data);
+          hideMessage();
       })
       .catch(error => {
           console.error('Erro ao buscar dados da API:', error);

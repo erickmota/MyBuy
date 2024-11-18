@@ -6,6 +6,8 @@ import { UserContext } from '../context/user';
 import { useFocusEffect } from '@react-navigation/native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import { Menu } from 'react-native-paper';
+import FlashMessage from 'react-native-flash-message';
+import { showMessage, hideMessage } from 'react-native-flash-message';
 
 import config from '../config';
 
@@ -52,6 +54,7 @@ export default function Minhas_compras(){
             setVisible(false);
             setModalVisible(false);
             setLoadApi(false);
+            hideMessage();
         })
         .catch(error => {
             console.error('Erro ao buscar dados da API:', error);

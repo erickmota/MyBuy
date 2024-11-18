@@ -475,6 +475,9 @@ export default function ListaItem({route, navigation}){
     /* Registra a compra no histórico. API */
     const registrar_compra = () => {
 
+        mostrar_alerta_inserindo_carrinho("show_compra");
+        setModalRegistrarVisible(false);
+
         if(mercado.trim() === ""){
 
             setPlaceObrigatorioColor("red");
@@ -485,7 +488,9 @@ export default function ListaItem({route, navigation}){
                 setPlaceObrigatorioColor("#CCC");
                 setPlaceObrigatorio("Insira o nome do mercado");
 
-            }, 2000)
+            }, 2000);
+
+            hideMessage();
 
         }else{
 
@@ -906,6 +911,28 @@ export default function ListaItem({route, navigation}){
 
             break;
 
+            case "show_compra":
+
+                showMessage({
+                    message: "",
+                    type: "success", // ou "danger", "info", etc.
+                    icon: "none",
+                    duration: 0,
+                    renderCustomContent: () => (
+                        <View style={{ flexDirection: "row", alignItems: "center", marginTop: -25 }}>
+                            <Image
+                                source={require("../img/carregando.gif")}
+                                style={{width: 40, height: 40}}
+                            />
+                            <Text style={{ marginLeft: 8, color: "#fff", fontSize: 16 }}>
+                                Cadastrando sua compra...
+                            </Text>
+                        </View>
+                    ),
+                });
+
+            break;
+
             case "hide":
 
                 hideMessage();
@@ -936,8 +963,6 @@ export default function ListaItem({route, navigation}){
         <View style={styles.container}>
 
             <StatusBar backgroundColor={config.cor1} style="light" />
-
-            <FlashMessage position="top" />
 
             {/* Modal */}
 
@@ -1153,7 +1178,7 @@ export default function ListaItem({route, navigation}){
 
                                                             <View style={{flex: 3, flexDirection: "column"}}>
 
-                                                                {prod.qtd > 0 || item.id == "nulo" || prod.obs != "" ? (
+                                                                {prod.qtd > 0 || item.id == "nulo" || prod.obs != "" || prod.carrinho == 2 ? (
 
                                                                     <Text style={styles.titleLista}>
                                                                                                                                     
@@ -1171,7 +1196,7 @@ export default function ListaItem({route, navigation}){
 
                                                                 )}
 
-                                                                {prod.qtd > 0 || item.id == "nulo" ? (
+                                                                {prod.qtd > 0 || item.id == "nulo" || prod.carrinho == 2 ? (
 
                                                                     <View style={{flexDirection: "row"}}>
 

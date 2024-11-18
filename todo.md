@@ -10,7 +10,7 @@
 - [x] Alterar título da View produtos_itens
 
 ## Funcionalidades
-- [ ] Corrigir dalay nos botões que dependem de API, com uma mensagem de progresso, nos seguintes itens:
+- [x] Corrigir dalay nos botões que dependem de API, com uma mensagem de progresso, nos seguintes itens:
  - Botão incluir produto na lista
  - Botão editar produto da lista
  - Botão editar lista

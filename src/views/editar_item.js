@@ -4,6 +4,8 @@ import { Picker } from '@react-native-picker/picker';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useNavigation } from '@react-navigation/native';
 import { UserContext } from '../context/user';
+import FlashMessage from 'react-native-flash-message';
+import { showMessage, hideMessage } from 'react-native-flash-message';
 
 import IconeCorreto from "../componentes/botaoCorreto"
 import config from "../config";
@@ -190,6 +192,8 @@ export default function EditarItem({route}){
 
             }, 3000)
 
+            hideMessage();
+
         }else{
 
             /* Verificando se o checkbox do carrinho está ativo */
@@ -329,6 +333,35 @@ export default function EditarItem({route}){
             /* Nenhuma ação */
 
         }
+
+    }
+
+    function mostrar_alerta(){
+
+        showMessage({
+            message: "",
+            type: "info", // ou "danger", "info", etc.
+            icon: "none",
+            duration: 0,
+            renderCustomContent: () => (
+                <View style={{ flexDirection: "row", alignItems: "center", marginTop: -25 }}>
+                    <Image
+                        source={require("../img/carregando.gif")}
+                        style={{width: 40, height: 40}}
+                    />
+                    <Text style={{ marginLeft: 8, color: "#fff", fontSize: 16 }}>
+                        Alterando item...
+                    </Text>
+                </View>
+            ),
+        });
+
+    }
+
+    function btn_inserir(){
+
+        mostrar_alerta();
+        editar_produto();
 
     }
 
@@ -658,7 +691,7 @@ export default function EditarItem({route}){
 
             </ScrollView>
 
-            <IconeCorreto funcao={() => editar_produto()}/>
+            <IconeCorreto funcao={() => btn_inserir()}/>
 
         </View>
 
