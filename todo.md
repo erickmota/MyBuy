@@ -10,18 +10,7 @@
 - [x] Alterar título da View produtos_itens
 
 ## Funcionalidades
-- [x] Corrigir dalay nos botões que dependem de API, com uma mensagem de progresso, nos seguintes itens:
- - Botão incluir produto na lista
- - Botão editar produto da lista
- - Botão editar lista
- - Botão adicionar item ao carrinho
- - Botão registrar compra
-- [x] Incluir as seguintes funcionalidades no menu listaitem:
- - Configurações
- - Histórico
- - Limpar carrinho
- - Desmarcar comprados
- - Remover comprados
+
 - [ ] View configurações
 - [ ] View Sobre
 - [ ] View Meus Produtos rastreados
@@ -37,3 +26,15 @@
 - [x] View Minhas Compras mostrando todos os itens
 - [x] Filtrar compras por datas
 - [x] View Minhas despesas
+- [x] Corrigir dalay nos botões que dependem de API, com uma mensagem de progresso, nos seguintes itens:
+ - Botão incluir produto na lista
+ - Botão editar produto da lista
+ - Botão editar lista
+ - Botão adicionar item ao carrinho
+ - Botão registrar compra
+- [x] Incluir as seguintes funcionalidades no menu listaitem:
+ - Configurações
+ - Histórico
+ - Limpar carrinho
+ - Desmarcar comprados
+ - Remover comprados
