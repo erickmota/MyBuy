@@ -2,6 +2,7 @@
 
 ## Pequenos ajustes
 
+- [ ] Substituir o ícones de filtros da View Minhas compras
 - [ ] Incluir loading ao carregar itens comprados do histórico de listas
 - [ ] Inserir um botão de "adicionar usuário" na view de configurações da lista.
 - [ ] Definir limite de caracteres para os nomes dos produtos.
@@ -11,6 +12,7 @@
 
 ## Funcionalidades
 
+- [ ] View meus mercados
 - [ ] View configurações
 - [ ] View Sobre
 - [ ] View Meus Produtos rastreados
@@ -18,10 +20,10 @@
 - [ ] Integrar API do facebook e do google, para o login
 - [ ] Criar notificações (para quando um usuário é adicionado em uma lista)
 - [ ] Botão para imprimir relatório de compra
-- [ ] Adicionar seção comprados, na lista.
 - [ ] Entrar sem fazer login, quando conectado
 - [ ] Salvar última lista vizualizada
 - [ ] Criar máscara para o valor, em todos os módulos
+- [x] Adicionar seção comprados, na lista.
 - [x] Incluir históricos de ações
 - [x] View Minhas Compras mostrando todos os itens
 - [x] Filtrar compras por datas

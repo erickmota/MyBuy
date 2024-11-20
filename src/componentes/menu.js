@@ -117,6 +117,27 @@ export default function Menu(){
 
                         <Icon
                             name="view-list"
+                            style={[styles.iconMenu, {marginLeft: 3, marginRight: 22}]}
+                            size={27}
+                            color={"#CCC"}
+                            />
+
+                        <Text style={styles.itemMenu}>
+
+                            Minhas listas
+
+                        </Text>
+
+                    </View>
+
+                </TouchableWithoutFeedback>
+
+                <TouchableWithoutFeedback onPress={() => {navigation.navigate("MinhasCompras")}}>
+
+                    <View style={styles.areaItemMenu}>
+
+                        <Icon
+                            name="cart"
                             style={styles.iconMenu}
                             size={25}
                             color={"#CCC"}
@@ -124,7 +145,7 @@ export default function Menu(){
 
                         <Text style={styles.itemMenu}>
 
-                            Minhas listas
+                            Minhas compras
 
                         </Text>
 
@@ -145,7 +166,28 @@ export default function Menu(){
 
                         <Text style={styles.itemMenu}>
 
-                            Minhas compras
+                            Meus produtos
+
+                        </Text>
+
+                    </View>
+
+                </TouchableWithoutFeedback>
+
+                <TouchableWithoutFeedback onPress={() => {navigation.navigate("MinhasCompras")}}>
+
+                    <View style={styles.areaItemMenu}>
+
+                        <Icon
+                            name="store"
+                            style={[styles.iconMenu, {marginLeft: 4, marginRight: 19}]}
+                            size={27}
+                            color={"#CCC"}
+                            />
+
+                        <Text style={styles.itemMenu}>
+
+                            Meus mercados
 
                         </Text>
 
