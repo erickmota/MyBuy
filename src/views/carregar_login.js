@@ -129,10 +129,8 @@ export default function Carregar_login({route}){
     .then(response => response.json())
     .then(data => {
 
-      if (!view) {
-        setData(data.data);
-        mostrarView(true);
-      }
+      setData(data.data);
+      mostrarView(true);
 
     })
     .catch(errors => {
@@ -143,36 +141,11 @@ export default function Carregar_login({route}){
 
         <View style={styles.container}>
 
-            <Text style={{color: "white"}}>
-
-                <Text>
-
-                    <Text>
-
-                        Conectando...
-
-                    </Text>
-
-                </Text>
-
-            </Text>
+            <Image style={styles.gif_load} source={require("../img/carregando3.gif")} />  
 
             {view && (<View>
 
-                {DATA !== false ? (
-
-                  <View>
-
-                    {/* Texto retornado, quando a API é localizada */}
-                    <Text style={{color: "white"}}>
-
-                      Conectado com sucesso!
-
-                    </Text>
-
-                  </View>
-
-                ) : (
+                {DATA !== false ? null : (
 
                     /* Alerta retornado quando o usuário não é localizado */
                     Alert.alert(
@@ -211,6 +184,13 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center",
 
-    }
+    },
+
+    gif_load:{
+
+      width: 150,
+      height: 150
+
+  }
 
 })

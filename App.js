@@ -23,6 +23,7 @@ import Editar_Item from "./src/views/editar_item"
 import Minhas_compras from "./src/views/minhas_compras"
 import Minhas_compras_itens from "./src/views/minhas_compras_itens"
 import Historico_lista from "./src/views/historico_lista"
+import Tela_loading from "./src/views/tela_loading.js"
 /* Despesas */
 import Despesas_categorias from "./src/views/pg-despesas/categoria.js"
 import Despesas_mercados from "./src/views/pg-despesas/mercados.js"
@@ -183,7 +184,7 @@ export default function App() {
 
         <NavigationContainer>
 
-          <stack.Navigator initialRouteName='Login'>
+          <stack.Navigator initialRouteName='Tela_loading'>
 
             <stack.Screen name="Drawer" component={DrawerNavigation} options={{ headerShown: false }} />
 
@@ -202,6 +203,12 @@ export default function App() {
             <stack.Screen name="Carregar_login" component={Carregar_login} options={{
 
               headerShown: false
+
+            }} />
+
+            <stack.Screen name="Tela_loading" component={Tela_loading} options={{
+
+            headerShown: false
 
             }} />
 
