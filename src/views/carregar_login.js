@@ -57,25 +57,6 @@ export default function Carregar_login({route}){
       });
     }
 
-    /* if (db) {
-      db.transaction((tx) => {
-        tx.executeSql(
-          "DROP TABLE IF EXISTS usuarios",
-          [],
-          ()=>{
-
-            console.log("Tabela apagada com sucesso");
-
-          },
-          (_, error)=>{
-
-            console.error("Erro ao apagar a tabela", error);
-
-          }
-        );
-      });
-    } */
-
   },[db])
 
   /* Função para inserir um novo dado na tabela local */
@@ -90,13 +71,7 @@ export default function Carregar_login({route}){
         ()=>{
 
           console.log("Dados inseridos corretamente na tabela");
-          login();
-
-          setTimeout(()=>{
-
-            navigation.navigate("Drawer");
-
-          }, 1500)
+          chama_login();
 
         },
         (_, error)=>{
@@ -108,6 +83,22 @@ export default function Carregar_login({route}){
     });
 
   }
+
+  const chama_login = async () => {
+    if (db) {
+        // Aguarda o login ser processado antes de navegar
+        try {
+            await new Promise((resolve, reject) => {
+                login(db, resolve, reject);  // Passa resolve e reject para o login
+            });
+
+            // Após o login ser completado, navega para a tela "Drawer"
+            navigation.navigate("Drawer");
+        } catch (error) {
+            console.error("Erro no login:", error);
+        }
+    }
+};
 
   /* Chamando a função para inserir um dado na tabela local */
   useEffect(()=>{
