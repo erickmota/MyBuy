@@ -20,9 +20,9 @@
 - [ ] Integrar API do facebook e do google, para o login
 - [ ] Criar notificações (para quando um usuário é adicionado em uma lista)
 - [ ] Botão para imprimir relatório de compra
-- [ ] Entrar sem fazer login, quando conectado
 - [ ] Salvar última lista vizualizada
 - [ ] Criar máscara para o valor, em todos os módulos
+- [x] Entrar sem fazer login, quando conectado
 - [x] Adicionar seção comprados, na lista.
 - [x] Incluir históricos de ações
 - [x] View Minhas Compras mostrando todos os itens
