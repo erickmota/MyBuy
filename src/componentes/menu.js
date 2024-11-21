@@ -12,7 +12,11 @@ export default function Menu(){
 
     const navigation = useNavigation();
 
+    const { logout } = useContext(UserContext); 
+
     const [db, setDbLocal] = useState(null);
+
+    const [sub_meus_itens, setSubMeusItens] = useState([false, 1, "menu-down"]);
 
     /* Contexto */
     const { DATAUser } = useContext(UserContext);
@@ -61,6 +65,20 @@ export default function Menu(){
     const log = () => {
 
         console.log(config.Foto_usuario_nulo);
+
+    }
+
+    const define_meus_itens = () => {
+
+        if(sub_meus_itens[0] == false){
+
+            setSubMeusItens([true, 0, "menu-up"]);
+
+        }else{
+
+            setSubMeusItens([false, 1, "menu-down"]);
+
+        }
 
     }
 
@@ -132,20 +150,20 @@ export default function Menu(){
 
                 </TouchableWithoutFeedback>
 
-                <TouchableWithoutFeedback onPress={() => {navigation.navigate("MinhasCompras")}}>
+                <TouchableWithoutFeedback onPress={() => {define_meus_itens()}}>
 
-                    <View style={styles.areaItemMenu}>
+                    <View style={[styles.areaItemMenu, {borderBottomWidth: sub_meus_itens[1]}]}>
 
                         <Icon
-                            name="cart"
-                            style={styles.iconMenu}
-                            size={25}
+                            name={sub_meus_itens[2]}
+                            style={[styles.iconMenu, {marginLeft: 3, marginRight: 19}]}
+                            size={30}
                             color={"#CCC"}
                             />
 
                         <Text style={styles.itemMenu}>
 
-                            Minhas compras
+                            Meus itens
 
                         </Text>
 
@@ -153,47 +171,76 @@ export default function Menu(){
 
                 </TouchableWithoutFeedback>
 
-                <TouchableWithoutFeedback onPress={() => {navigation.navigate("MinhasCompras")}}>
+                {sub_meus_itens[0] && (
 
-                    <View style={styles.areaItemMenu}>
+                    <View style={styles.itens_meus_itens}>
 
-                        <Icon
-                            name="shopping"
-                            style={styles.iconMenu}
-                            size={25}
-                            color={"#CCC"}
-                            />
+                        <TouchableWithoutFeedback onPress={() => {navigation.navigate("MinhasCompras")}}>
 
-                        <Text style={styles.itemMenu}>
+                            <View style={styles.areaItemMenu}>
 
-                            Meus produtos
+                                <Icon
+                                    name="cart"
+                                    style={styles.iconMenu}
+                                    size={25}
+                                    color={"#CCC"}
+                                    />
 
-                        </Text>
+                                <Text style={styles.itemMenu}>
+
+                                    Minhas compras
+
+                                </Text>
+
+                            </View>
+
+                        </TouchableWithoutFeedback>
+
+                        <TouchableWithoutFeedback onPress={() => {navigation.navigate("MinhasCompras")}}>
+
+                            <View style={styles.areaItemMenu}>
+
+                                <Icon
+                                    name="shopping"
+                                    style={styles.iconMenu}
+                                    size={25}
+                                    color={"#CCC"}
+                                    />
+
+                                <Text style={styles.itemMenu}>
+
+                                    Meus produtos
+
+                                </Text>
+
+                            </View>
+
+                        </TouchableWithoutFeedback>
+
+                        <TouchableWithoutFeedback onPress={() => {navigation.navigate("MinhasCompras")}}>
+
+                            <View style={styles.areaItemMenu}>
+
+                                <Icon
+                                    name="store"
+                                    style={[styles.iconMenu, {marginLeft: 4, marginRight: 19}]}
+                                    size={27}
+                                    color={"#CCC"}
+                                    />
+
+                                <Text style={styles.itemMenu}>
+
+                                    Meus mercados
+
+                                </Text>
+
+                            </View>
+
+                        </TouchableWithoutFeedback>
 
                     </View>
 
-                </TouchableWithoutFeedback>
-
-                <TouchableWithoutFeedback onPress={() => {navigation.navigate("MinhasCompras")}}>
-
-                    <View style={styles.areaItemMenu}>
-
-                        <Icon
-                            name="store"
-                            style={[styles.iconMenu, {marginLeft: 4, marginRight: 19}]}
-                            size={27}
-                            color={"#CCC"}
-                            />
-
-                        <Text style={styles.itemMenu}>
-
-                            Meus mercados
-
-                        </Text>
-
-                    </View>
-
-                </TouchableWithoutFeedback>
+                )}
 
                 <TouchableWithoutFeedback onPress={() => {navigation.navigate("Despesas")}}>
 
@@ -258,7 +305,7 @@ export default function Menu(){
 
                 </TouchableWithoutFeedback>
 
-                <TouchableWithoutFeedback onPress={()=>{sair()}}>
+                <TouchableWithoutFeedback onPress={()=>{[logout(), navigation.navigate("Login")]}}>
 
                     <View style={styles.areaItemMenu}>
 
@@ -380,5 +427,11 @@ const styles = StyleSheet.create({
         marginLeft: 5,
 
     },
+
+    itens_meus_itens:{
+
+        paddingLeft: 20
+
+    }
 
 })

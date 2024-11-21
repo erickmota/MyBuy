@@ -52,11 +52,31 @@ export const UserProvider = ({children}) => {
             );
         });
     }
-    
+
+    function logout(){
+
+        db.transaction((tx) => {
+            tx.executeSql(
+                "DROP TABLE IF EXISTS usuarios",
+                [],
+                ()=>{
+
+                console.log("Tabela excluída com sucesso");
+
+                },
+                (_, error)=>{
+
+                console.error("Erro ao excluir tabela", error);
+
+                }
+            );
+        });
+
+    }
 
     return(
 
-        <UserContext.Provider value={{DATAUser, login}}>
+        <UserContext.Provider value={{DATAUser, login, logout}}>
             
             {children}
             
