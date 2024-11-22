@@ -38,7 +38,7 @@ export default function Historico_lista({route}){
             console.error('Erro ao buscar dados da API:', error);
         });
 
-    }, []);
+    }, [DATAUser]);
 
     useEffect(()=>{
 
@@ -59,7 +59,7 @@ export default function Historico_lista({route}){
             console.error('Erro ao buscar dados da API:', error);
         });
 
-    }, [ID_Compra])
+    }, [ID_Compra, DATAUser])
 
     useFocusEffect(
 
@@ -71,7 +71,7 @@ export default function Historico_lista({route}){
 
           };
           
-        }, [])
+        }, [DATAUser])
 
     );
 

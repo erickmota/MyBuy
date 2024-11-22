@@ -1,5 +1,12 @@
 # My Buy - Bugs
 
+## Compra vazia
+
+- **Descrição**: Quando a lista está sendo carregada é possível clicar no botão para registrar uma compra.
+- **Passos para reproduzir**: Criar um loop infinito ao carregar a lista e tentar clicar no botão de registro.
+- **Status**: 🔴 Aberto.
+- **Data de descoberta**: 21/11/24.
+
 ## Gerenciar categorias
 
 - **Descrição**: Quando tem um número grande de categorias, o botão "adicionar" fica sobre o botão de exclusão

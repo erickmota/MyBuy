@@ -60,7 +60,7 @@ export default function Minhas_compras(){
             console.error('Erro ao buscar dados da API:', error);
         });
 
-    }, [URL_API]);
+    }, [URL_API, DATAUser]);
 
     useFocusEffect(
 
@@ -72,7 +72,7 @@ export default function Minhas_compras(){
 
           };
           
-        }, [URL_API])
+        }, [URL_API, DATAUser])
 
     );
 

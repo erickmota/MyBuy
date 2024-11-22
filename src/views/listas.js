@@ -14,10 +14,13 @@ import IconeMais from "../componentes/botaoAdd"
 
 export default function App() {
 
-  const [DATA, setData] = useState([]);
+  const [DATA, setData_listas] = useState([]);
 
   /* Estados */
   const [dbs, setDbLocal] = useState(null);
+
+  /* Contexto */
+  const { DATAUser } = useContext(UserContext);
 
   const navigation = useNavigation();
 
@@ -71,23 +74,20 @@ export default function App() {
 
   },[dbs])
 
-  /* Contexto */
-  const { DATAUser } = useContext(UserContext);
-
   /* Conexão com a API */
   const carregar_API = useCallback(() => {
 
     fetch(`${config.URL_inicial_API}${DATAUser[0].id}/listas`)
       .then(response => response.json())
       .then(data => {
-          setData(data.data);
+          setData_listas(data.data);
           hideMessage();
       })
       .catch(error => {
           console.error('Erro ao buscar dados da API:', error);
       });
 
-  }, []);
+  }, [DATAUser]);
 
   useFocusEffect(
 
@@ -97,9 +97,11 @@ export default function App() {
 
         return () => {
 
+          setData_listas([])
+
         };
         
-      }, [])
+      }, [DATAUser])
 
   );
   

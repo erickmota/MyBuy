@@ -176,7 +176,7 @@ export default function EditarItem({route}){
 
         seta_foto();
 
-    }, [DATA]);
+    }, [DATA, DATAUser]);
 
     const editar_produto = () => {
 

@@ -12,7 +12,7 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 
 import config from '../../config';
 
-export default function Categorias(){
+export default function Produtos(){
 
     /* Contexto */
     const { DATAUser } = useContext(UserContext);
@@ -71,7 +71,7 @@ export default function Categorias(){
 
         fetchData();
 
-    }, [URL_API])
+    }, [URL_API, DATAUser])
 
     useFocusEffect(
 
@@ -86,7 +86,7 @@ export default function Categorias(){
 
           };
           
-        }, [URL_API])
+        }, [URL_API, DATAUser])
 
     );
 

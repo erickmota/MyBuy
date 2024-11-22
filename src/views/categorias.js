@@ -35,7 +35,7 @@ export default function Categorias(){
         console.error('Erro ao buscar dados da API:', error);
     });
 
-    }, [DATA]);
+    }, [DATAUser]);
 
     /* Apagar uma categoria */
     function apagar_categoria(categoria){

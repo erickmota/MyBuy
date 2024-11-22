@@ -71,7 +71,7 @@ export default function Categorias(){
 
         fetchData();
 
-    }, [URL_API])
+    }, [URL_API, DATAUser])
 
     useFocusEffect(
 
@@ -86,7 +86,7 @@ export default function Categorias(){
 
           };
           
-        }, [URL_API])
+        }, [URL_API, DATAUser])
 
     );
 

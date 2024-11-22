@@ -13,7 +13,7 @@ import { useFocusEffect } from '@react-navigation/native';
 import config from '../../config';
 import { color } from 'react-native-elements/dist/helpers';
 
-export default function Categorias(){
+export default function Geral(){
 
     /* Contexto */
     const { DATAUser } = useContext(UserContext);
@@ -80,7 +80,7 @@ export default function Categorias(){
 
         fetchData();
 
-    }, [Ano_selecionado])
+    }, [Ano_selecionado, DATAUser])
 
     useFocusEffect(
 
@@ -99,7 +99,7 @@ export default function Categorias(){
 
           };
           
-        }, [Ano_selecionado])
+        }, [Ano_selecionado, DATAUser])
 
     );
 

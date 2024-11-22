@@ -176,7 +176,7 @@ export default function ListaItem({route, navigation}){
 
           };
           
-        }, [carregar_API, route.params])
+        }, [carregar_API, route.params, DATAUser])
     );
 
     useLayoutEffect(()=>{
@@ -539,7 +539,7 @@ export default function ListaItem({route, navigation}){
             console.error('Erro ao buscar dados da API:', error);
         });
 
-    }, []);
+    }, [DATAUser]);
     
     const filtrar_busca_mercados = (texto) => {
 

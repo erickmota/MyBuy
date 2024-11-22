@@ -38,36 +38,6 @@ export default function Menu(){
 
     },[])
 
-    /* Removendo o banco de dados e deslogando o usuário */
-    function sair(){
-
-        db.transaction((tx) => {
-            tx.executeSql(
-                "DROP TABLE IF EXISTS usuarios",
-                [],
-                ()=>{
-
-                console.log("Tabela excluída com sucesso");
-
-                },
-                (_, error)=>{
-
-                console.error("Erro ao excluir tabela", error);
-
-                }
-            );
-        });
-
-        navigation.navigate("Login");
-
-    }
-
-    const log = () => {
-
-        console.log(config.Foto_usuario_nulo);
-
-    }
-
     const define_meus_itens = () => {
 
         if(sub_meus_itens[0] == false){
@@ -109,7 +79,7 @@ export default function Menu(){
 
                     <View style={styles.areaItemMenu}>
 
-                        {DATAUser[0].foto_url != "null" ? (
+                        {DATAUser[0].foto_url && DATAUser[0].foto_url != "null" ? (
 
                             <Image style={styles.imgUsuario} source={{ uri: `${DATAUser[0].foto_url}` }} />
 
@@ -163,7 +133,7 @@ export default function Menu(){
 
                         <Text style={styles.itemMenu}>
 
-                            Meus itens
+                            Meus dados
 
                         </Text>
 

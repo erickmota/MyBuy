@@ -77,7 +77,7 @@ export default function Editar_lista({route}){
             console.error('Erro ao buscar dados da API:', error);
         });
 
-    }, [loadView]);
+    }, [loadView, DATAUser]);
 
     /* Função responsável por atualizar o nome da Lista
     via API.
