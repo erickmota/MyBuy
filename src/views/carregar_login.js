@@ -103,15 +103,7 @@ export default function Carregar_login({route}){
   /* Chamando a função para inserir um dado na tabela local */
   useEffect(()=>{
 
-    if (db && DATA.length > 0 && !view) {
-      const dataP = DATA[0];
-      console.log("Dados a serem inseridos:", dataP);
-      inserirNoBancoLocal(dataP.id, dataP.nome, dataP.token, dataP.foto_url);
-    }
-
-  },[db, DATA, view])
-
-  /* API */
+    /* API */
     const {email} = route.params
     const {senha} = route.params
 
@@ -136,6 +128,14 @@ export default function Carregar_login({route}){
     .catch(errors => {
     console.error('Erro ao enviar solicitação:', errors);
     });
+
+    if (db && DATA.length > 0 && !view) {
+      const dataP = DATA[0];
+      console.log("Dados a serem inseridos:", dataP);
+      inserirNoBancoLocal(dataP.id, dataP.nome, dataP.token, dataP.foto_url);
+    }
+
+  },[db, DATA, view])
 
     return(
 
