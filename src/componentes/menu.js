@@ -16,7 +16,7 @@ export default function Menu(){
 
     const [db, setDbLocal] = useState(null);
 
-    const [sub_meus_itens, setSubMeusItens] = useState([false, 1, "menu-down"]);
+    const [sub_meus_itens, setSubMeusItens] = useState([false, 1, "menu-down", 0]);
 
     /* Contexto */
     const { DATAUser } = useContext(UserContext);
@@ -42,11 +42,11 @@ export default function Menu(){
 
         if(sub_meus_itens[0] == false){
 
-            setSubMeusItens([true, 0, "menu-up"]);
+            setSubMeusItens([true, 0, "menu-up", 1]);
 
         }else{
 
-            setSubMeusItens([false, 1, "menu-down"]);
+            setSubMeusItens([false, 1, "menu-down", 0]);
 
         }
 
@@ -147,7 +147,7 @@ export default function Menu(){
 
                         <TouchableWithoutFeedback onPress={() => {navigation.navigate("MinhasCompras")}}>
 
-                            <View style={styles.areaItemMenu}>
+                            <View style={[styles.areaItemMenu, {borderBottomWidth: 0}]}>
 
                                 <Icon
                                     name="cart"
@@ -168,7 +168,7 @@ export default function Menu(){
 
                         <TouchableWithoutFeedback onPress={() => {navigation.navigate("MinhasCompras")}}>
 
-                            <View style={styles.areaItemMenu}>
+                            <View style={[styles.areaItemMenu, {borderBottomWidth: 0}]}>
 
                                 <Icon
                                     name="shopping"
@@ -189,7 +189,7 @@ export default function Menu(){
 
                         <TouchableWithoutFeedback onPress={() => {navigation.navigate("MinhasCompras")}}>
 
-                            <View style={styles.areaItemMenu}>
+                            <View style={[styles.areaItemMenu, {borderBottomWidth: 0}]}>
 
                                 <Icon
                                     name="store"
@@ -214,7 +214,7 @@ export default function Menu(){
 
                 <TouchableWithoutFeedback onPress={() => {navigation.navigate("Despesas")}}>
 
-                    <View style={styles.areaItemMenu}>
+                    <View style={[styles.areaItemMenu, {borderTopWidth: sub_meus_itens[3]}]}>
 
                         <Icon
                             name="chart-bar"
@@ -400,7 +400,8 @@ const styles = StyleSheet.create({
 
     itens_meus_itens:{
 
-        paddingLeft: 20
+        paddingLeft: 20,
+        marginTop: -10
 
     }
 
