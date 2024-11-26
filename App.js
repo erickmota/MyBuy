@@ -3,7 +3,7 @@ import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createDrawerNavigator } from '@react-navigation/drawer';
-import { Provider as PaperProvider } from 'react-native-paper';
+import { Provider as PaperProvider, DefaultTheme } from 'react-native-paper';
 import FlashMessage from "react-native-flash-message";
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -42,6 +42,15 @@ import { View } from 'react-native-web';
 const stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
 const Tab = createBottomTabNavigator();
+
+const theme = {
+  ...DefaultTheme, // ou DarkTheme
+  colors: {
+    ...DefaultTheme.colors,
+    background: 'white', // Defina o fundo explicitamente
+    surface: 'white', // ou qualquer cor que preferir
+  },
+};
 
 /* Menu Página despesas */
 function Tabs_despesas() {
@@ -180,7 +189,7 @@ export default function App() {
   
   return (
 
-    <PaperProvider>
+    <PaperProvider theme={theme}>
 
       <UserProvider>
 

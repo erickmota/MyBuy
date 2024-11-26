@@ -22,9 +22,6 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-<<<<<<< HEAD
-      "package": "com.erickmota.MyBuy"
-=======
       "package": "com.erickmota.MyBuy",
       "permissions": [
         "INTERNET",
@@ -33,7 +30,6 @@
         "WRITE_EXTERNAL_STORAGE"
       ],
       "versionCode": 1
->>>>>>> config
     },
     "web": {
       "favicon": "./assets/favicon.png"
@@ -42,13 +38,9 @@
       "eas": {
         "projectId": "3c2be47a-e524-47c5-903f-dd37ec600d07"
       }
-<<<<<<< HEAD
-    }
-=======
     },
     "plugins": [
       "expo-build-properties"
     ]
->>>>>>> config
   }
 }
