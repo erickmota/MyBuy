@@ -49,7 +49,8 @@ function Tabs_despesas() {
   return (
 
     <Tab.Navigator
-      initialRouteName="Home"
+      initialRouteName="Geral"
+      detachInactiveScreens={false}
       screenOptions={{
         tabBarActiveTintColor: config.cor2, // Cor do ícone ativo
         tabBarInactiveTintColor: '#777', // Cor do ícone inativo
@@ -115,7 +116,8 @@ function DrawerNavigation() {
 
   return (
 
-    <Drawer.Navigator drawerContent={Menu} initialRouteName="Listas">
+    <Drawer.Navigator drawerContent={Menu} initialRouteName="Listas"
+    detachInactiveScreens={false}>
 
       <Drawer.Screen name="ListaItem" component={ListaItem}  options={{
 
