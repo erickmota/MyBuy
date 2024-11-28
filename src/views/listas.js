@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useContext, useCallback} from 'react';
-import { StyleSheet, Text, View, FlatList, TouchableWithoutFeedback, TouchableOpacity, StatusBar } from 'react-native';
+import { StyleSheet, Text, View, FlatList, TouchableWithoutFeedback, TouchableOpacity, StatusBar, Image } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useNavigation } from '@react-navigation/native';
 import { UserContext } from '../context/user';
@@ -15,6 +15,7 @@ import IconeMais from "../componentes/botaoAdd"
 export default function App() {
 
   const [DATA, setData_listas] = useState([]);
+  const [load_API, setLoadApi] = useState();
 
   /* Estados */
   const [dbs, setDbLocal] = useState(null);
@@ -77,11 +78,14 @@ export default function App() {
   /* Conexão com a API */
   const carregar_API = useCallback(() => {
 
+    setLoadApi(true);
+
     fetch(`${config.URL_inicial_API}${DATAUser[0].id}/listas`)
       .then(response => response.json())
       .then(data => {
           setData_listas(data.data);
           hideMessage();
+          setLoadApi(false);
       })
       .catch(error => {
           console.error('Erro ao buscar dados da API:', error);
@@ -97,6 +101,7 @@ export default function App() {
 
         return () => {
 
+          setLoadApi(true);
           setData_listas([])
 
         };
@@ -113,92 +118,104 @@ export default function App() {
 
       <View style={styles.espacoListas}>
 
-        {DATA == false ? (
+        {load_API == true ? (
 
-          <View style={{alignItems: "center"}}>
+          <View style={{flex: 1, justifyContent: "center", alignItems: "center"}}>
 
-            <Text style={{color: config.corTextoSecundario, marginTop: 50}}>
-
-              Sem listas disponíveis
-
-            </Text>
+            <Image style={styles.gif_load} source={require("../img/carregando.gif")} />
 
           </View>
 
         ):(
 
-          <View style={styles.areaListas}>
+          DATA == false ? (
 
-            <FlatList
-            data={DATA}
-            renderItem={({item}) =>
+            <View style={{alignItems: "center"}}>
 
-            <View style={styles.itemLista}>
+              <Text style={{color: config.corTextoSecundario, marginTop: 50}}>
 
-              <TouchableOpacity
+                Sem listas disponíveis
 
-                activeOpacity={config.opacity_btn}
-                onPress={() => navigation.navigate('ListaItem', {TituloLista: item.nome, id_lista: item.id})}
-                onLongPress={() => navigation.navigate('Editar_lista', {TituloLista: item.nome, id_lista: item.id, origem: "listas"})}
-                
-              >
+              </Text>
 
-              <View style={{flex: 3, flexDirection: "column"}}>
+            </View>
 
-                <Text style={styles.titleLista}>{item.nome}</Text>
+          ):(
 
-                <View style={{flexDirection: "row"}}>
+            <View style={styles.areaListas}>
 
-                  <Text style={styles.qtdItens}>{item.qtd_produtos} - Produtos</Text>
+              <FlatList
+              data={DATA}
+              renderItem={({item}) =>
 
-                  {item.qtd_usuarios > 1 && (
+              <View style={styles.itemLista}>
 
-                    <View style={{flexDirection: "row"}}>
+                <TouchableOpacity
 
-                      <Text style={styles.barraIcon}>
+                  activeOpacity={config.opacity_btn}
+                  onPress={() => navigation.navigate('ListaItem', {TituloLista: item.nome, id_lista: item.id})}
+                  onLongPress={() => navigation.navigate('Editar_lista', {TituloLista: item.nome, id_lista: item.id, origem: "listas"})}
+                  
+                >
 
-                      -
+                <View style={{flex: 3, flexDirection: "column"}}>
 
-                      </Text>
+                  <Text style={styles.titleLista}>{item.nome}</Text>
 
-                      <Icon
-                      name="account-multiple"
-                      size={21}
-                      style={styles.iconShare}
+                  <View style={{flexDirection: "row"}}>
+
+                    <Text style={styles.qtdItens}>{item.qtd_produtos} - Produtos</Text>
+
+                    {item.qtd_usuarios > 1 && (
+
+                      <View style={{flexDirection: "row"}}>
+
+                        <Text style={styles.barraIcon}>
+
+                        -
+
+                        </Text>
+
+                        <Icon
+                        name="account-multiple"
+                        size={21}
+                        style={styles.iconShare}
+                        />
+
+
+                      </View>
+
+                    )}
+
+                  </View>
+
+                </View>
+
+                </TouchableOpacity>
+
+                <View style={[styles.iconeLista, {flex:1}]}>
+
+                  <TouchableWithoutFeedback onPress={() => navigation.navigate('Editar_lista', {TituloLista: item.nome, id_lista: item.id, origem: "listas"})}>
+
+                    <Icon
+                      name="pencil-box"
+                      size={28}
+                      color={config.cor2}
                       />
 
-
-                    </View>
-
-                  )}
+                  </TouchableWithoutFeedback>
 
                 </View>
 
               </View>
 
-              </TouchableOpacity>
-
-              <View style={[styles.iconeLista, {flex:1}]}>
-
-                <TouchableWithoutFeedback onPress={() => navigation.navigate('Editar_lista', {TituloLista: item.nome, id_lista: item.id, origem: "listas"})}>
-
-                  <Icon
-                    name="pencil-box"
-                    size={28}
-                    color={config.cor2}
-                    />
-
-                </TouchableWithoutFeedback>
-
-              </View>
+              }
+              keyExtractor={item => item.id}
+              />          
 
             </View>
 
-            }
-            keyExtractor={item => item.id}
-            />          
-
-          </View>
+          )
 
         )}
 
@@ -277,6 +294,15 @@ const styles = StyleSheet.create({
 
     left: 5,
     color: config.corTextoSecundario
+
+  },
+
+  /* ***** */
+
+  gif_load:{
+
+    width: 70,
+    height: 70
 
   }
 
