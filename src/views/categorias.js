@@ -1,8 +1,9 @@
-import React, {useState, useEffect, useContext} from "react";
+import React, {useState, useEffect, useContext, useCallback} from "react";
 import { Text, View, StyleSheet, FlatList, TouchableWithoutFeedback, Alert, Modal,
-  TextInput, Button, TouchableOpacity } from "react-native";
+  TextInput, Button, TouchableOpacity, Image } from "react-native";
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useNavigation } from '@react-navigation/native';
+import { useFocusEffect } from '@react-navigation/native';
 
 import config from "../config"
 import { UserContext } from '../context/user';
@@ -18,12 +19,13 @@ export default function Categorias(){
     const [modalVisible, setModalVisible] = useState(false);
     const [input, onChangeInput] = useState();
     const [idCategoria, onChangeIdCategoria] = useState();
+    const [load_API, setLoadApi] = useState();
 
     /* Contexto */
     const { DATAUser } = useContext(UserContext);
 
     /* Conexão com a API */
-    useEffect(() => {
+    /* useEffect(() => {
 
     fetch(`${config.URL_inicial_API}${DATAUser[0].id}/categorias`)
     .then(response => response.json())
@@ -35,7 +37,38 @@ export default function Categorias(){
         console.error('Erro ao buscar dados da API:', error);
     });
 
+    }, [DATAUser]); */
+
+    const carregar_API = useCallback(() => {
+
+      setLoadApi(true);
+
+      fetch(`${config.URL_inicial_API}${DATAUser[0].id}/categorias`)
+      .then(response => response.json())
+      .then(data => {
+          setData(data.data);
+          setDataConfirm(data.data.confirmacoes);
+          setLoadApi(false);
+      })
+      .catch(error => {
+          console.error('Erro ao buscar dados da API:', error);
+      });
+
     }, [DATAUser]);
+
+    useFocusEffect(
+
+      useCallback(() => {
+
+          carregar_API();
+
+        return () => {
+
+        };
+        
+      }, [DATAUser])
+
+    );
 
     /* Apagar uma categoria */
     function apagar_categoria(categoria){
@@ -53,7 +86,7 @@ export default function Categorias(){
         .then(response => response.json())
         .then(data => {
 
-            navigation.navigate("Categorias");
+            carregar_API();
     
         })
         .catch(errors => {
@@ -114,6 +147,7 @@ export default function Categorias(){
       .then(response => response.json())
       .then(data => {
 
+        carregar_API();
         setModalVisible(false);
   
       })
@@ -187,60 +221,72 @@ export default function Categorias(){
 
             </Modal>
 
-            <FlatList
-            data={DATA.categorias}
-            renderItem={({item, index}) =>
+            {load_API == true ? (
 
-            <View style={[styles.itemLista, index === DATA.categorias.length - 1 ? {marginBottom: 90}:null]}>
+              <View style={{flex: 1, justifyContent: "center", alignItems: "center"}}>
 
-                <TouchableOpacity
-                  onPress={() => setar_modal(item.nome, item.id)}
-                  activeOpacity={config.opacity_btn}
-                >
+                <Image style={styles.gif_load} source={require("../img/carregando.gif")} />
 
-                <View style={{flex: 3, flexDirection: "column"}}>
+              </View>
 
-                <Text style={styles.titleLista}>
-                    
-                    {item.nome}
-                    
-                </Text>
+            ):(
 
-                </View>
+              <FlatList
+              data={DATA.categorias}
+              renderItem={({item, index}) =>
 
-                </TouchableOpacity>
+              <View style={[styles.itemLista, index === DATA.categorias.length - 1 ? {marginBottom: 90}:null]}>
 
-                <View style={[styles.iconeLista, {flex:1}]}>
+                  <TouchableOpacity
+                    onPress={() => setar_modal(item.nome, item.id)}
+                    activeOpacity={config.opacity_btn}
+                  >
 
-                <TouchableWithoutFeedback onPress={() => confirma_apagar(item.id, item.nome)}>
+                  <View style={{flex: 3, flexDirection: "column"}}>
 
-                    {DATA_confirm.quantidade < 2 ? (
+                  <Text style={styles.titleLista}>
+                      
+                      {item.nome}
+                      
+                  </Text>
 
-                        <Icon
-                          name="delete-sweep"
-                          size={25}
-                          color={"#BBB"}
-                        />
+                  </View>
 
-                    ):(
+                  </TouchableOpacity>
 
-                        <Icon
-                          name="delete-sweep"
-                          size={25}
-                          color={config.cor2}
-                        />
+                  <View style={[styles.iconeLista, {flex:1}]}>
 
-                    )}
+                  <TouchableWithoutFeedback onPress={() => confirma_apagar(item.id, item.nome)}>
 
-                </TouchableWithoutFeedback>
+                      {DATA_confirm.quantidade < 2 ? (
 
-                </View>
+                          <Icon
+                            name="delete-sweep"
+                            size={25}
+                            color={"#BBB"}
+                          />
 
-            </View>
+                      ):(
 
-            }
-            keyExtractor={item => item.id}
-            /> 
+                          <Icon
+                            name="delete-sweep"
+                            size={25}
+                            color={config.cor2}
+                          />
+
+                      )}
+
+                  </TouchableWithoutFeedback>
+
+                  </View>
+
+              </View>
+
+              }
+              keyExtractor={item => item.id}
+              /> 
+
+            )}
 
             <IconeAdd caminho={"Adicionar_categoria"}/>
 
@@ -333,5 +379,14 @@ const styles = StyleSheet.create({
         marginTop: 20
 
     },
+
+    /* ***** */
+
+    gif_load:{
+
+      width: 70,
+      height: 70
+
+  }
 
 })
