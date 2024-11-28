@@ -189,9 +189,9 @@ export default function Categorias(){
 
             <FlatList
             data={DATA.categorias}
-            renderItem={({item}) =>
+            renderItem={({item, index}) =>
 
-            <View style={styles.itemLista}>
+            <View style={[styles.itemLista, index === DATA.categorias.length - 1 ? {marginBottom: 90}:null]}>
 
                 <TouchableOpacity
                   onPress={() => setar_modal(item.nome, item.id)}
