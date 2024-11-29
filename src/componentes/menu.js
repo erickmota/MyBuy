@@ -133,7 +133,7 @@ export default function Menu(){
 
                         <Text style={styles.itemMenu}>
 
-                            Meus dados
+                            Meus Itens
 
                         </Text>
 
@@ -166,7 +166,7 @@ export default function Menu(){
 
                         </TouchableWithoutFeedback>
 
-                        <TouchableWithoutFeedback onPress={() => {navigation.navigate("MinhasCompras")}}>
+                        <TouchableWithoutFeedback onPress={() => {navigation.navigate("MeusProdutos")}}>
 
                             <View style={[styles.areaItemMenu, {borderBottomWidth: 0}]}>
 
@@ -246,7 +246,7 @@ export default function Menu(){
 
                         <Text style={styles.itemMenu}>
 
-                            Gerenciar categorias
+                            Minhas categorias
 
                         </Text>
 
