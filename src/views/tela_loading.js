@@ -117,7 +117,7 @@ export default function Tela_loading(){
 
             <StatusBar backgroundColor={config.cor1} style="light" />
 
-            <Image style={styles.gif_load} source={require("../img/carregando2.gif")} />
+            <Image style={styles.gif_load} source={require("../img/carregando3.gif")} />
 
         </View>
 

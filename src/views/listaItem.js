@@ -877,7 +877,7 @@ export default function ListaItem({route, navigation}){
                     renderCustomContent: () => (
                         <View style={{ flexDirection: "row", alignItems: "center", marginTop: -25 }}>
                             <Image
-                                source={require("../img/carregando.gif")}
+                                source={require("../img/carregando2.gif")}
                                 style={{width: 40, height: 40}}
                             />
                             <Text style={{ marginLeft: 8, color: "#fff", fontSize: 16 }}>
@@ -899,7 +899,7 @@ export default function ListaItem({route, navigation}){
                     renderCustomContent: () => (
                         <View style={{ flexDirection: "row", alignItems: "center", marginTop: -25 }}>
                             <Image
-                                source={require("../img/carregando.gif")}
+                                source={require("../img/carregando2.gif")}
                                 style={{width: 40, height: 40}}
                             />
                             <Text style={{ marginLeft: 8, color: "#fff", fontSize: 16 }}>
