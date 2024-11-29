@@ -433,7 +433,15 @@ export default function Editar_lista({route}){
 
                         <View style={styles.areaImg}>
 
-                            <Image style={styles.imgUsuario} source={{ uri: `${DATA_dono.foto_url}` }} />
+                            {DATA_dono.foto_url != null ? (
+
+                                <Image style={styles.imgUsuario} source={{ uri: `${DATA_dono.foto_url}` }} />
+
+                            ):(
+
+                                <Image style={styles.imgUsuario} source={{ uri: `${config.Foto_usuario_nulo}` }} />
+
+                            )}
 
                         </View>
 
