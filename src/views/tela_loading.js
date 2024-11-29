@@ -138,8 +138,8 @@ const styles = StyleSheet.create({
 
     gif_load:{
 
-        width: 100,
-        height: 100
+        width: 150,
+        height: 150
 
     }
 
