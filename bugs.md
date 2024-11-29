@@ -7,13 +7,6 @@
 - **Status**: 🔴 Aberto.
 - **Data de descoberta**: 21/11/24.
 
-## Gerenciar categorias
-
-- **Descrição**: Quando tem um número grande de categorias, o botão "adicionar" fica sobre o botão de exclusão
-- **Passos para reproduzir**: Adicionar várias categorias, e entrar na view de gerenciar categorias.
-- **Status**: 🔴 Aberto.
-- **Data de descoberta**: 15/11/24.
-
 ## Produto mais recorrente, no gráfico geral
 
 - **Descrição**: O produto mais recorrente, mostrado no gráfico geral, está sendo exibido incorretamente.
@@ -41,6 +34,13 @@
 - **Passos para reproduzir**: Pressionar o botão na view de listas.
 - **Status**: 🔴 Aberto.
 - **Data de descoberta**: 27/10/24.
+
+## Gerenciar categorias
+
+- **Descrição**: Quando tem um número grande de categorias, o botão "adicionar" fica sobre o botão de exclusão
+- **Passos para reproduzir**: Adicionar várias categorias, e entrar na view de gerenciar categorias.
+- **Status**: ✅ Fechado em 28/11/24.
+- **Data de descoberta**: 15/11/24.
 
 ## Nome da lista
 
