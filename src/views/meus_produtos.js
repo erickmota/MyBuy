@@ -1,5 +1,5 @@
 import React, {useState, useContext, useLayoutEffect, useCallback} from 'react';
-import { StyleSheet, Text, View, ScrollView, Image, TouchableWithoutFeedback, Modal, Button} from 'react-native';
+import { StyleSheet, Text, View, ScrollView, Image, TouchableWithoutFeedback, Modal, Button, Alert} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useNavigation } from '@react-navigation/native';
 import { UserContext } from '../context/user';
@@ -18,26 +18,26 @@ export default function Meus_produtos(){
     /* Contexto */
     const { DATAUser } = useContext(UserContext);
 
+    const [DATA, setData] = useState([]);
+    const [load_API, setLoadApi] = useState();
+
     /* Conexão com a API da página compras */
-    /* const carregar_API = useCallback(() => {
+    const carregar_API = useCallback(() => {
 
         setLoadApi(true);
-        fetch(`${config.URL_inicial_API}${DATAUser[0].id}/compras/${URL_API}`)
+        fetch(`${config.URL_inicial_API}${DATAUser[0].id}/meus_produtos`)
         .then(response => response.json())
         .then(data => {
             setData(data.data);
-            setVisible(false);
-            setModalVisible(false);
             setLoadApi(false);
-            hideMessage();
         })
         .catch(error => {
             console.error('Erro ao buscar dados da API:', error);
         });
 
-    }, [URL_API, DATAUser]); */
+    }, [DATAUser]);
 
-    /* useFocusEffect(
+    useFocusEffect(
 
         useCallback(() => {
 
@@ -47,44 +47,143 @@ export default function Meus_produtos(){
 
           };
           
-        }, [URL_API, DATAUser])
+        }, [DATAUser])
 
     );
- */
+
+    const apagar_produto = (id_produto) => {
+
+        const formData = new URLSearchParams();
+        formData.append('id_produto', id_produto);
+
+        fetch(`${config.URL_inicial_API}${DATAUser[0].id}/apaga_produto_usuario`, {
+        method: "POST",
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: formData.toString()
+        })
+        .then(response => response.json())
+        .then(data => {
+
+            carregar_API();
+    
+        })
+        .catch(errors => {
+        console.error('Erro ao enviar solicitação:', errors);
+        });
+
+    }
+
+    function confirma_apagar(id_produto, nome_produto){
+
+        Alert.alert(
+            "Apagar produto",
+            `Deseja mesmo apagar o item "${nome_produto}" de sua lista de produtos? Todos os itens nas listas, e dados nos relatórios de despesas ligados a ele, serão excluidos.`,
+            [
+                {
+                text: "Cancelar",
+                onPress: () => console.log("Cancelado"),
+                style: "cancel"
+                },
+                {
+                text: "Sim",
+                onPress: () => {
+
+                    // Ação de exclusão
+                    
+                    apagar_produto(id_produto);
+
+                }
+                }
+            ],
+            { cancelable: false }
+        );
+  
+    }
+
     return(
 
         <View style={styles.container}>
 
-            <View style={styles.item_lista}>
+            {load_API == true ? (
 
-                <View style={styles.area_foto}>
+                <View style={{flex: 1, justifyContent: "center", alignItems: "center"}}>
 
-                    <Image style={styles.imgProduto} source={{ uri: `${config.Foto_prod_nulo}` }} />
-
-                </View>
-
-                <View style={styles.area_nome}>
-
-                    <Text style={styles.nomeProduto}>
-
-                        Produto exemplo
-
-                    </Text>
+                    <Image style={styles.gif_load} source={require("../img/carregando.gif")} />
 
                 </View>
 
-                <View style={styles.area_btn_apagar}>
+            ):(
 
-                    <Icon
-                        name="delete-sweep"
-                        size={25}
-                        color={config.cor2}
-                        style={styles.iconApagar}
-                        />
+                DATA == false ? (
 
-                </View>
+                    <View style={{flex: 1, justifyContent: "center", alignItems: "center"}}>
 
-            </View>
+                        <Text>
+
+                            Nenhum produto encontrado
+
+                        </Text>
+
+                    </View>
+
+                ):(
+
+                    <ScrollView>
+
+                        {DATA.map((item, index, array)=>(
+
+                            <View key={item.id} style={[styles.item_lista, index === array.length - 1 ? {borderBottomWidth: 0}:null]}>
+
+                                <View style={styles.area_foto}>
+
+                                    {item.url_foto == null ? (
+
+                                        <Image style={styles.imgProduto} source={{ uri: `${config.Foto_prod_nulo}` }} />
+
+                                    ):(
+
+                                        <Image style={styles.imgProduto} source={{ uri: `${item.url_foto}` }} />
+
+                                    )}
+
+                                </View>
+
+                                <View style={styles.area_nome}>
+
+                                    <Text style={styles.nomeProduto}>
+
+                                        {item.nome}
+
+                                    </Text>
+
+                                </View>
+
+                                <View style={styles.area_btn_apagar}>
+
+                                    <TouchableWithoutFeedback onPress={()=> confirma_apagar(item.id, item.nome)}>
+
+                                        <Icon
+                                            name="delete-sweep"
+                                            size={25}
+                                            color={config.cor2}
+                                            style={styles.iconApagar}
+                                            />
+
+                                    </TouchableWithoutFeedback>
+
+                                </View>
+
+                            </View>
+
+                        ))}
+
+                    </ScrollView>
+                    
+                )
+                
+            )}
 
         </View>
 
@@ -103,7 +202,7 @@ const styles = StyleSheet.create({
     item_lista:{
 
         flexDirection: "row",
-        paddingVertical: 5,
+        paddingVertical: 10,
         borderBottomWidth: 1,
         borderColor: "#DDD"
 
@@ -132,16 +231,16 @@ const styles = StyleSheet.create({
 
     imgProduto:{
 
-        width: 45,
-        height: 45,
+        width: 40,
+        height: 40,
         borderRadius: 50,
-        marginLeft: 5
+        marginLeft: 10
 
     },
 
     iconApagar:{
 
-        marginRight: 5
+        marginRight: 10
 
     },
 
@@ -150,6 +249,13 @@ const styles = StyleSheet.create({
         fontSize: 15,
         marginLeft: 10
 
+    },
+
+    gif_load:{
+
+        width: 70,
+        height: 70
+  
     }
 
 })
