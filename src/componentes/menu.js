@@ -99,7 +99,7 @@ export default function Menu(){
 
                 </TouchableWithoutFeedback>
 
-                <TouchableWithoutFeedback onPress={() => {navigation.navigate("Listas")}}>
+                <TouchableWithoutFeedback onPress={() => {[navigation.navigate("Listas"), setSubMeusItens([false, 1, "menu-down", 0])]}}>
 
                     <View style={styles.areaItemMenu}>
 
@@ -212,7 +212,7 @@ export default function Menu(){
 
                 )}
 
-                <TouchableWithoutFeedback onPress={() => {navigation.navigate("Despesas")}}>
+                <TouchableWithoutFeedback onPress={() => {[navigation.navigate("Despesas"), setSubMeusItens([false, 1, "menu-down", 0])]}}>
 
                     <View style={[styles.areaItemMenu, {borderTopWidth: sub_meus_itens[3]}]}>
 
@@ -233,7 +233,7 @@ export default function Menu(){
 
                 </TouchableWithoutFeedback>
 
-                <TouchableWithoutFeedback onPress={() => {navigation.navigate("Categorias")}}>
+                <TouchableWithoutFeedback onPress={() => {[navigation.navigate("Categorias"), setSubMeusItens([false, 1, "menu-down", 0])]}}>
 
                     <View style={styles.areaItemMenu}>
 
@@ -254,7 +254,7 @@ export default function Menu(){
 
                 </TouchableWithoutFeedback>
 
-                <TouchableWithoutFeedback onPress={() => {navigation.navigate("Categorias")}}>
+                <TouchableWithoutFeedback onPress={() => {[navigation.navigate("Categorias"), setSubMeusItens([false, 1, "menu-down", 0])]}}>
 
                     <View style={styles.areaItemMenu}>
 
@@ -275,7 +275,7 @@ export default function Menu(){
 
                 </TouchableWithoutFeedback>
 
-                <TouchableWithoutFeedback onPress={()=>{[logout(), navigation.navigate("Login")]}}>
+                <TouchableWithoutFeedback onPress={()=>{[logout(), navigation.navigate("Login"), setSubMeusItens([false, 1, "menu-down", 0])]}}>
 
                     <View style={styles.areaItemMenu}>
 
