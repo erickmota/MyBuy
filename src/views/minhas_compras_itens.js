@@ -61,7 +61,15 @@ export default function Minhas_compras_itens({route}){
 
             <View style={styles.areaMercado}>
 
-                <Text>{mercado}</Text>
+                {mercado == null ? (
+
+                    <Text>Indisponível</Text>
+
+                ):(
+
+                    <Text>{mercado}</Text>
+                    
+                )}
 
             </View>
 

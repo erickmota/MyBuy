@@ -25,6 +25,7 @@ import Minhas_compras_itens from "./src/views/minhas_compras_itens"
 import Historico_lista from "./src/views/historico_lista"
 import Tela_loading from "./src/views/tela_loading.js"
 import Meus_produtos from "./src/views/meus_produtos.js"
+import Meus_mercados from "./src/views/meus_mercados.js"
 /* Despesas */
 import Despesas_categorias from "./src/views/pg-despesas/categoria.js"
 import Despesas_mercados from "./src/views/pg-despesas/mercados.js"
@@ -158,6 +159,19 @@ function DrawerNavigation() {
       <Drawer.Screen name="MeusProdutos" component={Meus_produtos}  options={{
 
         title: "Meus produtos",
+        headerTintColor: "#FFF",
+        headerStyle: {
+
+          backgroundColor: config.cor1,
+          borderWidth: 0,
+
+        }
+
+      }} />
+
+      <Drawer.Screen name="MeusMercados" component={Meus_mercados}  options={{
+
+        title: "Meus mercados",
         headerTintColor: "#FFF",
         headerStyle: {
 

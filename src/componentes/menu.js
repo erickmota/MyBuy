@@ -187,7 +187,7 @@ export default function Menu(){
 
                         </TouchableWithoutFeedback>
 
-                        <TouchableWithoutFeedback onPress={() => {navigation.navigate("MinhasCompras")}}>
+                        <TouchableWithoutFeedback onPress={() => {navigation.navigate("MeusMercados")}}>
 
                             <View style={[styles.areaItemMenu, {borderBottomWidth: 0}]}>
 

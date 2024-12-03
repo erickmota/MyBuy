@@ -11,7 +11,7 @@ import { showMessage, hideMessage } from 'react-native-flash-message';
 
 import config from '../config';
 
-export default function Meus_produtos(){
+export default function Meus_mercados(){
 
     const navigation = useNavigation();
 
@@ -23,14 +23,14 @@ export default function Meus_produtos(){
 
     /* Modal */
     const [modalVisible, setModalVisible] = useState(false);
-    const [id_produto, onChangeIdProduto] = useState(false);
-    const [nome_produto, onChangeNomeProduto] = useState("");
+    const [id_mercado, onChangeIdMercado] = useState(false);
+    const [nome_mercado, onChangeNomeMercado] = useState("");
 
     /* Conexão com a API da página compras */
     const carregar_API = useCallback(() => {
 
         setLoadApi(true);
-        fetch(`${config.URL_inicial_API}${DATAUser[0].id}/meus_produtos`)
+        fetch(`${config.URL_inicial_API}${DATAUser[0].id}/mercados`)
         .then(response => response.json())
         .then(data => {
             setData(data.data);
@@ -56,12 +56,12 @@ export default function Meus_produtos(){
 
     );
 
-    const apagar_produto = (id_produto) => {
+    const apagar_mercado = (id_mercado) => {
 
         const formData = new URLSearchParams();
-        formData.append('id_produto', id_produto);
+        formData.append('id_mercado', id_mercado);
 
-        fetch(`${config.URL_inicial_API}${DATAUser[0].id}/apaga_produto_usuario`, {
+        fetch(`${config.URL_inicial_API}${DATAUser[0].id}/apaga_mercado`, {
         method: "POST",
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
@@ -80,11 +80,11 @@ export default function Meus_produtos(){
 
     }
 
-    function confirma_apagar(id_produto, nome_produto){
+    function confirma_apagar(id_mercado, nome_mercado){
 
         Alert.alert(
             "Apagar produto",
-            `Deseja mesmo apagar o item "${nome_produto}" de sua lista de produtos? Todos os itens nas listas, e dados nos relatórios de despesas ligados a ele, serão excluidos.`,
+            `Deseja mesmo apagar o mercado "${nome_mercado}"?`,
             [
                 {
                 text: "Cancelar",
@@ -97,7 +97,7 @@ export default function Meus_produtos(){
 
                     // Ação de exclusão
                     
-                    apagar_produto(id_produto);
+                    apagar_mercado(id_mercado);
 
                 }
                 }
@@ -110,10 +110,10 @@ export default function Meus_produtos(){
     function atualiza_nome(){
 
         const formData = new URLSearchParams();
-        formData.append('id_produto', id_produto);
-        formData.append('nome_produto', nome_produto);
+        formData.append('id_mercado', id_mercado);
+        formData.append('nome_mercado', nome_mercado);
   
-        fetch(`${config.URL_inicial_API}${DATAUser[0].id}/altera_nome_meus_produtos`, {
+        fetch(`${config.URL_inicial_API}${DATAUser[0].id}/altera_nome_mercado`, {
         method: "POST",
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
@@ -165,8 +165,8 @@ export default function Meus_produtos(){
                         <View>
 
                           <TextInput style={[styles.input]}
-                            onChangeText={onChangeNomeProduto}
-                            value={nome_produto}
+                            onChangeText={onChangeNomeMercado}
+                            value={nome_mercado}
                             keyboardType="default"
                             maxLength={30}
                           />
@@ -205,7 +205,7 @@ export default function Meus_produtos(){
 
                         <Text style={{color: config.corTextoSecundario}}>
 
-                            Nenhum produto encontrado
+                            Nenhum mercado encontrado
 
                         </Text>
 
@@ -219,32 +219,18 @@ export default function Meus_produtos(){
 
                             <View key={item.id} style={[styles.item_lista, index === array.length - 1 ? {borderBottomWidth: 0}:null]}>
 
-                                <View style={styles.area_foto}>
-
-                                    {item.url_foto == null ? (
-
-                                        <Image style={styles.imgProduto} source={{ uri: `${config.Foto_prod_nulo}` }} />
-
-                                    ):(
-
-                                        <Image style={styles.imgProduto} source={{ uri: `${item.url_foto}` }} />
-
-                                    )}
-
-                                </View>
-
                                 <View style={styles.area_nome}>
 
                                     <TouchableOpacity activeOpacity={config.opacity_btn} onPress={()=>{
 
-                                        onChangeIdProduto(item.id),
-                                        onChangeNomeProduto(item.nome),
+                                        onChangeIdMercado(item.id),
+                                        onChangeNomeMercado(item.nome),
                                         setModalVisible(true);
 
 
                                     }}>
 
-                                        <Text style={styles.nomeProduto}>
+                                        <Text style={styles.nomeMercado}>
 
                                             {item.nome}
 
@@ -302,12 +288,6 @@ const styles = StyleSheet.create({
 
     },
 
-    area_foto:{
-
-        flex: 1
-
-    },
-
     area_nome:{
 
         flex: 5,
@@ -323,22 +303,13 @@ const styles = StyleSheet.create({
 
     },
 
-    imgProduto:{
-
-        width: 40,
-        height: 40,
-        borderRadius: 50,
-        marginLeft: 10
-
-    },
-
     iconApagar:{
 
         marginRight: 10
 
     },
 
-    nomeProduto:{
+    nomeMercado:{
 
         fontSize: 15,
         marginLeft: 10
