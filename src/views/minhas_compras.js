@@ -87,7 +87,7 @@ export default function Minhas_compras(){
                             onDismiss={closeMenu}
                             anchor={
                                 <Icon
-                                    name="filter-variant-plus"
+                                    name="filter-variant"
                                     size={25}
                                     color={"white"}
                                     style={{ marginRight: 10 }}

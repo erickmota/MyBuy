@@ -1,12 +1,4 @@
 # My Buy - Bugs
-
-## Horário aparecendo incorretamente
-
-- **Descrição**: Os minutos não estão aparecendo corretamente no histórico da lista.
-- **Passos para reproduzir**: Criar um registro no histórico de qualquer lista.
-- **Status**: 🔴 Aberto.
-- **Data de descoberta**: 30/11/24.
-
 ## Compra vazia
 
 - **Descrição**: Quando a lista está sendo carregada é possível clicar no botão para registrar uma compra.
@@ -41,6 +33,13 @@
 - **Passos para reproduzir**: Pressionar o botão na view de listas.
 - **Status**: 🔴 Aberto.
 - **Data de descoberta**: 27/10/24.
+
+## Horário aparecendo incorretamente
+
+- **Descrição**: Os minutos não estão aparecendo corretamente no histórico da lista.
+- **Passos para reproduzir**: Criar um registro no histórico de qualquer lista.
+- **Status**: ✅ Fechado em 03/12/24.
+- **Data de descoberta**: 30/11/24.
 
 ## Gerenciar categorias
 

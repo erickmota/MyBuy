@@ -2,17 +2,20 @@
 
 ## Pequenos ajustes
 
-- [ ] Substituir o ícones de filtros da View Minhas compras
+- [ ] Criar um novo produto em "produtos_usuarios", quando é efetuado o registro de compra, de um produto de terceiros.
+- [ ] Incluir verificação de existência do id da compra em: /1/produtos_compra/39
 - [ ] Incluir loading ao carregar itens comprados do histórico de listas
-- [ ] Inserir um botão de "adicionar usuário" na view de configurações da lista.
 - [ ] Definir limite de caracteres para os nomes dos produtos.
 - [ ] Definir limite de caracteres para os nomes dos usuários.
+- [x] Inserir um botão de "adicionar usuário" na view de configurações da lista.
+- [x] Substituir o ícones de filtros da View Minhas compras
 - [x] Definir o key stractor nos mercados retornados no modal de registro de compras.
 - [x] Alterar título da View produtos_itens
 
 ## Funcionalidades
 
-- [ ] View meus mercados
+- [ ] Página web para cadastro de novos produtos de exemplo
+- [ ] Cadastro / Confirmação usuários
 - [ ] View configurações
 - [ ] View Sobre
 - [ ] View perfil (quando o usuário clicar no nome, no menu.)
@@ -21,6 +24,7 @@
 - [ ] Botão para imprimir relatório de compra
 - [ ] Salvar última lista vizualizada
 - [ ] Criar máscara para o valor, em todos os módulos
+- [x] View meus mercados
 - [x] View Meus Produtos rastreados
 - [x] Entrar sem fazer login, quando conectado
 - [x] Adicionar seção comprados, na lista.

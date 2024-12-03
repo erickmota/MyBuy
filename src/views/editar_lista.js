@@ -356,9 +356,6 @@ export default function Editar_lista({route}){
 
                         </View>
 
-                        {/* <Text style={styles.modalText}>Este é um modal!</Text>
-                        <Button title="Fechar" onPress={() => setModalVisible(false)} /> */}
-
                     </View>
 
                 </View>
@@ -400,28 +397,23 @@ export default function Editar_lista({route}){
 
                     <View style={styles.areaIcon}>
 
-                        <TouchableWithoutFeedback onPress={()=> {
-                            
-                                if(DATA_confirmacoes.dono_lista == true){
+                        {DATA_confirmacoes.dono_lista == true && (
 
-                                    setModalVisible(true)
-
-                                }
-                                
-                            }}>
+                            <TouchableWithoutFeedback onPress={()=> setModalVisible(true)}>
 
                             <View style={styles.BtnIconShare}>
 
-                                <Icon
-                                    name="share-variant"
-                                    size={17}
-                                    color={"white"}
-                                    style={styles.iconShare}
-                                />
+                                <Text style={{color: "#FFF"}}>
+
+                                    Adicionar
+
+                                </Text>
 
                             </View>
 
-                        </TouchableWithoutFeedback>
+                            </TouchableWithoutFeedback>
+
+                        )}
 
                     </View>
 
@@ -612,7 +604,7 @@ const styles = StyleSheet.create({
 
         backgroundColor: config.cor2,
         padding: 5,
-        borderRadius: 50
+        borderRadius: 8
 
     },
 
