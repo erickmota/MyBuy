@@ -148,7 +148,22 @@ export default function ListaItem({route, navigation}){
 
             setNomeLista(TituloLista);
 
-            navigation.setOptions({ title: TituloLista });
+            navigation.setOptions({
+
+                headerTitle: () => (
+                    <Text 
+                      onPress={() => navigation.navigate("Listas")} 
+                      style={{
+                        color: '#FFF',
+                        fontSize: 18,
+                        fontWeight: 'bold',
+                      }}
+                    >
+                      {TituloLista}
+                    </Text>
+                  ),
+
+            });
 
         }
 

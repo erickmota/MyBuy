@@ -112,7 +112,7 @@ export default function Menu(){
 
                         <Text style={styles.itemMenu}>
 
-                            Minhas listas
+                            Listas
 
                         </Text>
 
@@ -133,7 +133,7 @@ export default function Menu(){
 
                         <Text style={styles.itemMenu}>
 
-                            Meus Itens
+                            Mais registros
 
                         </Text>
 
@@ -158,7 +158,7 @@ export default function Menu(){
 
                                 <Text style={styles.itemMenu}>
 
-                                    Minhas compras
+                                    Compras
 
                                 </Text>
 
@@ -179,7 +179,7 @@ export default function Menu(){
 
                                 <Text style={styles.itemMenu}>
 
-                                    Meus produtos
+                                    Produtos
 
                                 </Text>
 
@@ -200,7 +200,7 @@ export default function Menu(){
 
                                 <Text style={styles.itemMenu}>
 
-                                    Meus mercados
+                                    Mercados
 
                                 </Text>
 
@@ -225,7 +225,7 @@ export default function Menu(){
 
                         <Text style={styles.itemMenu}>
 
-                            Minhas despesas
+                            Despesas
 
                         </Text>
 
@@ -246,7 +246,7 @@ export default function Menu(){
 
                         <Text style={styles.itemMenu}>
 
-                            Minhas categorias
+                            Categorias
 
                         </Text>
 

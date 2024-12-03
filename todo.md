@@ -14,6 +14,7 @@
 
 ## Funcionalidades
 
+- [ ] Editar dados da compra
 - [ ] Página web para cadastro de novos produtos de exemplo
 - [ ] Cadastro / Confirmação usuários
 - [ ] View configurações
