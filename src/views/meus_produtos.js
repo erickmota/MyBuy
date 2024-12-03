@@ -1,5 +1,5 @@
 import React, {useState, useContext, useLayoutEffect, useCallback} from 'react';
-import { StyleSheet, Text, View, ScrollView, Image, TouchableWithoutFeedback, Modal, Button, Alert} from 'react-native';
+import { StyleSheet, Text, View, ScrollView, Image, TouchableWithoutFeedback, Modal, Button, Alert, TextInput, TouchableOpacity} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { useNavigation } from '@react-navigation/native';
 import { UserContext } from '../context/user';
@@ -20,6 +20,12 @@ export default function Meus_produtos(){
 
     const [DATA, setData] = useState([]);
     const [load_API, setLoadApi] = useState();
+
+    /* Modal */
+    const [modalVisible, setModalVisible] = useState(false);
+    const [input, onChangeInput] = useState();
+    const [id_produto, onChangeIdProduto] = useState(false);
+    const [nome_produto, onChangeNomeProduto] = useState("");
 
     /* Conexão com a API da página compras */
     const carregar_API = useCallback(() => {
@@ -102,9 +108,87 @@ export default function Meus_produtos(){
   
     }
 
+    function atualiza_nome(){
+
+        const formData = new URLSearchParams();
+        formData.append('id_produto', id_produto);
+        formData.append('nome_produto', nome_produto);
+  
+        fetch(`${config.URL_inicial_API}${DATAUser[0].id}/altera_nome_meus_produtos`, {
+        method: "POST",
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: formData.toString()
+        })
+        .then(response => response.json())
+        .then(data => {
+  
+          carregar_API();
+          setModalVisible(false);
+    
+        })
+        .catch(errors => {
+        console.error('Erro ao enviar solicitação:', errors);
+        });
+  
+    }
+
     return(
 
         <View style={styles.container}>
+
+            <Modal
+                animationType="fade" // ou 'fade', 'none'
+                transparent={true}    // Define se o fundo será transparente
+                visible={modalVisible}
+                onRequestClose={() => setModalVisible(false)} // Fechar modal ao clicar no botão 'voltar'
+            >
+
+                <TouchableWithoutFeedback onPress={() => setModalVisible(false)}>
+
+                <View style={styles.centeredView}>
+
+                    <View style={styles.modalView}>
+
+                      <View style={styles.corpoModal}>
+
+                        <View>
+
+                          <Text>
+
+                            Alterar nome
+
+                          </Text>
+
+                        </View>
+
+                        <View>
+
+                          <TextInput style={[styles.input]}
+                            onChangeText={onChangeNomeProduto}
+                            value={nome_produto}
+                            keyboardType="default"
+                            maxLength={30}
+                          />
+
+                        </View>
+
+                        <View style={styles.AreaBtnConfirmar}>
+
+                            <Button onPress={()=> atualiza_nome()} color={config.cor2} title="Alterar  ->"/>
+
+                        </View>
+
+                      </View>
+                      
+                    </View>
+
+                </View>
+
+                </TouchableWithoutFeedback>
+
+            </Modal>
 
             {load_API == true ? (
 
@@ -120,7 +204,7 @@ export default function Meus_produtos(){
 
                     <View style={{flex: 1, justifyContent: "center", alignItems: "center"}}>
 
-                        <Text>
+                        <Text style={{color: config.corTextoSecundario}}>
 
                             Nenhum produto encontrado
 
@@ -152,11 +236,22 @@ export default function Meus_produtos(){
 
                                 <View style={styles.area_nome}>
 
-                                    <Text style={styles.nomeProduto}>
+                                    <TouchableOpacity activeOpacity={config.opacity_btn} onPress={()=>{
 
-                                        {item.nome}
+                                        onChangeIdProduto(item.id),
+                                        onChangeNomeProduto(item.nome),
+                                        setModalVisible(true);
 
-                                    </Text>
+
+                                    }}>
+
+                                        <Text style={styles.nomeProduto}>
+
+                                            {item.nome}
+
+                                        </Text>
+
+                                    </TouchableOpacity>
 
                                 </View>
 
@@ -256,6 +351,58 @@ const styles = StyleSheet.create({
         width: 70,
         height: 70
   
-    }
+    },
+
+    /* Modal */
+
+    centeredView: {
+
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'rgba(0,0,0,0.5)', // Fundo semitransparente
+
+      },
+
+      modalView: {
+
+        width: 300,
+        padding: 20,
+        backgroundColor: 'white',
+        borderRadius: 5,
+        shadowColor: '#000',
+        shadowOffset: {
+          width: 0,
+          height: 2,
+
+        },
+
+        shadowOpacity: 0.25,
+        shadowRadius: 4,
+        elevation: 5,
+
+      },
+
+      input:{
+
+        borderBottomWidth: 1,
+        borderBottomColor: "#CCC",
+        marginTop: 20,
+        fontSize: config.tamanhoTextosInputs,
+        color: "#777",
+
+      },
+
+      corpoModal:{
+
+        flexDirection: "column"
+
+      },
+
+      AreaBtnConfirmar:{
+
+        marginTop: 20
+
+    },
 
 })
