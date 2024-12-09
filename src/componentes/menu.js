@@ -120,6 +120,27 @@ export default function Menu(){
 
                 </TouchableWithoutFeedback>
 
+                <TouchableWithoutFeedback onPress={() => {[navigation.navigate("Categorias"), setSubMeusItens([false, 1, "menu-down", 0])]}}>
+
+                    <View style={styles.areaItemMenu}>
+
+                        <Icon
+                            name="list-status"
+                            style={styles.iconMenu}
+                            size={25}
+                            color={"#CCC"}
+                            />
+
+                        <Text style={styles.itemMenu}>
+
+                            Categorias
+
+                        </Text>
+
+                    </View>
+
+                </TouchableWithoutFeedback>
+
                 <TouchableWithoutFeedback onPress={() => {define_meus_itens()}}>
 
                     <View style={[styles.areaItemMenu, {borderBottomWidth: sub_meus_itens[1]}]}>
@@ -226,27 +247,6 @@ export default function Menu(){
                         <Text style={styles.itemMenu}>
 
                             Despesas
-
-                        </Text>
-
-                    </View>
-
-                </TouchableWithoutFeedback>
-
-                <TouchableWithoutFeedback onPress={() => {[navigation.navigate("Categorias"), setSubMeusItens([false, 1, "menu-down", 0])]}}>
-
-                    <View style={styles.areaItemMenu}>
-
-                        <Icon
-                            name="list-status"
-                            style={styles.iconMenu}
-                            size={25}
-                            color={"#CCC"}
-                            />
-
-                        <Text style={styles.itemMenu}>
-
-                            Categorias
 
                         </Text>
 
