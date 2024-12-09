@@ -23,6 +23,81 @@ export default function Minhas_compras_itens({route}){
     /* Estados */
     const [DATA, setData] = useState([]);
 
+    const navigation = useNavigation();
+
+    useLayoutEffect(()=>{
+
+        navigation.setOptions({
+            
+            headerRight: () => (
+                <Icon
+                  name="delete-sweep"
+                  size={22}
+                  color={"white"}
+                  style={{marginRight: 10}}
+                  onPress={()=>
+
+                    btn_apagar()
+                    
+                  }
+                  />
+              ),
+
+        })
+
+    },[])
+
+    const apagar_compra = () => {
+
+        const formData = new URLSearchParams();
+        formData.append('id_compra', id_compra);
+
+        fetch(`${config.URL_inicial_API}${DATAUser[0].id}/apaga_compra`, {
+        method: "POST",
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: formData.toString()
+        })
+        .then(response => response.json())
+        .then(data => {
+
+            navigation.navigate("MinhasCompras");
+    
+        })
+        .catch(errors => {
+        console.error('Erro ao enviar solicitação:', errors);
+        });
+
+    }
+
+    const btn_apagar = () => {
+
+        Alert.alert(
+            "Excluir compra",
+            `A compra será excluida do histórico e desespesas. Deseja continuar?`,
+            [
+              {
+                text: "Cancelar",
+                onPress: () => console.log("Cancelado"),
+                style: "cancel"
+              },
+              {
+                text: "Sim",
+                onPress: () => {
+
+                  // Ação de exclusão
+                  
+                  apagar_compra();
+
+                }
+              }
+            ],
+            { cancelable: false }
+        );
+
+    }
+
     /* Conexão com a API da página compras */
     const carregar_API = useCallback(() => {
 
