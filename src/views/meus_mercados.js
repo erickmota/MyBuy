@@ -282,7 +282,7 @@ const styles = StyleSheet.create({
     item_lista:{
 
         flexDirection: "row",
-        paddingVertical: 10,
+        paddingVertical: 15,
         borderBottomWidth: 1,
         borderColor: "#DDD"
 

@@ -16,7 +16,6 @@
 
 - [ ] Inserir vizualização do valor total por período, nas despesas.
 - [ ] Ao registrar uma compra, além de qtd e preço, o usuário também pode alterar o tipo de unidade.
-- [ ] Editar dados da compra
 - [ ] Página web para cadastro de novos produtos de exemplo
 - [ ] Cadastro / Confirmação usuários
 - [ ] View configurações

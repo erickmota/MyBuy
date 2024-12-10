@@ -1453,7 +1453,7 @@ export default function ListaItem({route, navigation}){
 
                                 <Text style={styles.textItemVazio}>
 
-                                    Nada encontrado!
+                                    Carrinho vazio!
 
                                 </Text>
 

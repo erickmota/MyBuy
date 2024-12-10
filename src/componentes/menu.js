@@ -120,12 +120,12 @@ export default function Menu(){
 
                 </TouchableWithoutFeedback>
 
-                <TouchableWithoutFeedback onPress={() => {[navigation.navigate("Categorias"), setSubMeusItens([false, 1, "menu-down", 0])]}}>
+                <TouchableWithoutFeedback onPress={() => {[navigation.navigate("MinhasCompras"), setSubMeusItens([false, 1, "menu-down", 0])]}}>
 
                     <View style={styles.areaItemMenu}>
 
                         <Icon
-                            name="list-status"
+                            name="cart"
                             style={styles.iconMenu}
                             size={25}
                             color={"#CCC"}
@@ -133,7 +133,7 @@ export default function Menu(){
 
                         <Text style={styles.itemMenu}>
 
-                            Categorias
+                            Compras
 
                         </Text>
 
@@ -147,14 +147,14 @@ export default function Menu(){
 
                         <Icon
                             name={sub_meus_itens[2]}
-                            style={[styles.iconMenu, {marginLeft: 3, marginRight: 19}]}
+                            style={[styles.iconMenu, {marginLeft: 3, marginRight: 18}]}
                             size={30}
                             color={"#CCC"}
                             />
 
                         <Text style={styles.itemMenu}>
 
-                            Mais registros
+                            Meus itens
 
                         </Text>
 
@@ -166,12 +166,12 @@ export default function Menu(){
 
                     <View style={styles.itens_meus_itens}>
 
-                        <TouchableWithoutFeedback onPress={() => {navigation.navigate("MinhasCompras")}}>
+                        <TouchableWithoutFeedback onPress={() => {navigation.navigate("Categorias")}}>
 
                             <View style={[styles.areaItemMenu, {borderBottomWidth: 0}]}>
 
                                 <Icon
-                                    name="cart"
+                                    name="list-status"
                                     style={styles.iconMenu}
                                     size={25}
                                     color={"#CCC"}
@@ -179,7 +179,7 @@ export default function Menu(){
 
                                 <Text style={styles.itemMenu}>
 
-                                    Compras
+                                    Categorias
 
                                 </Text>
 
