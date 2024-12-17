@@ -154,7 +154,7 @@ export default function Menu(){
 
                         <Text style={styles.itemMenu}>
 
-                            Meus itens
+                            Meus registros
 
                         </Text>
 
