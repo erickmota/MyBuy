@@ -24,8 +24,8 @@ export default function AddItem({route}){
     /* Estados */
 
     const [campo_nome, onChangecampo_nome] = useState('');
-    const [qtd, onChangeQtd] = useState('');
-    const [valor, onChangeValor] = useState('');
+    const [qtd, onChangeQtd] = useState(0);
+    const [valor, onChangeValor] = useState(0);
     const [selectedTipo, setSelectedTipo] = useState("1");
     const [selectedCategoria, setSelectedCategoria] = useState("option1");
     const [observacao, setObservacao] = useState("");
