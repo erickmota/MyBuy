@@ -29,6 +29,55 @@ export default function Cadastro(){
 
     }
 
+    function cadastrar_usuario(){
+
+        const formData = new URLSearchParams();
+        formData.append('nome', nome);
+        formData.append('email', email);
+        formData.append('senha', senha);
+        formData.append('confirma_senha', confirma_senha);
+
+        fetch(`${config.URL_inicial_API}/cadastrar`, {
+        method: "POST",
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: formData.toString()
+        })
+        .then(response => response.json())
+        .then(data => {
+
+            if(data.data == false){
+
+                showMessage({
+                    message: "Cadastro não realizado!",
+                    description: `${data.msg}`,
+                    type: "danger", // ou "danger", "info", etc.
+                    icon: "danger",
+                    duration: 3000
+                });
+
+            }else{
+
+                showMessage({
+                    message: "Cadastro realizado com sucesso!",
+                    description: "Por favor, faça o login para continuar.",
+                    type: "success", // ou "danger", "info", etc.
+                    icon: "success",
+                    duration: 4000
+                });
+
+                navigation.navigate("Login");
+
+            }
+    
+        })
+        .catch(errors => {
+        console.error('Erro ao enviar solicitação:', errors);
+        });
+
+    }
+
     const verifica_form = () => {
 
         if(nome.trim() == "" || email.trim() == "" || senha.trim() == "" || confirma_senha.trim() == ""){
@@ -48,8 +97,7 @@ export default function Cadastro(){
         if(!validarEmail(email)){
 
             showMessage({
-                title: "E-mail",
-                message: "Por favor, insira um e-mail válido!",
+                message: "Por favor, insira um endereço de e-mail válido!",
                 type: "warning", // ou "danger", "info", etc.
                 icon: "warning",
                 duration: 3000
@@ -62,7 +110,6 @@ export default function Cadastro(){
         if(senha != confirma_senha){
 
             showMessage({
-                title: "Senha",
                 message: "Senha e confirmar senha não conferem!",
                 type: "warning", // ou "danger", "info", etc.
                 icon: "warning",
@@ -72,6 +119,8 @@ export default function Cadastro(){
             return false;
 
         }
+
+        cadastrar_usuario();
 
     }
 
