@@ -1,19 +1,79 @@
 import React, {useState} from "react"
 import { View, Text, StyleSheet, TextInput, useWindowDimensions, TouchableNativeFeedback } from "react-native"
 import { useNavigation } from '@react-navigation/native';
+import FlashMessage from 'react-native-flash-message';
+import { showMessage, hideMessage } from 'react-native-flash-message';
 
 import config from "../config";
 
 export default function Cadastro(){
 
     /* Use state dos inputs */
-    const [number, onChangeNumber] = React.useState('');
+    const [nome, onChangeNome] = React.useState('');
+    const [email, onChangeEmail] = React.useState('');
+    const [senha, onChangeSenha] = React.useState('');
+    const [confirma_senha, onChangeConfirmaSenha] = React.useState('');
+
+    const [placeObrigatorio, setPlaceObrigatorio] = useState("");
 
     /* Tamanho da tela */
     const larguraTela = useWindowDimensions().width;
     const larguraEspacoLogin = larguraTela * 0.85;
 
     const navigation = useNavigation();
+
+    function validarEmail(email) {
+        
+        const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return regex.test(email);
+
+    }
+
+    const verifica_form = () => {
+
+        if(nome.trim() == "" || email.trim() == "" || senha.trim() == "" || confirma_senha.trim() == ""){
+
+            setPlaceObrigatorio("*");
+
+            setTimeout(() => {
+
+                setPlaceObrigatorio("");
+
+            }, 3000)
+
+            return false
+
+        }
+
+        if(!validarEmail(email)){
+
+            showMessage({
+                title: "E-mail",
+                message: "Por favor, insira um e-mail válido!",
+                type: "warning", // ou "danger", "info", etc.
+                icon: "warning",
+                duration: 3000
+            });
+
+            return false;
+
+        }
+
+        if(senha != confirma_senha){
+
+            showMessage({
+                title: "Senha",
+                message: "Senha e confirmar senha não conferem!",
+                type: "warning", // ou "danger", "info", etc.
+                icon: "warning",
+                duration: 3000
+            });
+
+            return false;
+
+        }
+
+    }
 
     return(
 
@@ -32,8 +92,11 @@ export default function Cadastro(){
                         </Text>
 
                         <TextInput style={styles.input}
-                        onChangeText={onChangeNumber}
-                        value={number}
+                        onChangeText={onChangeNome}
+                        placeholder={placeObrigatorio}
+                        placeholderTextColor={"red"}
+                        value={nome}
+                        maxLength={25}
                         keyboardType="default"
                         />
 
@@ -44,9 +107,12 @@ export default function Cadastro(){
                         </Text>
 
                         <TextInput style={styles.input}
-                        onChangeText={onChangeNumber}
-                        value={number}
-                        keyboardType="default"
+                        onChangeText={onChangeEmail}
+                        placeholder={placeObrigatorio}
+                        placeholderTextColor={"red"}
+                        value={email}
+                        maxLength={254}
+                        keyboardType="email-address"
                         />
 
                         <Text style={[styles.titulo, styles.tituloSeguinte]}>
@@ -56,8 +122,12 @@ export default function Cadastro(){
                         </Text>
 
                         <TextInput style={styles.input}
-                        onChangeText={onChangeNumber}
-                        value={number}
+                        onChangeText={onChangeSenha}
+                        placeholder={placeObrigatorio}
+                        placeholderTextColor={"red"}
+                        value={senha}
+                        maxLength={128}
+                        secureTextEntry={true}
                         keyboardType="default"
                         />
 
@@ -68,8 +138,12 @@ export default function Cadastro(){
                         </Text>
 
                         <TextInput style={styles.input}
-                        onChangeText={onChangeNumber}
-                        value={number}
+                        onChangeText={onChangeConfirmaSenha}
+                        placeholder={placeObrigatorio}
+                        placeholderTextColor={"red"}
+                        value={confirma_senha}
+                        maxLength={128}
+                        secureTextEntry={true}
                         keyboardType="default"
                         />
 
@@ -93,15 +167,19 @@ export default function Cadastro(){
 
                             </TouchableNativeFeedback>
 
-                            <View style={[styles.btnNativo, styles.btnEntrar]}>
+                            <TouchableNativeFeedback onPress={()=>verifica_form()}>
 
-                                <Text style={styles.textBtn}>
+                                <View style={[styles.btnNativo, styles.btnEntrar]}>
 
-                                    CADASTRAR
+                                    <Text style={styles.textBtn}>
 
-                                </Text>
+                                        CADASTRAR
 
-                            </View>
+                                    </Text>
+
+                                </View>
+
+                            </TouchableNativeFeedback>
 
                         </View>
 
