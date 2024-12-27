@@ -18,8 +18,7 @@ export default function Login(){
     const [email, onChangeEmail] = useState('');
     const [senha, onChangeSenha] = useState('');
 
-    /* Estado para alterar a cor dos inputs */
-    const [borda, changeBorda] = useState({});
+    const [placeObrigatorio, setPlaceObrigatorio] = useState("");
 
     /* Tamanho da tela */
     const larguraTela = useWindowDimensions().width;
@@ -29,13 +28,15 @@ export default function Login(){
 
         if(email.trim() === "" || senha.trim() === ""){
 
-            changeBorda({backgroundColor: "#f0d5da", borderBottomColor: "red"});
+            setPlaceObrigatorio("*");
 
             setTimeout(() => {
 
-                changeBorda({borderBottomColor: "#CCC", borderBottomWidth: 1});
+                setPlaceObrigatorio("");
 
             }, 3000)
+
+            return false
 
         }else{
 
@@ -63,9 +64,11 @@ export default function Login(){
 
                         </Text>
 
-                        <TextInput style={[styles.input, {...borda}]}
+                        <TextInput style={[styles.input]}
                         onChangeText={onChangeEmail}
                         value={email}
+                        placeholder={placeObrigatorio}
+                        placeholderTextColor={"red"}
                         required
                         keyboardType="email-address"
                         />
@@ -76,9 +79,11 @@ export default function Login(){
 
                         </Text>
 
-                        <TextInput style={[styles.input, {...borda}]}
+                        <TextInput style={[styles.input]}
                         onChangeText={onChangeSenha}
                         value={senha}
+                        placeholder={placeObrigatorio}
+                        placeholderTextColor={"red"}
                         required
                         secureTextEntry={true}
                         keyboardType="default"
