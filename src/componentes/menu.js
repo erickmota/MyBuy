@@ -75,7 +75,7 @@ export default function Menu(){
 
             <View style={styles.parte2}>
 
-                <TouchableWithoutFeedback onPress={() => {navigation.navigate("Listas")}}>
+                <TouchableWithoutFeedback onPress={() => {navigation.navigate("Perfil")}}>
 
                     <View style={styles.areaItemMenu}>
 

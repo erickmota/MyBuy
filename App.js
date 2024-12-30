@@ -26,6 +26,7 @@ import Historico_lista from "./src/views/historico_lista"
 import Tela_loading from "./src/views/tela_loading.js"
 import Meus_produtos from "./src/views/meus_produtos.js"
 import Meus_mercados from "./src/views/meus_mercados.js"
+import Perfil from "./src/views/perfil.js"
 /* Despesas */
 import Despesas_categorias from "./src/views/pg-despesas/categoria.js"
 import Despesas_mercados from "./src/views/pg-despesas/mercados.js"
@@ -133,6 +134,19 @@ function DrawerNavigation() {
       <Drawer.Screen name="ListaItem" component={ListaItem}  options={{
 
         title: "Lista Item",
+        headerTintColor: "#FFF",
+        headerStyle: {
+
+          backgroundColor: config.cor1,
+          borderWidth: 0,
+
+        }
+
+      }} />
+
+      <Drawer.Screen name="Perfil" component={Perfil}  options={{
+
+        title: "Meu Perfil",
         headerTintColor: "#FFF",
         headerStyle: {
 
