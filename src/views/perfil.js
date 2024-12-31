@@ -1,9 +1,10 @@
 import React, {useState, useEffect, useContext} from "react"
-import { View, Text, StyleSheet, TextInput, useWindowDimensions, TouchableNativeFeedback, StatusBar, Image} from "react-native"
+import { View, Text, StyleSheet, TextInput, useWindowDimensions, TouchableNativeFeedback, StatusBar, Image, TouchableWithoutFeedback} from "react-native"
 import { useNavigation } from '@react-navigation/native';
 import * as SQLite from "expo-sqlite"
 import { UserContext } from '../context/user';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import * as ImagePicker from 'expo-image-picker';
 
 import config from "../config";
 
@@ -27,13 +28,93 @@ export default function Perfil(){
 
     },[DATAUser])
 
+    const selectImage = async () => {
+        // Pedir permissão para acessar a galeria
+        const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
+      
+        if (permissionResult.granted === false) {
+          alert('Para acessar a galeria de imagens do seu aparelho, precisamos da permissão!');
+          return;
+        }
+      
+        // Abrir a galeria para selecionar uma imagem
+        const result = await ImagePicker.launchImageLibraryAsync({
+          mediaTypes: ImagePicker.MediaTypeOptions.Images,
+          quality: 0,
+        });
+      
+        if (!result.canceled) {
+            const image = result.assets[0]; // Exemplo: {uri, width, height, fileName}
+            console.log(image);
+            await uploadImage(image); // Passar a imagem para a função de upload
+        }
+    };
+
+    const uploadImage = async (image) => {
+        const formData = new FormData();
+        formData.append('file', {
+          uri: image.uri,
+          name: image.fileName || 'photo.jpg',
+          type: 'image/jpeg', // Altere o tipo conforme necessário
+        });
+      
+        try {
+          const response = await fetch(`${config.URL_inicial_API}${DATAUser[0].id}/upload_img_user`, {
+            method: 'POST',
+            body: formData,
+            headers: {
+              'Content-Type': 'multipart/form-data',
+            },
+          });
+      
+          const data = await response.json();
+          console.log(data);
+        } catch (error) {
+          console.error('Erro ao enviar imagem:', error);
+        }
+    };
+
+    /* const uploadImage = async (image) => {
+        const formData = new FormData();
+        formData.append('file', {
+          uri: image.uri,
+          name: image.fileName || 'photo.jpg',
+          type: 'image/jpeg', // Altere o tipo conforme necessário
+        });
+      
+        try {
+          const response = await fetch(`${config.URL_inicial_API}${DATAUser[0].id}/upload_img_user`, {
+            method: 'POST',
+            body: formData,
+            headers: {
+              'Content-Type': 'multipart/form-data',
+            },
+          });
+   
+          // Registrar a resposta como texto para verificar o erro
+          const text = await response.text(); 
+          console.log('Resposta do servidor:', text);
+   
+          // Agora, tente interpretar como JSON, se for uma resposta válida
+          const data = JSON.parse(text); 
+          console.log(data);
+        } catch (error) {
+          console.error('Erro ao enviar imagem:', error);
+        }
+    }; */
+   
+
     return(
 
         <View style={styles.container}>
 
             <View style={styles.area_foto}>
 
-                <Image style={styles.img_user} source={{ uri: `${config.Foto_usuario_nulo}` }} />
+                <TouchableWithoutFeedback onPress={()=> selectImage()}>
+
+                    <Image style={styles.img_user} source={{ uri: `${config.Foto_usuario_nulo}` }} />
+
+                </TouchableWithoutFeedback>
 
             </View>
 
