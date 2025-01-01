@@ -15,21 +15,28 @@ export default function Perfil(){
 
     /* Contexto */
     const { DATAUser } = useContext(UserContext);
+    const { atualizar_foto_local } = useContext(UserContext);
 
     const [DATA, setData] = useState([]);
+    const [db, setDbLocal] = useState(null);
 
-    /* useEffect(()=>{
+    /* Abrindo o Banco de dados */
+    useEffect(()=>{
 
-        fetch(`${config.URL_inicial_API}${DATAUser[0].id}/perfil`)
-        .then(response => response.json())
-        .then(data => {
-            setData(data.data);
-        })
-        .catch(error => {
-            console.error('Erro ao buscar dados da API:', error);
-        });
+        try {
 
-    },[DATAUser]) */
+            const db = SQLite.openDatabase("mybuy.db");
+            setDbLocal(db);
+
+            console.log("Sucesso ao abrir o banco");
+            
+        } catch (error) {
+            
+            console.error("conexão com o banco de dados local, falhou", error);
+
+        }
+
+    },[])
 
     const carregar_API = useCallback(()=>{
 
@@ -37,12 +44,19 @@ export default function Perfil(){
         .then(response => response.json())
         .then(data => {
             setData(data.data);
+            atualiza_foto(data.data[0].foto_url)
         })
         .catch(error => {
             console.error('Erro ao buscar dados da API:', error);
         });
         
-    }, [DATAUser])
+    }, [])
+
+    function atualiza_foto(url){
+
+        atualizar_foto_local(url);
+
+    }
 
     const selectImage = async () => {
         // Pedir permissão para acessar a galeria
@@ -96,9 +110,12 @@ export default function Perfil(){
                 duration: 3000
             });
 
-          }
+          }else{
 
-          carregar_API();
+            carregar_API();
+
+          }
+          
         } catch (error) {
           console.error('Erro ao enviar imagem:', error);
 
@@ -154,7 +171,7 @@ export default function Perfil(){
 
             };
             
-        }, [carregar_API, DATAUser])
+        }, [])
 
     );
 
@@ -168,7 +185,7 @@ export default function Perfil(){
 
                     <View style={styles.area_foto}>
 
-                        <TouchableWithoutFeedback onPress={()=> selectImage()}>
+                        <TouchableWithoutFeedback on onPress={()=> selectImage()}>
 
                             {item.foto_url == null?(
 

@@ -74,9 +74,39 @@ export const UserProvider = ({children}) => {
 
     }
 
+    function atualizar_foto_local(url){
+
+        if (db) {
+            db.transaction((tx) => {
+                tx.executeSql(
+                    `UPDATE usuarios SET foto_url='${url}'`,
+                    [],
+                    ()=>{
+
+                        setData((prevData) => {
+                            if (prevData && prevData.length > 0) {
+                                return [{ ...prevData[0], foto_url: url }];
+                            }
+                            return [{ foto_url: url }];
+                        });
+        
+                    console.log("Sucesso ao atualizar a foto local");
+        
+                    },
+                    (_, error)=>{
+        
+                    console.error("Erro ao atualizar a foto local", error);
+        
+                    }
+                );
+            });
+        }
+
+    }
+
     return(
 
-        <UserContext.Provider value={{DATAUser, login, logout}}>
+        <UserContext.Provider value={{DATAUser, login, logout, atualizar_foto_local}}>
             
             {children}
             

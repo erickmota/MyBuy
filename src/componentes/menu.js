@@ -17,6 +17,7 @@ export default function Menu(){
     const [db, setDbLocal] = useState(null);
 
     const [sub_meus_itens, setSubMeusItens] = useState([false, 1, "menu-down", 0]);
+    const [foto, setFoto] = useState(null);
 
     /* Contexto */
     const { DATAUser } = useContext(UserContext);
@@ -37,6 +38,12 @@ export default function Menu(){
         }
 
     },[])
+
+    useEffect(()=>{
+
+        setFoto(DATAUser[0].foto_url);
+
+    },[DATAUser])
 
     const define_meus_itens = () => {
 
@@ -81,7 +88,7 @@ export default function Menu(){
 
                         {DATAUser[0].foto_url && DATAUser[0].foto_url != "null" ? (
 
-                            <Image style={styles.imgUsuario} source={{ uri: `${config.URL_inicial_API}${DATAUser[0].foto_url}` }} />
+                            <Image style={styles.imgUsuario} source={{ uri: `${config.URL_inicial_API}${foto}` }} />
 
                         ):(
 
