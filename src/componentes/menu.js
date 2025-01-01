@@ -81,7 +81,7 @@ export default function Menu(){
 
                         {DATAUser[0].foto_url && DATAUser[0].foto_url != "null" ? (
 
-                            <Image style={styles.imgUsuario} source={{ uri: `${DATAUser[0].foto_url}` }} />
+                            <Image style={styles.imgUsuario} source={{ uri: `${config.URL_inicial_API}${DATAUser[0].foto_url}` }} />
 
                         ):(
 

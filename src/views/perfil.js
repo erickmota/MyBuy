@@ -1,10 +1,13 @@
-import React, {useState, useEffect, useContext} from "react"
+import React, {useState, useEffect, useContext, useCallback, useLayoutEffect} from "react"
 import { View, Text, StyleSheet, TextInput, useWindowDimensions, TouchableNativeFeedback, StatusBar, Image, TouchableWithoutFeedback} from "react-native"
 import { useNavigation } from '@react-navigation/native';
 import * as SQLite from "expo-sqlite"
+import { useFocusEffect } from '@react-navigation/native';
 import { UserContext } from '../context/user';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import * as ImagePicker from 'expo-image-picker';
+import FlashMessage from 'react-native-flash-message';
+import { showMessage, hideMessage } from 'react-native-flash-message';
 
 import config from "../config";
 
@@ -15,7 +18,7 @@ export default function Perfil(){
 
     const [DATA, setData] = useState([]);
 
-    useEffect(()=>{
+    /* useEffect(()=>{
 
         fetch(`${config.URL_inicial_API}${DATAUser[0].id}/perfil`)
         .then(response => response.json())
@@ -26,7 +29,20 @@ export default function Perfil(){
             console.error('Erro ao buscar dados da API:', error);
         });
 
-    },[DATAUser])
+    },[DATAUser]) */
+
+    const carregar_API = useCallback(()=>{
+
+        fetch(`${config.URL_inicial_API}${DATAUser[0].id}/perfil`)
+        .then(response => response.json())
+        .then(data => {
+            setData(data.data);
+        })
+        .catch(error => {
+            console.error('Erro ao buscar dados da API:', error);
+        });
+        
+    }, [DATAUser])
 
     const selectImage = async () => {
         // Pedir permissão para acessar a galeria
@@ -40,7 +56,7 @@ export default function Perfil(){
         // Abrir a galeria para selecionar uma imagem
         const result = await ImagePicker.launchImageLibraryAsync({
           mediaTypes: ImagePicker.MediaTypeOptions.Images,
-          quality: 0,
+          quality: 0.2,
         });
       
         if (!result.canceled) {
@@ -69,8 +85,31 @@ export default function Perfil(){
       
           const data = await response.json();
           console.log(data);
+
+          if(data.success == false){
+
+            showMessage({
+                message: "Imagem não atualizada!",
+                description: `${data.message}`,
+                type: "danger", // ou "danger", "info", etc.
+                icon: "auto",
+                duration: 3000
+            });
+
+          }
+
+          carregar_API();
         } catch (error) {
           console.error('Erro ao enviar imagem:', error);
+
+            showMessage({
+                message: "Imagem não atualizada!",
+                description: `${error}`,
+                type: "danger", // ou "danger", "info", etc.
+                icon: "auto",
+                duration: 3000
+            });
+
         }
     };
 
@@ -103,54 +142,77 @@ export default function Perfil(){
         }
     }; */
    
+    useFocusEffect(
+
+        useCallback(() => {
+
+            carregar_API();
+    
+            return () => {
+
+            setData([]);
+
+            };
+            
+        }, [carregar_API, DATAUser])
+
+    );
 
     return(
 
         <View style={styles.container}>
 
-            <View style={styles.area_foto}>
+            {DATA.map(item=>(
 
-                <TouchableWithoutFeedback onPress={()=> selectImage()}>
+                <View style={{flex: 1}} key={item.nome}>
 
-                    <Image style={styles.img_user} source={{ uri: `${config.Foto_usuario_nulo}` }} />
+                    <View style={styles.area_foto}>
 
-                </TouchableWithoutFeedback>
+                        <TouchableWithoutFeedback onPress={()=> selectImage()}>
 
-            </View>
+                            {item.foto_url == null?(
 
-            <View style={styles.informacoes}>
+                                <Image style={styles.img_user} source={{ uri: `${config.Foto_usuario_nulo}` }} />
 
-                {/* <View style={styles.area_confirma}>
+                            ):(
 
-                    <Text style={[styles.txt_padrao, styles.txt_confirma]}>
+                                <Image style={styles.img_user} source={{ uri: `${config.URL_inicial_API}${item.foto_url}` }} />
 
-                        Confirmação pendente!
+                            )}
 
-                    </Text>
+                        </TouchableWithoutFeedback>
 
-                    <Text style={[styles.txt_confirma]}>
+                    </View>
 
-                        Clique no link que enviamos para seu endereço de e-mail.
+                    <View style={styles.informacoes}>
 
-                    </Text>
+                        {/* <View style={styles.area_confirma}>
 
-                    <Text style={[styles.txt_confirma]}>
+                            <Text style={[styles.txt_padrao, styles.txt_confirma]}>
 
-                        Prazo de 7 dias restantes
+                                Confirmação pendente!
 
-                    </Text>
+                            </Text>
 
-                    <Text style={[styles.txt_confirma, {marginTop: 15}]}>
+                            <Text style={[styles.txt_confirma]}>
 
-                        REENVIAR E-MAIL
+                                Clique no link que enviamos para seu endereço de e-mail.
 
-                    </Text>
+                            </Text>
 
-                </View> */}
+                            <Text style={[styles.txt_confirma]}>
 
-                {DATA.map(item=>(
+                                Prazo de 7 dias restantes
 
-                    <View key={item.nome}>
+                            </Text>
+
+                            <Text style={[styles.txt_confirma, {marginTop: 15}]}>
+
+                                REENVIAR E-MAIL
+
+                            </Text>
+
+                        </View> */}
 
                         <View style={styles.area_inf}>
 
@@ -286,9 +348,9 @@ export default function Perfil(){
 
                     </View>
 
-                ))}
+                </View>
 
-            </View>
+            ))}
 
         </View>
 
