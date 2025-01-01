@@ -427,7 +427,7 @@ export default function Editar_lista({route}){
 
                             {DATA_dono.foto_url != null ? (
 
-                                <Image style={styles.imgUsuario} source={{ uri: `${DATA_dono.foto_url}` }} />
+                                <Image style={styles.imgUsuario} source={{ uri: `${config.URL_inicial_API}${DATA_dono.foto_url}` }} />
 
                             ):(
 
@@ -467,7 +467,7 @@ export default function Editar_lista({route}){
 
                                 {membros.foto_url != null ? (
 
-                                    <Image style={styles.imgUsuario} source={{ uri: `${membros.foto_url}` }} />
+                                    <Image style={styles.imgUsuario} source={{ uri: `${config.URL_inicial_API}${membros.foto_url}` }} />
 
                                 ):(
 

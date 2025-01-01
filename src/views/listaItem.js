@@ -1132,7 +1132,7 @@ export default function ListaItem({route, navigation}){
 
                                                                 ):(
 
-                                                                    <Image style={styles.imgUsuarios} source={{ uri: `${prod.foto_dono}` }} />
+                                                                    <Image style={styles.imgUsuarios} source={{ uri: `${config.URL_inicial_API}${prod.foto_dono}` }} />
 
                                                                 )
 
