@@ -157,19 +157,6 @@ function DrawerNavigation() {
 
       }} />
 
-      <Drawer.Screen name="Categorias" component={Categorias} options={{
-
-        title: "Minhas categorias",
-        headerTintColor: "#FFF",
-        headerStyle: {
-
-          backgroundColor: config.cor1,
-          borderWidth: 0,
-
-        }
-
-      }} />
-
       <Drawer.Screen name="MeusProdutos" component={Meus_produtos}  options={{
 
         title: "Meus produtos",
@@ -263,6 +250,19 @@ export default function App() {
             <stack.Screen name="Cadastro" component={Cadastro} options={{
 
               headerShown: false
+
+            }} />
+
+            <stack.Screen name="Categorias" component={Categorias} options={{
+
+              title: "Minhas categorias",
+              headerTintColor: "#FFF",
+              headerStyle: {
+
+                backgroundColor: config.cor1,
+                borderWidth: 0,
+
+              }
 
             }} />
 
