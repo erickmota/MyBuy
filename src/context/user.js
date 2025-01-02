@@ -104,9 +104,39 @@ export const UserProvider = ({children}) => {
 
     }
 
+    function atualizar_nome_local(nome){
+
+        if (db) {
+            db.transaction((tx) => {
+                tx.executeSql(
+                    `UPDATE usuarios SET nome='${nome}'`,
+                    [],
+                    ()=>{
+
+                        setData((prevData) => {
+                            if (prevData && prevData.length > 0) {
+                                return [{ ...prevData[0], nome: nome }];
+                            }
+                            return [{ nome: nome }];
+                        });
+        
+                    console.log("Sucesso ao atualizar o nome local");
+        
+                    },
+                    (_, error)=>{
+        
+                    console.error("Erro ao atualizar o nome local", error);
+        
+                    }
+                );
+            });
+        }
+
+    }
+
     return(
 
-        <UserContext.Provider value={{DATAUser, login, logout, atualizar_foto_local}}>
+        <UserContext.Provider value={{DATAUser, login, logout, atualizar_foto_local, atualizar_nome_local}}>
             
             {children}
             

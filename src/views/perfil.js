@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useContext, useCallback, useLayoutEffect} from "react"
-import { View, Text, StyleSheet, TextInput, useWindowDimensions, TouchableNativeFeedback, StatusBar, Image, TouchableWithoutFeedback, Button, Alert} from "react-native"
+import { View, Text, StyleSheet, TextInput, useWindowDimensions, TouchableNativeFeedback, StatusBar, Image, TouchableWithoutFeedback, Button, Alert, Modal} from "react-native"
 import { useNavigation } from '@react-navigation/native';
 import * as SQLite from "expo-sqlite"
 import { useFocusEffect } from '@react-navigation/native';
@@ -16,9 +16,13 @@ export default function Perfil(){
     /* Contexto */
     const { DATAUser } = useContext(UserContext);
     const { atualizar_foto_local } = useContext(UserContext);
+    const { atualizar_nome_local } = useContext(UserContext);
 
     const [DATA, setData] = useState([]);
     const [db, setDbLocal] = useState(null);
+
+    const [modalVisible, setModalVisible] = useState(false);
+    const [input, onChangeInput] = useState();
 
     /* Abrindo o Banco de dados */
     useEffect(()=>{
@@ -57,6 +61,32 @@ export default function Perfil(){
 
         atualizar_foto_local(url);
 
+    }
+
+    function atualiza_nome(novo_nome){
+
+        const formData = new URLSearchParams();
+        formData.append('novo_nome', novo_nome);
+  
+        fetch(`${config.URL_inicial_API}${DATAUser[0].id}/altera_nome`, {
+        method: "POST",
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: formData.toString()
+        })
+        .then(response => response.json())
+        .then(data => {
+  
+          atualizar_nome_local(novo_nome);
+          carregar_API();
+          setModalVisible(false);
+    
+        })
+        .catch(errors => {
+        console.error('Erro ao enviar solicitação:', errors);
+        });
+  
     }
 
     const selectImage = async () => {
@@ -230,6 +260,58 @@ export default function Perfil(){
 
         <View style={styles.container}>
 
+            <Modal
+                animationType="fade" // ou 'fade', 'none'
+                transparent={true}    // Define se o fundo será transparente
+                visible={modalVisible}
+                onRequestClose={() => setModalVisible(false)} // Fechar modal ao clicar no botão 'voltar'
+            >
+
+                <TouchableWithoutFeedback onPress={() => setModalVisible(false)}>
+
+                <View style={styles.centeredView}>
+
+                    <View style={styles.modalView}>
+
+                      <View style={styles.corpoModal}>
+
+                        <View>
+
+                          <Text>
+
+                            Alterar nome
+
+                          </Text>
+
+                        </View>
+
+                        <View>
+
+                          <TextInput style={[styles.input]}
+                            onChangeText={onChangeInput}
+                            value={input}
+                            keyboardType="default"
+                            maxLength={25}
+                          />
+
+                        </View>
+
+                        <View style={styles.AreaBtnConfirmar}>
+
+                            <Button onPress={()=> atualiza_nome(input)} color={config.cor2} title="Alterar  ->"/>
+
+                        </View>
+
+                      </View>
+                      
+                    </View>
+
+                </View>
+
+                </TouchableWithoutFeedback>
+
+            </Modal>
+
             {DATA.map(item=>(
 
                 <View style={{flex: 1}} key={item.nome}>
@@ -320,11 +402,15 @@ export default function Perfil(){
 
                             <View style={styles.col_3}>
 
-                                <Icon
-                                    name="pencil-box"
-                                    size={28}
-                                    color={config.cor2}
-                                />
+                                <TouchableWithoutFeedback onPress={()=>[onChangeInput(item.nome) ,setModalVisible(true)]}>
+
+                                    <Icon
+                                        name="pencil-box"
+                                        size={28}
+                                        color={config.cor2}
+                                    />
+
+                                </TouchableWithoutFeedback> 
 
                             </View>
 
@@ -533,6 +619,60 @@ const styles = StyleSheet.create({
         height: 50,
         marginTop: -100
 
-    }
+    },
+
+    /* Modal */
+
+    centeredView: {
+
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'rgba(0,0,0,0.5)', // Fundo semitransparente
+
+      },
+
+      modalView: {
+
+        width: 300,
+        padding: 20,
+        backgroundColor: 'white',
+        borderRadius: 5,
+        shadowColor: '#000',
+        shadowOffset: {
+          width: 0,
+          height: 2,
+
+        },
+
+        shadowOpacity: 0.25,
+        shadowRadius: 4,
+        elevation: 5,
+
+      },
+
+      input:{
+
+        borderBottomWidth: 1,
+        borderBottomColor: "#CCC",
+        marginTop: 20,
+        fontSize: config.tamanhoTextosInputs,
+        color: "#777",
+
+      },
+
+      corpoModal:{
+
+        flexDirection: "column"
+
+      },
+
+      AreaBtnConfirmar:{
+
+        marginTop: 20
+
+    },
+
+    /* ***** */
 
 })

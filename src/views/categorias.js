@@ -140,7 +140,7 @@ export default function Categorias(){
       console.error('Erro ao enviar solicitação:', errors);
       });
 
-  }
+    }
 
     const setar_modal = (nome_categoria, id_categoria) => {
 
