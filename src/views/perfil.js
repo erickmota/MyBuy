@@ -44,7 +44,8 @@ export default function Perfil(){
         .then(response => response.json())
         .then(data => {
             setData(data.data);
-            atualiza_foto(data.data[0].foto_url)
+            atualiza_foto(data.data[0].foto_url);
+            hideMessage();
         })
         .catch(error => {
             console.error('Erro ao buscar dados da API:', error);
@@ -59,12 +60,21 @@ export default function Perfil(){
     }
 
     const selectImage = async () => {
+
         // Pedir permissão para acessar a galeria
         const permissionResult = await ImagePicker.requestMediaLibraryPermissionsAsync();
       
         if (permissionResult.granted === false) {
           alert('Para acessar a galeria de imagens do seu aparelho, precisamos da permissão!');
           return;
+        }else{
+
+            setTimeout(()=>{
+
+                mostrar_loading_img();
+
+            }, 1000)
+
         }
       
         // Abrir a galeria para selecionar uma imagem
@@ -77,10 +87,15 @@ export default function Perfil(){
             const image = result.assets[0]; // Exemplo: {uri, width, height, fileName}
             console.log(image);
             await uploadImage(image); // Passar a imagem para a função de upload
+        }else{
+
+            hideMessage();
+
         }
     };
 
     const uploadImage = async (image) => {
+
         const formData = new FormData();
         formData.append('file', {
           uri: image.uri,
@@ -148,30 +163,52 @@ export default function Perfil(){
 
     const btn_apagar = () => {
     
-            Alert.alert(
-                "Remover foto",
-                `Deseja mesmo, remover sua foto de perfil?`,
-                [
-                  {
-                    text: "Cancelar",
-                    onPress: () => console.log("Cancelado"),
-                    style: "cancel"
-                  },
-                  {
-                    text: "Sim",
-                    onPress: () => {
-    
-                      // Ação de exclusão
-                      
-                      remover_img();
-    
-                    }
-                  }
-                ],
-                { cancelable: false }
-            );
-    
-        }
+        Alert.alert(
+            "Remover foto",
+            `Deseja mesmo, remover sua foto de perfil?`,
+            [
+                {
+                text: "Cancelar",
+                onPress: () => console.log("Cancelado"),
+                style: "cancel"
+                },
+                {
+                text: "Sim",
+                onPress: () => {
+
+                    // Ação de exclusão
+                    
+                    remover_img();
+
+                }
+                }
+            ],
+            { cancelable: false }
+        );
+
+    }
+
+    function mostrar_loading_img(){
+
+        showMessage({
+            message: "",
+            type: "info", // ou "danger", "info", etc.
+            icon: "none",
+            duration: 0,
+            renderCustomContent: () => (
+                <View style={{ flexDirection: "row", alignItems: "center", marginTop: -25 }}>
+                    <Image
+                        source={require("../img/carregando.gif")}
+                        style={{width: 40, height: 40}}
+                    />
+                    <Text style={{ marginLeft: 8, color: "#fff", fontSize: 16 }}>
+                        Fazendo o upload da imagem...
+                    </Text>
+                </View>
+            ),
+        });
+
+    }
    
     useFocusEffect(
 
@@ -487,6 +524,14 @@ const styles = StyleSheet.create({
 
         color: "white",
         fontWeight: 600
+
+    },
+
+    icon_loading:{
+
+        width: 50,
+        height: 50,
+        marginTop: -100
 
     }
 
