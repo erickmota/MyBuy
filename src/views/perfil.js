@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useContext, useCallback, useLayoutEffect} from "react"
-import { View, Text, StyleSheet, TextInput, useWindowDimensions, TouchableNativeFeedback, StatusBar, Image, TouchableWithoutFeedback} from "react-native"
+import { View, Text, StyleSheet, TextInput, useWindowDimensions, TouchableNativeFeedback, StatusBar, Image, TouchableWithoutFeedback, Button, Alert} from "react-native"
 import { useNavigation } from '@react-navigation/native';
 import * as SQLite from "expo-sqlite"
 import { useFocusEffect } from '@react-navigation/native';
@@ -130,34 +130,48 @@ export default function Perfil(){
         }
     };
 
-    /* const uploadImage = async (image) => {
-        const formData = new FormData();
-        formData.append('file', {
-          uri: image.uri,
-          name: image.fileName || 'photo.jpg',
-          type: 'image/jpeg', // Altere o tipo conforme necessário
+    function remover_img(){
+
+        fetch(`${config.URL_inicial_API}${DATAUser[0].id}/remover_img_user`)
+        .then(response => response.json())
+        .then(data => {
+
+            atualiza_foto(null);
+
+            carregar_API();
+        })
+        .catch(error => {
+            console.error('Erro ao buscar dados da API:', error);
         });
-      
-        try {
-          const response = await fetch(`${config.URL_inicial_API}${DATAUser[0].id}/upload_img_user`, {
-            method: 'POST',
-            body: formData,
-            headers: {
-              'Content-Type': 'multipart/form-data',
-            },
-          });
-   
-          // Registrar a resposta como texto para verificar o erro
-          const text = await response.text(); 
-          console.log('Resposta do servidor:', text);
-   
-          // Agora, tente interpretar como JSON, se for uma resposta válida
-          const data = JSON.parse(text); 
-          console.log(data);
-        } catch (error) {
-          console.error('Erro ao enviar imagem:', error);
+
+    };
+
+    const btn_apagar = () => {
+    
+            Alert.alert(
+                "Remover foto",
+                `Deseja mesmo, remover sua foto de perfil?`,
+                [
+                  {
+                    text: "Cancelar",
+                    onPress: () => console.log("Cancelado"),
+                    style: "cancel"
+                  },
+                  {
+                    text: "Sim",
+                    onPress: () => {
+    
+                      // Ação de exclusão
+                      
+                      remover_img();
+    
+                    }
+                  }
+                ],
+                { cancelable: false }
+            );
+    
         }
-    }; */
    
     useFocusEffect(
 
@@ -185,19 +199,33 @@ export default function Perfil(){
 
                     <View style={styles.area_foto}>
 
-                        <TouchableWithoutFeedback on onPress={()=> selectImage()}>
+                        <View>
 
-                            {item.foto_url == null?(
+                            <TouchableWithoutFeedback on onPress={()=> selectImage()}>
 
-                                <Image style={styles.img_user} source={{ uri: `${config.Foto_usuario_nulo}` }} />
+                                {item.foto_url == null?(
 
-                            ):(
+                                    <Image style={styles.img_user} source={{ uri: `${config.Foto_usuario_nulo}` }} />
 
-                                <Image style={styles.img_user} source={{ uri: `${config.URL_inicial_API}${item.foto_url}` }} />
+                                ):(
 
-                            )}
+                                    <Image style={styles.img_user} source={{ uri: `${config.URL_inicial_API}${item.foto_url}` }} />
 
-                        </TouchableWithoutFeedback>
+                                )}
+
+                            </TouchableWithoutFeedback>
+
+                        </View>
+
+                        {item.foto_url != null && (
+
+                            <View style={{flexDirection: "row", marginTop: -35}}>
+                                
+                                <Button color={config.cor2} style={styles.btn_remover} title="Remover" onPress={()=>btn_apagar()} />
+
+                            </View>
+
+                        )}
 
                     </View>
 
@@ -385,8 +413,8 @@ const styles = StyleSheet.create({
 
     area_foto:{
 
-        flex: 1,
-        flexDirection: "row",
+        flex: 3,
+        flexDirection: "column",
         justifyContent: "center",
         alignItems: "center"
 
@@ -394,15 +422,15 @@ const styles = StyleSheet.create({
 
     img_user:{
 
-        width: 190,
-        height: 190,
+        width: 230,
+        height: 230,
         borderRadius: 150
 
     },
 
     informacoes:{
 
-        flex: 2
+        flex: 4
 
     },
 
