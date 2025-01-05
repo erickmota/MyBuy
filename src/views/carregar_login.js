@@ -1,5 +1,5 @@
 import React, {useEffect, useState, useContext} from "react"
-import { Image, View, Text, StyleSheet, Alert } from "react-native"
+import { Image, View, Text, StyleSheet, Alert, StatusBar } from "react-native"
 import { useNavigation } from '@react-navigation/native'
 import * as SQLite from "expo-sqlite"
 import { UserContext } from '../context/user';
@@ -141,6 +141,8 @@ export default function Carregar_login({route}){
 
         <View style={styles.container}>
 
+            <StatusBar backgroundColor={config.cor_splash} style="light" />
+
             <Image style={styles.gif_load} source={require("../img/carregando3.gif")} />  
 
             {view && (<View>
@@ -180,7 +182,7 @@ const styles = StyleSheet.create({
     container:{
 
         flex: 1,
-        backgroundColor: config.cor2,
+        backgroundColor: config.cor_splash,
         justifyContent: "center",
         alignItems: "center",
 

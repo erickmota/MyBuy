@@ -3,6 +3,7 @@ const config = {
     /* Estilos */
     cor2: "#902dc4", /* Cor dos itens adicionais (cor mais fraca). */
     cor1: "#7523a0", /* Cor principal (mais forte). */
+    cor_splash: "#b759f3",
     corTextoSecundario: "#999", /* Cor dos textos secundários. */
     corTelaLogin: "#e1c6f5",
     corObs: "#ff924f", /* Cor do texto de observação dos produtos. */

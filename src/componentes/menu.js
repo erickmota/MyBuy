@@ -65,16 +65,11 @@ export default function Menu(){
 
             <View style={styles.parte1}>
 
-                <Icon
-                    name="view-list"
-                    style={styles.logo}
-                    size={35}
-                    color={"white"}
-                    />
+                <Image style={styles.logo} source={require("../img/logo_mybuy_menu.png")} />
 
                 <Text style={styles.textPtRoxa}>
 
-                    My Buy
+                    MY BUY
 
                 </Text>
 
@@ -390,6 +385,8 @@ const styles = StyleSheet.create({
 
     logo:{
 
+        width: 50,
+        height: 50,
         marginLeft: 20,
         marginRight: 20
 

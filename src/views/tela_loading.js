@@ -115,7 +115,7 @@ export default function Tela_loading(){
 
         <View style={styles.container}>
 
-            <StatusBar backgroundColor={config.cor1} style="light" />
+            <StatusBar backgroundColor={config.cor_splash} style="light" />
 
             <Image style={styles.gif_load} source={require("../img/carregando3.gif")} />
 
@@ -130,7 +130,7 @@ const styles = StyleSheet.create({
     container:{
 
         flex: 1,
-        backgroundColor: config.cor1,
+        backgroundColor: config.cor_splash,
         justifyContent: "center",
         alignItems: "center"
 
