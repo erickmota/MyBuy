@@ -1,5 +1,5 @@
 import 'react-native-gesture-handler';
-import React from 'react';
+import React, {useEffect} from "react"
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createDrawerNavigator } from '@react-navigation/drawer';
@@ -7,6 +7,7 @@ import { Provider as PaperProvider, DefaultTheme } from 'react-native-paper';
 import FlashMessage from "react-native-flash-message";
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import * as SplashScreen from 'expo-splash-screen';
 
 /* Views */
 import Listas from "./src/views/listas"
@@ -228,6 +229,17 @@ function DrawerNavigation() {
 
 /* Menu Stack */
 export default function App() {
+
+  useEffect(() => {
+    // Impede a splash screen de esconder automaticamente
+    SplashScreen.preventAutoHideAsync(); 
+  
+    // Simula um carregamento ou algum processo antes de esconder a splash screen
+    setTimeout(async () => {
+      // Agora podemos esconder a splash screen manualmente
+      await SplashScreen.hideAsync();
+    }, 3000); // 3 segundos de exibição da splash screen
+  }, []);
   
   return (
 
