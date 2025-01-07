@@ -1,5 +1,5 @@
 import React, {useState, useContext} from "react"
-import { View, Text, StyleSheet, TextInput, useWindowDimensions, TouchableNativeFeedback, StatusBar} from "react-native"
+import { View, Text, StyleSheet, TextInput, useWindowDimensions, TouchableNativeFeedback, StatusBar, Image, KeyboardAvoidingView} from "react-native"
 import { useNavigation } from '@react-navigation/native';
 import * as SQLite from "expo-sqlite"
 import { UserContext } from '../context/user';
@@ -19,10 +19,16 @@ export default function Login(){
     const [senha, onChangeSenha] = useState('');
 
     const [placeObrigatorio, setPlaceObrigatorio] = useState("");
+    const [logo_aberto, setLogoAbertoStyle] = useState(styles.logo_aberto);
+    const [logo_fechado, setLogoFechadoStyle] = useState(styles.logo_fechado);
+    const [logo_chateado, setLogoChateadoStyle] = useState(styles.logo_fechado);
 
     /* Tamanho da tela */
     const larguraTela = useWindowDimensions().width;
     const larguraEspacoLogin = larguraTela * 0.85;
+    const altura_tela = useWindowDimensions().height;
+    const alturaEspacoLogin = altura_tela * 0.15;
+    
 
     function enviarForm(){
 
@@ -30,9 +36,17 @@ export default function Login(){
 
             setPlaceObrigatorio("*");
 
+            setLogoAbertoStyle(styles.logo_fechado);
+            setLogoFechadoStyle(styles.logo_fechado);
+            setLogoChateadoStyle(styles.logo_aberto);
+
             setTimeout(() => {
 
                 setPlaceObrigatorio("");
+
+                setLogoAbertoStyle(styles.logo_aberto);
+                setLogoFechadoStyle(styles.logo_fechado);
+                setLogoChateadoStyle(styles.logo_fechado);
 
             }, 3000)
 
@@ -46,13 +60,48 @@ export default function Login(){
 
     }
 
+    const fechar_olho = async (tipo) => {
+
+        switch(tipo){
+
+            case "fechado":
+
+                setLogoAbertoStyle(styles.logo_fechado);
+                setLogoFechadoStyle(styles.logo_aberto);
+                setLogoChateadoStyle(styles.logo_fechado);
+
+
+            break;
+
+            case "aberto":
+
+                setLogoAbertoStyle(styles.logo_aberto);
+                setLogoFechadoStyle(styles.logo_fechado);
+                setLogoChateadoStyle(styles.logo_fechado);
+
+            break;
+
+        }
+
+    }
+
     return(
 
         <View style={styles.container}>
 
             <StatusBar backgroundColor={config.cor1} style="light" />
 
-            <View style={[styles.areaLogin, {width: larguraEspacoLogin}]}>
+            <KeyboardAvoidingView behavior="padding" style={{ flex: 1}}>
+
+            <View style={[styles.areaLogin, {width: larguraEspacoLogin, marginTop: alturaEspacoLogin}]}>
+
+                <View style={styles.area_logo}>
+
+                    <Image style={logo_aberto} source={require("../img/logo_mybuy_menu.png")} />
+                    <Image style={logo_fechado} source={require("../img/logo_mybuy_menu_fechado.png")} />
+                    <Image style={logo_chateado} source={require("../img/logo_mybuy_menu_chateado.png")} />
+
+                </View>
 
                 <View style={styles.conteudoLogin}>
 
@@ -87,6 +136,8 @@ export default function Login(){
                         required
                         secureTextEntry={true}
                         keyboardType="default"
+                        onFocus={()=>fechar_olho("fechado")}
+                        onBlur={()=>fechar_olho("aberto")}
                         />
 
                     </View>
@@ -165,6 +216,8 @@ export default function Login(){
 
             </View>
 
+            </KeyboardAvoidingView>
+
         </View>
 
     )
@@ -177,8 +230,8 @@ const styles = StyleSheet.create({
 
         flex: 1,
         backgroundColor: config.corTelaLogin,
-        justifyContent: "center",
-        alignItems: "center"
+        alignItems: "center",
+        justifyContent: "center"
 
     },
 
@@ -316,6 +369,28 @@ const styles = StyleSheet.create({
 
         color: config.cor1,
         textAlign: "right",
+
+    },
+
+    area_logo:{
+
+        alignItems: "center",
+        justifyContent: "center",
+        marginTop: -70,
+        marginBottom: -20
+
+    },
+
+    logo_aberto:{
+
+        width: 100,
+        height: 100,
+
+    },
+
+    logo_fechado:{
+
+        display: "none"
 
     }
 

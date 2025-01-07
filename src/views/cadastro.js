@@ -1,5 +1,5 @@
-import React, {useState} from "react"
-import { View, Text, StyleSheet, TextInput, useWindowDimensions, TouchableNativeFeedback } from "react-native"
+import React, {useEffect, useState} from "react"
+import { View, Text, StyleSheet, TextInput, useWindowDimensions, TouchableNativeFeedback, Image, KeyboardAvoidingView, Keyboard } from "react-native"
 import { useNavigation } from '@react-navigation/native';
 import FlashMessage from 'react-native-flash-message';
 import { showMessage, hideMessage } from 'react-native-flash-message';
@@ -13,12 +13,42 @@ export default function Cadastro(){
     const [email, onChangeEmail] = React.useState('');
     const [senha, onChangeSenha] = React.useState('');
     const [confirma_senha, onChangeConfirmaSenha] = React.useState('');
+    const [altura, setAltura] = useState(null);
 
     const [placeObrigatorio, setPlaceObrigatorio] = useState("");
+
+    const [logo_aberto, setLogoAbertoStyle] = useState(styles.logo_aberto);
+    const [logo_fechado, setLogoFechadoStyle] = useState(styles.logo_fechado);
+    const [logo_chateado, setLogoChateadoStyle] = useState(styles.logo_fechado);
 
     /* Tamanho da tela */
     const larguraTela = useWindowDimensions().width;
     const larguraEspacoLogin = larguraTela * 0.85;
+    const altura_tela = useWindowDimensions().height;
+
+    useEffect(()=>{
+
+        const alturaEspacoLogin = altura_tela * 0.15;
+        setAltura(alturaEspacoLogin);
+
+    },[])
+
+    useEffect(() => {
+        const keyboardDidShowListener = Keyboard.addListener(
+          "keyboardDidShow",
+          () => subir_view()
+        );
+        const keyboardDidHideListener = Keyboard.addListener(
+          "keyboardDidHide",
+          () => baixar_view()
+        );
+    
+        // Cleanup
+        return () => {
+          keyboardDidShowListener.remove();
+          keyboardDidHideListener.remove();
+        };
+      }, []);
 
     const navigation = useNavigation();
 
@@ -48,6 +78,20 @@ export default function Cadastro(){
         .then(data => {
 
             if(data.data == false){
+
+                setLogoAbertoStyle(styles.logo_fechado);
+                setLogoFechadoStyle(styles.logo_fechado);
+                setLogoChateadoStyle(styles.logo_aberto);
+
+                setTimeout(() => {
+
+                    setPlaceObrigatorio("");
+    
+                    setLogoAbertoStyle(styles.logo_aberto);
+                    setLogoFechadoStyle(styles.logo_fechado);
+                    setLogoChateadoStyle(styles.logo_fechado);
+    
+                }, 3200)
 
                 showMessage({
                     message: "Cadastro não realizado!",
@@ -84,9 +128,17 @@ export default function Cadastro(){
 
             setPlaceObrigatorio("*");
 
+            setLogoAbertoStyle(styles.logo_fechado);
+            setLogoFechadoStyle(styles.logo_fechado);
+            setLogoChateadoStyle(styles.logo_aberto);
+
             setTimeout(() => {
 
                 setPlaceObrigatorio("");
+
+                setLogoAbertoStyle(styles.logo_aberto);
+                setLogoFechadoStyle(styles.logo_fechado);
+                setLogoChateadoStyle(styles.logo_fechado);
 
             }, 3000)
 
@@ -95,6 +147,18 @@ export default function Cadastro(){
         }
 
         if(!validarEmail(email)){
+
+            setLogoAbertoStyle(styles.logo_fechado);
+            setLogoFechadoStyle(styles.logo_fechado);
+            setLogoChateadoStyle(styles.logo_aberto);
+
+            setTimeout(() => {
+
+                setLogoAbertoStyle(styles.logo_aberto);
+                setLogoFechadoStyle(styles.logo_fechado);
+                setLogoChateadoStyle(styles.logo_fechado);
+
+            }, 3200)
 
             showMessage({
                 message: "Por favor, insira um endereço de e-mail válido!",
@@ -108,6 +172,18 @@ export default function Cadastro(){
         }
 
         if(senha != confirma_senha){
+
+            setLogoAbertoStyle(styles.logo_fechado);
+            setLogoFechadoStyle(styles.logo_fechado);
+            setLogoChateadoStyle(styles.logo_aberto);
+
+            setTimeout(() => {
+
+                setLogoAbertoStyle(styles.logo_aberto);
+                setLogoFechadoStyle(styles.logo_fechado);
+                setLogoChateadoStyle(styles.logo_fechado);
+
+            }, 3200)
 
             showMessage({
                 message: "Senha e confirmar senha não conferem!",
@@ -124,11 +200,60 @@ export default function Cadastro(){
 
     }
 
+    const fechar_olho = async (tipo) => {
+
+        switch(tipo){
+
+            case "fechado":
+
+                setLogoAbertoStyle(styles.logo_fechado);
+                setLogoFechadoStyle(styles.logo_aberto);
+                setLogoChateadoStyle(styles.logo_fechado);
+
+
+            break;
+
+            case "aberto":
+
+                setLogoAbertoStyle(styles.logo_aberto);
+                setLogoFechadoStyle(styles.logo_fechado);
+                setLogoChateadoStyle(styles.logo_fechado);
+
+            break;
+
+        }
+
+    }
+
+    const subir_view = () => {
+
+        const alturaEspacoLogin = altura_tela * 0.05;
+        setAltura(alturaEspacoLogin);
+
+    }
+
+    const baixar_view = () => {
+
+        const alturaEspacoLogin = altura_tela * 0.15;
+        setAltura(alturaEspacoLogin);
+
+    }
+
     return(
 
         <View style={styles.container}>
 
-            <View style={[styles.areaLogin, {width: larguraEspacoLogin}]}>
+            <KeyboardAvoidingView behavior="padding" style={{ flex: 1}}>
+
+            <View style={[styles.areaLogin, {width: larguraEspacoLogin, marginTop: altura}]}>
+
+                <View style={styles.area_logo}>
+                
+                    <Image style={logo_aberto} source={require("../img/logo_mybuy_menu.png")} />
+                    <Image style={logo_fechado} source={require("../img/logo_mybuy_menu_fechado.png")} />
+                    <Image style={logo_chateado} source={require("../img/logo_mybuy_menu_chateado.png")} />
+
+                </View>
 
                 <View style={styles.conteudoLogin}>
 
@@ -178,6 +303,8 @@ export default function Cadastro(){
                         maxLength={128}
                         secureTextEntry={true}
                         keyboardType="default"
+                        onFocus={()=>fechar_olho("fechado")}
+                        onBlur={()=>fechar_olho("aberto")}
                         />
 
                         <Text style={[styles.titulo, styles.tituloSeguinte]}>
@@ -194,6 +321,8 @@ export default function Cadastro(){
                         maxLength={128}
                         secureTextEntry={true}
                         keyboardType="default"
+                        onFocus={()=>fechar_olho("fechado")}
+                        onBlur={()=>fechar_olho("aberto")}
                         />
 
                     </View>
@@ -237,6 +366,8 @@ export default function Cadastro(){
                 </View>
 
             </View>
+
+            </KeyboardAvoidingView>
 
         </View>
 
@@ -336,5 +467,27 @@ const styles = StyleSheet.create({
         color: "#FFF"
 
     },
+
+    area_logo:{
+
+        alignItems: "center",
+        justifyContent: "center",
+        marginTop: -70,
+        marginBottom: -20
+
+    },
+
+    logo_aberto:{
+
+        width: 100,
+        height: 100,
+
+    },
+
+    logo_fechado:{
+
+        display: "none"
+
+    }
 
 })

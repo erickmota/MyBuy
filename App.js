@@ -231,14 +231,15 @@ function DrawerNavigation() {
 export default function App() {
 
   useEffect(() => {
-    // Impede a splash screen de esconder automaticamente
+    
     SplashScreen.preventAutoHideAsync(); 
   
-    // Simula um carregamento ou algum processo antes de esconder a splash screen
     setTimeout(async () => {
-      // Agora podemos esconder a splash screen manualmente
+
       await SplashScreen.hideAsync();
-    }, 3000); // 3 segundos de exibição da splash screen
+
+    }, 2000); // 2 segundos de exibição da splash screen
+
   }, []);
   
   return (
