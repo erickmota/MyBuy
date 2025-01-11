@@ -13,7 +13,6 @@ export default function Cadastro(){
     const [email, onChangeEmail] = React.useState('');
     const [senha, onChangeSenha] = React.useState('');
     const [confirma_senha, onChangeConfirmaSenha] = React.useState('');
-    const [altura, setAltura] = useState(null);
 
     const [placeObrigatorio, setPlaceObrigatorio] = useState("");
 
@@ -24,31 +23,6 @@ export default function Cadastro(){
     /* Tamanho da tela */
     const larguraTela = useWindowDimensions().width;
     const larguraEspacoLogin = larguraTela * 0.85;
-    const altura_tela = useWindowDimensions().height;
-
-    useEffect(()=>{
-
-        const alturaEspacoLogin = altura_tela * 0.15;
-        setAltura(alturaEspacoLogin);
-
-    },[])
-
-    useEffect(() => {
-        const keyboardDidShowListener = Keyboard.addListener(
-          "keyboardDidShow",
-          () => subir_view()
-        );
-        const keyboardDidHideListener = Keyboard.addListener(
-          "keyboardDidHide",
-          () => baixar_view()
-        );
-    
-        // Cleanup
-        return () => {
-          keyboardDidShowListener.remove();
-          keyboardDidHideListener.remove();
-        };
-      }, []);
 
     const navigation = useNavigation();
 
@@ -225,27 +199,11 @@ export default function Cadastro(){
 
     }
 
-    const subir_view = () => {
-
-        const alturaEspacoLogin = altura_tela * 0.05;
-        setAltura(alturaEspacoLogin);
-
-    }
-
-    const baixar_view = () => {
-
-        const alturaEspacoLogin = altura_tela * 0.15;
-        setAltura(alturaEspacoLogin);
-
-    }
-
     return(
 
         <View style={styles.container}>
 
-            <KeyboardAvoidingView behavior="padding" style={{ flex: 1}}>
-
-            <View style={[styles.areaLogin, {width: larguraEspacoLogin, marginTop: altura}]}>
+            <View style={[styles.areaLogin, {width: larguraEspacoLogin}]}>
 
                 <View style={styles.area_logo}>
                 
@@ -366,8 +324,6 @@ export default function Cadastro(){
                 </View>
 
             </View>
-
-            </KeyboardAvoidingView>
 
         </View>
 

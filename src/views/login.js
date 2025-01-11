@@ -26,8 +26,6 @@ export default function Login(){
     /* Tamanho da tela */
     const larguraTela = useWindowDimensions().width;
     const larguraEspacoLogin = larguraTela * 0.85;
-    const altura_tela = useWindowDimensions().height;
-    const alturaEspacoLogin = altura_tela * 0.15;
     
 
     function enviarForm(){
@@ -91,9 +89,7 @@ export default function Login(){
 
             <StatusBar backgroundColor={config.cor1} style="light" />
 
-            <KeyboardAvoidingView behavior="padding" style={{ flex: 1}}>
-
-            <View style={[styles.areaLogin, {width: larguraEspacoLogin, marginTop: alturaEspacoLogin}]}>
+            <View style={[styles.areaLogin, {width: larguraEspacoLogin}]}>
 
                 <View style={styles.area_logo}>
 
@@ -215,8 +211,6 @@ export default function Login(){
                 </View>
 
             </View>
-
-            </KeyboardAvoidingView>
 
         </View>
 
