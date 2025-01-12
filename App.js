@@ -28,6 +28,7 @@ import Tela_loading from "./src/views/tela_loading.js"
 import Meus_produtos from "./src/views/meus_produtos.js"
 import Meus_mercados from "./src/views/meus_mercados.js"
 import Perfil from "./src/views/perfil.js"
+import Confirma_email from "./src/views/confirma_email.js"
 /* Despesas */
 import Despesas_categorias from "./src/views/pg-despesas/categoria.js"
 import Despesas_mercados from "./src/views/pg-despesas/mercados.js"
@@ -379,6 +380,12 @@ export default function App() {
               borderWidth: 0,
 
             }
+
+            }} />
+
+            <stack.Screen name="Confirma_email" component={Confirma_email} options={{
+
+              headerShown: false
 
             }} />
 
