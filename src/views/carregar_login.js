@@ -131,8 +131,17 @@ export default function Carregar_login({route}){
 
     if (db && DATA.length > 0 && !view) {
       const dataP = DATA[0];
-      console.log("Dados a serem inseridos:", dataP);
-      inserirNoBancoLocal(dataP.id, dataP.nome, dataP.token, dataP.foto_url);
+
+      if(dataP.confirmado == 0){
+
+        navigation.navigate("Confirma_email");
+
+      }else{
+
+        inserirNoBancoLocal(dataP.id, dataP.nome, dataP.token, dataP.foto_url);
+
+      }
+
     }
 
   },[db, DATA, view])

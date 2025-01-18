@@ -79,13 +79,13 @@ export default function Cadastro(){
 
                 showMessage({
                     message: "Cadastro realizado com sucesso!",
-                    description: "Por favor, faça o login para continuar.",
-                    type: "success", // ou "danger", "info", etc.
-                    icon: "success",
+                    description: "Por favor, confirme seu código de verificação.",
+                    type: "info", // ou "danger", "info", etc.
+                    icon: "info",
                     duration: 4000
                 });
 
-                navigation.navigate("Login");
+                navigation.navigate("Confirma_email");
 
             }
     

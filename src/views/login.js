@@ -152,7 +152,7 @@ export default function Login(){
 
                         <View style={styles.espacoBtnNativo}>
 
-                            <TouchableNativeFeedback onPress={() => navigation.navigate("Confirma_email")}>
+                            <TouchableNativeFeedback onPress={() => navigation.navigate("Cadastro")}>
 
                                 <View style={[styles.btnNativo, styles.btnCadastrar]}>
 

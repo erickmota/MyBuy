@@ -54,6 +54,12 @@ export default function Cadastro(){
                         
                     </View>
 
+                    <Text style={[styles.titulo, styles.txt_inf]}>
+
+                        O código expirará em 30 minutos. Reenvie o e-mail, para gerar um novo.
+
+                    </Text>
+
                     <View style={styles.botoes}>
 
                         <View style={styles.espacoBtnNativo}>
@@ -131,11 +137,19 @@ const styles = StyleSheet.create({
 
     },
 
+    txt_inf:{
+
+        fontSize: 13,
+        color: "#AAA",
+        marginTop: 40
+
+    },
+
     input:{
 
         borderBottomWidth: 1,
         borderBottomColor: "#CCC",
-        marginTop: 30,
+        marginTop: 15,
         fontSize: 20,
         color: "#777",
         width: 80,
@@ -147,7 +161,7 @@ const styles = StyleSheet.create({
 
     botoes:{
 
-        marginTop: 50
+        marginTop: 30
 
     },
 
