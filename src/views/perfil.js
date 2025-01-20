@@ -350,34 +350,6 @@ export default function Perfil(){
 
                     <View style={styles.informacoes}>
 
-                        {/* <View style={styles.area_confirma}>
-
-                            <Text style={[styles.txt_padrao, styles.txt_confirma]}>
-
-                                Confirmação pendente!
-
-                            </Text>
-
-                            <Text style={[styles.txt_confirma]}>
-
-                                Clique no link que enviamos para seu endereço de e-mail.
-
-                            </Text>
-
-                            <Text style={[styles.txt_confirma]}>
-
-                                Prazo de 7 dias restantes
-
-                            </Text>
-
-                            <Text style={[styles.txt_confirma, {marginTop: 15}]}>
-
-                                REENVIAR E-MAIL
-
-                            </Text>
-
-                        </View> */}
-
                         <View style={styles.area_inf}>
 
                             <View style={styles.col_1}>
@@ -567,13 +539,13 @@ const styles = StyleSheet.create({
 
     col_1:{
 
-        flex: 1
+        flex: 2
 
     },
 
     col_2:{
 
-        flex: 2
+        flex: 5
 
     },
 
@@ -593,23 +565,6 @@ const styles = StyleSheet.create({
     txt_titulo:{
 
         fontWeight: "600"
-
-    },
-
-    area_confirma:{
-
-        height: 110,
-        justifyContent: "center",
-        alignItems: "center",
-        backgroundColor: "red",
-        marginBottom: 15
-
-    },
-
-    txt_confirma:{
-
-        color: "white",
-        fontWeight: 600
 
     },
 

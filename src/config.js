@@ -13,6 +13,7 @@ const config = {
 
     qtd_itens_pesquisa: 5, /* Quantidade de itens retornados na pesquisa dos produtos. */
     opacity_btn: 0.5, /* Valor padrão dos opacitys */
+    versao: "Alfa",
 
     /* Conteúdos */
     Foto_prod_nulo: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSHSFDKZsJhNfyuNuvlSdZ_fsJOelRJ4Qi6mw&s", /* Foto padrão que aparece em um produto sem foto definida. */
@@ -20,7 +21,7 @@ const config = {
 
 
     /* Dados */
-    /* URL_inicial_API: "https://testes.erickmota.com/" */ //Web
+    //URL_inicial_API: "https://testes.erickmota.com/" //Web
     URL_inicial_API: "http://192.168.1.6:80/API_MyBuy/" //Local
     /* URL_inicial_API: "http://192.168.0.39:80/API_MyBuy/" */ //Local pais
 

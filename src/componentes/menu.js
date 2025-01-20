@@ -304,7 +304,7 @@ export default function Menu(){
 
                 <Text style={{color: "#CCC"}}>
 
-                    Alfa
+                    {config.versao}
 
                 </Text>
 

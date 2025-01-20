@@ -182,7 +182,7 @@ export default function Login(){
 
                         </View>
 
-                        <View style={styles.espacoBtnExtras}>
+                        {/* <View style={styles.espacoBtnExtras}>
 
                             <View style={[styles.btn, styles.btnFacebook]}>
 
@@ -203,6 +203,16 @@ export default function Login(){
                                     />
 
                             </View>
+
+                        </View> */}
+
+                        <View style={{marginTop: 20}}>
+
+                            <Text style={{textAlign: "center", color: "#CCC"}}>
+
+                                {config.versao}
+
+                            </Text>
 
                         </View>
 
