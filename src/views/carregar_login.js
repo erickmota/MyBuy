@@ -134,7 +134,7 @@ export default function Carregar_login({route}){
 
       if(dataP.confirmado == 0){
 
-        navigation.navigate("Confirma_email");
+        navigation.navigate("Confirma_email", {email: dataP.email, nome: dataP.nome});
 
       }else{
 

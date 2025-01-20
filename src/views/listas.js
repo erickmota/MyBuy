@@ -134,7 +134,7 @@ export default function App() {
 
               <Text style={{color: config.corTextoSecundario, marginTop: 50}}>
 
-                Crie um lista para começar!
+                Crie uma lista para começar!
 
               </Text>
 

@@ -85,7 +85,7 @@ export default function Cadastro(){
                     duration: 4000
                 });
 
-                navigation.navigate("Confirma_email");
+                navigation.navigate("Confirma_email", {email: email, nome: nome});
 
             }
     
