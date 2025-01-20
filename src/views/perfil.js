@@ -22,7 +22,11 @@ export default function Perfil(){
     const [db, setDbLocal] = useState(null);
 
     const [modalVisible, setModalVisible] = useState(false);
+    const [modalSenhaVisible, setModalSenhaVisible] = useState(false);
     const [input, onChangeInput] = useState();
+    const [senha_atual, onChaneSenhaAtual] = useState();
+    const [nova_senha_1, onChangeNovaSenha1] = useState();
+    const [nova_senha_2, onChangeNovaSenha2] = useState();
 
     /* Abrindo o Banco de dados */
     useEffect(()=>{
@@ -312,6 +316,89 @@ export default function Perfil(){
 
             </Modal>
 
+            <Modal
+                animationType="fade" // ou 'fade', 'none'
+                transparent={true}    // Define se o fundo será transparente
+                visible={modalSenhaVisible}
+                onRequestClose={() => setModalSenhaVisible(false)} // Fechar modal ao clicar no botão 'voltar'
+            >
+
+                <TouchableWithoutFeedback onPress={() => setModalSenhaVisible(false)}>
+
+                <View style={styles.centeredView}>
+
+                    <View style={styles.modalView}>
+
+                      <View style={styles.corpoModal}>
+
+                        <View>
+
+                          <Text>
+
+                            Alterar senha
+
+                          </Text>
+
+                        </View>
+
+                        <View>
+
+                          <TextInput style={[styles.input]}
+                            onChangeText={onChaneSenhaAtual}
+                            value={senha_atual}
+                            keyboardType="default"
+                            maxLength={25}
+                            placeholder="Senha atual"
+                            required
+                            secureTextEntry={true}
+                          />
+
+                        </View>
+
+                        <View>
+
+                          <TextInput style={[styles.input]}
+                            onChangeText={onChangeNovaSenha1}
+                            value={nova_senha_1}
+                            keyboardType="default"
+                            maxLength={25}
+                            placeholder="Nova senha"
+                            required
+                            secureTextEntry={true}
+                          />
+
+                        </View>
+
+                        <View>
+
+                          <TextInput style={[styles.input]}
+                            onChangeText={onChangeNovaSenha2}
+                            value={nova_senha_2}
+                            keyboardType="default"
+                            maxLength={25}
+                            placeholder="Confirmar nova senha"
+                            required
+                            secureTextEntry={true}
+                          />
+
+                        </View>
+
+                        <View style={styles.AreaBtnConfirmar}>
+
+                            <Button onPress={()=> atualiza_nome(input)} color={config.cor2} title="Alterar  ->"/>
+
+                        </View>
+
+                      </View>
+                      
+                    </View>
+
+                </View>
+
+                </TouchableWithoutFeedback>
+
+            </Modal>
+
             {DATA.map(item=>(
 
                 <View style={{flex: 1}} key={item.nome}>
@@ -412,11 +499,11 @@ export default function Perfil(){
 
                             <View style={styles.col_3}>
 
-                                <Icon
+                                {/* <Icon
                                     name="pencil-box"
                                     size={28}
                                     color={config.cor2}
-                                />
+                                /> */}
 
                             </View>
 
@@ -446,11 +533,15 @@ export default function Perfil(){
 
                             <View style={styles.col_3}>
 
-                                <Icon
-                                    name="pencil-box"
-                                    size={28}
-                                    color={config.cor2}
-                                />
+                                <TouchableWithoutFeedback onPress={()=> setModalSenhaVisible(true)}>
+
+                                    <Icon
+                                        name="pencil-box"
+                                        size={28}
+                                        color={config.cor2}
+                                    />
+
+                                </TouchableWithoutFeedback>
 
                             </View>
 
