@@ -23,6 +23,7 @@ export default function Perfil(){
 
     const [modalVisible, setModalVisible] = useState(false);
     const [modalSenhaVisible, setModalSenhaVisible] = useState(false);
+    const [modalApagarVisible, setModalApagarVisible] = useState(false);
     const [input, onChangeInput] = useState();
     const [senha_atual, onChaneSenhaAtual] = useState();
     const [nova_senha_1, onChangeNovaSenha1] = useState();
@@ -332,6 +333,33 @@ export default function Perfil(){
 
     );
 
+    function confirma_exclusao(){
+
+        Alert.alert(
+            "Excluir conta",
+            "Tem certeza de que deseja excluir sua conta? Essa ação é irreversível e todos os seus dados serão apagados.",
+            [
+            {
+                text: "Cancelar",
+                onPress: () => console.log("Cancelado"),
+                style: "cancel"
+            },
+            {
+                text: "Sim",
+                onPress: () => {
+    
+                // Ação de exclusão
+
+                setModalApagarVisible(true);
+    
+                }
+            }
+            ],
+            { cancelable: false }
+        );
+
+    }
+
     return(
 
         <View style={styles.container}>
@@ -458,6 +486,60 @@ export default function Perfil(){
                         <View style={styles.AreaBtnConfirmar}>
 
                             <Button onPress={()=> alterar_senha()} color={config.cor2} title="Alterar  ->"/>
+
+                        </View>
+
+                      </View>
+                      
+                    </View>
+
+                </View>
+
+                </TouchableWithoutFeedback>
+
+            </Modal>
+
+            <Modal
+                animationType="fade" // ou 'fade', 'none'
+                transparent={true}    // Define se o fundo será transparente
+                visible={modalApagarVisible}
+                onRequestClose={() => setModalApagarVisible(false)} // Fechar modal ao clicar no botão 'voltar'
+            >
+
+                <TouchableWithoutFeedback onPress={() => setModalApagarVisible(false)}>
+
+                <View style={styles.centeredView}>
+
+                    <View style={styles.modalView}>
+
+                      <View style={styles.corpoModal}>
+
+                        <View>
+
+                          <Text>
+
+                            Por favor, informe sua senha, para confirmar a exclusão dessa conta.
+
+                          </Text>
+
+                        </View>
+
+                        <View>
+
+                          <TextInput style={[styles.input]}
+                            onChangeText={onChaneSenhaAtual}
+                            value={senha_atual}
+                            keyboardType="default"
+                            placeholder="Digite sua senha"
+                            required
+                            secureTextEntry={true}
+                          />
+
+                        </View>
+
+                        <View style={styles.AreaBtnConfirmar}>
+
+                            <Button onPress={()=> alterar_senha()} color={config.cor2} title="Excluir minha conta"/>
 
                         </View>
 
@@ -651,6 +733,20 @@ export default function Perfil(){
 
                     </View>
 
+                    <View style={styles.area_excluir}>
+
+                        <TouchableWithoutFeedback onPress={()=> confirma_exclusao()}>
+
+                            <Text style={styles.txt_excluir}>
+
+                                Excluir minha conta
+
+                            </Text>
+
+                        </TouchableWithoutFeedback>
+
+                    </View>
+
                 </View>
 
             ))}
@@ -697,6 +793,20 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         paddingHorizontal: 20,
         paddingVertical: 8
+
+    },
+
+    area_excluir:{
+
+        flex: 1,
+        justifyContent: "center"
+
+    },
+
+    txt_excluir:{
+
+        textAlign: "center",
+        color: "red"
 
     },
 
