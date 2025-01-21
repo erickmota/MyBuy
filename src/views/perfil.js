@@ -243,6 +243,78 @@ export default function Perfil(){
         });
 
     }
+
+    const alterar_senha = () => {
+
+        if(senha_atual.trim() == "" || nova_senha_1.trim() == "" || nova_senha_2.trim() == ""){
+
+            showMessage({
+                message: "Preencha todos os campos",
+                type: "danger", // ou "danger", "info", etc.
+                icon: "danger",
+                duration: 3000
+            });
+
+            return false
+
+        }
+
+        if(nova_senha_1 != nova_senha_2){
+
+            showMessage({
+                message: "Nova senha e confirmação, não conferem!",
+                type: "danger", // ou "danger", "info", etc.
+                icon: "danger",
+                duration: 3000
+            });
+
+            return false
+
+        }
+
+        const formData = new URLSearchParams();
+        formData.append('email', DATA[0].email);
+        formData.append('senha', senha_atual);
+        formData.append('nova_senha_1', nova_senha_1);
+        formData.append('nova_senha_2', nova_senha_2);
+
+        fetch(`${config.URL_inicial_API}${DATAUser[0].id}/altera_senha`, {
+        method: "POST",
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: formData.toString()
+        })
+        .then(response => response.json())
+        .then(data => {
+
+            if(data.msg == "Sucesso"){
+
+                showMessage({
+                    message: "Sua senha foi alterada com sucesso",
+                    type: "success", // ou "danger", "info", etc.
+                    icon: "success",
+                    duration: 3000
+                });
+
+                setModalSenhaVisible(false);
+
+            }else{
+
+                showMessage({
+                    message: `${data.msg}`,
+                    type: "danger", // ou "danger", "info", etc.
+                    icon: "danger",
+                    duration: 3000
+                });
+
+            }
+        })
+        .catch(error => {
+            console.error('Erro ao buscar dados da API:', error);
+        });
+
+    }
    
     useFocusEffect(
 
@@ -385,7 +457,7 @@ export default function Perfil(){
 
                         <View style={styles.AreaBtnConfirmar}>
 
-                            <Button onPress={()=> atualiza_nome(input)} color={config.cor2} title="Alterar  ->"/>
+                            <Button onPress={()=> alterar_senha()} color={config.cor2} title="Alterar  ->"/>
 
                         </View>
 
