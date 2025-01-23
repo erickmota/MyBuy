@@ -13,6 +13,8 @@ import config from "../config";
 
 export default function Perfil(){
 
+    const navigation = useNavigation();
+
     /* Contexto */
     const { DATAUser } = useContext(UserContext);
     const { atualizar_foto_local } = useContext(UserContext);
@@ -28,6 +30,7 @@ export default function Perfil(){
     const [senha_atual, onChaneSenhaAtual] = useState();
     const [nova_senha_1, onChangeNovaSenha1] = useState();
     const [nova_senha_2, onChangeNovaSenha2] = useState();
+    const [senha_apagar, onChangeSenhaApagar] = useState();
 
     /* Abrindo o Banco de dados */
     useEffect(()=>{
@@ -360,6 +363,49 @@ export default function Perfil(){
 
     }
 
+    const apagar_usuario = () => {
+
+        const formData = new URLSearchParams();
+        formData.append('senha', senha_apagar);
+
+        fetch(`${config.URL_inicial_API}${DATAUser[0].id}/apagar_conta`, {
+        method: "POST",
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: formData.toString()
+        })
+        .then(response => response.json())
+        .then(data => {
+
+            if(data.msg == "Sucesso"){
+
+                showMessage({
+                    message: "Sua conta foi apagada com sucesso! Esperamos ter ver em breve.",
+                    type: "success", // ou "danger", "info", etc.
+                    icon: "success",
+                    duration: 5000
+                });
+
+                navigation.navigate("Login");
+
+            }else{
+
+                showMessage({
+                    message: `${data.msg}`,
+                    type: "danger", // ou "danger", "info", etc.
+                    icon: "danger",
+                    duration: 3000
+                });
+
+            }
+        })
+        .catch(error => {
+            console.error('Erro ao buscar dados da API:', error);
+        });
+
+    }
+
     return(
 
         <View style={styles.container}>
@@ -527,8 +573,8 @@ export default function Perfil(){
                         <View>
 
                           <TextInput style={[styles.input]}
-                            onChangeText={onChaneSenhaAtual}
-                            value={senha_atual}
+                            onChangeText={onChangeSenhaApagar}
+                            value={senha_apagar}
                             keyboardType="default"
                             placeholder="Digite sua senha"
                             required
@@ -539,7 +585,7 @@ export default function Perfil(){
 
                         <View style={styles.AreaBtnConfirmar}>
 
-                            <Button onPress={()=> alterar_senha()} color={config.cor2} title="Excluir minha conta"/>
+                            <Button onPress={()=> apagar_usuario()} color={config.cor2} title="Excluir minha conta"/>
 
                         </View>
 

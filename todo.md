@@ -2,6 +2,7 @@
 
 ## Pequenos ajustes
 
+- [ ] Corrigir campo e-mail, quando envia a lista para outro usuário.
 - [ ] Criar um novo produto em "produtos_usuarios", quando é efetuado o registro de compra, de um produto de terceiros.
 - [ ] Incluir verificação de existência do id da compra em: /1/produtos_compra/39
 - [ ] Incluir loading ao carregar itens comprados do histórico de listas
@@ -14,13 +15,15 @@
 
 ## Funcionalidades
 
+- [ ] Planos preemium
+- [ ] Enviar e-mail, ao receber uma lista.
+- [ ] Enviar e-mail, ao alterar a senha ou apagar a conta.
 - [ ] Clicar na etiqueta "comprado", para remove-la.
 - [ ] Inserir vizualização do valor total por período, nas despesas.
 - [ ] Ao registrar uma compra, além de qtd e preço, o usuário também pode alterar o tipo de unidade.
 - [ ] Página web para cadastro de novos produtos de exemplo
 - [ ] View Sobre
 - [ ] Integrar API do facebook e do google, para o login
-- [ ] Criar notificações (para quando um usuário é adicionado em uma lista)
 - [ ] Botão para imprimir relatório de compra
 - [x] Incluir edição de senha no perfil
 - [x] Enviar email de confirmação de email.
