@@ -971,7 +971,58 @@ export default function ListaItem({route, navigation}){
 
         }
   
-      }
+    }
+
+    function confirma_remocao_etiqueta(id){
+    
+            Alert.alert(
+                "Remover etiquta",
+                "Tem certeza de que deseja remover a etiqueta 'comprado' desse item?",
+                [
+                {
+                    text: "Cancelar",
+                    onPress: () => console.log("Cancelado"),
+                    style: "cancel"
+                },
+                {
+                    text: "Sim",
+                    onPress: () => {
+        
+                    // Ação de exclusão
+    
+                    remover_etiqueta(id);
+        
+                    }
+                }
+                ],
+                { cancelable: false }
+            );
+    
+    }
+
+    function remover_etiqueta(id){
+
+        const formData = new URLSearchParams();
+        formData.append('id',id);
+
+        fetch(`${config.URL_inicial_API}${DATAUser[0].id}/remove_etiqueta_comprado`, {
+        method: "POST",
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: formData.toString()
+        })
+        .then(response => response.json())
+        .then(data => {
+
+            carregar_API();
+
+        })
+        .catch(error => {
+            console.error('Erro ao buscar dados da API:', error);
+        });
+
+    }
 
     return(
 
@@ -1239,11 +1290,15 @@ export default function ListaItem({route, navigation}){
 
                                                                         {prod.carrinho == 2 ? (
 
-                                                                            <Text style={[styles.qtdItens, {color: "#FFF", backgroundColor: "#0AF", borderRadius: 5, paddingHorizontal: 5, fontSize: 7, marginLeft: 7, paddingTop: 5}]}>
+                                                                            <TouchableWithoutFeedback onPress={()=> confirma_remocao_etiqueta(prod.id)}>
 
-                                                                                COMPRADO
+                                                                                <Text style={[styles.qtdItens, {color: "#FFF", backgroundColor: "#0AF", borderRadius: 5, paddingHorizontal: 5, fontSize: 7, marginLeft: 7, paddingTop: 5}]}>
 
-                                                                            </Text>
+                                                                                    COMPRADO
+
+                                                                                </Text>
+
+                                                                            </TouchableWithoutFeedback>
 
                                                                         ):null}
 

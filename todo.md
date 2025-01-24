@@ -18,13 +18,13 @@
 - [ ] Planos preemium
 - [ ] Enviar e-mail, ao receber uma lista.
 - [ ] Enviar e-mail, ao alterar a senha ou apagar a conta.
-- [ ] Clicar na etiqueta "comprado", para remove-la.
 - [ ] Inserir vizualização do valor total por período, nas despesas.
 - [ ] Ao registrar uma compra, além de qtd e preço, o usuário também pode alterar o tipo de unidade.
 - [ ] Página web para cadastro de novos produtos de exemplo
 - [ ] View Sobre
 - [ ] Integrar API do facebook e do google, para o login
 - [ ] Botão para imprimir relatório de compra
+- [x] Clicar na etiqueta "comprado", para remove-la.
 - [x] Incluir edição de senha no perfil
 - [x] Enviar email de confirmação de email.
 - [x] View perfil (quando o usuário clicar no nome, no menu.)
