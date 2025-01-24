@@ -734,7 +734,7 @@ export default function Produtos(){
 
                                 <View style={[styles.linha_padrao, {flex: 4}]}>
 
-                                    <Text style={{color: "#222"}}>
+                                    <Text style={{color: "#222", marginLeft: 5}}>
 
                                         {item.name}
 
@@ -878,9 +878,9 @@ const styles = StyleSheet.create({
 
     cor_nome:{
 
-        width: 25,
-        height: 25,
-        borderRadius: 8,
+        width: 30,
+        height: 30,
+        borderRadius: 50,
         marginLeft: 5
 
     },
@@ -972,10 +972,10 @@ const styles = StyleSheet.create({
 
     imgProduto:{
 
-        width: 25,
-        height: 25,
+        width: 30,
+        height: 30,
         borderRadius: 50,
-        marginTop: 5,
+        marginTop: 0,
         marginLeft: 7,
         borderWidth: 2,
         borderColor: "white"
