@@ -682,7 +682,7 @@ export default function ListaItem({route, navigation}){
 
                 if(reduzido == 1){
 
-                    return "Pacote"
+                    return "Pacot"
 
                 }else{
 
@@ -704,7 +704,7 @@ export default function ListaItem({route, navigation}){
 
                 if(reduzido == 1){
 
-                    return "Garrafa";
+                    return "Garraf";
 
                 }else{
 
@@ -748,7 +748,7 @@ export default function ListaItem({route, navigation}){
 
                 if(reduzido == 1){
 
-                    return "Embala";
+                    return "Emba";
 
                 }else{
 
